@@ -1,0 +1,50 @@
+/* granular-tokens.css */
+
+:root {
+  /* Fondo estructural de GRANULAR */
+  --granular-bg: #050505;
+  --granular-surface: rgba(255, 255, 255, 0.03);
+  --granular-surface-hover: rgba(255, 255, 255, 0.08);
+  --granular-border: rgba(255, 255, 255, 0.1);
+
+  /* Texto */
+  --granular-text: #ffffff;
+  --granular-text-secondary: rgba(255, 255, 255, 0.6);
+  --granular-text-tertiary: rgba(255, 255, 255, 0.3);
+
+  /* Acentos de las 6 Dimensiones */
+  --granular-dim-water: #00e5ff;
+  --granular-dim-agriculture: #ff9800;
+  --granular-dim-governance: #e91e63;
+  --granular-dim-socioeconomy: #9c27b0;
+  --granular-dim-environment: #4caf50;
+  --granular-dim-connectivity: #cfd8dc;
+
+  /* Animación y Transiciones */
+  --granular-transition-slow: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --granular-transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --granular-transition-fast: 0.2s ease-out;
+
+  /* Z-Index */
+  --granular-z-hero: 10;
+  --granular-z-nav: 50;
+  --granular-z-overlay: 100;
+}
+
+.granular-theme {
+  background-color: var(--granular-bg);
+  color: var(--granular-text);
+  font-family: var(--font-sans);
+}
+
+.granular-border {
+  border-color: var(--granular-border);
+}
+
+.granular-bg-surface {
+  background-color: var(--granular-surface);
+}
+
+.granular-hover-surface:hover {
+  background-color: var(--granular-surface-hover);
+}

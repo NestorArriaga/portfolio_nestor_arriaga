@@ -1,0 +1,2414 @@
+[
+  {
+    "id": "p001-editorial-asset-01",
+    "sourcePage": 1,
+    "sourcePages": [
+      1
+    ],
+    "projectIds": [],
+    "section": "editorial",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p001-editorial-asset-01.webp",
+    "originalSrc": null,
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1.0,
+    "pageBounds": {
+      "x": -0.16,
+      "y": -21.83,
+      "width": 80.62,
+      "height": 80.61
+    },
+    "sha256": "127521b58011c6b06c89a2d6b2cca0edb4ef861678a3dc2959cadb7d70971b42",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p001-editorial-asset-02",
+    "sourcePage": 1,
+    "sourcePages": [
+      1
+    ],
+    "projectIds": [],
+    "section": "editorial",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p001-editorial-asset-02.webp",
+    "originalSrc": null,
+    "width": 524,
+    "height": 2000,
+    "aspectRatio": 0.26,
+    "pageBounds": {
+      "x": 80.46,
+      "y": -21.83,
+      "width": 21.12,
+      "height": 80.61
+    },
+    "sha256": "a56b7747a5451a415bf7c340247965b700b0318a0f37fa6e752d0ae0f0403d55",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p001-editorial-asset-03",
+    "sourcePage": 1,
+    "sourcePages": [
+      1
+    ],
+    "projectIds": [],
+    "section": "editorial",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p001-editorial-asset-03.webp",
+    "originalSrc": null,
+    "width": 2000,
+    "height": 1535,
+    "aspectRatio": 1.3,
+    "pageBounds": {
+      "x": -0.16,
+      "y": 58.78,
+      "width": 80.62,
+      "height": 61.87
+    },
+    "sha256": "26aa4e02bf6de322e8574997c4509e53a58277ba1fa8c75b65066686480a9460",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p001-editorial-asset-04",
+    "sourcePage": 1,
+    "sourcePages": [
+      1
+    ],
+    "projectIds": [],
+    "section": "editorial",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p001-editorial-asset-04.webp",
+    "originalSrc": null,
+    "width": 524,
+    "height": 1535,
+    "aspectRatio": 0.34,
+    "pageBounds": {
+      "x": 80.46,
+      "y": 58.78,
+      "width": 21.12,
+      "height": 61.87
+    },
+    "sha256": "a888c4da41d655c5b6dc600ba991d011c9f435559c9473bbc2bf0bbf6cc012c1",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p001-editorial-asset-05",
+    "sourcePage": 1,
+    "sourcePages": [
+      1
+    ],
+    "projectIds": [],
+    "section": "editorial",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p001-editorial-asset-05.webp",
+    "originalSrc": null,
+    "width": 2319,
+    "height": 2490,
+    "aspectRatio": 0.93,
+    "pageBounds": {
+      "x": 34.01,
+      "y": -0.19,
+      "width": 66.11,
+      "height": 100.39
+    },
+    "sha256": "4fbc1622c1ee1c108069d5e009c36954604f7b9e7c3c2c3505e5b2af07bdd75d",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p003-editorial-asset-01",
+    "sourcePage": 3,
+    "sourcePages": [
+      3
+    ],
+    "projectIds": [],
+    "section": "editorial",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p003-editorial-asset-01.webp",
+    "originalSrc": null,
+    "width": 589,
+    "height": 543,
+    "aspectRatio": 1.08,
+    "pageBounds": {
+      "x": 70.75,
+      "y": 75.46,
+      "width": 8.38,
+      "height": 21.88
+    },
+    "sha256": "5f0611db54961154c1a68ae90f1924d06b626732cd97ff000aabecee00c02d64",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p004-editorial-asset-01",
+    "sourcePage": 4,
+    "sourcePages": [
+      4
+    ],
+    "projectIds": [],
+    "section": "editorial",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p004-editorial-asset-01.webp",
+    "originalSrc": null,
+    "width": 994,
+    "height": 382,
+    "aspectRatio": 2.6,
+    "pageBounds": {
+      "x": -0.07,
+      "y": -0.19,
+      "width": 92.54,
+      "height": 100.6
+    },
+    "sha256": "ea4ab322ed642bfc8bb99f9bc3c8cd552f1264dd8294da7df71fb9c80987455b",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p005-editorial-asset-01",
+    "sourcePage": 5,
+    "sourcePages": [
+      5
+    ],
+    "projectIds": [],
+    "section": "editorial",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p005-editorial-asset-01.webp",
+    "originalSrc": null,
+    "width": 4677,
+    "height": 3307,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 50.0,
+      "y": 0.0,
+      "width": 50.0,
+      "height": 100.0
+    },
+    "sha256": "8dda76f6db0887835c44904c44d3bdbadea357759fd084ed0db1f09bb5c95d5c",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p006-index-asset-01",
+    "sourcePage": 6,
+    "sourcePages": [
+      6,
+      7,
+      8,
+      10,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      19,
+      20
+    ],
+    "projectIds": [
+      "01",
+      "02",
+      "04",
+      "05",
+      "07",
+      "09",
+      "10",
+      "11",
+      "12"
+    ],
+    "section": "index",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p006-index-asset-01.webp",
+    "originalSrc": null,
+    "width": 223,
+    "height": 167,
+    "aspectRatio": 1.34,
+    "pageBounds": {
+      "x": 61.97,
+      "y": 20.35,
+      "width": 3.17,
+      "height": 6.73
+    },
+    "sha256": "a71eac2fe1f70ee259fe118fe2a458a4b9715680b10c1c3ae2b52d9850036ae5",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p009-territory-intro-asset-01",
+    "sourcePage": 9,
+    "sourcePages": [
+      9
+    ],
+    "projectIds": [],
+    "section": "territory-intro",
+    "territory": "Ciudad de México",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p009-territory-intro-asset-01.webp",
+    "originalSrc": null,
+    "width": 1538,
+    "height": 1045,
+    "aspectRatio": 1.47,
+    "pageBounds": {
+      "x": -0.08,
+      "y": -0.13,
+      "width": 52.17,
+      "height": 100.27
+    },
+    "sha256": "a1b5821a275bcf881316e57e2bfee4787e0cac019e6b009fa3624eda4570552e",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p010-project-project-01-asset-01",
+    "sourcePage": 10,
+    "sourcePages": [
+      10
+    ],
+    "projectIds": [
+      "01"
+    ],
+    "section": "project",
+    "territory": "Ciudad de México",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p010-project-project-01-asset-01.webp",
+    "originalSrc": null,
+    "width": 280,
+    "height": 201,
+    "aspectRatio": 1.39,
+    "pageBounds": {
+      "x": 33.04,
+      "y": 31.28,
+      "width": 3.99,
+      "height": 8.1
+    },
+    "sha256": "5fcbe4b04ddfacee50e69df76d26d0b2bfa7504a7a3c1d5afa60dbbb1300544d",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p010-project-project-01-asset-02",
+    "sourcePage": 10,
+    "sourcePages": [
+      10
+    ],
+    "projectIds": [
+      "01"
+    ],
+    "section": "project",
+    "territory": "Ciudad de México",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p010-project-project-01-asset-02.webp",
+    "originalSrc": null,
+    "width": 327,
+    "height": 310,
+    "aspectRatio": 1.05,
+    "pageBounds": {
+      "x": 40.26,
+      "y": 28.77,
+      "width": 4.65,
+      "height": 12.47
+    },
+    "sha256": "58026242d2e1f060d5cb1022ea4c20da0c1e4011bf6ea8751c1bbb18e14f35bc",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p010-project-project-01-asset-03",
+    "sourcePage": 10,
+    "sourcePages": [
+      10
+    ],
+    "projectIds": [
+      "01"
+    ],
+    "section": "project",
+    "territory": "Ciudad de México",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p010-project-project-01-asset-03.webp",
+    "originalSrc": null,
+    "width": 2328,
+    "height": 3263,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": 73.67,
+      "y": -0.17,
+      "width": 26.39,
+      "height": 100.35
+    },
+    "sha256": "a63d18a696f15ed6ffcbb9ae900880f2a88036e568b7a2ef9927f75e7ba1998d",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p010-project-project-01-asset-04",
+    "sourcePage": 10,
+    "sourcePages": [
+      10
+    ],
+    "projectIds": [
+      "01"
+    ],
+    "section": "project",
+    "territory": "Ciudad de México",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p010-project-project-01-asset-04.webp",
+    "originalSrc": null,
+    "width": 815,
+    "height": 987,
+    "aspectRatio": 0.83,
+    "pageBounds": {
+      "x": 52.51,
+      "y": 19.19,
+      "width": 11.6,
+      "height": 39.75
+    },
+    "sha256": "f4b30772db94162c07856bb5399bbccfd468aa756ff8a24b7bbd4b1b282ad892",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p010-project-project-01-asset-05",
+    "sourcePage": 10,
+    "sourcePages": [
+      10
+    ],
+    "projectIds": [
+      "01"
+    ],
+    "section": "project",
+    "territory": "Ciudad de México",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p010-project-project-01-asset-05.webp",
+    "originalSrc": null,
+    "width": 662,
+    "height": 269,
+    "aspectRatio": 2.46,
+    "pageBounds": {
+      "x": 57.78,
+      "y": 76.88,
+      "width": 9.43,
+      "height": 10.83
+    },
+    "sha256": "0effc1b854035c417c7e65b95b625ccef5e53fc68816d8e5604635b2ab2480f0",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p011-territory-intro-asset-01",
+    "sourcePage": 11,
+    "sourcePages": [
+      11
+    ],
+    "projectIds": [],
+    "section": "territory-intro",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p011-territory-intro-asset-01.webp",
+    "originalSrc": null,
+    "width": 764,
+    "height": 537,
+    "aspectRatio": 1.42,
+    "pageBounds": {
+      "x": 48.61,
+      "y": -0.2,
+      "width": 51.5,
+      "height": 100.52
+    },
+    "sha256": "91bfad077a675891c913bcc047b20b4b8efbafbd7dab123aebadf7ee60d68f09",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p012-project-project-02-asset-01",
+    "sourcePage": 12,
+    "sourcePages": [
+      12
+    ],
+    "projectIds": [
+      "02"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p012-project-project-02-asset-01.webp",
+    "originalSrc": null,
+    "width": 277,
+    "height": 204,
+    "aspectRatio": 1.36,
+    "pageBounds": {
+      "x": 32.26,
+      "y": 59.29,
+      "width": 3.94,
+      "height": 8.21
+    },
+    "sha256": "5d927867dae262a3ae5477ce2ef1813841ec4367e63319d46d97ea2d1c7be152",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p012-project-project-02-asset-02",
+    "sourcePage": 12,
+    "sourcePages": [
+      12
+    ],
+    "projectIds": [
+      "02"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p012-project-project-02-asset-02.webp",
+    "originalSrc": null,
+    "width": 288,
+    "height": 223,
+    "aspectRatio": 1.29,
+    "pageBounds": {
+      "x": 40.24,
+      "y": 58.64,
+      "width": 4.09,
+      "height": 8.95
+    },
+    "sha256": "657ff470cc014d890f21904106c4b2eed159dda2771fca9922de1209be5cd984",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p012-project-project-02-asset-03",
+    "sourcePage": 12,
+    "sourcePages": [
+      12
+    ],
+    "projectIds": [
+      "02"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p012-project-project-02-asset-03.webp",
+    "originalSrc": null,
+    "width": 2478,
+    "height": 3421,
+    "aspectRatio": 0.72,
+    "pageBounds": {
+      "x": -0.06,
+      "y": -0.19,
+      "width": 26.02,
+      "height": 100.38
+    },
+    "sha256": "99bb18706484608545a062cf063216fb8f6c37f168743a94ba7fd6b8a3f0e24c",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p012-project-project-02-asset-04",
+    "sourcePage": 12,
+    "sourcePages": [
+      12
+    ],
+    "projectIds": [
+      "02"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p012-project-project-02-asset-04.webp",
+    "originalSrc": null,
+    "width": 433,
+    "height": 409,
+    "aspectRatio": 1.06,
+    "pageBounds": {
+      "x": 34.6,
+      "y": 71.71,
+      "width": 6.16,
+      "height": 16.45
+    },
+    "sha256": "464fb904c8271bca54a74d48ab1906250f432f0c22eec3e77d3fb2e5feb4ac6a",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p012-project-project-03-asset-01",
+    "sourcePage": 12,
+    "sourcePages": [
+      12
+    ],
+    "projectIds": [
+      "03"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p012-project-project-03-asset-01.webp",
+    "originalSrc": null,
+    "width": 2163,
+    "height": 1529,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 67.05,
+      "y": 28.06,
+      "width": 30.82,
+      "height": 61.64
+    },
+    "sha256": "810d59c3a467c37c087c8a9912409ca474002a26020ae6c9a2310b76b77ff46a",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p012-project-project-03-asset-02",
+    "sourcePage": 12,
+    "sourcePages": [
+      12
+    ],
+    "projectIds": [
+      "03"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p012-project-project-03-asset-02.webp",
+    "originalSrc": null,
+    "width": 457,
+    "height": 343,
+    "aspectRatio": 1.33,
+    "pageBounds": {
+      "x": 53.73,
+      "y": 9.64,
+      "width": 6.51,
+      "height": 13.8
+    },
+    "sha256": "769efa65d98e74c298690db712fd777c71fa9c487bd0164d35b8c1e5b092544b",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p012-project-project-03-asset-03",
+    "sourcePage": 12,
+    "sourcePages": [
+      12
+    ],
+    "projectIds": [
+      "03"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p012-project-project-03-asset-03.webp",
+    "originalSrc": null,
+    "width": 223,
+    "height": 167,
+    "aspectRatio": 1.34,
+    "pageBounds": {
+      "x": 60.65,
+      "y": 77.28,
+      "width": 3.17,
+      "height": 6.73
+    },
+    "sha256": "004543a461ba9f7fca557e231b17e9dc406980eada9f230eebc9225898948aae",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p013-project-project-04-asset-01",
+    "sourcePage": 13,
+    "sourcePages": [
+      13
+    ],
+    "projectIds": [
+      "04"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p013-project-project-04-asset-01.webp",
+    "originalSrc": null,
+    "width": 1909,
+    "height": 1301,
+    "aspectRatio": 1.47,
+    "pageBounds": {
+      "x": 0.47,
+      "y": 26.89,
+      "width": 34.14,
+      "height": 68.07
+    },
+    "sha256": "72d45da1ef810c2858f0b202ad43b732cf1622ee3606e0bf83762ee77cda7a2d",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p013-project-project-04-asset-02",
+    "sourcePage": 13,
+    "sourcePages": [
+      13
+    ],
+    "projectIds": [
+      "04"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p013-project-project-04-asset-02.webp",
+    "originalSrc": null,
+    "width": 679,
+    "height": 463,
+    "aspectRatio": 1.47,
+    "pageBounds": {
+      "x": 35.99,
+      "y": 4.61,
+      "width": 9.68,
+      "height": 18.63
+    },
+    "sha256": "a032910bb99b37eff27c8f2ffeb26353b84ef487b0c08fccf84657fcd542d5eb",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p013-project-project-04-asset-03",
+    "sourcePage": 13,
+    "sourcePages": [
+      13
+    ],
+    "projectIds": [
+      "04"
+    ],
+    "section": "project",
+    "territory": "Veracruz",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p013-project-project-04-asset-03.webp",
+    "originalSrc": null,
+    "width": 3222,
+    "height": 2489,
+    "aspectRatio": 1.29,
+    "pageBounds": {
+      "x": 54.15,
+      "y": -0.18,
+      "width": 45.92,
+      "height": 100.34
+    },
+    "sha256": "91191ecac02a71ed258d6391da015a5b49c8de48d1a72a591c54e87792797d1e",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p014-project-project-05-asset-01",
+    "sourcePage": 14,
+    "sourcePages": [
+      14
+    ],
+    "projectIds": [
+      "05"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p014-project-project-05-asset-01.webp",
+    "originalSrc": null,
+    "width": 2246,
+    "height": 2400,
+    "aspectRatio": 0.94,
+    "pageBounds": {
+      "x": 1.15,
+      "y": 21.9,
+      "width": 22.98,
+      "height": 72.19
+    },
+    "sha256": "59d68a8ee8041a9f0bcb2df23f873108d85c31655a658073fb039bd2d733ea51",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p014-project-project-05-asset-02",
+    "sourcePage": 14,
+    "sourcePages": [
+      14
+    ],
+    "projectIds": [
+      "05"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p014-project-project-05-asset-02.webp",
+    "originalSrc": null,
+    "width": 202,
+    "height": 171,
+    "aspectRatio": 1.18,
+    "pageBounds": {
+      "x": 24.7,
+      "y": 39.23,
+      "width": 5.17,
+      "height": 14.87
+    },
+    "sha256": "848d076affa2e08db15e46cef856bc95dd7a6a4dbd38d716ca23cc949846e6af",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p014-project-project-05-asset-03",
+    "sourcePage": 14,
+    "sourcePages": [
+      14
+    ],
+    "projectIds": [
+      "05"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p014-project-project-05-asset-03.webp",
+    "originalSrc": null,
+    "width": 135,
+    "height": 183,
+    "aspectRatio": 0.74,
+    "pageBounds": {
+      "x": 24.65,
+      "y": 60.06,
+      "width": 5.22,
+      "height": 14.91
+    },
+    "sha256": "a1640f84e668bf5f94f7150cf97c972daf488e707db652b8974e827bbedb398a",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p014-project-project-05-asset-04",
+    "sourcePage": 14,
+    "sourcePages": [
+      14
+    ],
+    "projectIds": [
+      "05"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p014-project-project-05-asset-04.webp",
+    "originalSrc": null,
+    "width": 415,
+    "height": 422,
+    "aspectRatio": 0.98,
+    "pageBounds": {
+      "x": 24.68,
+      "y": 81.14,
+      "width": 5.16,
+      "height": 14.84
+    },
+    "sha256": "6fc4581acdd3709a1110043f57afe1ba21f87f0475afaae0e8423b0a88d375ed",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p014-project-project-06-asset-01",
+    "sourcePage": 14,
+    "sourcePages": [
+      14,
+      15,
+      17,
+      18,
+      19,
+      20
+    ],
+    "projectIds": [
+      "06",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p014-project-project-06-asset-01.webp",
+    "originalSrc": null,
+    "width": 377,
+    "height": 283,
+    "aspectRatio": 1.33,
+    "pageBounds": {
+      "x": 73.6,
+      "y": 7.3,
+      "width": 5.36,
+      "height": 11.37
+    },
+    "sha256": "723daa218eb09270f2643652d333fffe703da6806f881c4ceeb05d7759635411",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p014-project-project-06-asset-02",
+    "sourcePage": 14,
+    "sourcePages": [
+      14
+    ],
+    "projectIds": [
+      "06"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p014-project-project-06-asset-02.webp",
+    "originalSrc": null,
+    "width": 2966,
+    "height": 2143,
+    "aspectRatio": 1.38,
+    "pageBounds": {
+      "x": 70.31,
+      "y": 24.45,
+      "width": 29.3,
+      "height": 61.97
+    },
+    "sha256": "397c61d1c21f76d9351fcabe7d795e1d56897946c26e27b1244104125b64b9d8",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p015-project-project-07-asset-01",
+    "sourcePage": 15,
+    "sourcePages": [
+      15
+    ],
+    "projectIds": [
+      "07"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p015-project-project-07-asset-01.webp",
+    "originalSrc": null,
+    "width": 1903,
+    "height": 2042,
+    "aspectRatio": 0.93,
+    "pageBounds": {
+      "x": 2.08,
+      "y": 34.82,
+      "width": 18.86,
+      "height": 61.79
+    },
+    "sha256": "b0a89c551b595c6393b8af84b9adb8de16fb6d84d16bd4b5ba1866e50967e4ca",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p015-project-project-07-asset-02",
+    "sourcePage": 15,
+    "sourcePages": [
+      15
+    ],
+    "projectIds": [
+      "07"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p015-project-project-07-asset-02.webp",
+    "originalSrc": null,
+    "width": 926,
+    "height": 690,
+    "aspectRatio": 1.34,
+    "pageBounds": {
+      "x": 35.22,
+      "y": 64.99,
+      "width": 13.19,
+      "height": 27.79
+    },
+    "sha256": "1c0a7b76f39102438c9d5eb5977884f3589a979208af4ce889fbca3b5529bddb",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p015-project-project-07-asset-03",
+    "sourcePage": 15,
+    "sourcePages": [
+      15
+    ],
+    "projectIds": [
+      "07"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p015-project-project-07-asset-03.webp",
+    "originalSrc": null,
+    "width": 433,
+    "height": 337,
+    "aspectRatio": 1.28,
+    "pageBounds": {
+      "x": 22.19,
+      "y": 29.25,
+      "width": 6.16,
+      "height": 13.56
+    },
+    "sha256": "757e120742fcc12de1b3ce9908e1093722d9d9b20fa478c48bbecf390fcbdf82",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p015-project-project-08-asset-01",
+    "sourcePage": 15,
+    "sourcePages": [
+      15
+    ],
+    "projectIds": [
+      "08"
+    ],
+    "section": "project",
+    "territory": "Metztitlán",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p015-project-project-08-asset-01.webp",
+    "originalSrc": null,
+    "width": 1800,
+    "height": 1583,
+    "aspectRatio": 1.14,
+    "pageBounds": {
+      "x": 74.41,
+      "y": 31.45,
+      "width": 25.65,
+      "height": 63.81
+    },
+    "sha256": "824bf6cabfc6692e32f59d689c7de85d71ea80b8e52ea2d1c6bbf20474d44518",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p016-territory-intro-asset-01",
+    "sourcePage": 16,
+    "sourcePages": [
+      16
+    ],
+    "projectIds": [],
+    "section": "territory-intro",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p016-territory-intro-asset-01.webp",
+    "originalSrc": null,
+    "width": 1522,
+    "height": 927,
+    "aspectRatio": 1.64,
+    "pageBounds": {
+      "x": -0.08,
+      "y": -0.27,
+      "width": 52.8,
+      "height": 100.49
+    },
+    "sha256": "b242b92a49a40d4a697e457e4754d38bb1a45e9934fdb4c7bce7ef010bed528e",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p017-project-project-09-asset-01",
+    "sourcePage": 17,
+    "sourcePages": [
+      17
+    ],
+    "projectIds": [
+      "09"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p017-project-project-09-asset-01.webp",
+    "originalSrc": null,
+    "width": 2315,
+    "height": 1959,
+    "aspectRatio": 1.18,
+    "pageBounds": {
+      "x": 63.06,
+      "y": 7.89,
+      "width": 33.0,
+      "height": 78.97
+    },
+    "sha256": "3169e174cc2e9215aecbe072a4780707ce6b3dba9333a432ec7119593471e7dc",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p018-project-project-10-asset-01",
+    "sourcePage": 18,
+    "sourcePages": [
+      18
+    ],
+    "projectIds": [
+      "10"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p018-project-project-10-asset-01.webp",
+    "originalSrc": null,
+    "width": 2333,
+    "height": 2033,
+    "aspectRatio": 1.15,
+    "pageBounds": {
+      "x": 4.71,
+      "y": 7.88,
+      "width": 33.25,
+      "height": 81.94
+    },
+    "sha256": "7b349323ed964a8efa86a16c2bc386c45254ed56380dfb0720bba25b0839d692",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p018-project-project-10-asset-02",
+    "sourcePage": 18,
+    "sourcePages": [
+      18
+    ],
+    "projectIds": [
+      "10"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p018-project-project-10-asset-02.webp",
+    "originalSrc": null,
+    "width": 364,
+    "height": 273,
+    "aspectRatio": 1.33,
+    "pageBounds": {
+      "x": 85.11,
+      "y": 81.73,
+      "width": 5.19,
+      "height": 11.0
+    },
+    "sha256": "63efed94b92660cb304668416f1f2d4ccd7eb152c2ef2bdced2225d3ff18a0c4",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p018-project-project-10-asset-03",
+    "sourcePage": 18,
+    "sourcePages": [
+      18
+    ],
+    "projectIds": [
+      "10"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p018-project-project-10-asset-03.webp",
+    "originalSrc": null,
+    "width": 364,
+    "height": 273,
+    "aspectRatio": 1.33,
+    "pageBounds": {
+      "x": 85.11,
+      "y": 48.93,
+      "width": 5.19,
+      "height": 11.0
+    },
+    "sha256": "8377490f85b2526938d795f518d9f1dc743db6d29413d12c0c21c20310ea0959",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p018-project-project-10-asset-04",
+    "sourcePage": 18,
+    "sourcePages": [
+      18
+    ],
+    "projectIds": [
+      "10"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p018-project-project-10-asset-04.webp",
+    "originalSrc": null,
+    "width": 364,
+    "height": 273,
+    "aspectRatio": 1.33,
+    "pageBounds": {
+      "x": 85.11,
+      "y": 29.87,
+      "width": 5.19,
+      "height": 11.0
+    },
+    "sha256": "019c59b47431461a76f836fd84585ccbcbd30731f3a07349ff32b67d88587611",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p019-project-project-11-asset-01",
+    "sourcePage": 19,
+    "sourcePages": [
+      19
+    ],
+    "projectIds": [
+      "11"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p019-project-project-11-asset-01.webp",
+    "originalSrc": null,
+    "width": 364,
+    "height": 273,
+    "aspectRatio": 1.33,
+    "pageBounds": {
+      "x": 9.07,
+      "y": 81.73,
+      "width": 5.19,
+      "height": 11.0
+    },
+    "sha256": "bd5773061bbef7e3f4fc19c7cc8a97f81a74ff2c2f1edb152389d6c60d56fdb9",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p019-project-project-11-asset-02",
+    "sourcePage": 19,
+    "sourcePages": [
+      19
+    ],
+    "projectIds": [
+      "11"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p019-project-project-11-asset-02.webp",
+    "originalSrc": null,
+    "width": 364,
+    "height": 273,
+    "aspectRatio": 1.33,
+    "pageBounds": {
+      "x": 9.07,
+      "y": 48.93,
+      "width": 5.19,
+      "height": 11.0
+    },
+    "sha256": "7c6fe44ddf32f0d615786acfaea61b47ce1afcb546fd9e36f798a95e909ca506",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p019-project-project-11-asset-03",
+    "sourcePage": 19,
+    "sourcePages": [
+      19
+    ],
+    "projectIds": [
+      "11"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p019-project-project-11-asset-03.webp",
+    "originalSrc": null,
+    "width": 364,
+    "height": 273,
+    "aspectRatio": 1.33,
+    "pageBounds": {
+      "x": 9.05,
+      "y": 29.87,
+      "width": 5.19,
+      "height": 11.0
+    },
+    "sha256": "7c6a494730819e6dd70b08232d8947f8337d0125e2ba052c73437a4066517915",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p019-project-project-11-asset-04",
+    "sourcePage": 19,
+    "sourcePages": [
+      19
+    ],
+    "projectIds": [
+      "11"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p019-project-project-11-asset-04.webp",
+    "originalSrc": null,
+    "width": 2301,
+    "height": 2040,
+    "aspectRatio": 1.13,
+    "pageBounds": {
+      "x": 63.64,
+      "y": 6.67,
+      "width": 32.79,
+      "height": 82.21
+    },
+    "sha256": "be99ea94517b035e2b2cc5407267ad80e9d14dcfbb3254b9b372190800a9c54e",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p020-project-project-13-asset-01",
+    "sourcePage": 20,
+    "sourcePages": [
+      20
+    ],
+    "projectIds": [
+      "13"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p020-project-project-13-asset-01.webp",
+    "originalSrc": null,
+    "width": 1648,
+    "height": 1964,
+    "aspectRatio": 0.84,
+    "pageBounds": {
+      "x": 74.66,
+      "y": 17.32,
+      "width": 23.48,
+      "height": 79.15
+    },
+    "sha256": "4d13d4c066c4dbe2a73a9c517c0de45b564b9fe321a7ffed78d9c65811bf1ff1",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p020-project-project-12-asset-01",
+    "sourcePage": 20,
+    "sourcePages": [
+      20
+    ],
+    "projectIds": [
+      "12"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p020-project-project-12-asset-01.webp",
+    "originalSrc": null,
+    "width": 1631,
+    "height": 1963,
+    "aspectRatio": 0.83,
+    "pageBounds": {
+      "x": 3.42,
+      "y": 17.33,
+      "width": 23.24,
+      "height": 79.14
+    },
+    "sha256": "e0bce019abe77ada867161e5fc8a1c1e8f262e1ad63d819bc325b3a33bfef87d",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p020-project-project-13-asset-02",
+    "sourcePage": 20,
+    "sourcePages": [
+      20
+    ],
+    "projectIds": [
+      "13"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p020-project-project-13-asset-02.webp",
+    "originalSrc": null,
+    "width": 768,
+    "height": 429,
+    "aspectRatio": 1.79,
+    "pageBounds": {
+      "x": 50.81,
+      "y": 17.28,
+      "width": 21.77,
+      "height": 34.56
+    },
+    "sha256": "72a85c89649f8e2afbba56cf091098e55e372490baec189132bef5f176b59298",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p020-project-project-12-asset-02",
+    "sourcePage": 20,
+    "sourcePages": [
+      20
+    ],
+    "projectIds": [
+      "12"
+    ],
+    "section": "project",
+    "territory": "Aguascalientes",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p020-project-project-12-asset-02.webp",
+    "originalSrc": null,
+    "width": 768,
+    "height": 794,
+    "aspectRatio": 0.97,
+    "pageBounds": {
+      "x": 29.29,
+      "y": 44.17,
+      "width": 16.67,
+      "height": 48.74
+    },
+    "sha256": "eaaa7046e54cdca246be5c33a9a997dd0f37b4d580a5067f1352cb6095ad7168",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p021-project-project-14-asset-01",
+    "sourcePage": 21,
+    "sourcePages": [
+      21
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p021-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 3315,
+    "height": 2212,
+    "aspectRatio": 1.5,
+    "pageBounds": {
+      "x": -0.06,
+      "y": -0.17,
+      "width": 53.18,
+      "height": 100.38
+    },
+    "sha256": "f9b313652dcbf0e7bf56641e5cba1648276298accd805798fa5e53de37029171",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p021-project-project-14-asset-02",
+    "sourcePage": 21,
+    "sourcePages": [
+      21
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p021-project-project-14-asset-02.webp",
+    "originalSrc": null,
+    "width": 812,
+    "height": 181,
+    "aspectRatio": 4.49,
+    "pageBounds": {
+      "x": 26.0,
+      "y": 7.75,
+      "width": 11.56,
+      "height": 7.28
+    },
+    "sha256": "2287fc88ae5c5b4e0eea172b87259e67c45ae1bf24e20adbc5c988e209a5b188",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p022-project-project-14-asset-01",
+    "sourcePage": 22,
+    "sourcePages": [
+      22
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p022-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 3507,
+    "height": 2480,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 42.09,
+      "y": -11.06,
+      "width": 61.06,
+      "height": 122.13
+    },
+    "sha256": "1dc519e0b3ed1c309c898a227d20eda1ea6330ba0865af5c0f198e3098d06ef6",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p023-project-project-14-asset-01",
+    "sourcePage": 23,
+    "sourcePages": [
+      23
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p023-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 3507,
+    "height": 2480,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": -39.18,
+      "y": -53.52,
+      "width": 107.7,
+      "height": 215.42
+    },
+    "sha256": "e3be19ad4cd8fbc1fa06218f23d14a78b004a11833fd4b2bd8fc118342250f19",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p023-project-project-14-asset-02",
+    "sourcePage": 23,
+    "sourcePages": [
+      23
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p023-project-project-14-asset-02.webp",
+    "originalSrc": null,
+    "width": 2209,
+    "height": 1562,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 74.96,
+      "y": 20.56,
+      "width": 31.67,
+      "height": 63.73
+    },
+    "sha256": "e1e1299f733a031a5f0780d80d930ff471e6885ac1e1e35f812aaac97dcaba53",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p024-project-project-14-asset-01",
+    "sourcePage": 24,
+    "sourcePages": [
+      24
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p024-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 3507,
+    "height": 2480,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": -7.37,
+      "y": 17.17,
+      "width": 33.32,
+      "height": 66.66
+    },
+    "sha256": "90bb7cd723c4f13c77b596f2b6c0e04aa66def089fa708be26c9ba4239fefba2",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p025-project-project-14-asset-01",
+    "sourcePage": 25,
+    "sourcePages": [
+      25
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p025-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 3507,
+    "height": 2480,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": -0.84,
+      "y": -11.45,
+      "width": 62.3,
+      "height": 119.66
+    },
+    "sha256": "8e8cbad88903d6c8e075f708296d9fbf45eaf93292c26adaa96711710d16669d",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p026-project-project-14-asset-01",
+    "sourcePage": 26,
+    "sourcePages": [
+      26
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p026-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 3507,
+    "height": 2480,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 22.19,
+      "y": -5.59,
+      "width": 56.6,
+      "height": 113.21
+    },
+    "sha256": "bdeb620ed07bcf80ca983904980fa3ca72fc5b9cc3e788765cd1c56648026884",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p029-project-project-14-asset-01",
+    "sourcePage": 29,
+    "sourcePages": [
+      29
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p029-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 2480,
+    "height": 3507,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": 60.36,
+      "y": -113.57,
+      "width": 71.4,
+      "height": 285.58
+    },
+    "sha256": "ec057576066df279e11ec87054a6e461dd383a78cbaf55e01b8017dee35c033d",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p030-project-project-14-asset-01",
+    "sourcePage": 30,
+    "sourcePages": [
+      30
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p030-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 3507,
+    "height": 2480,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 42.55,
+      "y": -15.0,
+      "width": 57.44,
+      "height": 118.33
+    },
+    "sha256": "1b80ae87822df1e7d2fe13ff77c8621e758ad02e5e1b8aefd9f736ffbdd78377",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p031-project-project-14-asset-01",
+    "sourcePage": 31,
+    "sourcePages": [
+      31
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p031-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 2480,
+    "height": 3507,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": 71.96,
+      "y": -21.39,
+      "width": 47.11,
+      "height": 188.45
+    },
+    "sha256": "2df0c1a9985ccf6bfc71b849623c468cb2d74cea85aa31466aa567d60ff33504",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p032-project-project-14-asset-01",
+    "sourcePage": 32,
+    "sourcePages": [
+      32
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p032-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 3507,
+    "height": 2480,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 0.01,
+      "y": 0.4,
+      "width": 58.07,
+      "height": 99.99
+    },
+    "sha256": "0999fd8f285e33123442344c2ff2c828831db1a4b932a72f4e044ecb08940ffb",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p033-project-project-14-asset-01",
+    "sourcePage": 33,
+    "sourcePages": [
+      33
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p033-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 2480,
+    "height": 3507,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": 13.08,
+      "y": -41.89,
+      "width": 43.93,
+      "height": 171.21
+    },
+    "sha256": "359c94accfdb81e326c7ebe77ddd318fee475ac7c43f0e18ab1486fc05e8e4ca",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p033-project-project-14-asset-02",
+    "sourcePage": 33,
+    "sourcePages": [
+      33
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p033-project-project-14-asset-02.webp",
+    "originalSrc": null,
+    "width": 2480,
+    "height": 3507,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": 33.62,
+      "y": -95.27,
+      "width": 55.01,
+      "height": 216.0
+    },
+    "sha256": "a59e4e2d188936cc6299111ec1f6fd6af5ab146859cb682d9243403ef51d54d9",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p033-project-project-14-asset-03",
+    "sourcePage": 33,
+    "sourcePages": [
+      33
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p033-project-project-14-asset-03.webp",
+    "originalSrc": null,
+    "width": 2480,
+    "height": 3507,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": 72.73,
+      "y": -2.62,
+      "width": 38.38,
+      "height": 158.21
+    },
+    "sha256": "db6706245ca9ce80379e445bb3acefe8f3f25636f33bf2244754a7f431ff8da7",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-01",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1.0,
+    "pageBounds": {
+      "x": 43.21,
+      "y": -0.64,
+      "width": 32.25,
+      "height": 80.61
+    },
+    "sha256": "4dcf094157480d4247e8de18994734a35712d9212ef6c9fd4621ac093a261d54",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-02",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-02.webp",
+    "originalSrc": null,
+    "width": 1567,
+    "height": 2000,
+    "aspectRatio": 0.78,
+    "pageBounds": {
+      "x": 75.46,
+      "y": -0.64,
+      "width": 25.27,
+      "height": 80.61
+    },
+    "sha256": "5bf8a348fa0d5e570dc335377c0c02a441ac3f9ead760aef3a7a714044ad355f",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-03",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-03.webp",
+    "originalSrc": null,
+    "width": 2000,
+    "height": 529,
+    "aspectRatio": 3.78,
+    "pageBounds": {
+      "x": 43.21,
+      "y": 79.97,
+      "width": 32.25,
+      "height": 21.32
+    },
+    "sha256": "74f873fb93421f5bbe0fad26ea9e4bf038075392b7ef786b0028f368f00565ea",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-04",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-04.webp",
+    "originalSrc": null,
+    "width": 1567,
+    "height": 529,
+    "aspectRatio": 2.96,
+    "pageBounds": {
+      "x": 75.46,
+      "y": 79.97,
+      "width": 25.27,
+      "height": 21.32
+    },
+    "sha256": "249933243c167c1353d86d1646060fd7504be8ee42727c96249dfa9a16c10663",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-05",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-05.webp",
+    "originalSrc": null,
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1.0,
+    "pageBounds": {
+      "x": 43.21,
+      "y": -0.64,
+      "width": 32.25,
+      "height": 80.61
+    },
+    "sha256": "37f450547d633c02622a0fcb3ca18e5074d10bfe82c336583aa1fd47cb5fbefd",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-06",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-06.webp",
+    "originalSrc": null,
+    "width": 1567,
+    "height": 2000,
+    "aspectRatio": 0.78,
+    "pageBounds": {
+      "x": 75.46,
+      "y": -0.64,
+      "width": 25.27,
+      "height": 80.61
+    },
+    "sha256": "9316eaf64620cd27a9ba39003b9fb40acfc6d94cc9c5a329f9f44e5706229d5b",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-07",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-07.webp",
+    "originalSrc": null,
+    "width": 2000,
+    "height": 529,
+    "aspectRatio": 3.78,
+    "pageBounds": {
+      "x": 43.21,
+      "y": 79.97,
+      "width": 32.25,
+      "height": 21.32
+    },
+    "sha256": "d10559e47ab700284fcfb8d7f349b2fb91c26ceb848978e4ca0cd54a038061ad",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-08",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-08.webp",
+    "originalSrc": null,
+    "width": 1567,
+    "height": 529,
+    "aspectRatio": 2.96,
+    "pageBounds": {
+      "x": 75.46,
+      "y": 79.97,
+      "width": 25.27,
+      "height": 21.32
+    },
+    "sha256": "4c0988119a6728ce57b2cef04e5c4209d016f93656c1f27bee711e446ebd3ebc",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p034-project-project-14-asset-09",
+    "sourcePage": 34,
+    "sourcePages": [
+      34
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p034-project-project-14-asset-09.webp",
+    "originalSrc": null,
+    "width": 3508,
+    "height": 2480,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 43.43,
+      "y": 0.4,
+      "width": 56.56,
+      "height": 99.96
+    },
+    "sha256": "c1d19ff64f5771699d1f8dbfcbd7bb066a68f0192ccbf8b9988ea57987d995cc",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p035-project-project-14-asset-01",
+    "sourcePage": 35,
+    "sourcePages": [
+      35
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p035-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 2480,
+    "height": 3507,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": -4.16,
+      "y": -37.43,
+      "width": 42.91,
+      "height": 171.63
+    },
+    "sha256": "d9085a77e35477fb68da16ff5ede4bf055f640737bc6a0a0772a2accd2b07018",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p035-project-project-14-asset-02",
+    "sourcePage": 35,
+    "sourcePages": [
+      35
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p035-project-project-14-asset-02.webp",
+    "originalSrc": null,
+    "width": 2480,
+    "height": 3507,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": 61.88,
+      "y": -32.44,
+      "width": 42.41,
+      "height": 169.71
+    },
+    "sha256": "ec08be915a7620db139ed1724e92213707b780009474f66f9aa870240768a93c",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p036-project-project-14-asset-01",
+    "sourcePage": 36,
+    "sourcePages": [
+      36
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p036-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 4730,
+    "height": 3063,
+    "aspectRatio": 1.54,
+    "pageBounds": {
+      "x": -0.07,
+      "y": -0.2,
+      "width": 54.8,
+      "height": 100.38
+    },
+    "sha256": "1bf75c6c5714f4f1b6a9b5da649406161e91c5f8fa990338238f7eca94968c0e",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p037-project-project-14-asset-01",
+    "sourcePage": 37,
+    "sourcePages": [
+      37
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p037-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 2200,
+    "height": 2186,
+    "aspectRatio": 1.01,
+    "pageBounds": {
+      "x": -0.06,
+      "y": 8.36,
+      "width": 31.35,
+      "height": 88.1
+    },
+    "sha256": "ee1cb6140acd70171253ddbba760699d1b66e2e823b285bc215e28660a33d21e",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p038-project-project-14-asset-01",
+    "sourcePage": 38,
+    "sourcePages": [
+      38
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p038-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 2480,
+    "height": 3507,
+    "aspectRatio": 0.71,
+    "pageBounds": {
+      "x": -5.18,
+      "y": -33.38,
+      "width": 42.21,
+      "height": 168.83
+    },
+    "sha256": "36f4864d8f75491dd157190a0611b0fa86a085f56af4844c8d2532da5aa7095c",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p039-project-project-14-asset-01",
+    "sourcePage": 39,
+    "sourcePages": [
+      39
+    ],
+    "projectIds": [
+      "14"
+    ],
+    "section": "project",
+    "territory": "Comarca Lagunera",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p039-project-project-14-asset-01.webp",
+    "originalSrc": null,
+    "width": 794,
+    "height": 528,
+    "aspectRatio": 1.5,
+    "pageBounds": {
+      "x": 46.55,
+      "y": -0.35,
+      "width": 53.53,
+      "height": 100.69
+    },
+    "sha256": "47c54a8f6f0958e3f4258c29b16f9304715f0ddc2d4b9c4ea2e6849c26c9735a",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p041-project-project-15-asset-01",
+    "sourcePage": 41,
+    "sourcePages": [
+      41
+    ],
+    "projectIds": [
+      "15"
+    ],
+    "section": "project",
+    "territory": "Mérida",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p041-project-project-15-asset-01.webp",
+    "originalSrc": null,
+    "width": 3845,
+    "height": 2509,
+    "aspectRatio": 1.53,
+    "pageBounds": {
+      "x": 0.03,
+      "y": -0.19,
+      "width": 54.71,
+      "height": 100.36
+    },
+    "sha256": "599e7f4221edb694d307b55452a36a3b5eb960c0d08a4be39e14ef6d20ee0387",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p045-project-project-15-asset-01",
+    "sourcePage": 45,
+    "sourcePages": [
+      45
+    ],
+    "projectIds": [
+      "15"
+    ],
+    "section": "project",
+    "territory": "Mérida",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p045-project-project-15-asset-01.webp",
+    "originalSrc": null,
+    "width": 2432,
+    "height": 1726,
+    "aspectRatio": 1.41,
+    "pageBounds": {
+      "x": 50.0,
+      "y": -0.19,
+      "width": 50.0,
+      "height": 100.37
+    },
+    "sha256": "36249af294853ec219900b3c306413d266cf8a707039ad24ff2e2ff6ccaa416e",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  },
+  {
+    "id": "p047-closing-asset-01",
+    "sourcePage": 47,
+    "sourcePages": [
+      47
+    ],
+    "projectIds": [],
+    "section": "closing",
+    "territory": "N/A",
+    "type": "image",
+    "role": "unclassified",
+    "src": "/portfolio-media/extracted/p047-closing-asset-01.webp",
+    "originalSrc": null,
+    "width": 559,
+    "height": 236,
+    "aspectRatio": 2.37,
+    "pageBounds": {
+      "x": 6.94,
+      "y": -0.26,
+      "width": 85.52,
+      "height": 100.5
+    },
+    "sha256": "6f183f6612528338be15e03799613ca5bc5e3851e223b59c57ae56b4493a5e94",
+    "hasAlpha": false,
+    "confidence": 0.8,
+    "warnings": []
+  }
+]

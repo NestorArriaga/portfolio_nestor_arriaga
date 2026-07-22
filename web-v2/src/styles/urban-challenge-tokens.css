@@ -1,0 +1,34 @@
+:root {
+  --urban-bg-deep: #050505;
+  --urban-bg-surface: #111111;
+  --urban-text-primary: #FFFFFF;
+  --urban-text-secondary: rgba(255, 255, 255, 0.6);
+  --urban-border: rgba(255, 255, 255, 0.1);
+  
+  /* Paleta específica del caso */
+  --urban-offwhite: #EAE8E3;
+  --urban-beige: #D9C9B4;
+  --urban-green-vegetal: #5D7052;
+  --urban-green-dark: #2F3B2A;
+  --urban-wood: #A67C52;
+  --urban-gray-volumetric: #8A8D91;
+  --urban-sepia: #B09B84;
+  
+  /* Acentos para warnings/estado */
+  --urban-accent: #E3A042;
+  
+  /* Tiempos */
+  --urban-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --urban-duration-base: 400ms;
+  --urban-duration-slow: 800ms;
+}
+
+.urban-case {
+  background-color: var(--urban-bg-deep);
+  color: var(--urban-text-primary);
+}
+
+.urban-case ::selection {
+  background-color: var(--urban-green-vegetal);
+  color: white;
+}

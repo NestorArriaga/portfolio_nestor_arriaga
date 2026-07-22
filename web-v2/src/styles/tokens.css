@@ -1,0 +1,59 @@
+:root {
+  /* COLORES BASE */
+  --color-black: #050505;
+  --color-black-elevated: #090a0b;
+  --color-graphite: #101214;
+  --color-graphite-light: #171a1d;
+  --color-white: #f2f1ec;
+  --color-text-muted: #a4a5a1;
+  --color-text-faint: #737572;
+  --color-line: rgba(255, 255, 255, 0.10);
+  --color-line-strong: rgba(255, 255, 255, 0.20);
+  --color-accent: #00a6c7;
+
+  /* ACENTOS TERRITORIALES */
+  --accent-cdmx: #3da45c; /* verde urbano */
+  --accent-veracruz: #bf4a3f; /* rojo tierra */
+  --accent-metztitlan: #d4a35c; /* amarillo mineral */
+  --accent-aguascalientes: #d97736; /* naranja */
+  --accent-granular: #00a6c7; /* turquesa o azul mineral */
+  --accent-merida: #e0c89c; /* arena o verde tropical */
+
+  /* ESPACIADO */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 1rem;
+  --spacing-4: 2rem;
+  --spacing-5: 4rem;
+  --spacing-6: 8rem;
+
+  /* RADIOS */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-panel: 16px;
+
+  /* BORDES Y PROFUNDIDAD */
+  --border-subtle: 1px solid var(--color-line);
+  --border-active: 1px solid var(--color-line-strong);
+  --shadow-ambient: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  --shadow-image: 0 20px 60px -15px rgba(0, 0, 0, 0.8);
+  --inset-line: inset 0 0 0 1px var(--color-line);
+}
+
+/* UTILIDADES DEL SISTEMA DE DISEÑO (Para /design-lab) */
+.design-lab-container {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-sans), sans-serif;
+}
+
+.text-display-xl { font-size: clamp(3rem, 8vw, 7rem); line-height: 0.9; font-weight: 700; letter-spacing: -0.04em; }
+.text-display-lg { font-size: clamp(2rem, 5vw, 4rem); line-height: 1; font-weight: 600; letter-spacing: -0.02em; }
+.text-heading { font-size: 1.5rem; line-height: 1.2; font-weight: 500; }
+.text-subheading { font-size: 1.125rem; line-height: 1.4; font-weight: 400; color: var(--color-text-muted); }
+.text-body-lg { font-size: 1.125rem; line-height: 1.6; font-weight: 300; }
+.text-body { font-size: 0.875rem; line-height: 1.5; font-weight: 300; }
+.text-label { font-size: 0.75rem; line-height: 1; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+.text-mono { font-family: var(--font-mono), monospace; font-size: 0.75rem; letter-spacing: 0.05em; }
+.text-caption { font-size: 0.7rem; line-height: 1.4; color: var(--color-text-faint); }

@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "../styles/tokens.css";
+
+body {
+  background-color: #050505;
+  color: #F2F1EC;
+}

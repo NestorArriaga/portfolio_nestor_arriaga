@@ -1,0 +1,204 @@
+{
+  "inventory": [
+    {
+      "assetId": "project-14-marco-conceptual-work",
+      "page": 21,
+      "dimension": "overview",
+      "scale": "regional",
+      "type": "text-figure",
+      "role": "chapter-cover",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-water-intro-work",
+      "page": 22,
+      "dimension": "water",
+      "scale": "regional",
+      "type": "chapter-cover",
+      "role": "chapter-cover",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-water-quality-map-work",
+      "page": 23,
+      "dimension": "water",
+      "scale": "municipal",
+      "type": "primary-map",
+      "role": "hero-candidate",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-aquifer-status-map-work",
+      "page": 24,
+      "dimension": "water",
+      "scale": "regional",
+      "type": "primary-map",
+      "role": "primary-map",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-agriculture-intro-work",
+      "page": 25,
+      "dimension": "agriculture",
+      "scale": "regional",
+      "type": "chapter-cover",
+      "role": "chapter-cover",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-irrigation-rainfed-work",
+      "page": 26,
+      "dimension": "agriculture",
+      "scale": "municipal",
+      "type": "comparison",
+      "role": "primary-map",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-crops-chord-work",
+      "page": 27,
+      "dimension": "agriculture",
+      "scale": "regional",
+      "type": "chord-diagram",
+      "role": "diagram",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-drought-vulnerability-work",
+      "page": 28,
+      "dimension": "agriculture",
+      "scale": "municipal",
+      "type": "primary-map",
+      "role": "primary-map",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-productive-localities-work",
+      "page": 29,
+      "dimension": "agriculture",
+      "scale": "locality",
+      "type": "locality-map",
+      "role": "primary-map",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-governance-intro-work",
+      "page": 30,
+      "dimension": "governance",
+      "scale": "regional",
+      "type": "chapter-cover",
+      "role": "chapter-cover",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-governance-anp-rtp-work",
+      "page": 31,
+      "dimension": "governance",
+      "scale": "regional",
+      "type": "primary-map",
+      "role": "primary-map",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-socioeconomy-intro-work",
+      "page": 32,
+      "dimension": "socioeconomy",
+      "scale": "regional",
+      "type": "chapter-cover",
+      "role": "chapter-cover",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-socioeconomy-metrics-work",
+      "page": 33,
+      "dimension": "socioeconomy",
+      "scale": "municipal",
+      "type": "secondary-map",
+      "role": "primary-map",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-environment-intro-work",
+      "page": 34,
+      "dimension": "environment",
+      "scale": "regional",
+      "type": "chapter-cover",
+      "role": "chapter-cover",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-environment-connectivity-work",
+      "page": 35,
+      "dimension": "environment",
+      "scale": "municipal",
+      "type": "primary-map",
+      "role": "primary-map",
+      "priority": "high",
+      "status": "ambiguous"
+    },
+    {
+      "assetId": "project-14-results-intro-work",
+      "page": 36,
+      "dimension": "clustering",
+      "scale": "regional",
+      "type": "chapter-cover",
+      "role": "chapter-cover",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-municipal-clusters-work",
+      "page": 37,
+      "dimension": "clustering",
+      "scale": "municipal",
+      "type": "typology-map",
+      "role": "hero-candidate",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-locality-typology-work",
+      "page": 38,
+      "dimension": "typology",
+      "scale": "locality",
+      "type": "locality-map",
+      "role": "primary-map",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-situated-typologies-work",
+      "page": 39,
+      "dimension": "typology",
+      "scale": "locality",
+      "type": "diagram",
+      "role": "diagram",
+      "priority": "high",
+      "status": "partial"
+    },
+    {
+      "assetId": "project-14-causal-loop-work",
+      "page": 40,
+      "dimension": "policy",
+      "scale": "regional",
+      "type": "causal-loop",
+      "role": "diagram",
+      "priority": "high",
+      "status": "partial"
+    }
+  ]
+}
