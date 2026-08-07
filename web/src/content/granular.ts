@@ -49,6 +49,8 @@ export type Pillar = {
     base?: LayerRef;
     layers: LayerRef[];
     categories?: Category[];
+    /** Municipios que el texto de la fuente menciona por nombre. */
+    highlightMunicipios?: string[];
     reading?: string;
   }[];
   facts?: { label: string; value: string; note?: string }[];
@@ -101,6 +103,7 @@ export const pillars: Pillar[] = [
           { name: 'Bajo', desc: 'Localidades periféricas y menor presión hídrica. El texto aclara que no están libres de riesgo.' },
           { name: 'Sin riesgo aparente', desc: 'Categoría visible en la leyenda original.', warning: 'La página no desarrolla su definición ni sus criterios.' },
         ],
+        highlightMunicipios: ['Torreón', 'Gómez Palacio'],
         reading:
           'La lectura del portafolio concentra su atención en la franja central de La Laguna y la interpreta como un espacio donde presión hídrica, actividad agrícola y calidad del agua se superponen. La composición no documenta en esta página un análisis causal, temporal ni estadístico que permita atribuir cada patrón a una sola fuente.',
       },
@@ -122,6 +125,7 @@ export const pillars: Pillar[] = [
           { name: 'Límite', range: '≈ 80–100 %', desc: 'Zonas de Nazas y Santa Clara.' },
           { name: 'Sostenible', range: '<80 %', desc: 'Áreas periféricas descritas como cada vez más escasas y con menor densidad de riego.' },
         ],
+        highlightMunicipios: ['San Juan de Guadalupe', 'Mapimí', 'Torreón', 'Gómez Palacio', 'Nazas', 'Santa Clara'],
         reading:
           'La interpretación describe una presión escalonada: el centro metropolitano y agroindustrial se relaciona con acuíferos sobreexplotados, mientras distintas áreas periféricas aparecen asociadas con condiciones de límite o criticidad. La página no muestra una medición directa de vulnerabilidad social ni un modelo causal que cuantifique estas relaciones.',
       },

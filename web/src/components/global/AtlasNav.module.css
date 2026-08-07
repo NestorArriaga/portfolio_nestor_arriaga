@@ -1,0 +1,91 @@
+/* Riel de navegación. Delgado, monoespaciado, sin fondo hasta que hace falta. */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-chrome);
+  display: flex;
+  align-items: baseline;
+  gap: var(--gutter);
+  padding: 0.7rem var(--margin);
+  /* Solo transform: una barra fija que anima `top` repinta toda la página. */
+  transform: translateY(0);
+  transition:
+    transform var(--dur-micro) var(--ease-out),
+    background-color var(--dur-micro) linear,
+    border-color var(--dur-micro) linear;
+  border-bottom: var(--hairline) solid transparent;
+}
+
+/* Al bajar se retira: en una lámina a sangre, una barra permanente le come el
+   borde superior al mapa. */
+.nav[data-hidden='true'] { transform: translateY(-100%); }
+
+/* El fondo solo aparece cuando hay contenido detrás que estorbe la lectura. */
+.nav[data-scrolled='true'] {
+  background: rgba(5, 5, 5, 0.86);
+  backdrop-filter: blur(8px);
+  border-bottom-color: var(--line-dark);
+}
+
+.home,
+.link {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-faint);
+  transition: color var(--dur-micro) var(--ease-out);
+}
+
+.home {
+  color: var(--ink);
+  font-weight: 500;
+  flex: 0 0 auto;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar { display: none; }
+
+.link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  white-space: nowrap;
+  padding-bottom: 0.15rem;
+  border-bottom: var(--line-strong) solid transparent;
+}
+
+.link:hover { color: var(--ink); }
+
+.link[data-current='true'] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.kicker { color: var(--accent); }
+
+@media (max-width: 900px) {
+  .nav { gap: 1rem; padding: 0.6rem var(--margin); }
+  .list { gap: 1rem; }
+  /* El riel se desplaza al borde para que quepan todos los capítulos. */
+  .list { margin-right: calc(var(--margin) * -1); padding-right: var(--margin); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav { transition: none; }
+  .nav[data-hidden='true'] { transform: none; }
+}

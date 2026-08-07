@@ -4,6 +4,8 @@ import localFont from 'next/font/local';
 import '@/styles/tokens.css';
 import '@/styles/globals.css';
 import { CartoPatternDefs } from '@/components/atlas/CartoPatterns';
+import { AtlasNav } from '@/components/global/AtlasNav';
+import { pillars } from '@/content/granular';
 
 /**
  * Fuentes locales. Geist variable cubre los dos papeles que pide la dirección
@@ -64,6 +66,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {/* Los patrones se montan una sola vez para todo el documento. */}
         <CartoPatternDefs />
+        <AtlasNav
+          sections={[
+            { href: '/#indice', label: 'Índice' },
+            ...pillars.map((p) => ({
+              href: `/granular/${p.id}`,
+              kicker: p.number,
+              label: p.title,
+            })),
+          ]}
+        />
         {children}
       </body>
     </html>

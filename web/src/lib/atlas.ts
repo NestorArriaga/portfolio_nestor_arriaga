@@ -66,6 +66,41 @@ export function listTerritoryMasks(): MaskMeta[] {
   return data.masks.filter((m) => m.mask);
 }
 
+export type Municipio = {
+  slug: string;
+  name: string;
+  estado: string;
+  paths: string[];
+  /** Encuadre propio de la silueta. Cada municipio tiene el suyo. */
+  viewBox: string;
+  ratio: number;
+  /** Centroide del área. */
+  label: [number, number];
+  points: number;
+};
+
+export type MunicipalSet = {
+  note: string;
+  municipios: Municipio[];
+};
+
+/**
+ * Siluetas municipales de la Comarca.
+ *
+ * Los quince archivos declaran el mismo viewBox que las capas ráster, pero no
+ * están co-registrados: cada municipio se exportó escalado a su propia hoja
+ * —comprobado renderizando los originales—. Se entregan con su encuadre propio
+ * y sirven como índice de formas, no como capa cartográfica.
+ *
+ * Son la única geometría vectorial verdadera del proyecto: lo único trazable,
+ * coloreable e interactivo.
+ */
+export function getMunicipios(): MunicipalSet | null {
+  const file = path.join(GEO_DIR, 'municipios.json');
+  if (!fs.existsSync(file)) return null;
+  return JSON.parse(fs.readFileSync(file, 'utf8')) as MunicipalSet;
+}
+
 export type NationalPlacement = {
   slug: string;
   mask: TerritoryMaskData;

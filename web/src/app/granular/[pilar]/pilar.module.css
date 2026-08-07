@@ -209,3 +209,30 @@
   /* Dos columnas de texto a 11px en móvil son ilegibles. */
   .limitationsList { columns: 1; }
 }
+
+/* --- Índice municipal ------------------------------------------------------ */
+
+.municipal {
+  padding: var(--margin-wide) var(--margin);
+  border-top: var(--hairline) solid var(--line-dark);
+  background: var(--black);
+}
+
+.municipalHead {
+  max-width: var(--measure);
+  margin-bottom: 2.5rem;
+}
+
+.municipalLede {
+  margin: 0;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  color: var(--ink-muted);
+}
+
+/* La barra fija no debe tapar la primera línea de cada apertura. */
+.opening { padding-top: calc(var(--margin) + 2.2rem); }
+
+@media (max-width: 900px) {
+  .municipal { padding: 3rem var(--margin); }
+}

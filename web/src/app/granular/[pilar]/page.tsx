@@ -5,6 +5,8 @@ import Link from 'next/link';
 import styles from './pilar.module.css';
 import { getPillar, granularProject, pillars } from '@/content/granular';
 import { PillarPlate } from '@/components/granular/PillarPlate';
+import { MunicipalIndex } from '@/components/granular/MunicipalIndex';
+import { getMunicipios } from '@/lib/atlas';
 import { SignalPoster } from '@/components/atlas/SignalPoster';
 import { TextureOverlay } from '@/components/atlas/TextureOverlay';
 
@@ -35,6 +37,12 @@ export default function PilarPage({ params }: { params: { pilar: string } }) {
 
   const index = pillars.findIndex((p) => p.id === pillar.id);
   const next = pillars[index + 1];
+
+  // Los municipios que este pilar nombra, para marcarlos en el índice.
+  const named = Array.from(
+    new Set(pillar.plates.flatMap((p) => p.highlightMunicipios ?? [])),
+  );
+  const municipal = getMunicipios();
 
   return (
     <main style={{ ['--accent' as string]: pillar.accentVar }}>
@@ -81,6 +89,20 @@ export default function PilarPage({ params }: { params: { pilar: string } }) {
       {pillar.plates.map((plate) => (
         <PillarPlate key={plate.id} pillar={pillar} plate={plate} />
       ))}
+
+      {/* --- Índice municipal -------------------------------------------------- */}
+      {municipal ? (
+        <section className={styles.municipal}>
+          <header className={styles.municipalHead}>
+            <h2 className={styles.sectionTitle}>Los quince municipios</h2>
+            <p className={styles.municipalLede}>
+              Geometría vectorial real del proyecto. Los marcados son los que el
+              texto de este pilar nombra.
+            </p>
+          </header>
+          <MunicipalIndex municipios={municipal.municipios} highlight={named} />
+        </section>
+      ) : null}
 
       {/* --- Cifras de la fuente ---------------------------------------------- */}
       {pillar.facts?.length ? (
