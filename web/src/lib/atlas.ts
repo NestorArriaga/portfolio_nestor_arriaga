@@ -66,6 +66,76 @@ export function listTerritoryMasks(): MaskMeta[] {
   return data.masks.filter((m) => m.mask);
 }
 
+export type NationalPlacement = {
+  slug: string;
+  mask: TerritoryMaskData;
+  /** Rectángulo que ocupa dentro del marco compartido, en unidades del viewBox. */
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+export type NationalFrame = {
+  width: number;
+  height: number;
+  /** Extensión real cubierta: [oeste, sur, este, norte] en metros EPSG:6372. */
+  extent: [number, number, number, number];
+  /** Ancho real del marco, para dibujar una escala verdadera. */
+  metersWide: number;
+  placements: NationalPlacement[];
+};
+
+/**
+ * Coloca las máscaras en un único marco geográfico compartido.
+ *
+ * Cada máscara se normalizó a 1000 unidades de ancho, lo que borra su posición
+ * absoluta. Aquí se recupera desde `extent_m`: se calcula la unión de todas las
+ * extensiones en EPSG:6372 y se sitúa cada silueta en su rectángulo real dentro
+ * de ella. El resultado es un mapa verdadero de dónde está cada territorio, no
+ * una composición decorativa.
+ *
+ * Solo aparecen los territorios con geometría local. Los que no la tienen no se
+ * dibujan en una posición aproximada: se listan aparte.
+ */
+export function getNationalFrame(slugs?: string[], viewWidth = 1000): NationalFrame | null {
+  const metas = listTerritoryMasks().filter((m) => !slugs || slugs.includes(m.slug));
+  if (!metas.length) return null;
+
+  const minX = Math.min(...metas.map((m) => m.extent_m[0]));
+  const minY = Math.min(...metas.map((m) => m.extent_m[1]));
+  const maxX = Math.max(...metas.map((m) => m.extent_m[2]));
+  const maxY = Math.max(...metas.map((m) => m.extent_m[3]));
+
+  const spanX = maxX - minX || 1;
+  const spanY = maxY - minY || 1;
+  const scale = viewWidth / spanX;
+
+  const placements: NationalPlacement[] = [];
+  for (const meta of metas) {
+    const mask = getTerritoryMask(meta.slug);
+    if (!mask) continue;
+    const [x0, y0, x1, y1] = meta.extent_m;
+    placements.push({
+      slug: meta.slug,
+      mask,
+      x: (x0 - minX) * scale,
+      // Y invertida: la proyección crece al norte, el SVG hacia abajo.
+      y: (maxY - y1) * scale,
+      width: (x1 - x0) * scale,
+      height: (y1 - y0) * scale,
+    });
+  }
+
+  return {
+    width: viewWidth,
+    height: spanY * scale,
+    extent: [minX, minY, maxX, maxY],
+    metersWide: spanX,
+    placements,
+  };
+}
+
 /* -------------------------------------------------------------------------- */
 
 export type AtlasLayerFiles = Partial<Record<'color' | 'gray', Record<string, string>>>;

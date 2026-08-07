@@ -1,0 +1,64 @@
+/* Composición del home. Cada bloque tiene su propio ritmo; ninguno es una
+   cuadrícula de tarjetas. */
+
+.section {
+  padding: calc(var(--margin-wide) * 1.25) var(--margin) var(--margin-wide);
+  border-top: var(--hairline) solid var(--line-dark);
+  background: var(--black);
+}
+
+.sectionHead {
+  max-width: var(--measure);
+  margin-bottom: 3.5rem;
+}
+
+.h2 {
+  margin: 0.75rem 0 0.75rem;
+  font-size: var(--type-display);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  margin: 0;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  color: var(--ink-muted);
+}
+
+.sectionBody { position: relative; }
+
+.plateField { position: relative; }
+
+.plateInstruments {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: var(--z-annotation);
+}
+
+.footer {
+  padding: var(--margin-wide) var(--margin);
+  border-top: var(--hairline) solid var(--line-dark);
+  background: var(--black);
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--gutter);
+}
+
+.footerGrid p { margin: 0; }
+
+.footerValue {
+  margin-top: 0.35rem;
+  font-size: var(--type-label);
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .section { padding: 4rem var(--margin) 3rem; }
+  .sectionHead { margin-bottom: 2rem; }
+}

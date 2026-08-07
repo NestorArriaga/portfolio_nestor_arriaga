@@ -1,0 +1,98 @@
+/* Hero-espécimen. Campo negro, objeto aislado, mucho aire.
+   El objeto es el sujeto; el texto lo acompaña desde el margen. */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 2rem;
+  padding: var(--margin) var(--margin) calc(var(--margin) * 1.5);
+  background: var(--black);
+  overflow: hidden;
+}
+
+.marks {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+/* El objeto ocupa 50-65 % del viewport. El ancho se limita por altura para que
+   una pantalla apaisada no lo aplaste ni una alta lo desborde. */
+.object {
+  position: relative;
+  width: min(46vw, 64svh * 0.88);
+  max-width: 620px;
+}
+
+.stack {
+  /* El espécimen flota: sombra física por debajo, no sombra de tarjeta. */
+  filter: drop-shadow(var(--shadow-object));
+  background: transparent;
+}
+
+.identity {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: var(--gutter);
+  align-items: end;
+}
+
+.name {
+  grid-column: 1;
+  margin: 0;
+  font-size: clamp(1.75rem, 4.2vw, 3.75rem);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.role {
+  grid-column: 1;
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.intro {
+  grid-column: 2;
+  margin: 0;
+  max-width: 44ch;
+  font-size: var(--type-label);
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    gap: 1.5rem;
+    padding: var(--margin) var(--margin) 2.5rem;
+  }
+
+  /* En móvil el objeto crece: es lo único que justifica la pantalla. */
+  .object { width: min(86vw, 52svh * 0.88); }
+
+  .identity { grid-template-columns: 1fr; gap: 1.25rem; }
+  .name { grid-column: 1; }
+  .role { grid-column: 1; }
+  .intro { grid-column: 1; }
+
+  .marks { flex-wrap: wrap; row-gap: 0.35rem; }
+}
