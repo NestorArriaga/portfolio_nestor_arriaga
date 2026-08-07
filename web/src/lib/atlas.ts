@@ -284,13 +284,36 @@ export function canvasRatio(slug: string): number | null {
   return getAtlasFile(slug)?.canvas?.ratio ?? null;
 }
 
+/** Saturación aproximada de un hex, en 0..1. */
+function saturationOf(hex: string): number {
+  const m = /^#([0-9a-f]{6})$/i.exec(hex);
+  if (!m) return 0;
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  const max = Math.max(r, g, b);
+  return max === 0 ? 0 : (max - Math.min(r, g, b)) / max;
+}
+
 /**
  * Color con el que una capa rasterizada está realmente dibujada.
  *
  * El color de un ráster está cocido en el pixel: CSS no puede recolorearlo. Una
  * clave de leyenda que declare otro tono estaría describiendo un mapa que no es
  * el que se ve. Estas claves deben tomar su color de aquí, no de la paleta.
+ *
+ * Se elige el dominante más saturado y no el más extenso. Muchas capas traen su
+ * propia base satelital debajo, que ocupa casi todo el encuadre: por superficie
+ * ganaría siempre el gris azulado del fondo y las tres clases de commuting
+ * tendrían la misma clave. Lo que distingue a una capa temática es su color
+ * categórico, no el del terreno que comparte con las demás.
  */
 export function layerColor(layer: AtlasLayer, fallback = 'var(--accent)'): string {
-  return layer.dominant?.[0]?.hex ?? fallback;
+  const dominant = layer.dominant ?? [];
+  if (!dominant.length) return fallback;
+
+  const vivid = dominant
+    .filter((d) => saturationOf(d.hex) > 0.45)
+    .sort((a, b) => saturationOf(b.hex) - saturationOf(a.hex))[0];
+
+  return (vivid ?? dominant[0]).hex;
 }

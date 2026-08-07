@@ -88,3 +88,67 @@
   font-family: var(--font-mono);
   color: var(--ink-faint);
 }
+
+/* --- Comparación en pequeños múltiplos ------------------------------------- */
+
+/* Cuando cada capa trae su propia base opaca, apilarlas oculta todas menos una.
+   Puestas en fila, la comparación es el contenido. */
+.compare {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--compare-count, 3), minmax(0, 1fr));
+  gap: var(--gutter);
+  align-items: start;
+}
+
+.compare[data-count='2'] { --compare-count: 2; }
+.compare[data-count='3'] { --compare-count: 3; }
+.compare[data-count='4'] { --compare-count: 4; }
+
+.compareCell {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.compareCell figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding-top: 0.5rem;
+  border-top: var(--line-strong) solid currentColor;
+}
+
+.compareLabel {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.compareNote {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  color: var(--ink-faint);
+}
+
+@media (max-width: 900px) {
+  /* Comparar tres mapas en 390 px los deja en 110 px cada uno: ilegibles.
+     Pasan a carrusel con anclaje, que conserva la comparación por barrido. */
+  .compare {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--margin) * -1);
+    padding-inline: var(--margin);
+    scrollbar-width: none;
+  }
+
+  .compare::-webkit-scrollbar { display: none; }
+
+  .compareCell {
+    flex: 0 0 74%;
+    scroll-snap-align: start;
+  }
+}

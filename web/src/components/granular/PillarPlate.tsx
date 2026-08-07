@@ -95,7 +95,30 @@ export function PillarPlate({ pillar, plate }: Props) {
         </>
       }
     >
-      {resolved.length ? (
+      {resolved.length && plate.mode === 'compare' ? (
+        /* Pequeños múltiplos: cada capa trae su propia base, así que se leen
+           una al lado de otra y no superpuestas. */
+        <div className={styles.compare} data-count={resolved.length}>
+          {resolved.map((r) => (
+            <figure key={r.ref.slug} className={styles.compareCell}>
+              <LayerStack ratio={canvasRatio(r.ref.slug) ?? ratio}>
+                <StackLayer
+                  {...r.image}
+                  sizes="(max-width: 900px) 90vw, 24vw"
+                  alt={`${plate.title}: ${r.ref.label}`}
+                />
+              </LayerStack>
+              <figcaption>
+                <span className={styles.compareLabel} style={{ color: r.color }}>
+                  {r.ref.label}
+                </span>
+                {r.ref.note ? <span className={styles.compareNote}>{r.ref.note}</span> : null}
+              </figcaption>
+            </figure>
+          ))}
+          <TextureOverlay kind="grain" />
+        </div>
+      ) : resolved.length ? (
         <div className={styles.field}>
           <LayerStack ratio={ratio}>
             {base ? <StackLayer {...base.image} step={0} opacity={0.8} /> : null}

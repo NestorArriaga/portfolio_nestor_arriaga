@@ -48,6 +48,16 @@ export type Pillar = {
     /** Base opcional bajo las capas temáticas. */
     base?: LayerRef;
     layers: LayerRef[];
+    /**
+     * `stack` superpone las capas sobre un mismo encuadre. `compare` las pone
+     * una al lado de otra.
+     *
+     * Apilar solo es honesto cuando las capas superiores tienen transparencia.
+     * Las tres clases de commuting traen cada una su propia base satelital
+     * opaca: superpuestas, la de arriba tapa a las otras dos y la leyenda
+     * prometería tres capas mostrando una.
+     */
+    mode?: 'stack' | 'compare';
     categories?: Category[];
     /** Municipios que el texto de la fuente menciona por nombre. */
     highlightMunicipios?: string[];
@@ -218,6 +228,335 @@ export const pillars: Pillar[] = [
       title: 'Gobernanza',
       desc:
         'Tras el agua y la estructura productiva, el capítulo siguiente observa las escalas institucionales y los territorios de gobernanza.',
+    },
+  },
+
+  {
+    id: 'gobernanza',
+    number: 'III',
+    title: 'Gobernanza',
+    subtitle: 'Instituciones, normas y poder territorial',
+    pages: [30, 31],
+    accentVar: 'var(--g-gobernanza)',
+    intro: {
+      title: 'Decidir sobre un mismo territorio',
+      paragraphs: [
+        'La gobernanza territorial se presenta como el conjunto de instituciones, normas y actores que intervienen en la gestión del territorio y de sus recursos.',
+        'El análisis destaca una superposición de escalas de decisión —ejidos, municipios, estados y federación— que pueden operar mediante marcos normativos fragmentados o contradictorios.',
+        'El pilar relaciona estas configuraciones con la distribución de recursos, la gestión del agua, la regulación de la actividad agropecuaria y la capacidad de las comunidades para incidir en decisiones territoriales.',
+      ],
+    },
+    variables: ['Ejidos', 'Municipios', 'Estados', 'Federación'],
+    plates: [
+      {
+        id: 'anp-rtp',
+        title: 'Áreas protegidas y regiones prioritarias',
+        subtitle: 'Dos figuras que no son equivalentes',
+        page: 31,
+        caption:
+          'Reserva de la Biósfera de Mapimí y Regiones Terrestres Prioritarias sobre la Comarca Lagunera.',
+        sourceNote:
+          'ANP y RTP no son categorías jurídicas equivalentes. La página no documenta normas específicas ni competencias institucionales.',
+        mode: 'compare',
+        layers: [
+          { slug: 'anp', label: 'Áreas Naturales Protegidas', note: '14 154 elementos' },
+          { slug: 'rtp', label: 'Regiones Terrestres Prioritarias', note: '14 674 elementos' },
+        ],
+        categories: [
+          { name: 'Cuchillas de la Zarca', desc: 'Nazas, San Luis del Cordero.' },
+          { name: 'Mapimí', desc: 'Vinculada directamente con la Reserva de la Biósfera.' },
+          { name: 'Sierra La Fragua', desc: 'Francisco I. Madero.' },
+        ],
+        highlightMunicipios: ['Nazas', 'San Luis del Cordero', 'Mapimí', 'Francisco I. Madero'],
+        reading:
+          'El portafolio presenta la Reserva de la Biósfera de Mapimí, decretada en 1979, como la primera de su tipo en México y América Latina. Esa condición no se verifica externamente en la fuente. Las llamadas «zonas grises» donde se superponen figuras son una interpretación narrativa, no una delimitación jurídica.',
+      },
+    ],
+    facts: [
+      { label: 'Superficie de la Reserva', value: 'más de 342,000 ha', note: 'la Reserva descrita en su totalidad' },
+      { label: 'Durango', value: '62.9 %' },
+      { label: 'Coahuila', value: '22.4 %' },
+      { label: 'Chihuahua', value: '14.7 %' },
+    ],
+    limitations: {
+      title: 'Alcance documentado',
+      text:
+        'La versión web conserva las figuras, cifras y lecturas institucionales de las páginas 30–31. Las interpretaciones sobre tensión, fricción y zonas grises permanecen atribuidas al portafolio y no se convierten en conclusiones jurídicas.',
+      points: [
+        'No se documentan normas específicas ni competencias institucionales.',
+        'No se cuantifica geográficamente la intersección entre figuras.',
+        'No se muestran expedientes de conflicto ni actores particulares.',
+        'No se evalúa capacidad institucional ni se mide participación comunitaria.',
+        'La condición «primera en México y América Latina» no se verifica externamente.',
+        'Las «zonas grises» son una interpretación narrativa.',
+        'ANP y RTP no deben tratarse como categorías jurídicas equivalentes.',
+        'Las cifras de distribución corresponden a la Reserva descrita en su totalidad.',
+      ],
+    },
+    next: {
+      number: 'IV',
+      title: 'Socioeconomía',
+      desc:
+        'Las estructuras institucionales no operan sobre un territorio socialmente homogéneo. El siguiente capítulo observa cómo oportunidades, servicios, empleo, movilidad y marginación se distribuyen de forma desigual entre municipios y localidades.',
+    },
+  },
+
+  {
+    id: 'socioeconomia',
+    number: 'IV',
+    title: 'Socioeconomía',
+    subtitle: 'Movilidad, servicios y desigualdad territorial',
+    pages: [32, 33],
+    accentVar: 'var(--g-socio)',
+    intro: {
+      title: 'Un mosaico de condiciones sociales',
+      paragraphs: [
+        'El pilar socioeconómico examina las condiciones de vida y las dinámicas económicas que configuran las comunidades rurales.',
+        'Más allá de indicadores agregados, el análisis busca observar cómo se distribuyen las oportunidades, el acceso a servicios y las fuentes de ingreso dentro del territorio.',
+        'La página relaciona la expansión agroindustrial con contrastes persistentes entre zonas productivas consolidadas y localidades con rezagos sociales.',
+      ],
+    },
+    variables: ['Empleo', 'Ingresos', 'Educación', 'Servicios', 'Movilidad'],
+    plates: [
+      {
+        id: 'commuting',
+        title: 'Commuting',
+        subtitle: 'Desplazamientos cotidianos entre territorios',
+        page: 32,
+        caption:
+          'Representación de commuting en la Comarca Lagunera mediante categorías Baja, Media y Alta, acompañada por ejemplos textuales de desplazamiento diario.',
+        sourceNote:
+          'No se documenta el año del commuting ni la fuente de la PEA.',
+        mode: 'compare',
+        layers: [
+          { slug: 'commuting-bajo', label: 'Bajo', note: 'menos del 30 %' },
+          { slug: 'commuting-medio', label: 'Medio', note: 'rango no definido' },
+          { slug: 'commuting-alto', label: 'Alto', note: 'más del 60 % de la PEA' },
+        ],
+        categories: [
+          { name: 'Bajo', range: 'menos del 30 %', desc: 'En municipios periféricos como San Juan de Guadalupe y San Luis del Cordero. La página relaciona esta condición con aislamiento y dependencia de la agricultura local.' },
+          { name: 'Medio', desc: 'La categoría aparece en la leyenda.', warning: 'La página no desarrolla su rango ni sus ejemplos.' },
+          { name: 'Alto', range: 'más del 60 % (PEA)', desc: 'En Matamoros y San Pedro, más del 60 % de la PEA se desplaza diariamente hacia Torreón y Gómez Palacio. La página los interpreta como territorios dormitorio del corredor metropolitano.' },
+        ],
+        highlightMunicipios: ['San Juan de Guadalupe', 'San Luis del Cordero', 'Matamoros', 'San Pedro', 'Torreón', 'Gómez Palacio'],
+        reading:
+          'La movilidad y la marginación son variables distintas: una representa la intensidad de desplazamientos y otra describe contrastes sociales entre localidades. La coincidencia narrativa entre movilidad, empleo y acceso a servicios no sustituye un análisis estadístico, que no se documenta en estas páginas.',
+      },
+      {
+        id: 'marginacion',
+        title: 'Grado de marginación',
+        subtitle: 'Por localidad',
+        page: 33,
+        caption:
+          'Mapa de localidades representadas mediante categorías de marginación dentro de la Comarca Lagunera.',
+        sourceNote:
+          'No se define el IMN —su fórmula, fuente, año o dirección— ni los umbrales intermedios.',
+        layers: [
+          { slug: 'marginacion-localidades', label: 'Marginación por localidad' },
+        ],
+        categories: [
+          { name: 'Localidades metropolitanas', range: 'IMN > 0.85', desc: 'Torreón, Gómez Palacio y Lerdo. Colonias y ejidos cercanos a la mancha urbana con muy baja marginación: servicios básicos, educación y empleo urbano-industrial.' },
+          { name: 'Rurales agrícolas', desc: 'Matamoros, San Pedro, Nazas y Mapimí. La mayoría en rangos de baja a media marginación, con agricultura de riego, carencias en vivienda y servicios, y dependencia del trabajo estacional.' },
+          { name: 'Dispersas periféricas', range: 'IMN < 0.70', desc: 'San Juan de Guadalupe, Simón Bolívar, Viesca y Rodeo. Varias en alta marginación: comunidades de menos de 500 habitantes, falta de servicios básicos, transporte y empleo no agrícola.' },
+        ],
+        highlightMunicipios: ['Torreón', 'Gómez Palacio', 'Lerdo', 'Matamoros', 'San Pedro', 'Nazas', 'Mapimí', 'San Juan de Guadalupe', 'General Simón Bolívar', 'Viesca'],
+        reading:
+          'La página interpreta la combinación de menor acceso a servicios, transporte y empleo no agrícola como una condición que acentúa la exclusión territorial. La composición no muestra indicadores separados que permitan medir la contribución individual de cada factor.',
+      },
+    ],
+    limitations: {
+      title: 'Alcance documentado',
+      text: 'La versión web conserva los datos reportados sin calcular índices inexistentes.',
+      points: [
+        'No se documenta el año del commuting ni la fuente de la PEA.',
+        'No se define el rango Medio de commuting ni el umbral general para Alto.',
+        'No se muestran volúmenes de viajes, distancias ni tiempos.',
+        'No se define el IMN: fórmula, fuente, año ni dirección.',
+        'No se documentan fuentes de marginación ni umbrales intermedios.',
+        'No se incluyen niveles de pobreza, carencias medidas ni ingresos monetarios.',
+        'Las correlaciones causales son interpretativas.',
+      ],
+    },
+    next: {
+      number: 'V',
+      title: 'Ambiente',
+      desc:
+        'El pilar ambiental examina cómo la estructura territorial interactúa con las restricciones del medio físico y los límites ecológicos.',
+    },
+  },
+
+  {
+    id: 'ambiente',
+    number: 'V',
+    title: 'Ambiente',
+    subtitle: 'Soporte biofísico y límites ecológicos',
+    pages: [34, 35],
+    accentVar: 'var(--g-ambiente)',
+    intro: {
+      title: 'Un territorio con capacidades y restricciones distintas',
+      paragraphs: [
+        'La clasificación diferencia áreas descritas mediante condiciones de fertilidad, dependencia climática, salinidad, erosión y desarrollo del suelo.',
+        'Dentro de la narrativa del portafolio, estas diferencias permiten observar que las posibilidades productivas no se distribuyen de manera homogénea y que cada zona enfrenta límites ambientales distintos.',
+        'La lectura no determina usos obligatorios ni sustituye estudios de suelo detallados.',
+      ],
+    },
+    variables: ['Fertilidad', 'Clima', 'Salinidad', 'Erosión', 'Desarrollo'],
+    plates: [
+      {
+        id: 'suelos',
+        title: 'Clasificación funcional del suelo',
+        subtitle: 'Seis clases',
+        page: 34,
+        caption:
+          'Clasificación funcional del suelo representada en la Comarca Lagunera mediante seis clases productivas y ambientales descritas en la página fuente.',
+        sourceNote:
+          'La página no documenta la metodología ni la fuente utilizada para delimitar las seis clases. «Funcional» distingue esta composición de una taxonomía edafológica oficial; no se le asignan equivalencias con sistemas externos.',
+        layers: [
+          { slug: 'class-edaf', label: 'Clasificación funcional del suelo', note: 'seis clases' },
+        ],
+        categories: [
+          { name: 'Agrícolas bastante fértiles', desc: 'Suelos de valle, con buena retención de agua y nutrientes; sostienen los cultivos de riego más productivos.' },
+          { name: 'Agrícolas de regular o baja productividad', desc: 'Menor fertilidad natural; requieren fertilización y riego constante para mantener rendimientos.' },
+          { name: 'Agrícolas dependientes del clima', desc: 'Suelos de temporal; su productividad varía según las lluvias y presentan alta vulnerabilidad a sequías.' },
+          { name: 'Con exceso de sales', desc: 'Afectados por salinidad y sodicidad; limitan el crecimiento de cultivos convencionales.' },
+          { name: 'Erosionados aptos para pastizales', desc: 'Degradados, con poca capacidad agrícola; aún sostienen vegetación natural o uso ganadero extensivo.' },
+          { name: 'Jóvenes con poco desarrollo', desc: 'Suelos incipientes, poco evolucionados, comunes en piedemontes y laderas.' },
+        ],
+        reading:
+          'Los nombres de las seis clases se conservan conforme a la página fuente. La versión web no les asigna equivalencias con sistemas edafológicos externos porque la fuente no las documenta.',
+      },
+    ],
+    limitations: {
+      title: 'Alcance documentado',
+      text:
+        'La versión web conserva la clasificación de las páginas 34–35 sin traducirla a ninguna taxonomía oficial.',
+      points: [
+        'No se documenta la metodología de delimitación de las clases.',
+        'No se identifica la fuente de los datos edafológicos.',
+        'No se presentan perfiles, muestreos ni análisis de laboratorio.',
+        'El término «funcional» es de la versión web, para distinguirla de una taxonomía oficial.',
+      ],
+    },
+    next: {
+      number: 'VI',
+      title: 'Conectividad',
+      desc:
+        'Tras el soporte biofísico, el capítulo siguiente observa la posición espacial de las localidades respecto de los centros urbanos.',
+    },
+  },
+
+  {
+    id: 'conectividad',
+    number: 'VI',
+    title: 'Conectividad',
+    subtitle: 'Distancias y patrones espaciales',
+    pages: [35, 35],
+    accentVar: 'var(--g-conectividad)',
+    intro: {
+      title: 'La distancia como lectura territorial',
+      paragraphs: [
+        'La página organiza las localidades mediante tres rangos de distancia respecto de centros urbanos.',
+        'Cada rango se vincula en la fuente con una condición distinta de accesibilidad, transporte, relación con mercados laborales y acceso a servicios.',
+        'La composición no documenta el método de distancia, la red utilizada ni la identidad de todos los centros urbanos.',
+      ],
+    },
+    variables: ['Proximidad', 'Transporte', 'Mercados', 'Servicios'],
+    plates: [
+      {
+        id: 'distancias',
+        title: 'Tres rangos espaciales',
+        subtitle: 'Localidades y centros urbanos',
+        page: 35,
+        caption:
+          'Representación de localidades de la Comarca Lagunera mediante rangos de distancia respecto de centros urbanos y líneas de relación espacial.',
+        sourceNote:
+          'La composición no especifica si las distancias corresponden a línea recta, red vial u otro procedimiento. Fuente no identificada de forma explícita.',
+        layers: [
+          { slug: 'conectividad', label: 'Relaciones de distancia', note: 'líneas de relación espacial' },
+        ],
+        categories: [
+          { name: 'Menos de 10 km', desc: 'Alta accesibilidad, confluencia de transporte y mercados laborales.' },
+          { name: 'Entre 10 y 30 km', desc: 'Conectividad media; dependen de carreteras secundarias y transporte rural.' },
+          { name: 'Más de 30 km', desc: 'Baja conectividad; mayor aislamiento físico y menor acceso a servicios básicos.' },
+        ],
+        reading:
+          'Estas relaciones corresponden a la interpretación de la página y no sustituyen una evaluación de infraestructura, frecuencia de transporte, calidad vial o disponibilidad real de servicios. La conectividad y el commuting no son la misma variable: una organiza por distancia, el otro representa desplazamientos cotidianos, y las páginas no documentan una equivalencia entre ambos.',
+      },
+    ],
+    limitations: {
+      title: 'Alcance documentado',
+      text:
+        'La página 35 clasifica por distancia sin documentar cómo se midió.',
+      points: [
+        'No se documenta si la distancia es euclidiana o por red vial.',
+        'No se identifica el inventario completo de centros urbanos utilizados.',
+        'No se combinan ambiente y conectividad en un índice conjunto; eso ocurre después, en el clustering.',
+        'No se documenta equivalencia entre distancia y commuting.',
+      ],
+    },
+    next: {
+      number: 'VII',
+      title: 'Clustering',
+      desc:
+        'Las seis dimensiones anteriores se integran en una clasificación municipal de tres grupos.',
+    },
+  },
+
+  {
+    id: 'clustering',
+    number: 'VII',
+    title: 'Clustering',
+    subtitle: 'Tres configuraciones de un mismo territorio',
+    pages: [36, 37],
+    accentVar: 'var(--p09-agua)',
+    intro: {
+      title: 'Tres grupos territoriales',
+      paragraphs: [
+        'El análisis integra las dimensiones anteriores en una clasificación municipal de tres agrupaciones.',
+        'La página interpreta su distribución mediante una lógica centro–intermedio–periferia.',
+        'La composición no documenta una prueba de autocorrelación, contigüidad o significancia espacial, ni proporciona una tabla exhaustiva de asignaciones municipales.',
+      ],
+    },
+    variables: ['Núcleo', 'Intermedio', 'Periferia'],
+    plates: [
+      {
+        id: 'espacializacion',
+        title: 'Espacialización municipal',
+        subtitle: 'Centro, intermedio y periferia',
+        page: 37,
+        caption:
+          'Clasificación municipal de la Comarca Lagunera en tres agrupaciones representadas mediante azul, amarillo y rosa.',
+        sourceNote:
+          'La composición no documenta una prueba de autocorrelación, contigüidad o significancia espacial. Tampoco proporciona una tabla exhaustiva de asignaciones municipales.',
+        layers: [
+          { slug: 'comarca-caracterizacion', label: 'Agrupaciones municipales', note: 'tres grupos' },
+        ],
+        categories: [
+          { name: 'Núcleo agroindustrial', desc: 'Interpretado en la fuente como altamente integrado, con mayor densidad de interacciones y reflejo del peso del corredor metropolitano.' },
+          { name: 'Intermedio de transición', desc: 'La página describe este conjunto como una bisagra entre núcleos y periferias.' },
+          { name: 'Periferia vulnerable', desc: 'Caracterizados por la fuente como municipios más aislados, marginados y ambientalmente frágiles.' },
+        ],
+        reading:
+          'La página afirma que el grupo azul concentra la mayor densidad de interacciones, el amarillo funciona como bisagra y el rosa aparece más aislado. El diagrama de relaciones que acompaña esta clasificación no documenta el significado, peso, dirección ni método de construcción de sus enlaces.',
+      },
+    ],
+    limitations: {
+      title: 'Alcance documentado',
+      text:
+        'La clasificación en tres grupos se conserva como la presenta la fuente, con sus nombres alternativos y sin reconstruir el método.',
+      points: [
+        'No se documenta el algoritmo de clustering ni sus parámetros.',
+        'No se documenta qué variables entran en el modelo ni con qué peso.',
+        'No se presenta una tabla completa de asignación municipal.',
+        'No hay prueba de autocorrelación, contigüidad ni significancia espacial.',
+        'Los nombres de los grupos varían entre páginas de la fuente.',
+      ],
+    },
+    next: {
+      number: '—',
+      title: 'Cierre',
+      desc:
+        'El recorrido cubre las siete dimensiones documentadas en las páginas 21–40 del portafolio.',
     },
   },
 ];
