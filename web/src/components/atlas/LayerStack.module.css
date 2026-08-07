@@ -3,7 +3,11 @@
 
 .stack {
   position: relative;
-  width: 100%;
+  /* El menor entre el ancho disponible y el que corresponde a la altura
+     máxima de lámina. Sin esto, un mapa vertical se estira hasta perder la
+     composición y obliga a dos pantallas de scroll para verlo entero. */
+  width: min(100%, calc(var(--stack-max-h, 86svh) * var(--stack-ratio, 1)));
+  margin-inline: auto;
   overflow: hidden;
   background: var(--black);
 }

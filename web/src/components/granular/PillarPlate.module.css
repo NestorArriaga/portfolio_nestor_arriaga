@@ -1,0 +1,90 @@
+/* Lámina de pilar. La estructura no cambia entre pilares; solo el acento y las
+   capas. */
+
+.field { position: relative; }
+
+.instruments {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: var(--z-annotation);
+}
+
+.reading {
+  margin: 0;
+  max-width: 60ch;
+  font-family: var(--font-sans);
+  font-size: var(--type-technical);
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* La nota de fuente se distingue de la lectura: una dice de dónde sale el dato,
+   la otra qué interpreta el autor. */
+.source {
+  margin: 0;
+  max-width: 60ch;
+  display: flex;
+  gap: 0.6rem;
+  padding-top: 0.75rem;
+  border-top: var(--hairline) solid var(--line-dark);
+}
+
+.sourceLabel {
+  flex: 0 0 auto;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* --- Categorías de la leyenda original ------------------------------------- */
+
+.categories {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.category {
+  padding: 0.7rem 0;
+  border-top: var(--hairline) solid var(--line-dark);
+}
+
+.category:last-child { border-bottom: var(--hairline) solid var(--line-dark); }
+
+.category dt {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.range {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.category dd {
+  margin: 0.3rem 0 0;
+  font-size: var(--type-technical);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+/* Marca de vacío documental. No es un error del sitio: es lo que la fuente
+   deja sin definir, y se dice. */
+.warning {
+  display: block;
+  margin-top: 0.35rem;
+  padding-left: 0.6rem;
+  border-left: var(--line-strong) solid var(--accent);
+  font-style: normal;
+  font-family: var(--font-mono);
+  color: var(--ink-faint);
+}

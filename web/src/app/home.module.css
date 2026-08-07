@@ -62,3 +62,20 @@
   .section { padding: 4rem var(--margin) 3rem; }
   .sectionHead { margin-bottom: 2rem; }
 }
+
+/* Entrada al caso. Un enlace de texto con regla, no un botón: el sitio no
+   tiene controles con relleno. */
+.caseLink {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding-top: 0.6rem;
+  border-top: var(--line-strong) solid var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.caseLink:hover { color: var(--accent); }

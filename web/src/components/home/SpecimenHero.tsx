@@ -43,7 +43,7 @@ export function SpecimenHero({ object, ratio, callouts, identity }: Props) {
 
       <div className={styles.stage}>
         <div className={styles.object}>
-          <LayerStack ratio={ratio} className={styles.stack}>
+          <LayerStack ratio={ratio} priority className={styles.stack}>
             <StackLayer
               {...object}
               alt="Recorte satelital de la Comarca Lagunera"

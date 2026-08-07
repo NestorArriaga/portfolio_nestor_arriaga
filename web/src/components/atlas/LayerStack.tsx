@@ -1,8 +1,8 @@
 'use client';
 
-import { CSSProperties, ReactNode, createContext, useContext, useEffect, useRef, useState } from 'react';
+import { CSSProperties, ReactNode, createContext, useContext } from 'react';
 import styles from './LayerStack.module.css';
-import { usePrefersReducedMotion } from '@/lib/motion';
+import { useReveal } from '@/lib/motion';
 
 /**
  * Pila de capas del campo cartográfico.
@@ -10,27 +10,21 @@ import { usePrefersReducedMotion } from '@/lib/motion';
  * Todas las capas comparten la misma extensión geográfica y se apilan en el
  * mismo encuadre. Es la única forma honesta de superponer las capas de GRANULAR:
  * proceden de exportaciones del mismo mapa, así que coinciden pixel a pixel
- * mientras no se recorte ninguna por separado.
+ * mientras cada una se coloque en el encuadre que registró el manifiesto.
  *
  * Cada capa entra por máscara — un barrido de `clip-path` — en lugar de por
  * desplazamiento. Revelar sobre la misma extensión enseña qué añade la capa;
  * moverla mentiría sobre dónde está.
  *
- * La carga va en dos fases:
- *
- *   1. `armed` — la pila se acerca al viewport (400 px antes). Se montan las
- *      imágenes y empiezan a descargarse.
- *   2. `revealed` — la pila entra de verdad. Corre el barrido de clip-path.
- *
- * Se prefiere esto a `loading="lazy"` porque une la descarga con la secuencia:
- * las capas terminan de llegar antes de que empiece el barrido, así que el
- * revelado no descubre un hueco vacío. Además el margen de 400 px es explícito,
- * en vez de depender de la heurística de cada navegador.
+ * Las imágenes se renderizan siempre, también en el servidor. Montarlas solo
+ * tras un IntersectionObserver dejaba el HTML sin ninguna capa, y entonces el
+ * fallback de <noscript> no tiene nada que revelar: la lámina queda vacía sin
+ * JavaScript. La carga diferida la resuelve `loading="lazy"`, que es lo que hace
+ * bien el navegador; `priority` la desactiva en la primera pantalla, donde
+ * diferir solo retrasa lo que se ve de inmediato.
  */
 
-type StackState = { armed: boolean; revealed: boolean };
-
-const StackContext = createContext<StackState>({ armed: true, revealed: true });
+const PriorityContext = createContext(false);
 
 export type StackLayerProps = {
   src: string;
@@ -69,19 +63,14 @@ export function StackLayer({
   frame = [0, 0, 1, 1],
   className,
 }: StackLayerProps) {
-  const { armed } = useContext(StackContext);
-
-  // Hasta que la pila se arma no hay src: no se descarga nada de una lámina
-  // que el lector todavía no va a ver.
-  if (!armed) return null;
-
+  const priority = useContext(PriorityContext);
   const [left, top, w, h] = frame;
 
   return (
     // next/image no aporta aquí y estorba: el pipeline ya emitió cada capa en
     // WebP a 2000/1000/500 px recortada a su contenido, así que el optimizador
     // solo volvería a comprimir lo ya comprimido. Además necesitamos gobernar
-    // `sizes`, el encuadre y el momento de carga desde el propio componente.
+    // `sizes`, el encuadre y la prioridad desde el propio componente.
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className={[styles.layer, className].filter(Boolean).join(' ')}
@@ -92,6 +81,8 @@ export function StackLayer({
       height={height}
       alt={alt ?? ''}
       aria-hidden={alt ? undefined : 'true'}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
       decoding="async"
       style={{
         left: `${left * 100}%`,
@@ -110,66 +101,36 @@ type Props = {
   children: ReactNode;
   /** Proporción del campo. Reservarla evita CLS al cargar las capas. */
   ratio: number;
+  /** Para la primera pantalla: carga inmediata en vez de diferida. */
+  priority?: boolean;
   className?: string;
   style?: CSSProperties;
 };
 
-export function LayerStack({ children, ratio, className, style }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduced = usePrefersReducedMotion();
-  const [state, setState] = useState<StackState>({ armed: false, revealed: false });
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    if (typeof IntersectionObserver === 'undefined') {
-      setState({ armed: true, revealed: true });
-      return;
-    }
-
-    // Dos umbrales: uno holgado para empezar a descargar, otro ajustado para
-    // disparar el barrido cuando la lámina ya está en pantalla.
-    const arm = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setState((s) => ({ ...s, armed: true }));
-          arm.disconnect();
-        }
-      },
-      { rootMargin: '400px 0px' },
-    );
-
-    const show = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setState({ armed: true, revealed: true });
-          show.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-
-    arm.observe(node);
-    show.observe(node);
-    return () => {
-      arm.disconnect();
-      show.disconnect();
-    };
-  }, []);
-
-  const value = reduced ? { armed: state.armed, revealed: true } : state;
+export function LayerStack({ children, ratio, priority = false, className, style }: Props) {
+  const { ref, revealed } = useReveal<HTMLDivElement>({ threshold: 0.15 });
 
   return (
-    <StackContext.Provider value={value}>
+    <PriorityContext.Provider value={priority}>
       <div
         ref={ref}
         className={[styles.stack, className].filter(Boolean).join(' ')}
-        data-revealed={value.revealed ? 'true' : 'false'}
-        style={{ aspectRatio: String(ratio), ...style }}
+        data-revealed={revealed ? 'true' : 'false'}
+        style={{
+          aspectRatio: String(ratio),
+          // El ancho se limita por la altura disponible cuando la proporción lo
+          // exige, para que un lienzo vertical no se vaya a 1500 px de alto.
+          ['--stack-ratio' as string]: String(ratio),
+          // Un mapa en retrato tiene derecho a pasar de una pantalla: la
+          // referencia Food es una lámina vertical que se recorre. Apretarlo a
+          // la altura del viewport lo encoge y le abre un hueco al lado. Uno
+          // apaisado, en cambio, sí debe caber de una vez.
+          ['--stack-max-h' as string]: ratio < 0.9 ? '128svh' : '86svh',
+          ...style,
+        }}
       >
         {children}
       </div>
-    </StackContext.Provider>
+    </PriorityContext.Provider>
   );
 }

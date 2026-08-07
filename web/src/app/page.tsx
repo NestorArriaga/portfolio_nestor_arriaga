@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import styles from './home.module.css';
 import {
   canvasRatio,
@@ -139,6 +141,7 @@ export default function Home() {
             </LegendRail>
           }
           detail={
+            <>
             <PlateFacts
               items={[
                 { label: 'Páginas', value: `${granular.pages[0]}–${granular.pages[granular.pages.length - 1]}` },
@@ -146,6 +149,10 @@ export default function Home() {
                 { label: 'Capas', value: `${conectividad.length} separadas` },
               ]}
             />
+            <Link href="/granular/agua" className={styles.caseLink}>
+              Recorrer el caso →
+            </Link>
+            </>
           }
         >
           <div className={styles.plateField}>

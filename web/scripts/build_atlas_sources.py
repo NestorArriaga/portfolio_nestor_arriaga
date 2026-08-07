@@ -23,12 +23,13 @@ import io
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import unicodedata
 from dataclasses import dataclass, field, asdict
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw
 
 Image.MAX_IMAGE_PIXELS = None
 
@@ -47,6 +48,12 @@ WIDTHS = (2000, 1000, 500)
 WEBP_QUALITY = 82
 # Por debajo de este alfa un pixel cuenta como vacio al recortar.
 ALPHA_FLOOR = 8
+# Por encima de este valor en los tres canales, un pixel es "blanco de hoja".
+WHITE_FLOOR = 244
+# Lado maximo al que se reduce la mascara de fondo antes del relleno.
+MASK_MAX = 700
+# Minimo de elementos para que valga la pena rasterizar un SVG sin rasteres.
+VECTOR_RASTER_MIN = 200
 
 IMAGE_TAG_RE = re.compile(rb"<image\b[^>]*?(?:/>|>.*?</image>)", re.S)
 ATTR_RE = re.compile(rb'([\w:-]+)\s*=\s*"([^"]*)"')
@@ -97,6 +104,8 @@ class LayerOut:
     mean_saturation: float
     opaque_ratio: float
     role: str
+    # True si se retiro un fondo blanco de hoja para poder superponerla.
+    keyed_white: bool = False
     # Colores que la capa dibuja de verdad, para que la leyenda no mienta.
     dominant: list = field(default_factory=list)
     # Posición de la capa dentro del lienzo comun del archivo, en fracciones
@@ -164,6 +173,87 @@ def composite(tiles: list):
                 im = im.resize((tw, th), Image.LANCZOS)
             canvas.alpha_composite(im, (px, py))
     return canvas, (x0, y0, x1, y1), scale
+
+
+def key_white_page(canvas):
+    """Vuelve transparente el fondo blanco de página de una exportación A4.
+
+    Muchas capas de GRANULAR no se exportaron con fondo transparente sino sobre
+    la hoja blanca. Son mapas limpios —sin texto incrustado— pero opacos, así que
+    apilarlos sobre el campo oscuro del atlas pondría un rectangulo blanco encima
+    de todo lo demas. Sin esto, la mitad del material es inservible en Modo A.
+
+    Solo se recorta el blanco conectado con el borde. Un blanco interior —una
+    categoria clara de la leyenda, una mancha urbana, un cuerpo de agua seco— no
+    toca el borde y se conserva. Un umbral global se los llevaria por delante.
+
+    Devuelve (imagen, True) si se aplico, (imagen, False) si no era una hoja.
+    """
+    w, h = canvas.size
+    if w < 4 or h < 4:
+        return canvas, False
+
+    rgb = canvas.convert("RGB")
+    corners = [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]
+    px = rgb.load()
+    if not all(min(px[c]) >= WHITE_FLOOR for c in corners):
+        return canvas, False
+
+    # El relleno se calcula sobre una copia reducida: es una operacion en Python
+    # puro y a tamano nativo tardaria minutos por capa. La forma del fondo es
+    # una region amplia, asi que la resolucion reducida la describe de sobra.
+    scale = min(1.0, MASK_MAX / max(w, h))
+    mw, mh = max(2, round(w * scale)), max(2, round(h * scale))
+    small = rgb.resize((mw, mh), Image.BILINEAR)
+
+    # 255 = candidato a fondo (casi blanco); 0 = contenido.
+    flags = small.convert("L").point(lambda v: 255 if v >= WHITE_FLOOR else 0)
+    for c in [(0, 0), (mw - 1, 0), (0, mh - 1), (mw - 1, mh - 1)]:
+        if flags.getpixel(c) == 255:
+            ImageDraw.floodfill(flags, c, 128, thresh=0)
+
+    # 128 = blanco alcanzado desde el borde -> fuera. Lo demas se queda.
+    alpha_small = flags.point(lambda v: 0 if v == 128 else 255)
+    alpha = alpha_small.resize((w, h), Image.BILINEAR)
+
+    out = canvas.convert("RGBA")
+    # Minimo por pixel: lo que ya era transparente lo sigue siendo, y ademas se
+    # retira el blanco de hoja. Reemplazar el alfa perderia la transparencia
+    # propia que algunas capas ya traian.
+    out.putalpha(ImageChops.darker(out.getchannel("A"), alpha))
+    return out, True
+
+
+def rasterize_vector_only(svg_path: str, slug: str):
+    """Convierte a WebP un SVG que solo tiene vector.
+
+    Cuatro archivos de GRANULAR —las parcelas de riego y de temporal, la
+    vulnerabilidad a la sequia, la superficie de riego— son vector puro, sin
+    ningun raster incrustado. Son datos reales, pero pesan entre 1.7 y 2.3 MB con
+    mas de diez mil poligonos cada uno: inline reventarian el DOM y como <img>
+    obligarian a descargar tres cuartos de mega comprimido por capa.
+
+    A tamano de pantalla, diez mil parcelas son una superficie, no un trazo que
+    se pueda seguir: rasterizarlas no pierde nada legible y las deja en la misma
+    escalera que el resto. El SVG original se conserva en /atlas/vector por si
+    hace falta la geometria.
+
+    Devuelve (imagen RGBA, ancho_render) o None si rsvg-convert falla.
+    """
+    out_png = os.path.join(OUT_RASTER, f".{slug}-tmp.png")
+    try:
+        subprocess.run(
+            ["rsvg-convert", "-w", str(WIDTHS[0]), "--background-color=none",
+             "-o", out_png, svg_path],
+            check=True, capture_output=True,
+        )
+        with Image.open(out_png) as im:
+            return im.convert("RGBA")
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError):
+        return None
+    finally:
+        if os.path.exists(out_png):
+            os.remove(out_png)
 
 
 def measure(im):
@@ -326,6 +416,8 @@ def process(name: str) -> dict:
             record["layers"].append({"layer": li, "error": "%s: %s" % (type(exc).__name__, exc)})
             continue
 
+        canvas, keyed = key_white_page(canvas)
+
         native = [canvas.width, canvas.height]
         bbox = canvas.getchannel("A").point(lambda a: 255 if a > ALPHA_FLOOR else 0).getbbox()
         has_alpha = bbox is not None and bbox != (0, 0, canvas.width, canvas.height)
@@ -360,6 +452,7 @@ def process(name: str) -> dict:
             mean_saturation=sat,
             opaque_ratio=opaque,
             role="base" if opaque > 0.9 else "overlay",
+            keyed_white=keyed,
             dominant=dominant,
             frame=frame,
             files={},
@@ -375,12 +468,56 @@ def process(name: str) -> dict:
     # --- vector -------------------------------------------------------------
     vec = strip_rasters(blob)
     stats = vector_stats(vec)
+    vec_path = None
     if stats["element_total"] > 0:
         vname = "%s.svg" % slug
-        with open(os.path.join(OUT_VECTOR, vname), "wb") as fh:
+        vec_path = os.path.join(OUT_VECTOR, vname)
+        with open(vec_path, "wb") as fh:
             fh.write(vec)
         stats["file"] = "/atlas/vector/%s" % vname
     record["vector"] = stats
+
+    # Un archivo sin rasteres pero con mucha geometria necesita su propia
+    # version en mapa de bits para poder componerse como capa.
+    usable = [l for l in record["layers"] if "error" not in l]
+    if not usable and vec_path and stats["element_total"] >= VECTOR_RASTER_MIN:
+        canvas = rasterize_vector_only(vec_path, slug)
+        if canvas is not None:
+            full_w, full_h = canvas.size
+            bbox = canvas.getchannel("A").point(
+                lambda a: 255 if a > ALPHA_FLOOR else 0).getbbox()
+            if bbox:
+                canvas = canvas.crop(bbox)
+            if canvas.width and canvas.height:
+                sat, opaque, dominant = measure(canvas)
+                frame = [
+                    round((bbox[0] if bbox else 0) / full_w, 6),
+                    round((bbox[1] if bbox else 0) / full_h, 6),
+                    round(canvas.width / full_w, 6),
+                    round(canvas.height / full_h, 6),
+                ]
+                out = LayerOut(
+                    layer=1, tiles=0,
+                    native_px=[full_w, full_h],
+                    trimmed_px=[canvas.width, canvas.height],
+                    trim_ratio=round(1 - (canvas.width * canvas.height) / (full_w * full_h), 3),
+                    has_alpha=True,
+                    mean_saturation=sat,
+                    opaque_ratio=opaque,
+                    role="base" if opaque > 0.9 else "overlay",
+                    keyed_white=False,
+                    dominant=dominant,
+                    frame=frame,
+                    files={},
+                )
+                out.files["color"] = emit(canvas, slug, 1, gray=False)
+                record["layers"].append(asdict(out))
+                record["canvas"] = {
+                    "user_box": [0, 0, full_w, full_h],
+                    "ratio": round(full_w / full_h, 5),
+                }
+                record["rasterized_from_vector"] = True
+                canvas.close()
     return record
 
 
