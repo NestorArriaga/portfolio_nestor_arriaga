@@ -1,0 +1,167 @@
+{
+ "srs": "EPSG:6372",
+ "masks": [
+  {
+   "viewBox": [
+    0,
+    0,
+    1000.0,
+    578.9
+   ],
+   "rings": 1,
+   "points": 182,
+   "srs": "EPSG:6372",
+   "extent_m": [
+    2995518.8,
+    805035.3,
+    3074921.1,
+    851001.5
+   ],
+   "span_km": [
+    79.4,
+    46.0
+   ],
+   "simplify_m": 150,
+   "slug": "decozalapa",
+   "source": "DECOZALAPA.shp",
+   "mask": "/atlas/vector/mask-decozalapa.svg",
+   "geojson": "/atlas/geo/decozalapa.geojson",
+   "svg_bytes": 2775
+  },
+  {
+   "viewBox": [
+    0,
+    0,
+    1000.0,
+    863.58
+   ],
+   "rings": 1,
+   "points": 297,
+   "srs": "EPSG:6372",
+   "extent_m": [
+    2410119.9,
+    1067540.0,
+    2516929.2,
+    1159778.3
+   ],
+   "span_km": [
+    106.8,
+    92.2
+   ],
+   "simplify_m": 150,
+   "slug": "aguascalientes",
+   "source": "SHAPE/AGUASCALIENTES.shp",
+   "mask": "/atlas/vector/mask-aguascalientes.svg",
+   "geojson": "/atlas/geo/aguascalientes.geojson",
+   "svg_bytes": 4487
+  },
+  {
+   "viewBox": [
+    0,
+    0,
+    1000.0,
+    1343.43
+   ],
+   "rings": 1,
+   "points": 135,
+   "srs": "EPSG:6372",
+   "extent_m": [
+    2776217.9,
+    786788.9,
+    2820850.3,
+    846749.5
+   ],
+   "span_km": [
+    44.6,
+    60.0
+   ],
+   "simplify_m": 150,
+   "slug": "ciudad-de-mexico",
+   "source": "SHAPE/CIUDAD DE MÉXICO.shp",
+   "mask": "/atlas/vector/mask-ciudad-de-mexico.svg",
+   "geojson": "/atlas/geo/ciudad-de-mexico.geojson",
+   "svg_bytes": 2163
+  },
+  {
+   "viewBox": [
+    0,
+    0,
+    1000.0,
+    972.53
+   ],
+   "rings": 52,
+   "points": 3991,
+   "srs": "EPSG:6372",
+   "extent_m": [
+    2115918.1,
+    770594.3,
+    2550360.7,
+    1193103.3
+   ],
+   "span_km": [
+    434.4,
+    422.5
+   ],
+   "simplify_m": 150,
+   "slug": "jalisco",
+   "source": "SHAPE/JALISCO.shp",
+   "mask": "/atlas/vector/mask-jalisco.svg",
+   "geojson": "/atlas/geo/jalisco.geojson",
+   "svg_bytes": 59436
+  },
+  {
+   "viewBox": [
+    0,
+    0,
+    1000.0,
+    1031.49
+   ],
+   "rings": 63,
+   "points": 6342,
+   "srs": "EPSG:6372",
+   "extent_m": [
+    2839949.1,
+    596831.8,
+    3391921.6,
+    1166185.9
+   ],
+   "span_km": [
+    552.0,
+    569.4
+   ],
+   "simplify_m": 150,
+   "slug": "veracruz",
+   "source": "SHAPE/VERACRUZ.shp",
+   "mask": "/atlas/vector/mask-veracruz.svg",
+   "geojson": "/atlas/geo/veracruz.geojson",
+   "svg_bytes": 93868
+  },
+  {
+   "viewBox": [
+    0,
+    0,
+    1000.0,
+    666.21
+   ],
+   "rings": 63,
+   "points": 1221,
+   "srs": "EPSG:6372",
+   "extent_m": [
+    3500729.8,
+    897964.9,
+    3994856.7,
+    1227157.6
+   ],
+   "span_km": [
+    494.1,
+    329.2
+   ],
+   "simplify_m": 150,
+   "slug": "yucatan",
+   "source": "SHAPE/YUCATAN.shp",
+   "mask": "/atlas/vector/mask-yucatan.svg",
+   "geojson": "/atlas/geo/yucatan.geojson",
+   "svg_bytes": 18664
+  }
+ ]
+}
