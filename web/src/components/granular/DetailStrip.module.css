@@ -1,0 +1,91 @@
+/* Columna de detalles. Marco rectangular con marcas de esquina, como un recorte
+   de lámina impresa; nada de tarjeta con fondo y radio. */
+
+.strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--gutter);
+  color: var(--accent);
+}
+
+.inset {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity var(--dur-layer) var(--ease-out);
+}
+
+.strip[data-revealed='true'] .inset { opacity: 1; }
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--black-soft);
+  overflow: hidden;
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Gris con el marco en señal: cinco recortes a todo color competirían con el
+     mapa que acompañan. */
+  filter: grayscale(1) contrast(1.05);
+  transition: filter var(--dur-micro) var(--ease-out);
+}
+
+.inset:hover .frame img { filter: grayscale(0) contrast(1); }
+
+.corners {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.35;
+}
+
+.page {
+  color: currentColor;
+  letter-spacing: var(--tracking-label);
+  font-variant-numeric: tabular-nums;
+}
+
+.type {
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+}
+
+.scale { color: var(--ink-faint); }
+
+@media (max-width: 900px) {
+  /* Carrusel al borde, sin autoplay. */
+  .strip {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--margin) * -1);
+    padding-inline: var(--margin);
+    scrollbar-width: none;
+  }
+
+  .strip::-webkit-scrollbar { display: none; }
+  .inset { flex: 0 0 58%; scroll-snap-align: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inset { opacity: 1; transition: none; transition-delay: 0s !important; }
+}

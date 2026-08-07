@@ -101,6 +101,44 @@ export function getMunicipios(): MunicipalSet | null {
   return JSON.parse(fs.readFileSync(file, 'utf8')) as MunicipalSet;
 }
 
+export type Inset = {
+  slug: string;
+  page: number;
+  dimension: string | null;
+  native_px: [number, number];
+  ratio: number;
+  files: Record<string, string>;
+};
+
+/** Tamaños de página completa de GRANULAR, en píxeles. */
+const FULL_PAGE_SIZES = [
+  [3507, 2480], [2480, 3507], [3508, 2480], [2480, 3508],
+];
+
+function isFullPage([w, h]: [number, number]): boolean {
+  return FULL_PAGE_SIZES.some(([fw, fh]) => Math.abs(w - fw) < 4 && Math.abs(h - fh) < 4);
+}
+
+/**
+ * Recortes de detalle de un pilar.
+ *
+ * Se descartan los que tienen el tamaño de una página completa: son el mismo
+ * mapa que la lámina ya muestra a tamaño grande, y repetirlo en la columna de
+ * detalles no añade nada. Un inset vale por lo que enseña de cerca.
+ *
+ * No llevan conector al mapa. El inventario registra página, dimensión, escala
+ * y tipo, pero no dónde cae el recorte dentro del territorio; una línea trazada
+ * a un punto elegido a ojo afirmaría una ubicación que no consta.
+ */
+export function getInsets(dimension: string, limit = 5): Inset[] {
+  const file = path.join(PUBLIC_DIR, 'atlas', 'insets.json');
+  if (!fs.existsSync(file)) return [];
+  const data = JSON.parse(fs.readFileSync(file, 'utf8')) as { insets: Inset[] };
+  return data.insets
+    .filter((i) => i.dimension === dimension && !isFullPage(i.native_px))
+    .slice(0, limit);
+}
+
 export type NationalPlacement = {
   slug: string;
   mask: TerritoryMaskData;

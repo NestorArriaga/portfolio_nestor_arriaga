@@ -290,3 +290,39 @@
   .cycle { padding: 3rem var(--margin); }
   .cycleGrid { grid-template-columns: 1fr; gap: 2.5rem; }
 }
+
+/* --- Detalles de la fuente ------------------------------------------------- */
+
+.details {
+  padding: var(--margin-wide) var(--margin);
+  border-top: var(--hairline) solid var(--line-dark);
+  background: var(--black);
+}
+
+.detailsHead {
+  max-width: var(--measure);
+  margin-bottom: 2.5rem;
+}
+
+.detailsLede {
+  margin: 0;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  color: var(--ink-muted);
+}
+
+/* La ausencia se declara con el mismo peso que una nota de fuente: es un dato
+   sobre el material, no un hueco de maquetación. */
+.detailsEmpty {
+  margin: 0;
+  padding-left: 1rem;
+  border-left: var(--line-strong) solid var(--line-dark);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 900px) {
+  .details { padding: 3rem var(--margin); }
+}

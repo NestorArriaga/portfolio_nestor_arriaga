@@ -7,7 +7,8 @@ import { getPillar, granularProject, pillars } from '@/content/granular';
 import { PillarPlate } from '@/components/granular/PillarPlate';
 import { MunicipalIndex } from '@/components/granular/MunicipalIndex';
 import { FlowCycle } from '@/components/granular/FlowCycle';
-import { getMunicipios } from '@/lib/atlas';
+import { DetailStrip } from '@/components/granular/DetailStrip';
+import { getInsets, getMunicipios } from '@/lib/atlas';
 import { SignalPoster } from '@/components/atlas/SignalPoster';
 import { TextureOverlay } from '@/components/atlas/TextureOverlay';
 
@@ -44,6 +45,10 @@ export default function PilarPage({ params }: { params: { pilar: string } }) {
     new Set(pillar.plates.flatMap((p) => p.highlightMunicipios ?? [])),
   );
   const municipal = getMunicipios();
+
+  // Un recorte suelto no es una columna de detalles. El material solo da para
+  // varios en algunos pilares, y donde no los hay se dice.
+  const insets = getInsets(pillar.id);
 
   return (
     <main style={{ ['--accent' as string]: pillar.accentVar }}>
@@ -90,6 +95,29 @@ export default function PilarPage({ params }: { params: { pilar: string } }) {
       {pillar.plates.map((plate) => (
         <PillarPlate key={plate.id} pillar={pillar} plate={plate} />
       ))}
+
+      {/* --- Detalles de la fuente --------------------------------------------- */}
+      <section className={styles.details}>
+        <header className={styles.detailsHead}>
+          <h2 className={styles.sectionTitle}>Detalles de la fuente</h2>
+          {insets.length >= 2 ? (
+            <p className={styles.detailsLede}>
+              Recortes de las páginas {pillar.pages[0]}–{pillar.pages[1]}. No
+              llevan línea al mapa: el inventario no registra dónde cae cada uno
+              dentro del territorio.
+            </p>
+          ) : (
+            <p className={styles.detailsEmpty}>
+              Las páginas de este pilar no dejaron recortes de detalle
+              aprovechables: sus imágenes son el mapa completo, que la lámina ya
+              muestra a tamaño grande.
+            </p>
+          )}
+        </header>
+        {insets.length >= 2 ? (
+          <DetailStrip insets={insets} accent={pillar.accentVar} />
+        ) : null}
+      </section>
 
       {/* --- Ciclo de flujo ---------------------------------------------------- */}
       {pillar.cycle ? (
