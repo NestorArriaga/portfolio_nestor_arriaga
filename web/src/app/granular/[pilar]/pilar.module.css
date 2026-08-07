@@ -236,3 +236,57 @@
 @media (max-width: 900px) {
   .municipal { padding: 3rem var(--margin); }
 }
+
+/* --- Ciclo de flujo -------------------------------------------------------- */
+
+.cycle {
+  padding: var(--margin-wide) var(--margin);
+  border-top: var(--hairline) solid var(--line-dark);
+  background: var(--black);
+}
+
+.cycleGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: calc(var(--gutter) * 2);
+  align-items: center;
+}
+
+.cycleText {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: var(--measure);
+}
+
+.cycleText p { margin: 0; }
+
+.cycleTitle {
+  margin: 0;
+  font-size: var(--type-display);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.03em;
+}
+
+.cycleReading {
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  color: var(--ink-muted);
+}
+
+/* La advertencia se separa del argumento con una regla de acento: lo que la
+   fuente afirma y lo que no respalda no pueden leerse como lo mismo. */
+.cycleDisclaimer {
+  padding-left: 1rem;
+  border-left: var(--line-strong) solid var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 900px) {
+  .cycle { padding: 3rem var(--margin); }
+  .cycleGrid { grid-template-columns: 1fr; gap: 2.5rem; }
+}

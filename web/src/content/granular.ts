@@ -64,6 +64,15 @@ export type Pillar = {
     reading?: string;
   }[];
   facts?: { label: string; value: string; note?: string }[];
+  /** Ciclo de flujo del capítulo, cuando la fuente lo documenta como tal. */
+  cycle?: {
+    title: string;
+    page: number;
+    nodes: { label: string }[];
+    caption: string;
+    reading: string;
+    disclaimer: string;
+  };
   limitations: { title: string; text: string; points: string[] };
   next: { number: string; title: string; desc: string };
 };
@@ -206,6 +215,23 @@ export const pillars: Pillar[] = [
           'La exposición a la sequía se distribuye de forma desigual y el portafolio la vincula con la modalidad de producción: el temporal aparece asociado a las categorías más altas.',
       },
     ],
+    cycle: {
+      title: 'La paradoja hídrica',
+      page: 27,
+      // Los cuatro términos y el sentido del ciclo vienen del diagrama radial
+      // de la página 27. La circunferencia solo los ordena.
+      nodes: [
+        { label: 'Agua' },
+        { label: 'Forrajes' },
+        { label: 'Vacas' },
+        { label: 'Leche' },
+      ],
+      caption: 'Diagrama radial de la página 27, reconstruido con texto real.',
+      reading:
+        'A partir del peso de los forrajes dentro de la superficie bajo riego, la página formula una crítica al destino productivo del agua y utiliza la expresión «alimentar vacas, no personas». La narrativa interpreta este patrón como una contradicción entre alta productividad agroindustrial, presión hídrica y producción directa de alimentos.',
+      disclaimer:
+        'La página no presenta junto a esta afirmación un balance de consumo de agua por cultivo, producción pecuaria, disponibilidad alimentaria ni seguridad alimentaria. La expresión entrecomillada es del autor, no un resultado calculado.',
+    },
     facts: [
       { label: 'Superficie de riego', value: '366,912 ha', note: 'consignada en la página 26' },
       { label: 'Superficie de temporal', value: '135,541 ha', note: 'consignada en la página 26' },

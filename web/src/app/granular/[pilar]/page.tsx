@@ -6,6 +6,7 @@ import styles from './pilar.module.css';
 import { getPillar, granularProject, pillars } from '@/content/granular';
 import { PillarPlate } from '@/components/granular/PillarPlate';
 import { MunicipalIndex } from '@/components/granular/MunicipalIndex';
+import { FlowCycle } from '@/components/granular/FlowCycle';
 import { getMunicipios } from '@/lib/atlas';
 import { SignalPoster } from '@/components/atlas/SignalPoster';
 import { TextureOverlay } from '@/components/atlas/TextureOverlay';
@@ -89,6 +90,21 @@ export default function PilarPage({ params }: { params: { pilar: string } }) {
       {pillar.plates.map((plate) => (
         <PillarPlate key={plate.id} pillar={pillar} plate={plate} />
       ))}
+
+      {/* --- Ciclo de flujo ---------------------------------------------------- */}
+      {pillar.cycle ? (
+        <section className={styles.cycle}>
+          <div className={styles.cycleGrid}>
+            <div className={styles.cycleText}>
+              <p className="technical">p.{pillar.cycle.page}</p>
+              <h2 className={styles.cycleTitle}>{pillar.cycle.title}</h2>
+              <p className={styles.cycleReading}>{pillar.cycle.reading}</p>
+              <p className={styles.cycleDisclaimer}>{pillar.cycle.disclaimer}</p>
+            </div>
+            <FlowCycle nodes={pillar.cycle.nodes} caption={pillar.cycle.caption} />
+          </div>
+        </section>
+      ) : null}
 
       {/* --- Índice municipal -------------------------------------------------- */}
       {municipal ? (
