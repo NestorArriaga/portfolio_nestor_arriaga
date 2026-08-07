@@ -1,0 +1,159 @@
+/* Interludio de pantalla completa. Dos acabados: amarillo de señal y negro
+   mineral. Ambos con retícula visible y un solo punto de color. */
+
+.poster {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  padding: var(--margin-wide) var(--margin);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.poster[data-variant='signal'] {
+  background: var(--signal);
+  color: var(--black);
+  --poster-grid: rgba(255, 255, 255, 0.85);
+  --poster-territory: #6f6f6f;
+}
+
+.poster[data-variant='mineral'] {
+  background: var(--black);
+  color: var(--white);
+  --poster-grid: rgba(255, 255, 255, 0.5);
+  --poster-territory: #2a2a2a;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  stroke: var(--poster-grid);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity var(--dur-chapter) var(--ease-out);
+}
+
+.poster[data-revealed='true'] .grid { opacity: 0.55; }
+
+.territory {
+  position: absolute;
+  inset: 8% 12%;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+  color: var(--poster-territory);
+  /* La silueta entra 24 px. Solo transform: no toca el layout. */
+  transform: translateY(24px);
+  opacity: 0;
+  transition:
+    transform var(--dur-chapter) var(--ease-out),
+    opacity var(--dur-chapter) var(--ease-out);
+}
+
+.territory :global(svg) {
+  max-height: 84svh;
+  width: auto;
+}
+
+.poster[data-revealed='true'] .territory {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.title {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+  /* 16-26vw, con recorte controlado. */
+  font-size: clamp(3.5rem, 19vw, 15rem);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.word {
+  display: block;
+  /* El título se desplaza 16 px en dirección contraria a la silueta. */
+  transform: translateY(-16px);
+  opacity: 0;
+  transition:
+    transform var(--dur-chapter) var(--ease-out),
+    opacity var(--dur-chapter) var(--ease-out);
+}
+
+/* Palabras alternas desplazadas: fragmentación, no desorden. */
+.word:nth-child(even) { margin-left: 0.32em; }
+
+.poster[data-revealed='true'] .word {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.poster[data-vertical='true'] .title {
+  writing-mode: vertical-rl;
+  flex-direction: row;
+  justify-self: center;
+  line-height: 0.9;
+}
+
+.poster[data-vertical='true'] .word:nth-child(even) {
+  margin-left: 0;
+  margin-top: 0.32em;
+}
+
+.marks {
+  position: absolute;
+  inset: var(--margin) var(--margin) auto;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.mark { display: flex; flex-direction: column; gap: 0.1rem; }
+.mark dt { opacity: 0.55; }
+.mark dd { margin: 0; font-variant-numeric: tabular-nums; }
+
+.note {
+  position: absolute;
+  left: var(--margin);
+  bottom: var(--margin);
+  max-width: 26ch;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--type-label);
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .poster { padding: 5rem var(--margin) 4rem; }
+  .title { font-size: clamp(2.75rem, 21vw, 6rem); }
+  .marks { flex-wrap: wrap; row-gap: 0.6rem; }
+  /* En vertical el título no cabe en móvil: vuelve a horizontal. */
+  .poster[data-vertical='true'] .title {
+    writing-mode: horizontal-tb;
+    flex-direction: column;
+  }
+  .note { position: static; margin-top: 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid { opacity: 0.55; transition: none; }
+  .territory,
+  .word {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+}

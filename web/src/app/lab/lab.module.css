@@ -1,0 +1,247 @@
+/* Laboratorio visual. Su propia composición debe respetar el sistema que
+   documenta: retícula, línea fina, cero radio, cero tarjeta. */
+
+.page {
+  min-height: 100svh;
+  background: var(--black);
+}
+
+.masthead {
+  padding: var(--margin-wide) var(--margin) 3rem;
+  border-bottom: var(--hairline) solid var(--line-dark);
+}
+
+.h1 {
+  margin: 1rem 0 0.75rem;
+  font-size: var(--type-case);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.045em;
+}
+
+.lede {
+  margin: 0;
+  max-width: var(--measure);
+  color: var(--ink-muted);
+}
+
+.stats {
+  margin: 2.5rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 3rem;
+}
+
+.stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 0.6rem;
+  border-top: var(--line) solid var(--line-dark);
+  min-width: 8rem;
+}
+
+.stats dt {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.stats dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.section { border-bottom: var(--hairline) solid var(--line-dark); }
+
+.sectionHead {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 22ch) minmax(0, 1fr);
+  gap: var(--gutter);
+  align-items: baseline;
+  padding: 3.5rem var(--margin) 1.75rem;
+}
+
+.h2 {
+  margin: 0;
+  font-size: var(--type-heading);
+  font-weight: 600;
+}
+
+.note {
+  margin: 0;
+  font-size: var(--type-label);
+  color: var(--ink-muted);
+  max-width: var(--measure);
+}
+
+.body { padding: 0 var(--margin) 4rem; }
+.bodyBare { padding: 0; }
+
+/* --- Color ---------------------------------------------------------------- */
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--gutter);
+}
+
+.swatch { margin: 0; }
+
+.chip {
+  height: 76px;
+  border: var(--hairline) solid var(--line-dark);
+}
+
+.swatch figcaption,
+.patternCell figcaption,
+.maskCell figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding-top: 0.45rem;
+  font-size: var(--type-technical);
+}
+
+.swatch code,
+.patternCell code,
+.maskCell code,
+.icons code {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  color: var(--ink-faint);
+}
+
+/* --- Tipografía ------------------------------------------------------------ */
+
+.typeSpecimens { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.typeCase {
+  margin: 0;
+  font-size: var(--type-case);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.045em;
+}
+
+.typeDisplay {
+  margin: 0;
+  font-size: var(--type-display);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.typeHeading { margin: 0; font-size: var(--type-heading); font-weight: 500; }
+
+.typeBody {
+  margin: 0;
+  max-width: var(--measure);
+  color: var(--ink-muted);
+}
+
+/* --- Patrones -------------------------------------------------------------- */
+
+.patterns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--gutter);
+  color: var(--p04-cultivo);
+}
+
+.patternCell { margin: 0; }
+
+.patternSwatch {
+  width: 100%;
+  height: auto;
+  background: var(--black-soft);
+}
+
+/* --- Íconos ---------------------------------------------------------------- */
+
+.icons {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--gutter);
+  color: var(--ink);
+}
+
+.icons li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: var(--hairline) solid var(--line-dark);
+}
+
+/* --- Instrumentos ---------------------------------------------------------- */
+
+.instruments {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, auto));
+  gap: 2.5rem var(--gutter);
+  align-items: start;
+}
+
+.instrument { display: flex; flex-direction: column; gap: 0.6rem; max-width: 220px; }
+.instrument p { margin: 0; }
+.instrumentWide { grid-column: 1 / -1; max-width: 620px; }
+
+/* --- Máscaras -------------------------------------------------------------- */
+
+.masks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--gutter);
+  color: var(--p01-verde);
+}
+
+.maskCell { margin: 0; }
+
+.maskFigure {
+  display: grid;
+  place-items: center;
+  height: 200px;
+  padding: 1rem;
+  border: var(--hairline) solid var(--line-dark);
+}
+
+/* Las siluetas tienen proporciones muy distintas —CDMX es casi vertical,
+   Yucatán apaisada— así que hay que limitar la altura del propio svg. Acotar
+   sólo el contenedor deja que el svg lo desborde. */
+.maskFigure :global(svg) {
+  max-height: 168px;
+  width: auto;
+  max-width: 100%;
+}
+
+/* --- Lámina ---------------------------------------------------------------- */
+
+.plateField { position: relative; }
+
+.plateInstruments {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: var(--z-annotation);
+}
+
+.singleLayer { max-width: 520px; display: flex; flex-direction: column; gap: 0.75rem; }
+.singleLayer p { margin: 0; }
+
+@media (max-width: 900px) {
+  .sectionHead {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 2.5rem var(--margin) 1.25rem;
+  }
+  .body { padding: 0 var(--margin) 3rem; }
+  .stats { gap: 0 1.5rem; }
+}

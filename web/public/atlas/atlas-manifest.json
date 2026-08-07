@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-07T12:12:57",
+ "generated": "2026-08-07T14:26:35",
  "source_dir": "/Users/nestorarriagagallegos/Documents/EPI /GRANULAR/DISEÑO IMAGEN Y PRESENTACION/B VECTORES SVG AI EPS/EPI CIHEAM/ELEMENTOS",
  "widths": [
   2000,
@@ -12,6 +12,15 @@
    "source": "Comarca_Bing.svg",
    "slug": "comarca-bing",
    "source_bytes": 25320660,
+   "canvas": {
+    "user_box": [
+     -18.0,
+     -50.0,
+     3588.0,
+     2523.0
+    ],
+    "ratio": 1.40148
+   },
    "layers": [
     {
      "layer": 1,
@@ -29,6 +38,30 @@
      "mean_saturation": 0.2858,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#54543a",
+       "share": 0.208
+      },
+      {
+       "hex": "#6e6a4e",
+       "share": 0.18
+      },
+      {
+       "hex": "#3a4025",
+       "share": 0.109
+      },
+      {
+       "hex": "#7c7255",
+       "share": 0.082
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-bing--l1-color-2000.webp",
@@ -61,12 +94,21 @@
     "bytes": 343718,
     "file": "/atlas/vector/comarca-bing.svg"
    },
-   "seconds": 1.51
+   "seconds": 1.65
   },
   {
    "source": "Comarca_Black.svg",
    "slug": "comarca-black",
    "source_bytes": 30468615,
+   "canvas": {
+    "user_box": [
+     -18.0,
+     -50.0,
+     3588.0,
+     2523.0
+    ],
+    "ratio": 1.40148
+   },
    "layers": [
     {
      "layer": 1,
@@ -84,6 +126,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-black--l1-color-2000.webp",
@@ -108,6 +157,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.004992,
+      0.019433,
+      0.972823,
+      0.963855
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-black--l2-color-2000.webp",
@@ -135,12 +191,21 @@
     "bytes": 344439,
     "file": "/atlas/vector/comarca-black.svg"
    },
-   "seconds": 2.07
+   "seconds": 2.4
   },
   {
    "source": "Comarca_Caracterizacion.svg",
    "slug": "comarca-caracterizacion",
    "source_bytes": 8307760,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     1832.0,
+     2000.0
+    ],
+    "ratio": 0.916
+   },
    "layers": [
     {
      "layer": 1,
@@ -158,6 +223,30 @@
      "mean_saturation": 0.2369,
      "opaque_ratio": 0.5336,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#53543b",
+       "share": 0.232
+      },
+      {
+       "hex": "#6d6a4f",
+       "share": 0.178
+      },
+      {
+       "hex": "#888165",
+       "share": 0.101
+      },
+      {
+       "hex": "#7c7256",
+       "share": 0.076
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.999453,
+      1.000184
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/comarca-caracterizacion--l1-color-1000.webp",
@@ -181,6 +270,30 @@
      "mean_saturation": 0.3516,
      "opaque_ratio": 0.3545,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#545338",
+       "share": 0.208
+      },
+      {
+       "hex": "#3a3d24",
+       "share": 0.178
+      },
+      {
+       "hex": "#6f6a4d",
+       "share": 0.109
+      },
+      {
+       "hex": "#7c7253",
+       "share": 0.071
+      }
+     ],
+     "frame": [
+      0.240153,
+      0.0,
+      0.129103,
+      0.039586
+     ],
      "files": {
       "color": {}
      }
@@ -215,12 +328,21 @@
     "bytes": 304999,
     "file": "/atlas/vector/comarca-caracterizacion.svg"
    },
-   "seconds": 0.37
+   "seconds": 0.42
   },
   {
    "source": "Comarca_Caracterizacion_g.svg",
    "slug": "comarca-caracterizacion-g",
    "source_bytes": 8710506,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     1847.0,
+     2000.0
+    ],
+    "ratio": 0.9235
+   },
    "layers": [
     {
      "layer": 1,
@@ -238,6 +360,30 @@
      "mean_saturation": 0.9906,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#002552",
+       "share": 0.17
+      },
+      {
+       "hex": "#001c3d",
+       "share": 0.14
+      },
+      {
+       "hex": "#001025",
+       "share": 0.112
+      },
+      {
+       "hex": "#003c82",
+       "share": 0.112
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.998917,
+      0.999541
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/comarca-caracterizacion-g--l1-color-1000.webp",
@@ -261,6 +407,30 @@
      "mean_saturation": 0.9203,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#00040a",
+       "share": 0.387
+      },
+      {
+       "hex": "#000f22",
+       "share": 0.233
+      },
+      {
+       "hex": "#001c3d",
+       "share": 0.106
+      },
+      {
+       "hex": "#002552",
+       "share": 0.103
+      }
+     ],
+     "frame": [
+      0.241062,
+      0.0,
+      0.132178,
+      0.048526
+     ],
      "files": {
       "color": {}
      }
@@ -281,6 +451,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      0.998917,
+      0.999041
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/comarca-caracterizacion-g--l3-color-1000.webp",
@@ -304,6 +481,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.241062,
+      0.0,
+      0.132178,
+      0.048526
+     ],
      "files": {
       "color": {}
      }
@@ -337,12 +521,21 @@
     "bytes": 526394,
     "file": "/atlas/vector/comarca-caracterizacion-g.svg"
    },
-   "seconds": 0.56
+   "seconds": 0.61
   },
   {
    "source": "Comarca_Google.svg",
    "slug": "comarca-google",
    "source_bytes": 28206488,
+   "canvas": {
+    "user_box": [
+     -18.0,
+     -50.0,
+     3588.0,
+     2523.0
+    ],
+    "ratio": 1.40148
+   },
    "layers": [
     {
      "layer": 1,
@@ -360,6 +553,30 @@
      "mean_saturation": 0.1883,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#99836e",
+       "share": 0.198
+      },
+      {
+       "hex": "#b29b83",
+       "share": 0.154
+      },
+      {
+       "hex": "#816b59",
+       "share": 0.097
+      },
+      {
+       "hex": "#8b7b67",
+       "share": 0.06
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-google--l1-color-2000.webp",
@@ -392,12 +609,13 @@
     "bytes": 343718,
     "file": "/atlas/vector/comarca-google.svg"
    },
-   "seconds": 1.54
+   "seconds": 1.64
   },
   {
    "source": "Comarca_Orange.svg",
    "slug": "comarca-orange",
    "source_bytes": 361324,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -425,6 +643,15 @@
    "source": "Comarca_Recorte_Azul.svg",
    "slug": "comarca-recorte-azul",
    "source_bytes": 8138356,
+   "canvas": {
+    "user_box": [
+     405.0,
+     709.0,
+     2252.0,
+     2806.0
+    ],
+    "ratio": 0.88078
+   },
    "layers": [
     {
      "layer": 1,
@@ -442,6 +669,30 @@
      "mean_saturation": 0.9909,
      "opaque_ratio": 0.0002,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#002652",
+       "share": 0.168
+      },
+      {
+       "hex": "#001c3d",
+       "share": 0.143
+      },
+      {
+       "hex": "#003d82",
+       "share": 0.112
+      },
+      {
+       "hex": "#001125",
+       "share": 0.112
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.999459,
+      1.0
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/comarca-recorte-azul--l1-color-1000.webp",
@@ -465,6 +716,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      0.999459,
+      1.0
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/comarca-recorte-azul--l2-color-1000.webp",
@@ -490,12 +748,21 @@
     "bytes": 11022,
     "file": "/atlas/vector/comarca-recorte-azul.svg"
    },
-   "seconds": 0.52
+   "seconds": 0.55
   },
   {
    "source": "Comarca_Recorte_Negro.svg",
    "slug": "comarca-recorte-negro",
    "source_bytes": 7585968,
+   "canvas": {
+    "user_box": [
+     465.0,
+     720.0,
+     2282.0,
+     2784.0
+    ],
+    "ratio": 0.88033
+   },
    "layers": [
     {
      "layer": 1,
@@ -513,6 +780,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0002,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/comarca-recorte-negro--l1-color-1000.webp",
@@ -536,6 +810,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/comarca-recorte-negro--l2-color-1000.webp",
@@ -561,12 +842,21 @@
     "bytes": 11022,
     "file": "/atlas/vector/comarca-recorte-negro.svg"
    },
-   "seconds": 0.51
+   "seconds": 0.56
   },
   {
    "source": "Comarca_Satelite_B.svg",
    "slug": "comarca-satelite-b",
    "source_bytes": 8012707,
+   "canvas": {
+    "user_box": [
+     333.0,
+     709.0,
+     2165.0,
+     2790.0
+    ],
+    "ratio": 0.88035
+   },
    "layers": [
     {
      "layer": 1,
@@ -584,6 +874,30 @@
      "mean_saturation": 0.2372,
      "opaque_ratio": 0.5124,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#53543c",
+       "share": 0.238
+      },
+      {
+       "hex": "#6d6a4e",
+       "share": 0.181
+      },
+      {
+       "hex": "#888164",
+       "share": 0.097
+      },
+      {
+       "hex": "#7d7256",
+       "share": 0.073
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/comarca-satelite-b--l1-color-1000.webp",
@@ -609,12 +923,21 @@
     "bytes": 9460,
     "file": "/atlas/vector/comarca-satelite-b.svg"
    },
-   "seconds": 0.35
+   "seconds": 0.39
   },
   {
    "source": "Comarca_V3.svg",
    "slug": "comarca-v3",
    "source_bytes": 19839613,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -632,6 +955,30 @@
      "mean_saturation": 0.6201,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#1f4069",
+       "share": 0.289
+      },
+      {
+       "hex": "#1b3454",
+       "share": 0.267
+      },
+      {
+       "hex": "#3c536e",
+       "share": 0.111
+      },
+      {
+       "hex": "#284a73",
+       "share": 0.088
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-v3--l1-color-2000.webp",
@@ -662,12 +1009,13 @@
     "bytes": 5847,
     "file": "/atlas/vector/comarca-v3.svg"
    },
-   "seconds": 1.15
+   "seconds": 1.26
   },
   {
    "source": "Copia de Landscape Illustration_Tutorial Source File [Recuperado].svg",
    "slug": "copia-de-landscape-illustration-tutorial-source-file-recuperado",
    "source_bytes": 5938905,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -694,12 +1042,13 @@
     "bytes": 5938905,
     "file": "/atlas/vector/copia-de-landscape-illustration-tutorial-source-file-recuperado.svg"
    },
-   "seconds": 0.03
+   "seconds": 0.04
   },
   {
    "source": "Cuencame.svg",
    "slug": "cuencame",
    "source_bytes": 30560,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -726,6 +1075,15 @@
    "source": "Cuencas_Comarca.svg",
    "slug": "cuencas-comarca",
    "source_bytes": 15617435,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -743,6 +1101,30 @@
      "mean_saturation": 0.167,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#3570b4",
+       "share": 0.286
+      },
+      {
+       "hex": "#2b67ab",
+       "share": 0.188
+      },
+      {
+       "hex": "#1f5a9e",
+       "share": 0.143
+      },
+      {
+       "hex": "#2661a5",
+       "share": 0.075
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/cuencas-comarca--l1-color-2000.webp",
@@ -773,12 +1155,21 @@
     "bytes": 5337,
     "file": "/atlas/vector/cuencas-comarca.svg"
    },
-   "seconds": 1.18
+   "seconds": 1.26
   },
   {
    "source": "Cuencas_V3.svg",
    "slug": "cuencas-v3",
    "source_bytes": 17594969,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -796,6 +1187,30 @@
      "mean_saturation": 0.6869,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#1c3555",
+       "share": 0.327
+      },
+      {
+       "hex": "#1f4169",
+       "share": 0.27
+      },
+      {
+       "hex": "#406e89",
+       "share": 0.117
+      },
+      {
+       "hex": "#0e59b0",
+       "share": 0.089
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/cuencas-v3--l1-color-2000.webp",
@@ -826,12 +1241,13 @@
     "bytes": 5847,
     "file": "/atlas/vector/cuencas-v3.svg"
    },
-   "seconds": 1.07
+   "seconds": 1.15
   },
   {
    "source": "Franciso_I_Madero.svg",
    "slug": "franciso-i-madero",
    "source_bytes": 18347,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -858,6 +1274,7 @@
    "source": "General_Simon_Bolivar.svg",
    "slug": "general-simon-bolivar",
    "source_bytes": 85883,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -884,6 +1301,7 @@
    "source": "Gomez_Palacio.svg",
    "slug": "gomez-palacio",
    "source_bytes": 34695,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -910,6 +1328,7 @@
    "source": "Lerdo.svg",
    "slug": "lerdo",
    "source_bytes": 29000,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -936,6 +1355,7 @@
    "source": "Mapimi.svg",
    "slug": "mapimi",
    "source_bytes": 27068,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -962,6 +1382,7 @@
    "source": "Matamoros.svg",
    "slug": "matamoros",
    "source_bytes": 20878,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -988,6 +1409,7 @@
    "source": "Nazas.svg",
    "slug": "nazas",
    "source_bytes": 25424,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1014,6 +1436,15 @@
    "source": "PROYECTO FINAL MANEJO DE CUENCAS.svg",
    "slug": "proyecto-final-manejo-de-cuencas",
    "source_bytes": 7100060,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2648.0,
+     2623.0
+    ],
+    "ratio": 1.00953
+   },
    "layers": [
     {
      "layer": 1,
@@ -1031,6 +1462,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/proyecto-final-manejo-de-cuencas--l1-color-2000.webp",
@@ -1055,6 +1493,30 @@
      "mean_saturation": 0.0196,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#030302",
+       "share": 0.949
+      },
+      {
+       "hex": "#54543f",
+       "share": 0.028
+      },
+      {
+       "hex": "#23241b",
+       "share": 0.009
+      },
+      {
+       "hex": "#777755",
+       "share": 0.003
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/proyecto-final-manejo-de-cuencas--l2-color-2000.webp",
@@ -1077,12 +1539,13 @@
     "bytes": 1262,
     "file": "/atlas/vector/proyecto-final-manejo-de-cuencas.svg"
    },
-   "seconds": 0.91
+   "seconds": 1.02
   },
   {
    "source": "RTP.svg",
    "slug": "rtp",
    "source_bytes": 3122948,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1130,6 +1593,15 @@
    "source": "Radar de Tensiones y Políticas_Hídricas_Comarca_Lagunera_(1990–2025).svg",
    "slug": "radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025",
    "source_bytes": 7199652,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2000.0,
+     1994.0
+    ],
+    "ratio": 1.00301
+   },
    "layers": [
     {
      "layer": 1,
@@ -1147,6 +1619,30 @@
      "mean_saturation": 0.9908,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#002652",
+       "share": 0.166
+      },
+      {
+       "hex": "#001c3d",
+       "share": 0.143
+      },
+      {
+       "hex": "#003c82",
+       "share": 0.112
+      },
+      {
+       "hex": "#001025",
+       "share": 0.11
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.918497,
+      0.998577
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l1-color-1000.webp",
@@ -1170,6 +1666,30 @@
      "mean_saturation": 0.9291,
      "opaque_ratio": 0.0001,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#00040a",
+       "share": 0.374
+      },
+      {
+       "hex": "#000f22",
+       "share": 0.232
+      },
+      {
+       "hex": "#001b3d",
+       "share": 0.108
+      },
+      {
+       "hex": "#002552",
+       "share": 0.104
+      }
+     ],
+     "frame": [
+      0.220097,
+      0.0,
+      0.123334,
+      0.048275
+     ],
      "files": {
       "color": {}
      }
@@ -1190,6 +1710,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.220097,
+      0.0,
+      0.123334,
+      0.048275
+     ],
      "files": {
       "color": {}
      }
@@ -1210,6 +1737,30 @@
      "mean_saturation": 0.3625,
      "opaque_ratio": 0.1026,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#bd955a",
+       "share": 0.225
+      },
+      {
+       "hex": "#223c70",
+       "share": 0.129
+      },
+      {
+       "hex": "#2e7bba",
+       "share": 0.121
+      },
+      {
+       "hex": "#3183c6",
+       "share": 0.087
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.8,
+      0.296891
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l4-color-1000.webp",
@@ -1233,6 +1784,30 @@
      "mean_saturation": 0.6881,
      "opaque_ratio": 0.2601,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#6dbd43",
+       "share": 0.435
+      },
+      {
+       "hex": "#1a6383",
+       "share": 0.286
+      },
+      {
+       "hex": "#1a5e7d",
+       "share": 0.104
+      },
+      {
+       "hex": "#71c345",
+       "share": 0.082
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      0.51003
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l5-color-2000.webp",
@@ -1257,6 +1832,30 @@
      "mean_saturation": 0.6787,
      "opaque_ratio": 0.0608,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#a22143",
+       "share": 0.449
+      },
+      {
+       "hex": "#b3254a",
+       "share": 0.222
+      },
+      {
+       "hex": "#aa2346",
+       "share": 0.187
+      },
+      {
+       "hex": "#bb9459",
+       "share": 0.132
+      }
+     ],
+     "frame": [
+      0.0015,
+      0.001505,
+      0.7955,
+      0.220662
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l6-color-1000.webp",
@@ -1280,6 +1879,30 @@
      "mean_saturation": 0.6753,
      "opaque_ratio": 0.0913,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#9f2449",
+       "share": 0.742
+      },
+      {
+       "hex": "#ab274f",
+       "share": 0.14
+      },
+      {
+       "hex": "#b28d5c",
+       "share": 0.08
+      },
+      {
+       "hex": "#b6905e",
+       "share": 0.021
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.512,
+      0.132899
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l7-color-1000.webp",
@@ -1313,12 +1936,13 @@
     "bytes": 326673,
     "file": "/atlas/vector/radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025.svg"
    },
-   "seconds": 0.7
+   "seconds": 0.84
   },
   {
    "source": "San_Juan_De_Guadalupe.svg",
    "slug": "san-juan-de-guadalupe",
    "source_bytes": 26689,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1345,6 +1969,7 @@
    "source": "San_Luis_Del_Cordero.svg",
    "slug": "san-luis-del-cordero",
    "source_bytes": 16487,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1371,6 +1996,7 @@
    "source": "San_Pedro.svg",
    "slug": "san-pedro",
    "source_bytes": 16611,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1397,6 +2023,7 @@
    "source": "Santa_Clara.svg",
    "slug": "santa-clara",
    "source_bytes": 26711,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1423,6 +2050,7 @@
    "source": "Tlahualillo.svg",
    "slug": "tlahualillo",
    "source_bytes": 13488,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1449,6 +2077,7 @@
    "source": "Torreon.svg",
    "slug": "torreon",
    "source_bytes": 72618,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1475,6 +2104,7 @@
    "source": "Viesca.svg",
    "slug": "viesca",
    "source_bytes": 57373,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1501,6 +2131,15 @@
    "source": "Zona_Lagunera_Total.svg",
    "slug": "zona-lagunera-total",
    "source_bytes": 25815755,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -1518,6 +2157,30 @@
      "mean_saturation": 0.3429,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#53513c",
+       "share": 0.147
+      },
+      {
+       "hex": "#393a28",
+       "share": 0.133
+      },
+      {
+       "hex": "#6d6750",
+       "share": 0.08
+      },
+      {
+       "hex": "#986f3c",
+       "share": 0.079
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/zona-lagunera-total--l1-color-2000.webp",
@@ -1548,12 +2211,21 @@
     "bytes": 5337,
     "file": "/atlas/vector/zona-lagunera-total.svg"
    },
-   "seconds": 1.41
+   "seconds": 1.97
   },
   {
    "source": "Zona_Lagunera_Total_Black.svg",
    "slug": "zona-lagunera-total-black",
    "source_bytes": 17312057,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -1571,6 +2243,30 @@
      "mean_saturation": 0.1345,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#98724d",
+       "share": 0.146
+      },
+      {
+       "hex": "#8a643f",
+       "share": 0.141
+      },
+      {
+       "hex": "#a17c56",
+       "share": 0.131
+      },
+      {
+       "hex": "#805a34",
+       "share": 0.117
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/zona-lagunera-total-black--l1-color-2000.webp",
@@ -1601,12 +2297,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/zona-lagunera-total-black.svg"
    },
-   "seconds": 1.21
+   "seconds": 1.36
   },
   {
    "source": "acuiferos total.svg",
    "slug": "acuiferos-total",
    "source_bytes": 7154569,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -1624,6 +2329,30 @@
      "mean_saturation": 0.1267,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#396f9c",
+       "share": 0.133
+      },
+      {
+       "hex": "#3e7cb4",
+       "share": 0.113
+      },
+      {
+       "hex": "#2a556b",
+       "share": 0.074
+      },
+      {
+       "hex": "#3d3b6a",
+       "share": 0.068
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/acuiferos-total--l1-color-2000.webp",
@@ -1654,12 +2383,13 @@
     "bytes": 5847,
     "file": "/atlas/vector/acuiferos-total.svg"
    },
-   "seconds": 0.71
+   "seconds": 0.8
   },
   {
    "source": "agricultura1.svg",
    "slug": "agricultura1",
    "source_bytes": 2273,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1684,6 +2414,15 @@
    "source": "agricultura_comarca.svg",
    "slug": "agricultura-comarca",
    "source_bytes": 5607313,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -1701,6 +2440,30 @@
      "mean_saturation": 0.0401,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#22887e",
+       "share": 0.219
+      },
+      {
+       "hex": "#3b847e",
+       "share": 0.09
+      },
+      {
+       "hex": "#53827e",
+       "share": 0.055
+      },
+      {
+       "hex": "#6a3956",
+       "share": 0.053
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/agricultura-comarca--l1-color-2000.webp",
@@ -1726,12 +2489,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/agricultura-comarca.svg"
    },
-   "seconds": 0.62
+   "seconds": 0.64
   },
   {
    "source": "agricultura_comarca_total.svg",
    "slug": "agricultura-comarca-total",
    "source_bytes": 16567737,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -1749,6 +2521,30 @@
      "mean_saturation": 0.0589,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#1f837a",
+       "share": 0.117
+      },
+      {
+       "hex": "#207e75",
+       "share": 0.062
+      },
+      {
+       "hex": "#3b6e6a",
+       "share": 0.054
+      },
+      {
+       "hex": "#6d244f",
+       "share": 0.042
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/agricultura-comarca-total--l1-color-2000.webp",
@@ -1774,12 +2570,13 @@
     "bytes": 5847,
     "file": "/atlas/vector/agricultura-comarca-total.svg"
    },
-   "seconds": 0.82
+   "seconds": 0.84
   },
   {
    "source": "agricultura_riego.svg",
    "slug": "agricultura-riego",
    "source_bytes": 2177187,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1827,6 +2624,7 @@
    "source": "agricultura_temporal.svg",
    "slug": "agricultura-temporal",
    "source_bytes": 2291404,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1874,6 +2672,15 @@
    "source": "agricultura_total_2.svg",
    "slug": "agricultura-total-2",
    "source_bytes": 19963695,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -1891,6 +2698,30 @@
      "mean_saturation": 0.6194,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#1f4069",
+       "share": 0.284
+      },
+      {
+       "hex": "#1b3454",
+       "share": 0.263
+      },
+      {
+       "hex": "#3c536d",
+       "share": 0.11
+      },
+      {
+       "hex": "#274a73",
+       "share": 0.082
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/agricultura-total-2--l1-color-2000.webp",
@@ -1921,12 +2752,13 @@
     "bytes": 5337,
     "file": "/atlas/vector/agricultura-total-2.svg"
    },
-   "seconds": 1.16
+   "seconds": 1.21
   },
   {
    "source": "agropro.svg",
    "slug": "agropro",
    "source_bytes": 85270,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -1955,6 +2787,15 @@
    "source": "agua_tot.svg",
    "slug": "agua-tot",
    "source_bytes": 20026033,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -1972,6 +2813,30 @@
      "mean_saturation": 0.5814,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#3e5854",
+       "share": 0.141
+      },
+      {
+       "hex": "#376b80",
+       "share": 0.094
+      },
+      {
+       "hex": "#2b6584",
+       "share": 0.094
+      },
+      {
+       "hex": "#3c656b",
+       "share": 0.085
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/agua-tot--l1-color-2000.webp",
@@ -2002,12 +2867,13 @@
     "bytes": 5847,
     "file": "/atlas/vector/agua-tot.svg"
    },
-   "seconds": 1.23
+   "seconds": 1.35
   },
   {
    "source": "anp.svg",
    "slug": "anp",
    "source_bytes": 3069600,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -2055,6 +2921,15 @@
    "source": "anp_rtp.svg",
    "slug": "anp-rtp",
    "source_bytes": 6475505,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -2072,6 +2947,30 @@
      "mean_saturation": 0.0197,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#ad4222",
+       "share": 0.17
+      },
+      {
+       "hex": "#844495",
+       "share": 0.14
+      },
+      {
+       "hex": "#bc413a",
+       "share": 0.085
+      },
+      {
+       "hex": "#874a98",
+       "share": 0.072
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/anp-rtp--l1-color-2000.webp",
@@ -2097,12 +2996,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/anp-rtp.svg"
    },
-   "seconds": 0.66
+   "seconds": 0.71
   },
   {
    "source": "base_red.svg",
    "slug": "base-red",
    "source_bytes": 23828063,
+   "canvas": {
+    "user_box": [
+     -40.0,
+     -99.0,
+     3659.0,
+     2548.0
+    ],
+    "ratio": 1.39743
+   },
    "layers": [
     {
      "layer": 1,
@@ -2120,6 +3028,30 @@
      "mean_saturation": 0.5509,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#1f0d0d",
+       "share": 0.198
+      },
+      {
+       "hex": "#823a3a",
+       "share": 0.174
+      },
+      {
+       "hex": "#552525",
+       "share": 0.147
+      },
+      {
+       "hex": "#662c2c",
+       "share": 0.113
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/base-red--l1-color-2000.webp",
@@ -2149,6 +3081,30 @@
      "mean_saturation": 0.25,
      "opaque_ratio": 0.003,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#acaa7f",
+       "share": 0.455
+      },
+      {
+       "hex": "#9dad81",
+       "share": 0.224
+      },
+      {
+       "hex": "#b0a371",
+       "share": 0.104
+      },
+      {
+       "hex": "#a19d74",
+       "share": 0.087
+      }
+     ],
+     "frame": [
+      0.010814,
+      0.037401,
+      0.948364,
+      0.93691
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/base-red--l2-color-2000.webp",
@@ -2175,12 +3131,21 @@
     "bytes": 10279,
     "file": "/atlas/vector/base-red.svg"
    },
-   "seconds": 2.59
+   "seconds": 3.1
   },
   {
    "source": "basedef.svg",
    "slug": "basedef",
    "source_bytes": 14965412,
+   "canvas": {
+    "user_box": [
+     -4.0,
+     -14.0,
+     2520.0,
+     3521.0
+    ],
+    "ratio": 0.714
+   },
    "layers": [
     {
      "layer": 1,
@@ -2198,6 +3163,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/basedef--l1-color-2000.webp",
@@ -2224,12 +3196,21 @@
     "bytes": 10508,
     "file": "/atlas/vector/basedef.svg"
    },
-   "seconds": 1.12
+   "seconds": 1.2
   },
   {
    "source": "bolson_mapimi.svg",
    "slug": "bolson-mapimi",
    "source_bytes": 209406,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3508.0,
+     2480.0
+    ],
+    "ratio": 1.41452
+   },
    "layers": [
     {
      "layer": 1,
@@ -2247,6 +3228,30 @@
      "mean_saturation": 0.9905,
      "opaque_ratio": 0.3449,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#0076ff",
+       "share": 0.923
+      },
+      {
+       "hex": "#067fff",
+       "share": 0.056
+      },
+      {
+       "hex": "#2089ff",
+       "share": 0.019
+      },
+      {
+       "hex": "#2c92ff",
+       "share": 0.001
+      }
+     ],
+     "frame": [
+      0.178449,
+      0.010081,
+      0.499715,
+      0.985081
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/bolson-mapimi--l1-color-1000.webp",
@@ -2272,12 +3277,21 @@
     "bytes": 7384,
     "file": "/atlas/vector/bolson-mapimi.svg"
    },
-   "seconds": 0.17
+   "seconds": 0.19
   },
   {
    "source": "calidad_agua_total.svg",
    "slug": "calidad-agua-total",
    "source_bytes": 7257317,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -2295,6 +3309,30 @@
      "mean_saturation": 0.1096,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#3a4d6c",
+       "share": 0.15
+      },
+      {
+       "hex": "#344054",
+       "share": 0.142
+      },
+      {
+       "hex": "#3e5882",
+       "share": 0.121
+      },
+      {
+       "hex": "#43669c",
+       "share": 0.119
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/calidad-agua-total--l1-color-2000.webp",
@@ -2325,12 +3363,13 @@
     "bytes": 5847,
     "file": "/atlas/vector/calidad-agua-total.svg"
    },
-   "seconds": 0.71
+   "seconds": 0.88
   },
   {
    "source": "circuito_radial_laguna.svg",
    "slug": "circuito-radial-laguna",
    "source_bytes": 17757,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -2354,6 +3393,15 @@
    "source": "class_edaf.svg",
    "slug": "class-edaf",
    "source_bytes": 6684317,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -2371,6 +3419,30 @@
      "mean_saturation": 0.1069,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#553a21",
+       "share": 0.127
+      },
+      {
+       "hex": "#7f5935",
+       "share": 0.112
+      },
+      {
+       "hex": "#6e4c2b",
+       "share": 0.11
+      },
+      {
+       "hex": "#644426",
+       "share": 0.082
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/class-edaf--l1-color-2000.webp",
@@ -2401,12 +3473,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/class-edaf.svg"
    },
-   "seconds": 1.04
+   "seconds": 1.19
   },
   {
    "source": "comarca_base.svg",
    "slug": "comarca-base",
    "source_bytes": 25342997,
+   "canvas": {
+    "user_box": [
+     -15.0,
+     -48.0,
+     3614.0,
+     2522.0
+    ],
+    "ratio": 1.41206
+   },
    "layers": [
     {
      "layer": 1,
@@ -2424,6 +3505,30 @@
      "mean_saturation": 0.2815,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#54543a",
+       "share": 0.208
+      },
+      {
+       "hex": "#6e6a4e",
+       "share": 0.178
+      },
+      {
+       "hex": "#3a4025",
+       "share": 0.101
+      },
+      {
+       "hex": "#7c7255",
+       "share": 0.087
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base--l1-color-2000.webp",
@@ -2453,6 +3558,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.004133,
+      0.018677,
+      0.974924,
+      0.964981
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base--l2-color-2000.webp",
@@ -2477,6 +3589,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0002,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.232847,
+      0.054086,
+      0.564067,
+      0.901946
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base--l3-color-2000.webp",
@@ -2503,12 +3622,21 @@
     "bytes": 11079,
     "file": "/atlas/vector/comarca-base.svg"
    },
-   "seconds": 2.2
+   "seconds": 2.38
   },
   {
    "source": "comarca_base_conectividad.svg",
    "slug": "comarca-base-conectividad",
    "source_bytes": 58264396,
+   "canvas": {
+    "user_box": [
+     -9.0,
+     -48.0,
+     3580.0,
+     2522.0
+    ],
+    "ratio": 1.3965
+   },
    "layers": [
     {
      "layer": 1,
@@ -2526,6 +3654,30 @@
      "mean_saturation": 0.9462,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#156904",
+       "share": 0.155
+      },
+      {
+       "hex": "#105303",
+       "share": 0.154
+      },
+      {
+       "hex": "#1a8305",
+       "share": 0.145
+      },
+      {
+       "hex": "#0c3c02",
+       "share": 0.121
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base-conectividad--l1-color-2000.webp",
@@ -2555,6 +3707,13 @@
      "mean_saturation": 0.3599,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base-conectividad--l2-color-2000.webp",
@@ -2579,6 +3738,30 @@
      "mean_saturation": 0.2785,
      "opaque_ratio": 0.0005,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#9aaa7f",
+       "share": 0.407
+      },
+      {
+       "hex": "#6cc4d9",
+       "share": 0.179
+      },
+      {
+       "hex": "#70c3d3",
+       "share": 0.1
+      },
+      {
+       "hex": "#7dbbb6",
+       "share": 0.082
+      }
+     ],
+     "frame": [
+      0.002508,
+      0.018677,
+      0.977431,
+      0.964981
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base-conectividad--l3-color-2000.webp",
@@ -2603,6 +3786,18 @@
      "mean_saturation": 0.8993,
      "opaque_ratio": 0.0387,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#ff6a19",
+       "share": 1.0
+      }
+     ],
+     "frame": [
+      0.210086,
+      0.046304,
+      0.57314,
+      0.911673
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base-conectividad--l4-color-2000.webp",
@@ -2629,12 +3824,21 @@
     "bytes": 13680,
     "file": "/atlas/vector/comarca-base-conectividad.svg"
    },
-   "seconds": 4.85
+   "seconds": 5.42
   },
   {
    "source": "comarca_base_moradp.svg",
    "slug": "comarca-base-moradp",
    "source_bytes": 24710429,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -2652,6 +3856,30 @@
      "mean_saturation": 0.4323,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#553a6b",
+       "share": 0.203
+      },
+      {
+       "hex": "#673f83",
+       "share": 0.173
+      },
+      {
+       "hex": "#3e2652",
+       "share": 0.101
+      },
+      {
+       "hex": "#42344f",
+       "share": 0.098
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base-moradp--l1-color-2000.webp",
@@ -2682,12 +3910,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/comarca-base-moradp.svg"
    },
-   "seconds": 1.32
+   "seconds": 1.52
   },
   {
    "source": "comarca_base_rosa.svg",
    "slug": "comarca-base-rosa",
    "source_bytes": 55678869,
+   "canvas": {
+    "user_box": [
+     -14.0,
+     -26.0,
+     3553.0,
+     2503.0
+    ],
+    "ratio": 1.41044
+   },
    "layers": [
     {
      "layer": 1,
@@ -2705,6 +3942,30 @@
      "mean_saturation": 0.8051,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#540f24",
+       "share": 0.208
+      },
+      {
+       "hex": "#66122c",
+       "share": 0.123
+      },
+      {
+       "hex": "#3f0b1b",
+       "share": 0.115
+      },
+      {
+       "hex": "#86193a",
+       "share": 0.102
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base-rosa--l1-color-2000.webp",
@@ -2734,6 +3995,13 @@
      "mean_saturation": 0.3625,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base-rosa--l2-color-2000.webp",
@@ -2758,6 +4026,30 @@
      "mean_saturation": 0.2663,
      "opaque_ratio": 0.0002,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#9caa7f",
+       "share": 0.195
+      },
+      {
+       "hex": "#6cc4d9",
+       "share": 0.177
+      },
+      {
+       "hex": "#7cbcb7",
+       "share": 0.17
+      },
+      {
+       "hex": "#6fc3d4",
+       "share": 0.16
+      }
+     ],
+     "frame": [
+      0.003925,
+      0.010281,
+      0.983459,
+      0.980625
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-base-rosa--l3-color-2000.webp",
@@ -2784,12 +4076,21 @@
     "bytes": 13399,
     "file": "/atlas/vector/comarca-base-rosa.svg"
    },
-   "seconds": 4.39
+   "seconds": 5.05
   },
   {
    "source": "comarca_granjas.svg",
    "slug": "comarca-granjas",
    "source_bytes": 8850001,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -2807,6 +4108,30 @@
      "mean_saturation": 0.1094,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#836754",
+       "share": 0.276
+      },
+      {
+       "hex": "#6b5342",
+       "share": 0.19
+      },
+      {
+       "hex": "#9f7c68",
+       "share": 0.149
+      },
+      {
+       "hex": "#735b4a",
+       "share": 0.097
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/comarca-granjas--l1-color-2000.webp",
@@ -2837,12 +4162,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/comarca-granjas.svg"
    },
-   "seconds": 1.15
+   "seconds": 1.24
   },
   {
    "source": "commuting.svg",
    "slug": "commuting",
    "source_bytes": 4948817,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -2860,6 +4194,30 @@
      "mean_saturation": 0.0886,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#833f1d",
+       "share": 0.102
+      },
+      {
+       "hex": "#9c4d25",
+       "share": 0.062
+      },
+      {
+       "hex": "#6f381d",
+       "share": 0.054
+      },
+      {
+       "hex": "#c66b3d",
+       "share": 0.044
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/commuting--l1-color-2000.webp",
@@ -2890,12 +4248,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/commuting.svg"
    },
-   "seconds": 0.96
+   "seconds": 1.04
   },
   {
    "source": "commuting_alto.svg",
    "slug": "commuting-alto",
    "source_bytes": 11457305,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -2913,6 +4280,30 @@
      "mean_saturation": 0.0802,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#4f566d",
+       "share": 0.405
+      },
+      {
+       "hex": "#3c4154",
+       "share": 0.151
+      },
+      {
+       "hex": "#5b627b",
+       "share": 0.131
+      },
+      {
+       "hex": "#646b85",
+       "share": 0.121
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/commuting-alto--l1-color-2000.webp",
@@ -2943,12 +4334,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/commuting-alto.svg"
    },
-   "seconds": 1.27
+   "seconds": 1.38
   },
   {
    "source": "commuting_bajo.svg",
    "slug": "commuting-bajo",
    "source_bytes": 11004421,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -2966,6 +4366,30 @@
      "mean_saturation": 0.1048,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#4f556d",
+       "share": 0.233
+      },
+      {
+       "hex": "#5488c9",
+       "share": 0.13
+      },
+      {
+       "hex": "#3c4154",
+       "share": 0.103
+      },
+      {
+       "hex": "#58637f",
+       "share": 0.096
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/commuting-bajo--l1-color-2000.webp",
@@ -2996,12 +4420,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/commuting-bajo.svg"
    },
-   "seconds": 1.25
+   "seconds": 1.34
   },
   {
    "source": "commuting_medio.svg",
    "slug": "commuting-medio",
    "source_bytes": 11341749,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3019,6 +4452,30 @@
      "mean_saturation": 0.0935,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#4f566d",
+       "share": 0.346
+      },
+      {
+       "hex": "#3c4154",
+       "share": 0.13
+      },
+      {
+       "hex": "#5b637c",
+       "share": 0.117
+      },
+      {
+       "hex": "#646b85",
+       "share": 0.103
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/commuting-medio--l1-color-2000.webp",
@@ -3049,12 +4506,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/commuting-medio.svg"
    },
-   "seconds": 1.27
+   "seconds": 1.31
   },
   {
    "source": "commuting_total.svg",
    "slug": "commuting-total",
    "source_bytes": 10993989,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3072,6 +4538,30 @@
      "mean_saturation": 0.1075,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#4f556d",
+       "share": 0.229
+      },
+      {
+       "hex": "#3c4154",
+       "share": 0.1
+      },
+      {
+       "hex": "#59637f",
+       "share": 0.093
+      },
+      {
+       "hex": "#646c86",
+       "share": 0.061
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/commuting-total--l1-color-2000.webp",
@@ -3102,12 +4592,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/commuting-total.svg"
    },
-   "seconds": 1.25
+   "seconds": 1.29
   },
   {
    "source": "conectividad.svg",
    "slug": "conectividad",
    "source_bytes": 6145805,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3125,6 +4624,30 @@
      "mean_saturation": 0.3677,
      "opaque_ratio": 0.5143,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#553b3a",
+       "share": 0.087
+      },
+      {
+       "hex": "#b35629",
+       "share": 0.08
+      },
+      {
+       "hex": "#c5693a",
+       "share": 0.079
+      },
+      {
+       "hex": "#b7653a",
+       "share": 0.062
+      }
+     ],
+     "frame": [
+      0.152823,
+      0.228115,
+      0.677823,
+      0.54434
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/conectividad--l1-color-1000.webp",
@@ -3149,12 +4672,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/conectividad.svg"
    },
-   "seconds": 0.32
+   "seconds": 0.33
   },
   {
    "source": "cover_line.svg",
    "slug": "cover-line",
    "source_bytes": 133076,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3508.0
+    ],
+    "ratio": 0.70696
+   },
    "layers": [
     {
      "layer": 1,
@@ -3172,6 +4704,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0003,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.127823,
+      0.313854,
+      0.704435,
+      0.416477
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/cover-line--l1-color-1000.webp",
@@ -3197,12 +4736,13 @@
     "bytes": 6874,
     "file": "/atlas/vector/cover-line.svg"
    },
-   "seconds": 0.09
+   "seconds": 0.1
   },
   {
    "source": "critical_layers.svg",
    "slug": "critical-layers",
    "source_bytes": 3475,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -3225,6 +4765,15 @@
    "source": "cuencas.svg",
    "slug": "cuencas",
    "source_bytes": 208605,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3242,6 +4791,30 @@
      "mean_saturation": 0.0844,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#7fbaff",
+       "share": 0.897
+      },
+      {
+       "hex": "#98c8ff",
+       "share": 0.035
+      },
+      {
+       "hex": "#74b4ff",
+       "share": 0.02
+      },
+      {
+       "hex": "#8cc1ff",
+       "share": 0.019
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/cuencas--l1-color-2000.webp",
@@ -3272,12 +4845,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/cuencas.svg"
    },
-   "seconds": 0.74
+   "seconds": 0.84
   },
   {
    "source": "distritos_riego.svg",
    "slug": "distritos-riego",
    "source_bytes": 7235369,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3295,6 +4877,30 @@
      "mean_saturation": 0.0515,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#53543c",
+       "share": 0.229
+      },
+      {
+       "hex": "#6c694f",
+       "share": 0.169
+      },
+      {
+       "hex": "#888165",
+       "share": 0.084
+      },
+      {
+       "hex": "#7c7256",
+       "share": 0.065
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/distritos-riego--l1-color-2000.webp",
@@ -3320,12 +4926,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/distritos-riego.svg"
    },
-   "seconds": 0.64
+   "seconds": 0.66
   },
   {
    "source": "edafologia_cs.svg",
    "slug": "edafologia-cs",
    "source_bytes": 5607073,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3343,6 +4958,30 @@
      "mean_saturation": 0.0847,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#86c6b1",
+       "share": 0.142
+      },
+      {
+       "hex": "#504e72",
+       "share": 0.117
+      },
+      {
+       "hex": "#58577c",
+       "share": 0.102
+      },
+      {
+       "hex": "#6b829c",
+       "share": 0.067
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/edafologia-cs--l1-color-2000.webp",
@@ -3373,12 +5012,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/edafologia-cs.svg"
    },
-   "seconds": 1.04
+   "seconds": 1.08
   },
   {
    "source": "fondo.svg",
    "slug": "fondo",
    "source_bytes": 33473927,
+   "canvas": {
+    "user_box": [
+     -4.0,
+     -14.0,
+     2520.0,
+     3521.0
+    ],
+    "ratio": 0.714
+   },
    "layers": [
     {
      "layer": 1,
@@ -3396,6 +5044,13 @@
      "mean_saturation": 0.0001,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/fondo--l1-color-2000.webp",
@@ -3420,6 +5075,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [],
+     "frame": [
+      0.001585,
+      0.00396,
+      0.982567,
+      0.992362
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/fondo--l2-color-2000.webp",
@@ -3446,12 +5108,21 @@
     "bytes": 10789,
     "file": "/atlas/vector/fondo.svg"
    },
-   "seconds": 3.42
+   "seconds": 3.78
   },
   {
    "source": "gobernanza.svg",
    "slug": "gobernanza",
    "source_bytes": 17423665,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -3469,6 +5140,30 @@
      "mean_saturation": 0.6695,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#6c5427",
+       "share": 0.166
+      },
+      {
+       "hex": "#9b6c28",
+       "share": 0.121
+      },
+      {
+       "hex": "#805720",
+       "share": 0.091
+      },
+      {
+       "hex": "#85632a",
+       "share": 0.091
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/gobernanza--l1-color-2000.webp",
@@ -3499,12 +5194,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/gobernanza.svg"
    },
-   "seconds": 1.22
+   "seconds": 1.31
   },
   {
    "source": "grado_rezago.svg",
    "slug": "grado-rezago",
    "source_bytes": 5853445,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3522,6 +5226,30 @@
      "mean_saturation": 0.0941,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#553a21",
+       "share": 0.153
+      },
+      {
+       "hex": "#6d4b2b",
+       "share": 0.134
+      },
+      {
+       "hex": "#7f5936",
+       "share": 0.129
+      },
+      {
+       "hex": "#af8156",
+       "share": 0.093
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/grado-rezago--l1-color-2000.webp",
@@ -3552,12 +5280,13 @@
     "bytes": 5847,
     "file": "/atlas/vector/grado-rezago.svg"
    },
-   "seconds": 1.03
+   "seconds": 1.09
   },
   {
    "source": "granular_flow.svg",
    "slug": "granular-flow",
    "source_bytes": 2931,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -3580,6 +5309,15 @@
    "source": "hh}.svg",
    "slug": "hh",
    "source_bytes": 15598733,
+   "canvas": {
+    "user_box": [
+     -19.0,
+     -40.0,
+     2596.0,
+     3538.0
+    ],
+    "ratio": 0.73086
+   },
    "layers": [
     {
      "layer": 1,
@@ -3597,6 +5335,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/hh--l1-color-2000.webp",
@@ -3621,6 +5366,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.007266,
+      0.011179,
+      0.948375,
+      0.980436
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/hh--l2-color-2000.webp",
@@ -3647,12 +5399,21 @@
     "bytes": 10281,
     "file": "/atlas/vector/hh.svg"
    },
-   "seconds": 1.45
+   "seconds": 1.56
   },
   {
    "source": "hill.svg",
    "slug": "hill",
    "source_bytes": 26493546,
+   "canvas": {
+    "user_box": [
+     -4.0,
+     -14.0,
+     2520.0,
+     3521.0
+    ],
+    "ratio": 0.714
+   },
    "layers": [
     {
      "layer": 1,
@@ -3670,6 +5431,18 @@
      "mean_saturation": 0.763,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#010000",
+       "share": 1.0
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/hill--l1-color-2000.webp",
@@ -3696,12 +5469,21 @@
     "bytes": 9998,
     "file": "/atlas/vector/hill.svg"
    },
-   "seconds": 2.93
+   "seconds": 3.13
   },
   {
    "source": "hillshade_base.svg",
    "slug": "hillshade-base",
    "source_bytes": 22193320,
+   "canvas": {
+    "user_box": [
+     -102.0,
+     -84.0,
+     2607.0,
+     3585.0
+    ],
+    "ratio": 0.73835
+   },
    "layers": [
     {
      "layer": 1,
@@ -3719,6 +5501,18 @@
      "mean_saturation": 0.6957,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#010000",
+       "share": 1.0
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/hillshade-base--l1-color-2000.webp",
@@ -3745,12 +5539,21 @@
     "bytes": 10508,
     "file": "/atlas/vector/hillshade-base.svg"
    },
-   "seconds": 2.79
+   "seconds": 3.0
   },
   {
    "source": "lcoalidades_total.svg",
    "slug": "lcoalidades-total",
    "source_bytes": 21122359,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -3768,6 +5571,30 @@
      "mean_saturation": 0.6324,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#1c3554",
+       "share": 0.331
+      },
+      {
+       "hex": "#1f4069",
+       "share": 0.301
+      },
+      {
+       "hex": "#284a72",
+       "share": 0.092
+      },
+      {
+       "hex": "#36506f",
+       "share": 0.052
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/lcoalidades-total--l1-color-2000.webp",
@@ -3798,12 +5625,21 @@
     "bytes": 5337,
     "file": "/atlas/vector/lcoalidades-total.svg"
    },
-   "seconds": 1.2
+   "seconds": 1.3
   },
   {
    "source": "localidades_agroproductivas.svg",
    "slug": "localidades-agroproductivas",
    "source_bytes": 9367201,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3821,6 +5657,30 @@
      "mean_saturation": 0.0692,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#af403f",
+       "share": 0.089
+      },
+      {
+       "hex": "#9f3d3c",
+       "share": 0.065
+      },
+      {
+       "hex": "#9b534f",
+       "share": 0.063
+      },
+      {
+       "hex": "#845552",
+       "share": 0.058
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/localidades-agroproductivas--l1-color-2000.webp",
@@ -3851,12 +5711,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/localidades-agroproductivas.svg"
    },
-   "seconds": 1.19
+   "seconds": 1.26
   },
   {
    "source": "localidades_blue.svg",
    "slug": "localidades-blue",
    "source_bytes": 10501929,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3874,6 +5743,30 @@
      "mean_saturation": 0.1445,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#3b6785",
+       "share": 0.153
+      },
+      {
+       "hex": "#6b98b6",
+       "share": 0.09
+      },
+      {
+       "hex": "#517f9e",
+       "share": 0.084
+      },
+      {
+       "hex": "#2a516c",
+       "share": 0.068
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/localidades-blue--l1-color-2000.webp",
@@ -3904,12 +5797,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/localidades-blue.svg"
    },
-   "seconds": 1.26
+   "seconds": 1.32
   },
   {
    "source": "localidades_parcial.svg",
    "slug": "localidades-parcial",
    "source_bytes": 2766815,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3535.0
+    ],
+    "ratio": 0.70156
+   },
    "layers": [
     {
      "layer": 1,
@@ -3927,6 +5829,30 @@
      "mean_saturation": 0.0353,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#f5ba7f",
+       "share": 0.427
+      },
+      {
+       "hex": "#f5b371",
+       "share": 0.177
+      },
+      {
+       "hex": "#f2c69b",
+       "share": 0.118
+      },
+      {
+       "hex": "#eac49e",
+       "share": 0.083
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/localidades-parcial--l1-color-2000.webp",
@@ -3952,12 +5878,21 @@
     "bytes": 5337,
     "file": "/atlas/vector/localidades-parcial.svg"
    },
-   "seconds": 0.54
+   "seconds": 0.55
   },
   {
    "source": "marginacion.svg",
    "slug": "marginacion",
    "source_bytes": 5091393,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -3975,6 +5910,30 @@
      "mean_saturation": 0.415,
      "opaque_ratio": 0.5149,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#528256",
+       "share": 0.194
+      },
+      {
+       "hex": "#3b6c42",
+       "share": 0.133
+      },
+      {
+       "hex": "#66996d",
+       "share": 0.089
+      },
+      {
+       "hex": "#4f714c",
+       "share": 0.055
+      }
+     ],
+     "frame": [
+      0.183065,
+      0.255204,
+      0.621774,
+      0.499002
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/marginacion--l1-color-1000.webp",
@@ -3999,12 +5958,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/marginacion.svg"
    },
-   "seconds": 0.28
+   "seconds": 0.3
   },
   {
    "source": "marginacion_localidades.svg",
    "slug": "marginacion-localidades",
    "source_bytes": 1227491,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -4022,6 +5990,30 @@
      "mean_saturation": 0.5302,
      "opaque_ratio": 0.096,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#71e64f",
+       "share": 0.136
+      },
+      {
+       "hex": "#e6fb93",
+       "share": 0.127
+      },
+      {
+       "hex": "#dded8a",
+       "share": 0.104
+      },
+      {
+       "hex": "#fce88a",
+       "share": 0.098
+      }
+     ],
+     "frame": [
+      0.183468,
+      0.255204,
+      0.621371,
+      0.499002
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/marginacion-localidades--l1-color-1000.webp",
@@ -4046,12 +6038,21 @@
     "bytes": 5337,
     "file": "/atlas/vector/marginacion-localidades.svg"
    },
-   "seconds": 0.29
+   "seconds": 0.3
   },
   {
    "source": "marginacion_mun.svg",
    "slug": "marginacion-mun",
    "source_bytes": 1342931,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -4069,6 +6070,30 @@
      "mean_saturation": 0.7178,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#3e8842",
+       "share": 0.665
+      },
+      {
+       "hex": "#ea914a",
+       "share": 0.106
+      },
+      {
+       "hex": "#993332",
+       "share": 0.046
+      },
+      {
+       "hex": "#df533e",
+       "share": 0.04
+      }
+     ],
+     "frame": [
+      0.183065,
+      0.254919,
+      0.621774,
+      0.499287
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/marginacion-mun--l1-color-1000.webp",
@@ -4093,12 +6118,13 @@
     "bytes": 5337,
     "file": "/atlas/vector/marginacion-mun.svg"
    },
-   "seconds": 0.29
+   "seconds": 0.3
   },
   {
    "source": "methodology_flow.svg",
    "slug": "methodology-flow",
    "source_bytes": 4554,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -4121,6 +6147,7 @@
    "source": "mexico_typologies.svg",
    "slug": "mexico-typologies",
    "source_bytes": 3425,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -4142,6 +6169,7 @@
    "source": "paisaje_comarca.svg",
    "slug": "paisaje-comarca",
    "source_bytes": 571470,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -4171,6 +6199,15 @@
    "source": "pilar_agua.svg",
    "slug": "pilar-agua",
    "source_bytes": 7650221,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -4188,6 +6225,30 @@
      "mean_saturation": 0.1305,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#4e8588",
+       "share": 0.112
+      },
+      {
+       "hex": "#679da1",
+       "share": 0.107
+      },
+      {
+       "hex": "#824d89",
+       "share": 0.061
+      },
+      {
+       "hex": "#5b9599",
+       "share": 0.054
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/pilar-agua--l1-color-2000.webp",
@@ -4218,12 +6279,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/pilar-agua.svg"
    },
-   "seconds": 1.1
+   "seconds": 1.13
   },
   {
    "source": "portada.svg",
    "slug": "portada",
    "source_bytes": 2041655,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     263.344,
+     210.0
+    ],
+    "ratio": 1.25402
+   },
    "layers": [
     {
      "layer": 1,
@@ -4241,6 +6311,30 @@
      "mean_saturation": 0.1125,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#534d3d",
+       "share": 0.119
+      },
+      {
+       "hex": "#2c3125",
+       "share": 0.104
+      },
+      {
+       "hex": "#6f6651",
+       "share": 0.098
+      },
+      {
+       "hex": "#7fadb7",
+       "share": 0.074
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/portada--l1-color-1000.webp",
@@ -4275,6 +6369,15 @@
    "source": "portada_def.svg",
    "slug": "portada-def",
    "source_bytes": 26454521,
+   "canvas": {
+    "user_box": [
+     -19.0,
+     -40.0,
+     2596.0,
+     3538.0
+    ],
+    "ratio": 0.73086
+   },
    "layers": [
     {
      "layer": 1,
@@ -4292,6 +6395,30 @@
      "mean_saturation": 0.9931,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#833f00",
+       "share": 0.163
+      },
+      {
+       "hex": "#6d3400",
+       "share": 0.15
+      },
+      {
+       "hex": "#532800",
+       "share": 0.142
+      },
+      {
+       "hex": "#9d4c00",
+       "share": 0.112
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/portada-def--l1-color-2000.webp",
@@ -4321,6 +6448,30 @@
      "mean_saturation": 0.2094,
      "opaque_ratio": 0.0002,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#6cc4d9",
+       "share": 0.357
+      },
+      {
+       "hex": "#aea47b",
+       "share": 0.114
+      },
+      {
+       "hex": "#a3a17a",
+       "share": 0.1
+      },
+      {
+       "hex": "#6ec2d4",
+       "share": 0.086
+      }
+     ],
+     "frame": [
+      0.007266,
+      0.011179,
+      0.948375,
+      0.980436
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/portada-def--l2-color-2000.webp",
@@ -4345,6 +6496,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.211855,
+      0.295137,
+      0.525048,
+      0.436277
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/portada-def--l3-color-1000.webp",
@@ -4370,12 +6528,21 @@
     "bytes": 12086,
     "file": "/atlas/vector/portada-def.svg"
    },
-   "seconds": 3.36
+   "seconds": 3.46
   },
   {
    "source": "pozos y plantas.svg",
    "slug": "pozos-y-plantas",
    "source_bytes": 8561623,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -4393,6 +6560,30 @@
      "mean_saturation": 0.0384,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#9b826a",
+       "share": 0.101
+      },
+      {
+       "hex": "#836a53",
+       "share": 0.097
+      },
+      {
+       "hex": "#af8050",
+       "share": 0.096
+      },
+      {
+       "hex": "#6b553e",
+       "share": 0.093
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/pozos-y-plantas--l1-color-2000.webp",
@@ -4418,12 +6609,21 @@
     "bytes": 5337,
     "file": "/atlas/vector/pozos-y-plantas.svg"
    },
-   "seconds": 0.52
+   "seconds": 0.54
   },
   {
    "source": "pp_ Radar de Tensiones y Políticas_Hídricas_Comarca_Lagunera_(1990–2025).svg",
    "slug": "pp-radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025",
    "source_bytes": 6894282,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2000.0,
+     1997.0
+    ],
+    "ratio": 1.0015
+   },
    "layers": [
     {
      "layer": 1,
@@ -4441,6 +6641,30 @@
      "mean_saturation": 0.9908,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#002652",
+       "share": 0.167
+      },
+      {
+       "hex": "#001c3d",
+       "share": 0.143
+      },
+      {
+       "hex": "#001025",
+       "share": 0.111
+      },
+      {
+       "hex": "#003c82",
+       "share": 0.111
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.920497,
+      0.999121
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/pp-radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l1-color-1000.webp",
@@ -4464,6 +6688,30 @@
      "mean_saturation": 0.9298,
      "opaque_ratio": 0.0001,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#00040a",
+       "share": 0.375
+      },
+      {
+       "hex": "#000f22",
+       "share": 0.231
+      },
+      {
+       "hex": "#001b3d",
+       "share": 0.108
+      },
+      {
+       "hex": "#002552",
+       "share": 0.104
+      }
+     ],
+     "frame": [
+      0.22212,
+      0.0,
+      0.123067,
+      0.048098
+     ],
      "files": {
       "color": {}
      }
@@ -4484,6 +6732,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.22212,
+      0.0,
+      0.123067,
+      0.048098
+     ],
      "files": {
       "color": {}
      }
@@ -4504,6 +6759,30 @@
      "mean_saturation": 0.3625,
      "opaque_ratio": 0.1026,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#bd955a",
+       "share": 0.225
+      },
+      {
+       "hex": "#223c70",
+       "share": 0.129
+      },
+      {
+       "hex": "#2e7bba",
+       "share": 0.121
+      },
+      {
+       "hex": "#3183c6",
+       "share": 0.087
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.8,
+      0.296445
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/pp-radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l4-color-1000.webp",
@@ -4527,6 +6806,30 @@
      "mean_saturation": 0.6881,
      "opaque_ratio": 0.2601,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#6dbd43",
+       "share": 0.435
+      },
+      {
+       "hex": "#1a6383",
+       "share": 0.286
+      },
+      {
+       "hex": "#1a5e7d",
+       "share": 0.104
+      },
+      {
+       "hex": "#71c345",
+       "share": 0.082
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      0.509264
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/pp-radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l5-color-2000.webp",
@@ -4551,6 +6854,30 @@
      "mean_saturation": 0.6787,
      "opaque_ratio": 0.0608,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#a22143",
+       "share": 0.449
+      },
+      {
+       "hex": "#b3254a",
+       "share": 0.222
+      },
+      {
+       "hex": "#aa2346",
+       "share": 0.187
+      },
+      {
+       "hex": "#bb9459",
+       "share": 0.132
+      }
+     ],
+     "frame": [
+      0.0015,
+      0.001502,
+      0.7955,
+      0.22033
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/pp-radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l6-color-1000.webp",
@@ -4574,6 +6901,30 @@
      "mean_saturation": 0.6753,
      "opaque_ratio": 0.0913,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#9f2449",
+       "share": 0.742
+      },
+      {
+       "hex": "#ab274f",
+       "share": 0.14
+      },
+      {
+       "hex": "#b28d5c",
+       "share": 0.08
+      },
+      {
+       "hex": "#b6905e",
+       "share": 0.021
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      0.512,
+      0.132699
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/pp-radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025--l7-color-1000.webp",
@@ -4610,12 +6961,13 @@
     "bytes": 12989,
     "file": "/atlas/vector/pp-radar-de-tensiones-y-politicas-hidricas-comarca-lagunera-19902025.svg"
    },
-   "seconds": 0.7
+   "seconds": 0.73
   },
   {
    "source": "riego_2.svg",
    "slug": "riego-2",
    "source_bytes": 122809,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -4653,6 +7005,15 @@
    "source": "rio nazas.svg",
    "slug": "rio-nazas",
    "source_bytes": 272011,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -4670,6 +7031,13 @@
      "mean_saturation": 0.9759,
      "opaque_ratio": 0.0,
      "role": "overlay",
+     "dominant": [],
+     "frame": [
+      0.161106,
+      0.116129,
+      0.593955,
+      0.710887
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/rio-nazas--l1-color-2000.webp",
@@ -4695,12 +7063,13 @@
     "bytes": 5337,
     "file": "/atlas/vector/rio-nazas.svg"
    },
-   "seconds": 0.32
+   "seconds": 0.35
   },
   {
    "source": "rostro.svg",
    "slug": "rostro",
    "source_bytes": 90479,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {
@@ -4721,6 +7090,15 @@
    "source": "satelite_base_rostro.svg",
    "slug": "satelite-base-rostro",
    "source_bytes": 16530662,
+   "canvas": {
+    "user_box": [
+     -126.0,
+     -90.0,
+     2608.0,
+     3597.0
+    ],
+    "ratio": 0.74152
+   },
    "layers": [
     {
      "layer": 1,
@@ -4738,6 +7116,13 @@
      "mean_saturation": 0.0,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/satelite-base-rostro--l1-color-2000.webp",
@@ -4764,12 +7149,21 @@
     "bytes": 9998,
     "file": "/atlas/vector/satelite-base-rostro.svg"
    },
-   "seconds": 1.13
+   "seconds": 1.19
   },
   {
    "source": "satelite_base_rr.svg",
    "slug": "satelite-base-rr",
    "source_bytes": 24024424,
+   "canvas": {
+    "user_box": [
+     -14.0,
+     -15.0,
+     2508.0,
+     3523.0
+    ],
+    "ratio": 0.71283
+   },
    "layers": [
     {
      "layer": 1,
@@ -4787,6 +7181,30 @@
      "mean_saturation": 0.3979,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#555136",
+       "share": 0.279
+      },
+      {
+       "hex": "#3c3e24",
+       "share": 0.25
+      },
+      {
+       "hex": "#4f4b2b",
+       "share": 0.092
+      },
+      {
+       "hex": "#645a3c",
+       "share": 0.091
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/satelite-base-rr--l1-color-2000.webp",
@@ -4818,12 +7236,21 @@
     "bytes": 9998,
     "file": "/atlas/vector/satelite-base-rr.svg"
    },
-   "seconds": 2.0
+   "seconds": 2.09
   },
   {
    "source": "sequia.svg",
    "slug": "sequia",
    "source_bytes": 5967787,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -4841,6 +7268,30 @@
      "mean_saturation": 0.6521,
      "opaque_ratio": 0.5137,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#68281d",
+       "share": 0.156
+      },
+      {
+       "hex": "#9c5138",
+       "share": 0.139
+      },
+      {
+       "hex": "#7f3a29",
+       "share": 0.113
+      },
+      {
+       "hex": "#ac5b3b",
+       "share": 0.098
+      }
+     ],
+     "frame": [
+      0.152823,
+      0.228115,
+      0.677823,
+      0.544625
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/sequia--l1-color-1000.webp",
@@ -4865,12 +7316,21 @@
     "bytes": 5337,
     "file": "/atlas/vector/sequia.svg"
    },
-   "seconds": 0.3
+   "seconds": 0.31
   },
   {
    "source": "suelos.svg",
    "slug": "suelos",
    "source_bytes": 8448041,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -4888,6 +7348,30 @@
      "mean_saturation": 0.2112,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#25b37d",
+       "share": 0.318
+      },
+      {
+       "hex": "#3ecc96",
+       "share": 0.141
+      },
+      {
+       "hex": "#1ca273",
+       "share": 0.071
+      },
+      {
+       "hex": "#34c48c",
+       "share": 0.067
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/suelos--l1-color-2000.webp",
@@ -4918,12 +7402,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/suelos.svg"
    },
-   "seconds": 1.13
+   "seconds": 1.19
   },
   {
    "source": "sup_riego.svg",
    "slug": "sup-riego",
    "source_bytes": 8718249,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -4941,6 +7434,30 @@
      "mean_saturation": 0.2255,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#09273b",
+       "share": 0.194
+      },
+      {
+       "hex": "#0e3752",
+       "share": 0.132
+      },
+      {
+       "hex": "#1e6a9b",
+       "share": 0.084
+      },
+      {
+       "hex": "#071b29",
+       "share": 0.083
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/sup-riego--l1-color-2000.webp",
@@ -4971,12 +7488,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/sup-riego.svg"
    },
-   "seconds": 1.17
+   "seconds": 1.26
   },
   {
    "source": "tenencia_tierra.svg",
    "slug": "tenencia-tierra",
    "source_bytes": 9719481,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -4994,6 +7520,30 @@
      "mean_saturation": 0.1621,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#7e5938",
+       "share": 0.217
+      },
+      {
+       "hex": "#97714e",
+       "share": 0.188
+      },
+      {
+       "hex": "#896340",
+       "share": 0.161
+      },
+      {
+       "hex": "#a07b59",
+       "share": 0.123
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/tenencia-tierra--l1-color-2000.webp",
@@ -5024,12 +7574,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/tenencia-tierra.svg"
    },
-   "seconds": 1.19
+   "seconds": 1.33
   },
   {
    "source": "total_agro.svg",
    "slug": "total-agro",
    "source_bytes": 21351905,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -5047,6 +7606,30 @@
      "mean_saturation": 0.2705,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#546f52",
+       "share": 0.223
+      },
+      {
+       "hex": "#678865",
+       "share": 0.195
+      },
+      {
+       "hex": "#70956f",
+       "share": 0.142
+      },
+      {
+       "hex": "#5b7a5a",
+       "share": 0.09
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/total-agro--l1-color-2000.webp",
@@ -5077,12 +7660,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/total-agro.svg"
    },
-   "seconds": 1.29
+   "seconds": 1.33
   },
   {
    "source": "total_granjas.svg",
    "slug": "total-granjas",
    "source_bytes": 21236913,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -5100,6 +7692,30 @@
      "mean_saturation": 0.1677,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#4e5a6a",
+       "share": 0.277
+      },
+      {
+       "hex": "#6f7f93",
+       "share": 0.221
+      },
+      {
+       "hex": "#556273",
+       "share": 0.134
+      },
+      {
+       "hex": "#647284",
+       "share": 0.063
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/total-granjas--l1-color-2000.webp",
@@ -5130,12 +7746,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/total-granjas.svg"
    },
-   "seconds": 1.91
+   "seconds": 1.94
   },
   {
    "source": "total_granjas_2.svg",
    "slug": "total-granjas-2",
    "source_bytes": 23385921,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     3507.0,
+     2480.0
+    ],
+    "ratio": 1.41411
+   },
    "layers": [
     {
      "layer": 1,
@@ -5153,6 +7778,30 @@
      "mean_saturation": 0.1816,
      "opaque_ratio": 1.0,
      "role": "base",
+     "dominant": [
+      {
+       "hex": "#4d5a6a",
+       "share": 0.343
+      },
+      {
+       "hex": "#546273",
+       "share": 0.17
+      },
+      {
+       "hex": "#6f7f92",
+       "share": 0.111
+      },
+      {
+       "hex": "#5b697a",
+       "share": 0.071
+      }
+     ],
+     "frame": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+     ],
      "files": {
       "color": {
        "2000": "/atlas/raster/total-granjas-2--l1-color-2000.webp",
@@ -5183,12 +7832,21 @@
     "bytes": 5847,
     "file": "/atlas/vector/total-granjas-2.svg"
    },
-   "seconds": 1.34
+   "seconds": 1.39
   },
   {
    "source": "vegetacion.svg",
    "slug": "vegetacion",
    "source_bytes": 6029909,
+   "canvas": {
+    "user_box": [
+     0.0,
+     0.0,
+     2480.0,
+     3507.0
+    ],
+    "ratio": 0.70716
+   },
    "layers": [
     {
      "layer": 1,
@@ -5206,6 +7864,30 @@
      "mean_saturation": 0.405,
      "opaque_ratio": 0.5138,
      "role": "overlay",
+     "dominant": [
+      {
+       "hex": "#3d6d38",
+       "share": 0.329
+      },
+      {
+       "hex": "#507b42",
+       "share": 0.087
+      },
+      {
+       "hex": "#4c723e",
+       "share": 0.071
+      },
+      {
+       "hex": "#688654",
+       "share": 0.066
+      }
+     ],
+     "frame": [
+      0.152823,
+      0.228115,
+      0.677823,
+      0.544625
+     ],
      "files": {
       "color": {
        "1000": "/atlas/raster/vegetacion--l1-color-1000.webp",
@@ -5230,12 +7912,13 @@
     "bytes": 5847,
     "file": "/atlas/vector/vegetacion.svg"
    },
-   "seconds": 0.31
+   "seconds": 0.34
   },
   {
    "source": "vulnerabilidad_sequia.svg",
    "slug": "vulnerabilidad-sequia",
    "source_bytes": 1684276,
+   "canvas": null,
    "layers": [],
    "vector": {
     "elements": {

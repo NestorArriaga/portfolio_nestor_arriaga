@@ -27,11 +27,37 @@ criterio recupera la pila original: `comarca_base_conectividad.svg` (58 MB, 10
 imágenes) se separa en 4 capas independientes — relieve, satélite, contorno y red
 de conectividad — cada una compositable y animable por separado.
 
-**Resultado: 996 MB → 136 MB.** 102 capas ráster (52 base, 50 sobreposición con
+**Resultado: 996 MB → 137 MB.** 102 capas ráster (52 base, 50 sobreposición con
 transparencia) en WebP a 2000/1000/500 px, más 102 SVG limpios de ráster.
 
 Resolución nativa dominante: 2480×3507 y 3507×2480 (A4 a 300 dpi). Sobra para
 láminas a sangre en pantallas 2x.
+
+### Registro entre capas
+
+Cada capa se recorta a su contenido, lo que ahorra mucho peso pero mueve su
+origen. Superponer dos capas recortadas de distinto tamaño las centraría una
+sobre otra y **el mapa mentiría**: en la primera versión la red de conectividad
+(2057×2343) aparecía centrada dentro del relieve (3589×2570), desplazada del
+territorio que describe.
+
+Por eso el manifiesto guarda, por archivo, un `canvas` en unidades de usuario del
+SVG —el espacio común a todas sus capas— y, por capa, un `frame`
+`[left, top, width, height]` en fracciones de ese lienzo. `LayerStack` posiciona
+cada capa con esas fracciones. La proporción del campo se toma de
+`canvas.ratio`, no de una capa suelta.
+
+Esto vale **dentro de un archivo**. Dos archivos distintos no comparten lienzo:
+no se pueden mezclar capas de `sequia.svg` con las de `comarca_base.svg` sin
+verificar antes que su encuadre coincide.
+
+### Color real de cada capa
+
+El color de un ráster está cocido en el pixel y CSS no puede cambiarlo. Una
+clave de leyenda que declare otro tono describe un mapa que no es el que se ve
+—la red de conectividad se dibuja en `#ff6a19`, no en el rojo de la paleta—.
+El manifiesto guarda por capa sus colores dominantes con su superficie relativa,
+y `layerColor()` los expone para que la leyenda tome el color del mapa.
 
 ## Material por familia de proyecto
 

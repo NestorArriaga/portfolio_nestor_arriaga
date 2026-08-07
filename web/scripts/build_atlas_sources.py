@@ -97,6 +97,12 @@ class LayerOut:
     mean_saturation: float
     opaque_ratio: float
     role: str
+    # Colores que la capa dibuja de verdad, para que la leyenda no mienta.
+    dominant: list = field(default_factory=list)
+    # Posición de la capa dentro del lienzo comun del archivo, en fracciones
+    # [left, top, width, height]. Sin esto, apilar dos capas recortadas de
+    # distinto tamano las centra una sobre otra y el mapa miente.
+    frame: list = field(default_factory=list)
     files: dict = field(default_factory=dict)
 
 
@@ -128,7 +134,11 @@ def group_into_layers(placed: list) -> list:
 
 
 def composite(tiles: list):
-    """Recompone los mosaicos de una capa en una sola imagen RGBA."""
+    """Recompone los mosaicos de una capa en una sola imagen RGBA.
+
+    Devuelve tambien el rectangulo que ocupa la capa en unidades de usuario del
+    SVG, que es el espacio comun a todas las capas del archivo.
+    """
     x0 = min(t.x for t in tiles)
     y0 = min(t.y for t in tiles)
     x1 = max(t.x + t.w for t in tiles)
@@ -153,15 +163,20 @@ def composite(tiles: list):
             if (im.width, im.height) != (tw, th):
                 im = im.resize((tw, th), Image.LANCZOS)
             canvas.alpha_composite(im, (px, py))
-    return canvas, (x1 - x0, y1 - y0)
+    return canvas, (x0, y0, x1, y1), scale
 
 
 def measure(im):
-    """Saturacion media de los pixeles opacos y cobertura opaca del encuadre.
+    """Saturacion, cobertura opaca y colores dominantes de una capa.
 
     La saturacion distingue base satelital (casi gris) de capa tematica (con
     color categorico). La cobertura distingue una base que llena el lienzo de
     una sobreposicion recortada, y decide si vale la pena una version gris.
+
+    Los colores dominantes existen por una razon concreta: el color de una capa
+    rasterizada esta cocido en el pixel y no se puede cambiar desde CSS. Si la
+    leyenda declara un acento distinto, la leyenda miente sobre el mapa. Estos
+    valores permiten que la clave use el color que el mapa dibuja de verdad.
     """
     small = im.convert("RGBA")
     small.thumbnail((160, 160), Image.LANCZOS)
@@ -171,7 +186,30 @@ def measure(im):
     vals = [s for s, a in zip(sat, alpha) if a > 128]
     saturation = round(sum(vals) / len(vals) / 255, 4) if vals else 0.0
     opaque = round(sum(1 for a in alpha if a > 250) / len(alpha), 4) if alpha else 0.0
-    return saturation, opaque
+
+    # Se cuentan solo pixeles opacos y con color: los grises del relieve y los
+    # bordes semitransparentes no dicen nada de la categoria de la capa.
+    buckets: dict = {}
+    for (r, g, b), a, s in zip(rgb.getdata(), alpha, sat):
+        if a < 200 or s < 60:
+            continue
+        key = (r // 24, g // 24, b // 24)
+        acc = buckets.setdefault(key, [0, 0, 0, 0])
+        acc[0] += r
+        acc[1] += g
+        acc[2] += b
+        acc[3] += 1
+
+    top = sorted(buckets.values(), key=lambda v: -v[3])[:4]
+    total = sum(v[3] for v in buckets.values()) or 1
+    dominant = [
+        {
+            "hex": "#%02x%02x%02x" % (v[0] // v[3], v[1] // v[3], v[2] // v[3]),
+            "share": round(v[3] / total, 3),
+        }
+        for v in top
+    ]
+    return saturation, opaque, dominant
 
 
 def emit(im, slug: str, layer_idx: int, gray: bool) -> dict:
@@ -238,6 +276,7 @@ def process(name: str) -> dict:
         "source": name,
         "slug": slug,
         "source_bytes": os.path.getsize(path),
+        "canvas": None,
         "layers": [],
         "vector": None,
     }
@@ -261,9 +300,28 @@ def process(name: str) -> dict:
             payload=payload,
         ))
 
-    for li, tiles in enumerate(group_into_layers(placed), start=1):
+    groups = group_into_layers(placed)
+
+    # Lienzo comun del archivo: la union de todas las capas en unidades de
+    # usuario del SVG. Es el espacio en el que las capas se registran entre si.
+    if groups:
+        cx0 = min(t.x for g in groups for t in g)
+        cy0 = min(t.y for g in groups for t in g)
+        cx1 = max(t.x + t.w for g in groups for t in g)
+        cy1 = max(t.y + t.h for g in groups for t in g)
+        record["canvas"] = {
+            "user_box": [round(cx0, 3), round(cy0, 3), round(cx1, 3), round(cy1, 3)],
+            "ratio": round((cx1 - cx0) / (cy1 - cy0), 5) if cy1 > cy0 else None,
+        }
+    else:
+        cx0 = cy0 = cx1 = cy1 = 0.0
+
+    cw = (cx1 - cx0) or 1.0
+    ch = (cy1 - cy0) or 1.0
+
+    for li, tiles in enumerate(groups, start=1):
         try:
-            canvas, user_size = composite(tiles)
+            canvas, user_box, scale = composite(tiles)
         except Exception as exc:  # una capa rota no debe tumbar el lote
             record["layers"].append({"layer": li, "error": "%s: %s" % (type(exc).__name__, exc)})
             continue
@@ -277,7 +335,21 @@ def process(name: str) -> dict:
             record["layers"].append({"layer": li, "error": "capa vacia"})
             continue
 
-        sat, opaque = measure(canvas)
+        # El recorte al contenido ahorra mucho peso pero mueve el origen de la
+        # capa. Se traduce de vuelta a unidades de usuario y de ahi a fracciones
+        # del lienzo comun, para poder recolocarla exactamente donde estaba.
+        off_x = (bbox[0] / scale) if bbox else 0.0
+        off_y = (bbox[1] / scale) if bbox else 0.0
+        lx = user_box[0] + off_x
+        ly = user_box[1] + off_y
+        frame = [
+            round((lx - cx0) / cw, 6),
+            round((ly - cy0) / ch, 6),
+            round((canvas.width / scale) / cw, 6),
+            round((canvas.height / scale) / ch, 6),
+        ]
+
+        sat, opaque, dominant = measure(canvas)
         out = LayerOut(
             layer=li,
             tiles=len(tiles),
@@ -288,6 +360,8 @@ def process(name: str) -> dict:
             mean_saturation=sat,
             opaque_ratio=opaque,
             role="base" if opaque > 0.9 else "overlay",
+            dominant=dominant,
+            frame=frame,
             files={},
         )
         out.files["color"] = emit(canvas, slug, li, gray=False)

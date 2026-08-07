@@ -1,0 +1,158 @@
+/* ============================================================================
+   Tokens del atlas territorial
+   Fuente: CLAUDE.md (color, retícula, tipografía, línea) y
+   PROMPTS_VISUALES_Y_MOVIMIENTO_V2.md (acabado, densidad, movimiento).
+
+   Reglas duras que estos tokens hacen cumplir:
+   - bordes rectos: no existe un token de radio mayor que 4px, y ese solo
+     aplica a controles pequeños;
+   - no hay sombras de tarjeta: solo sombra física bajo un objeto elevado;
+   - no hay gradientes decorativos;
+   - las etiquetas técnicas nunca bajan de 11px en escritorio ni 12px en móvil.
+   ========================================================================= */
+
+:root {
+  /* --- Base ------------------------------------------------------------- */
+  --black: #050505;
+  --black-soft: #111111;
+  --charcoal: #1b1b1b;
+  --paper: #f3f2ec;
+  --paper-cool: #e5e6e2;
+  --line-dark: #363636;
+  --line-light: #c8cac6;
+  --white: #f7f7f2;
+
+  /* Texto sobre campo oscuro. Escalonado para jerarquía, no para decorar. */
+  --ink: var(--white);
+  --ink-muted: #9c9d98;
+  --ink-faint: #6b6c68;
+
+  /* --- Acentos por familia de proyecto ---------------------------------- */
+  --p01-verde: #78f36a;          /* áreas verdes */
+  --p02-carbono: #ff3b4d;        /* carbono */
+  --p03-cafe: #e53131;           /* café */
+  --p04-cultivo: #d7ec31;        /* cultivos */
+  --p05-mineral: #d7c62a;        /* Metztitlán */
+  --p05-registro: #ff3a2e;       /* rojo de registro */
+  --p09-verde: #5ed57b;          /* Aguascalientes */
+  --p09-rojo: #e83b3b;
+  --p09-agua: #5ed6e8;
+  --p09-senal: #f2ea16;
+  --p15-bosque: #416b48;         /* Urban Challenge */
+  --p15-madera: #a5784c;
+
+  /* Pilares de GRANULAR. Uno por capítulo; nunca todos a la vez salvo
+     clustering, donde la paleta categórica sí es el dato. */
+  --g-agua: #5ed6e8;
+  --g-agro: #78f36a;
+  --g-agro-alt: #ff4fa3;
+  --g-gobernanza: #9b7bff;
+  --g-gobernanza-alt: #ff8a3d;
+  --g-socio: #ff8a3d;
+  --g-ambiente: #ff4fa3;
+  --g-ambiente-alt: #78f36a;
+  --g-conectividad: #ff3b4d;
+  --g-conectividad-alt: #5b8cff;
+
+  /* Color de señal de los interludios. Un solo tono, muy intenso. */
+  --signal: #f2ea16;
+
+  /* Acento activo del capítulo. Cada sección lo redefine en su ámbito;
+     los componentes cartográficos solo leen esta variable. */
+  --accent: var(--white);
+
+  /* --- Retícula ---------------------------------------------------------- */
+  --grid-columns: 12;
+  --gutter: 24px;
+  --margin: 48px;
+  --margin-wide: 80px;
+  /* Lámina editorial: columna informativa / campo cartográfico. */
+  --plate-column: 28%;
+  --plate-field: 72%;
+
+  /* --- Línea técnica ----------------------------------------------------- */
+  --hairline: 0.8px;
+  --line: 1px;
+  --line-strong: 1.2px;
+  --grid-line-opacity: 0.08;   /* cuadrícula: 5-12% */
+  --texture-opacity: 0.05;     /* papel/fotocopia: 3-8% */
+  --noise-opacity: 0.03;       /* ruido: 2-4% */
+
+  /* --- Tipografía -------------------------------------------------------- */
+  --font-sans: var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  --type-case: clamp(2.625rem, 9vw, 10rem);   /* 42-160px, título de caso */
+  --type-display: clamp(2rem, 5.5vw, 4.5rem);
+  --type-heading: clamp(1.25rem, 2vw, 1.75rem);
+  --type-body: clamp(1rem, 1.15vw, 1.25rem);  /* 16-20px */
+  --type-label: 0.75rem;                      /* 12px */
+  --type-technical: 0.6875rem;                /* 11px, mínimo en escritorio */
+
+  --measure: 62ch;             /* 45-75 caracteres */
+  --leading-tight: 0.92;
+  --leading-body: 1.55;
+  --tracking-label: 0.08em;
+
+  /* --- Radios ------------------------------------------------------------ */
+  --radius-none: 0;
+  --radius-control: 2px;       /* solo controles pequeños */
+
+  /* --- Sombra ------------------------------------------------------------ */
+  /* Únicamente física, bajo un objeto que de verdad flota. */
+  --shadow-object: 0 32px 60px -24px rgba(0, 0, 0, 0.85);
+  --shadow-contact: 0 2px 10px -4px rgba(0, 0, 0, 0.7);
+
+  /* --- Glow -------------------------------------------------------------- */
+  /* Máximo 12-24px y solo en nodos activos. */
+  --glow-node: 0 0 14px;
+  --glow-node-strong: 0 0 22px;
+
+  /* --- Movimiento -------------------------------------------------------- */
+  --dur-micro: 180ms;          /* 120-220 */
+  --dur-layer: 600ms;          /* 450-750 */
+  --dur-trace: 950ms;          /* 700-1200 */
+  --dur-chapter: 1150ms;       /* 900-1400 */
+  --loop-min: 12s;             /* ningún loop evidente por debajo de 8s */
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  /* Sin rebote ni elástico: el movimiento explica territorio, no juega. */
+
+  /* --- Capas ------------------------------------------------------------- */
+  --z-field: 0;
+  --z-overlay: 10;
+  --z-annotation: 20;
+  --z-chrome: 30;
+}
+
+/* Modo laboratorio mineral: papel blanco. Invierte tinta y línea sin tocar
+   los acentos, que siguen siendo los del capítulo. */
+[data-surface="paper"] {
+  --ink: #17171a;
+  --ink-muted: #55565a;
+  --ink-faint: #85868a;
+  --line-dark: var(--line-light);
+  --grid-line-opacity: 0.12;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --margin: 20px;
+    --gutter: 16px;
+    /* En móvil la lámina se reordena, no se encoge: la columna y el campo
+       dejan de convivir y pasan a apilarse. */
+    --plate-column: 100%;
+    --plate-field: 100%;
+    --type-technical: 0.75rem; /* mínimo 12px en móvil */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-micro: 1ms;
+    --dur-layer: 1ms;
+    --dur-trace: 1ms;
+    --dur-chapter: 1ms;
+  }
+}

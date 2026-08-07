@@ -1,0 +1,35 @@
+/* Pila de capas. El contenedor reserva su proporción desde el primer render:
+   las capas llegan después, pero el hueco ya está hecho. */
+
+.stack {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.layer {
+  position: absolute;
+  /* La posición y el tamaño los fija el encuadre del manifiesto, no `inset`.
+     `fill` y no `contain`: la capa ya ocupa exactamente su rectángulo, así que
+     ajustarla otra vez la desplazaría respecto a las demás. */
+  object-fit: fill;
+  /* Revelado por máscara: la capa se descubre de arriba abajo sin moverse.
+     Se anima clip-path, que va en el compositor y no recalcula layout. */
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--dur-layer) var(--ease-out);
+  will-change: clip-path;
+}
+
+.stack[data-revealed='true'] .layer {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    clip-path: none;
+    transition: none;
+    transition-delay: 0s !important;
+    will-change: auto;
+  }
+}

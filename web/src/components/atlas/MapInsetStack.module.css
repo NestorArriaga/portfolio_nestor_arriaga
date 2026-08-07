@@ -1,0 +1,101 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.inset {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: var(--inset-accent);
+  opacity: 0;
+  transition: opacity var(--dur-layer) var(--ease-out);
+}
+
+.stack[data-revealed='true'] .inset { opacity: 1; }
+
+.frame {
+  position: relative;
+  /* Proporción fija: el inset reserva su hueco antes de que llegue la imagen. */
+  aspect-ratio: 4 / 3;
+  background: var(--black-soft);
+  overflow: hidden;
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Los recortes se leen en gris y solo el marco lleva señal; así cinco insets
+     juntos no compiten con el mapa. */
+  filter: grayscale(1) contrast(1.06);
+}
+
+.corners {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-size: var(--type-technical);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: currentColor;
+}
+
+.category {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  color: var(--ink-faint);
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-annotation);
+  pointer-events: none;
+  overflow: visible;
+}
+
+@media (max-width: 900px) {
+  /* Carrusel horizontal, sin autoplay y con anclaje por inset. */
+  .stack {
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--gutter);
+    /* Sangrado al borde de la pantalla: un carrusel con margen parece tarjeta. */
+    margin-inline: calc(var(--margin) * -1);
+    padding-inline: var(--margin);
+    scrollbar-width: none;
+  }
+
+  .stack::-webkit-scrollbar { display: none; }
+
+  .inset {
+    flex: 0 0 58%;
+    scroll-snap-align: start;
+  }
+
+  .connectors { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inset { opacity: 1; transition: none; transition-delay: 0s !important; }
+}

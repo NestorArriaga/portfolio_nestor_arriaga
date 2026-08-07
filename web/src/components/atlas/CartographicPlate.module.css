@@ -1,0 +1,166 @@
+/* Lámina cartográfica. Sin tarjeta, sin radio, sin sombra: el campo llega al
+   borde y la columna vive en el margen. */
+
+.plate {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--plate-column) 1fr;
+  gap: var(--gutter);
+  padding: var(--margin-wide) var(--margin);
+  background: var(--black);
+  color: var(--ink);
+}
+
+.marks {
+  position: absolute;
+  top: 18px;
+  left: var(--margin);
+  right: var(--margin);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.column {
+  /* La tipografía de la columna se dimensiona contra la columna, no contra el
+     viewport. Con vw, un título de 5.5vw (79 px a 1440) desborda una columna de
+     376 px y se corta a media palabra. */
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  /* La columna no se estira con el mapa: se ancla arriba y ya.
+     Nada de sticky con overflow oculto: en cuanto las notas superan la altura
+     del viewport, el texto queda recortado y sin forma de alcanzarlo. En una
+     lámina impresa la columna es parte de la composición, no un panel. */
+  align-self: start;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(1.75rem, 11cqw, 3.5rem);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  /* Una palabra larga —"conectividad", "Aguascalientes"— no debe salirse de la
+     columna aunque el clamp la deje justa. */
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.lede {
+  margin: 0;
+  max-width: var(--measure);
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  color: var(--ink-muted);
+}
+
+.aside,
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.detail {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+.facts {
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--gutter);
+  align-items: baseline;
+  padding: 0.45rem 0;
+  border-top: var(--hairline) solid var(--line-dark);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+}
+
+.fact:last-child { border-bottom: var(--hairline) solid var(--line-dark); }
+
+.fact dt {
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.fact dd {
+  margin: 0;
+  text-align: right;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* El campo cartográfico: sin fondo propio, sin borde, sin recorte. */
+.field {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  .plate {
+    grid-template-columns: 1fr;
+    padding: 3.5rem var(--margin) var(--margin);
+    /* Reordenar, no encoger: marcas, título, mapa, leyenda, detalles. */
+    grid-template-areas:
+      'marks'
+      'heading'
+      'field'
+      'aside'
+      'detail';
+  }
+
+  .column {
+    display: contents;
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .heading { grid-area: heading; margin-bottom: 1.5rem; }
+  .field { grid-area: field; }
+  .aside { grid-area: aside; margin-top: 1.75rem; }
+  .detail { grid-area: detail; margin-top: 1.75rem; }
+
+  .marks {
+    grid-area: marks;
+    position: static;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    row-gap: 0.35rem;
+  }
+}

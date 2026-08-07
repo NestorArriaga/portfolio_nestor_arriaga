@@ -1,0 +1,92 @@
+/* Leyenda. Densa y jerárquica, como en una lámina impresa. Nunca con aspecto
+   de filtros: sin casillas, sin fondos, sin bordes de control. */
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.groupTitle {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.groupSubtitle {
+  margin: 0 0 0.15rem;
+  font-family: var(--font-sans);
+  font-size: var(--type-label);
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.keys {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.key {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 0.6rem;
+  align-items: start;
+}
+
+.mark {
+  display: block;
+  width: 20px;
+  /* Alineación óptica con la primera línea del texto. */
+  margin-top: 0.18em;
+}
+
+.mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--type-technical);
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
+.note {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.35;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 900px) {
+  /* La leyenda pasa a dos columnas en móvil: apilada ocuparía más pantalla
+     que el propio mapa. */
+  .keys {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem var(--gutter);
+  }
+}

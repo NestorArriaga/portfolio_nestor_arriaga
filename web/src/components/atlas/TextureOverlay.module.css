@@ -1,0 +1,12 @@
+/* Textura decorativa. Nunca captura el puntero ni entra en el orden de lectura. */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-overlay);
+  pointer-events: none;
+  background-repeat: repeat;
+  /* mix-blend-mode overlay conserva el detalle de las sombras en lugar de
+     aclararlas: es lo que evita que un negro quede plano. */
+  mix-blend-mode: overlay;
+}

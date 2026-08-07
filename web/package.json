@@ -1,0 +1,27 @@
+{
+  "name": "portafolio-atlas",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4100",
+    "build": "next build",
+    "start": "next start -p 4100",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "atlas:sources": "../.venv/bin/python scripts/build_atlas_sources.py",
+    "atlas:masks": "../.venv/bin/python scripts/build_territory_masks.py"
+  },
+  "dependencies": {
+    "next": "14.2.35",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
+    "typescript": "^5"
+  }
+}

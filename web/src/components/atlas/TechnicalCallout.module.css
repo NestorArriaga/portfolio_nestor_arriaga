@@ -1,0 +1,104 @@
+/* Anotación técnica. Vive por encima del objeto sin capturar el puntero:
+   el mapa sigue siendo interactivo debajo. */
+
+.wrap {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-annotation);
+  pointer-events: none;
+  color: var(--ink-muted);
+}
+
+.callout { display: contents; }
+
+/* Los dos tramos del codo. 1 px exacto en cualquier proporción del campo,
+   porcentaje solo en el eje que recorren. */
+.horizontal,
+.vertical {
+  position: absolute;
+  background: currentColor;
+  transition: transform var(--dur-layer) var(--ease-out);
+  transition-delay: inherit;
+}
+
+.horizontal {
+  height: 1px;
+  transform: scaleX(0);
+}
+
+.vertical {
+  width: 1px;
+  transform: scaleY(0);
+}
+
+.wrap[data-revealed='true'] .horizontal { transform: scaleX(1); }
+.wrap[data-revealed='true'] .vertical { transform: scaleY(1); }
+
+.anchor {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity var(--dur-micro) var(--ease-out);
+  transition-delay: inherit;
+}
+
+.wrap[data-revealed='true'] .anchor { opacity: 1; }
+
+.label {
+  position: absolute;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-width: 15ch;
+  opacity: 0;
+  transition: opacity var(--dur-micro) var(--ease-out);
+}
+
+/* La etiqueta arranca donde termina el codo: alineada al punto, no centrada. */
+.label[data-align='left'] {
+  transform: translateY(-0.55em);
+  padding-left: 0.5rem;
+  text-align: left;
+}
+
+.label[data-align='right'] {
+  transform: translate(-100%, -0.55em);
+  padding-right: 0.5rem;
+  text-align: right;
+}
+
+.wrap[data-revealed='true'] .label { opacity: 1; }
+
+.labelText {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.3;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.labelValue {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.3;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .horizontal { transform: scaleX(1); transition: none; }
+  .vertical { transform: scaleY(1); transition: none; }
+  .anchor,
+  .label { opacity: 1; transition: none; }
+}
+
+@media (max-width: 900px) {
+  /* En móvil las llamadas sobre el mapa se vuelven ilegibles. La lámina las
+     sustituye por una lista debajo; aquí simplemente se retiran. */
+  .wrap { display: none; }
+}

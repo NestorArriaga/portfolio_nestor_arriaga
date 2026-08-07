@@ -1,0 +1,43 @@
+.wrap {
+  display: block;
+  width: 100%;
+  color: var(--accent);
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* pathLength="1" hace que dasharray/dashoffset trabajen en fracciones del
+   recorrido, sin medir nada en el cliente. */
+.outline path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--dur-trace) var(--ease-out);
+}
+
+.wrap[data-revealed='true'] .outline path {
+  stroke-dashoffset: 0;
+}
+
+.fill {
+  transition: opacity var(--dur-layer) var(--ease-out);
+  /* El relleno entra después del trazo: primero se dibuja el límite, luego se
+     llena. Al revés parecería una mancha que crece. */
+  transition-delay: var(--dur-trace);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .outline path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+
+  .fill {
+    transition: none;
+    transition-delay: 0s;
+  }
+}

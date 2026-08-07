@@ -1,0 +1,182 @@
+/* Marco de coordenadas. El campo cartográfico manda; el marco es un borde
+   delgado que no le roba superficie.
+
+   Los rieles se dimensionan con variables en vez de números sueltos: el mismo
+   valor gobierna el padding del marco, la posición de la cuadrícula y el alto
+   de cada riel, y en móvil basta con redefinirlos. */
+
+.frame {
+  --pad-x: 46px;
+  --pad-top: 18px;
+  /* El riel inferior lleva dos filas: cifras y sistema de referencia. */
+  --pad-bottom: 34px;
+
+  position: relative;
+  padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+  color: var(--ink-muted);
+  background: var(--black);
+  border: var(--hairline) solid var(--line-dark);
+}
+
+.field {
+  position: relative;
+  z-index: var(--z-field);
+  width: 100%;
+  height: 100%;
+}
+
+.grid {
+  position: absolute;
+  top: var(--pad-top);
+  left: var(--pad-x);
+  /* Un <svg> con viewBox tiene proporción intrínseca: con height:auto toma su
+     alto de esa proporción y desborda el marco. Hay que darle medidas
+     explícitas, derivadas del propio padding. */
+  width: calc(100% - var(--pad-x) * 2);
+  height: calc(100% - var(--pad-top) - var(--pad-bottom));
+  z-index: var(--z-overlay);
+  pointer-events: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  opacity: var(--grid-line-opacity);
+}
+
+.rail {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+
+.top,
+.bottom {
+  left: var(--pad-x);
+  right: var(--pad-x);
+}
+
+.top { top: 0; height: var(--pad-top); }
+.bottom { bottom: 0; height: var(--pad-bottom); }
+
+.left,
+.right {
+  top: var(--pad-top);
+  bottom: var(--pad-bottom);
+  width: var(--pad-x);
+}
+
+.left { left: 0; }
+.right { right: 0; }
+
+.tick {
+  position: absolute;
+  display: block;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Marca corta antes del número: la referencia visual es el trazo, no la cifra. */
+.tick::before {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.top .tick,
+.bottom .tick {
+  transform: translateX(-50%);
+}
+
+.top .tick { bottom: 3px; }
+/* Anclado arriba del riel inferior: debajo queda la línea del sistema. */
+.bottom .tick { top: 3px; }
+
+.top .tick::before,
+.bottom .tick::before {
+  left: 50%;
+  width: 1px;
+  height: 4px;
+}
+
+.top .tick::before { bottom: -4px; }
+.bottom .tick::before { top: -4px; }
+
+.left .tick,
+.right .tick {
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+}
+
+.left .tick { right: 5px; }
+.right .tick { left: 5px; }
+
+.left .tick::before,
+.right .tick::before {
+  top: 50%;
+  height: 1px;
+  width: 4px;
+}
+
+.left .tick::before { right: -5px; }
+.right .tick::before { left: -5px; }
+
+/* Segunda fila del riel inferior: nunca pisa las cifras. */
+.srs {
+  position: absolute;
+  right: var(--pad-x);
+  bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* --- Escala --------------------------------------------------------------- */
+
+.scale {
+  display: block;
+  min-width: 90px;
+  color: var(--ink-muted);
+}
+
+.scaleBar {
+  display: block;
+  width: 100%;
+  height: 6px;
+}
+
+.scaleLabel {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: 0.02em;
+}
+
+/* --- Norte ---------------------------------------------------------------- */
+
+.north {
+  display: block;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 900px) {
+  .frame {
+    --pad-x: 26px;
+    --pad-top: 14px;
+    --pad-bottom: 30px;
+  }
+
+  /* En móvil las marcas se ralean: mostrar seis cifras verticales en 26 px
+     las volvería ilegibles. */
+  .left .tick:nth-child(even),
+  .right .tick:nth-child(even),
+  .top .tick:nth-child(even),
+  .bottom .tick:nth-child(even) {
+    display: none;
+  }
+}
