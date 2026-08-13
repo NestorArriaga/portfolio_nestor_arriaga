@@ -1,0 +1,372 @@
+{
+ "source": "laminas del PDF, color-keying por leyenda",
+ "tolerancia": 46,
+ "laminas": [
+  {
+   "slug": "p01-areas-verdes",
+   "px": [
+    900,
+    923
+   ],
+   "clases": [
+    {
+     "label": "\u00c1reas verdes",
+     "color": "#3cd63c",
+     "file": "/projects/masks/p01-areas-verdes--reas-verdes.webp",
+     "cobertura": 0.0062
+    },
+    {
+     "label": "Bosques Urbanos",
+     "color": "#dff5d8",
+     "file": "/projects/masks/p01-areas-verdes--bosques-urbanos.webp",
+     "cobertura": 0.2565
+    },
+    {
+     "label": "Jornada Interinstitucional",
+     "color": "#b9e8ac",
+     "file": "/projects/masks/p01-areas-verdes--jornada-interinstitucional.webp",
+     "cobertura": 0.0675
+    },
+    {
+     "label": "Pilares",
+     "color": "#8ade7c",
+     "file": "/projects/masks/p01-areas-verdes--pilares.webp",
+     "cobertura": 0.0157
+    },
+    {
+     "label": "Proyectos (Vialidades)",
+     "color": "#5bd155",
+     "file": "/projects/masks/p01-areas-verdes--proyectos-vialidades.webp",
+     "cobertura": 0.0132
+    },
+    {
+     "label": "Sembrando Parques",
+     "color": "#2eb84a",
+     "file": "/projects/masks/p01-areas-verdes--sembrando-parques.webp",
+     "cobertura": 0.0042
+    },
+    {
+     "label": "\u00c1reas de valor ambiental",
+     "color": "#4bb6dd",
+     "file": "/projects/masks/p01-areas-verdes--reas-de-valor-ambiental.webp",
+     "cobertura": 0.0244
+    }
+   ]
+  },
+  {
+   "slug": "p02-carbono",
+   "px": [
+    900,
+    939
+   ],
+   "clases": [
+    {
+     "label": "30",
+     "color": "#fbdccf",
+     "file": "/projects/masks/p02-carbono--30.webp",
+     "cobertura": 0.058
+    },
+    {
+     "label": "40",
+     "color": "#f7c3ae",
+     "file": "/projects/masks/p02-carbono--40.webp",
+     "cobertura": 0.0309
+    },
+    {
+     "label": "50",
+     "color": "#f2a58c",
+     "file": "/projects/masks/p02-carbono--50.webp",
+     "cobertura": 0.0438
+    },
+    {
+     "label": "60",
+     "color": "#e8836c",
+     "file": "/projects/masks/p02-carbono--60.webp",
+     "cobertura": 0.0383
+    },
+    {
+     "label": "70",
+     "color": "#d95f54",
+     "file": "/projects/masks/p02-carbono--70.webp",
+     "cobertura": 0.0515
+    },
+    {
+     "label": "80",
+     "color": "#c4404a",
+     "file": "/projects/masks/p02-carbono--80.webp",
+     "cobertura": 0.0421
+    },
+    {
+     "label": "90",
+     "color": "#a52b41",
+     "file": "/projects/masks/p02-carbono--90.webp",
+     "cobertura": 0.0267
+    }
+   ]
+  },
+  {
+   "slug": "p03-zonas-optimas",
+   "px": [
+    900,
+    918
+   ],
+   "clases": [
+    {
+     "label": "Cultivo de lim\u00f3n",
+     "color": "#6cf06c",
+     "file": "/projects/masks/p03-zonas-optimas--cultivo-de-lim-n.webp",
+     "cobertura": 0.0017
+    },
+    {
+     "label": "Cultivo de caf\u00e9",
+     "color": "#3d2f1f",
+     "file": "/projects/masks/p03-zonas-optimas--cultivo-de-caf.webp",
+     "cobertura": 0.0434
+    }
+   ]
+  },
+  {
+   "slug": "p06-zonas-ecologicas",
+   "px": [
+    900,
+    612
+   ],
+   "clases": [
+    {
+     "label": "\u00c1reas de Exclusi\u00f3n",
+     "color": "#6fcbcf",
+     "file": "/projects/masks/p06-zonas-ecologicas--reas-de-exclusi-n.webp",
+     "cobertura": 0.0015
+    },
+    {
+     "label": "Zona \u00c1rida",
+     "color": "#a04e52",
+     "file": "/projects/masks/p06-zonas-ecologicas--zona-rida.webp",
+     "cobertura": 0.0024
+    },
+    {
+     "label": "Zona C\u00e1lida Subh\u00fameda",
+     "color": "#24408f",
+     "file": "/projects/masks/p06-zonas-ecologicas--zona-c-lida-subh-meda.webp",
+     "cobertura": 0.0002
+    },
+    {
+     "label": "Zona Des\u00e9rtica",
+     "color": "#6bbf57",
+     "file": "/projects/masks/p06-zonas-ecologicas--zona-des-rtica.webp",
+     "cobertura": 0.0015
+    },
+    {
+     "label": "Zona Semi\u00e1rida",
+     "color": "#febe2b",
+     "file": "/projects/masks/p06-zonas-ecologicas--zona-semi-rida.webp",
+     "cobertura": 0.0339
+    },
+    {
+     "label": "Zona Templada H\u00fameda",
+     "color": "#5d489d",
+     "file": "/projects/masks/p06-zonas-ecologicas--zona-templada-h-meda.webp",
+     "cobertura": 0.0001
+    },
+    {
+     "label": "Zona Templada Subh\u00fameda",
+     "color": "#73c380",
+     "file": "/projects/masks/p06-zonas-ecologicas--zona-templada-subh-meda.webp",
+     "cobertura": 0.0033
+    }
+   ]
+  },
+  {
+   "slug": "p07-pendiente",
+   "px": [
+    900,
+    939
+   ],
+   "clases": [
+    {
+     "label": "0 \u2013 10 %",
+     "color": "#9c76b3",
+     "file": "/projects/masks/p07-pendiente--0-10.webp",
+     "cobertura": 0.0003
+    },
+    {
+     "label": "10 \u2013 25 %",
+     "color": "#2f679e",
+     "file": "/projects/masks/p07-pendiente--10-25.webp",
+     "cobertura": 0.044
+    },
+    {
+     "label": "25 \u2013 50 %",
+     "color": "#7ec9a1",
+     "file": "/projects/masks/p07-pendiente--25-50.webp",
+     "cobertura": 0.0167
+    },
+    {
+     "label": "> 50 %",
+     "color": "#00020c",
+     "file": "/projects/masks/p07-pendiente--50.webp",
+     "cobertura": 0.0333
+    }
+   ]
+  },
+  {
+   "slug": "p09-vocaciones",
+   "px": [
+    900,
+    776
+   ],
+   "clases": [
+    {
+     "label": "Orientado a la conservaci\u00f3n",
+     "color": "#30823f",
+     "file": "/projects/masks/p09-vocaciones--orientado-a-la-conservaci-n.webp",
+     "cobertura": 0.1461
+    },
+    {
+     "label": "Orientado a la agricultura",
+     "color": "#d65e27",
+     "file": "/projects/masks/p09-vocaciones--orientado-a-la-agricultura.webp",
+     "cobertura": 0.0017
+    }
+   ]
+  },
+  {
+   "slug": "p10-conservacion",
+   "px": [
+    900,
+    773
+   ],
+   "clases": [
+    {
+     "label": "Nulo",
+     "color": "#f0f0f0",
+     "file": "/projects/masks/p10-conservacion--nulo.webp",
+     "cobertura": 0.0163
+    },
+    {
+     "label": "Medio",
+     "color": "#4ab85f",
+     "file": "/projects/masks/p10-conservacion--medio.webp",
+     "cobertura": 0.0034
+    },
+    {
+     "label": "Alto",
+     "color": "#0c562c",
+     "file": "/projects/masks/p10-conservacion--alto.webp",
+     "cobertura": 0.0125
+    }
+   ]
+  },
+  {
+   "slug": "p11-agricola",
+   "px": [
+    900,
+    785
+   ],
+   "clases": [
+    {
+     "label": "Nulo",
+     "color": "#f0f0f0",
+     "file": "/projects/masks/p11-agricola--nulo.webp",
+     "cobertura": 0.0172
+    },
+    {
+     "label": "Medio",
+     "color": "#f8982d",
+     "file": "/projects/masks/p11-agricola--medio.webp",
+     "cobertura": 0.0993
+    },
+    {
+     "label": "Alto",
+     "color": "#d65e27",
+     "file": "/projects/masks/p11-agricola--alto.webp",
+     "cobertura": 0.1305
+    }
+   ]
+  },
+  {
+   "slug": "p06-zonas-ecologicas-clean",
+   "px": [
+    900,
+    612
+   ],
+   "clases": [
+    {
+     "label": "\u00c1reas de Exclusi\u00f3n",
+     "color": "#6fcbcf",
+     "file": "/projects/masks/p06-zonas-ecologicas-clean--reas-de-exclusi-n.webp",
+     "cobertura": 0.0015
+    },
+    {
+     "label": "Zona \u00c1rida",
+     "color": "#a04e52",
+     "file": "/projects/masks/p06-zonas-ecologicas-clean--zona-rida.webp",
+     "cobertura": 0.0024
+    },
+    {
+     "label": "Zona C\u00e1lida Subh\u00fameda",
+     "color": "#24408f",
+     "file": "/projects/masks/p06-zonas-ecologicas-clean--zona-c-lida-subh-meda.webp",
+     "cobertura": 0.0002
+    },
+    {
+     "label": "Zona Des\u00e9rtica",
+     "color": "#6bbf57",
+     "file": "/projects/masks/p06-zonas-ecologicas-clean--zona-des-rtica.webp",
+     "cobertura": 0.0015
+    },
+    {
+     "label": "Zona Semi\u00e1rida",
+     "color": "#febe2b",
+     "file": "/projects/masks/p06-zonas-ecologicas-clean--zona-semi-rida.webp",
+     "cobertura": 0.0339
+    },
+    {
+     "label": "Zona Templada H\u00fameda",
+     "color": "#5d489d",
+     "file": "/projects/masks/p06-zonas-ecologicas-clean--zona-templada-h-meda.webp",
+     "cobertura": 0.0001
+    },
+    {
+     "label": "Zona Templada Subh\u00fameda",
+     "color": "#73c380",
+     "file": "/projects/masks/p06-zonas-ecologicas-clean--zona-templada-subh-meda.webp",
+     "cobertura": 0.0033
+    }
+   ]
+  },
+  {
+   "slug": "p07-pendiente-clean",
+   "px": [
+    900,
+    939
+   ],
+   "clases": [
+    {
+     "label": "0 \u2013 10 %",
+     "color": "#9c76b3",
+     "file": "/projects/masks/p07-pendiente-clean--0-10.webp",
+     "cobertura": 0.0003
+    },
+    {
+     "label": "10 \u2013 25 %",
+     "color": "#2f679e",
+     "file": "/projects/masks/p07-pendiente-clean--10-25.webp",
+     "cobertura": 0.044
+    },
+    {
+     "label": "25 \u2013 50 %",
+     "color": "#7ec9a1",
+     "file": "/projects/masks/p07-pendiente-clean--25-50.webp",
+     "cobertura": 0.0167
+    },
+    {
+     "label": "> 50 %",
+     "color": "#00020c",
+     "file": "/projects/masks/p07-pendiente-clean--50.webp",
+     "cobertura": 0.0333
+    }
+   ]
+  }
+ ]
+}

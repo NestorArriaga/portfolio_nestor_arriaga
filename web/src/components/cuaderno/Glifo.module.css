@@ -1,0 +1,13 @@
+/* Un solo trazo para toda la familia: mismo grosor, mismos remates y color
+   heredado, así que un glifo sobre papel y otro sobre tinta son la misma
+   pieza. Sin relleno ni filtros: se mantiene nítido a cualquier tamaño. */
+
+.glifo {
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}

@@ -11,13 +11,11 @@
  */
 
 export const identity = {
-  name: 'Néstor Elihu Arriaga Gallegos',
+  name: 'Nestor Elihu Arriaga Gallegos',
   role: 'Ingeniero en Recursos Naturales Renovables',
   line: 'Territorio, ruralidad y paisaje',
   institution: 'Universidad Autónoma Chapingo',
   year: '2026',
-  intro:
-    'Cartografía, análisis territorial y proyectos que relacionan paisaje, recursos naturales y formas de habitar.',
 };
 
 export type Territory = {

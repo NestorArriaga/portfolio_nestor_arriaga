@@ -1,0 +1,948 @@
+/* Atlas operativo — páginas interiores P01–P13.
+
+   Un solo esqueleto: retícula de 12 columnas, riel, índice de capítulos,
+   microdatos en mono y amarillo de señal. La diferencia entre proyectos nace de
+   la superficie de su familia, de la operación cartográfica que ejecuta y de la
+   composición de cada instrumento, no de trece hojas de estilo distintas. */
+
+.proyecto {
+  --tinta: #080908;
+  --papel: #f1eee6;
+  --optico: #f6f7f2;
+  --senal: #e9ff3a;
+  --margen: clamp(20px, 3.5vw, 64px);
+  --ancho: 1600px;
+  --col: calc((min(100vw, var(--ancho)) - var(--margen) * 2) / 12);
+  --sal: cubic-bezier(.16, 1, .3, 1);
+  --micro: 220ms;
+  --capitulo: 700ms;
+
+  --fondo: var(--tinta);
+  --texto: var(--optico);
+  /* El amarillo de señal vale como relleno en cualquier superficie, pero como
+     tinta sólo sobre negro: sobre papel marfil su contraste es de 1.1:1 y el
+     rótulo desaparece. `--senal-texto` es el mismo color llevado a legible. */
+  --senal-texto: var(--senal);
+  --texto-2: #a6a79f;
+  --linea: color-mix(in srgb, var(--optico) 20%, transparent);
+
+  background: var(--fondo);
+  color: var(--texto);
+  min-height: 100svh;
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+}
+
+.proyecto[data-sup='papel'] {
+  --fondo: var(--papel);
+  --texto: #13140f;
+  --texto-2: #55564e;
+  --linea: color-mix(in srgb, #13140f 22%, transparent);
+  --senal-texto: #5f6b00;
+}
+
+/* Familias: el acento del proyecto sale de sus datos, no de un color de marca.
+   Sólo se declara aquí el tono con el que la interfaz subraya, nunca el color
+   con el que el mapa clasifica. */
+.proyecto[data-familia='urbana']  { --acento: #3cd63c; }
+.proyecto[data-familia='cuenca']  { --acento: #e53131; }
+.proyecto[data-familia='mineral'] { --acento: #a5784c; }
+.proyecto[data-familia='tecnica'] { --acento: #30823f; }
+.proyecto[data-familia='suelo']   { --acento: #5ed6e8; }
+
+/* --- Apertura -------------------------------------------------------------- */
+
+.apertura {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: calc(var(--margen) + 3.6rem) var(--margen) clamp(2rem, 8vh, 6rem);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: center;
+  min-height: 88svh;
+}
+
+.aperturaTexto { grid-column: span 5; display: grid; gap: 0.9rem; min-width: 0; }
+
+.codigo {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 12px; letter-spacing: 0.14em; color: var(--senal-texto);
+}
+
+/* Dos líneas como máximo en escritorio: el cuerpo responde al ancho disponible
+   y también a la longitud real del rótulo. */
+.titulo {
+  margin: 0;
+  font-size: min(clamp(58px, 7.2vw, 124px), calc(46vw / var(--largo, 14) * 2.5));
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-weight: 560;
+  text-wrap: balance;
+}
+
+.ficha { display: grid; gap: 0.35rem; font-size: 12px; margin: 0.4rem 0 0; }
+.ficha > div { display: flex; gap: 0.8rem; }
+.ficha dt { color: var(--texto-2); min-width: 6rem; }
+.ficha dd { margin: 0; }
+
+/* El dato principal vive en la apertura, no en una tarjeta aparte. */
+.heroMetrica { margin: 1rem 0 0; display: grid; gap: 0.2rem; }
+.heroMetrica b {
+  font-size: clamp(30px, 4.5vw, 72px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--acento);
+}
+.heroMetrica span { font-size: 12px; color: var(--texto-2); }
+
+.heroObra { grid-column: span 7; }
+
+/* --- Índice de capítulos --------------------------------------------------- */
+
+/* Índice de capítulos.
+
+   Por defecto es una banda pegajosa bajo el riel. Sólo pasa a columna lateral
+   cuando hay margen real fuera del ancho editorial: a 1440 px el carril quedaba
+   encima del título, porque el hueco entre el borde y la retícula es menor que
+   el propio carril. */
+.indice {
+  position: sticky;
+  top: 3.4rem;
+  z-index: 40;
+  padding: 0.4rem var(--margen);
+  background: color-mix(in srgb, var(--fondo) 88%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.indice ol { grid-auto-flow: column; justify-content: start; gap: 1rem; overflow-x: auto; }
+.indice span { opacity: 1; transform: none; font-size: 12px; }
+
+@media (min-width: 1500px) {
+  .indice {
+    position: fixed;
+    left: calc((100vw - var(--ancho)) / 2 - 3.2rem);
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    background: none;
+    backdrop-filter: none;
+  }
+
+  .indice ol { grid-auto-flow: row; gap: 0.55rem; overflow: visible; }
+  .indice span { opacity: 0; transform: translateX(-4px); font-size: 11px; }
+  .indice a:hover span, .indice a:focus-visible span, .indice a[data-on] span {
+    opacity: 1; transform: none;
+  }
+}
+
+.indice ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+
+.indice a {
+  display: flex; align-items: center; gap: 0.5rem;
+  min-height: 24px;
+  color: var(--texto-2);
+  text-decoration: none;
+}
+
+.indice i {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor;
+  opacity: 0.45;
+  transition: opacity var(--micro) var(--sal), transform var(--micro) var(--sal);
+}
+
+.indice span {
+  font-size: 11px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--micro) var(--sal), transform var(--micro) var(--sal);
+  white-space: nowrap;
+}
+
+.indice a:hover span, .indice a:focus-visible span,
+.indice a[data-on] span { opacity: 1; transform: none; }
+
+.indice a[data-on] i { opacity: 1; background: var(--senal); transform: scale(1.5); }
+
+/* --- Capítulo -------------------------------------------------------------- */
+
+.capitulo {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 9vh, 7rem) var(--margen);
+  display: grid;
+  gap: clamp(0.9rem, 2vh, 1.6rem);
+  scroll-margin-top: 5rem;
+}
+
+.capituloNombre {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+/* --- Pieza dentro de su guarda de densidad --------------------------------- */
+
+.pieza {
+  position: relative;
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+  /* La guarda: nunca por encima de un píxel de origen por píxel de pantalla. */
+  width: min(100%, calc(var(--nativo, 2000) / var(--dpr, 1) * 1px));
+  justify-self: center;
+}
+
+.pieza img {
+  display: block;
+  width: 100%;
+  max-height: 82svh;
+  object-fit: contain;
+}
+
+.pieza figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.pieza figcaption span { color: color-mix(in srgb, var(--texto-2) 74%, transparent); }
+
+/* --- Mesa: mapa + instrumento ---------------------------------------------- */
+
+.mesa {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: center;
+}
+
+.mapaCaja { grid-column: span 8; min-width: 0; display: grid; justify-items: center; }
+
+/* La lámina se subordina cuando hay una clase aislada; no desaparece. */
+.mapaCaja[data-aislado] .pieza img { opacity: 0.34; }
+.mapaCaja .pieza img { transition: opacity var(--capitulo) var(--sal); }
+
+.mascara {
+  position: absolute;
+  inset: 0;
+  bottom: 2.1rem;
+  pointer-events: none;
+  background: var(--c);
+  -webkit-mask-image: var(--m);
+  mask-image: var(--m);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: entra var(--capitulo) var(--sal);
+}
+
+@keyframes entra { from { opacity: 0 } to { opacity: 1 } }
+
+/* --- Leyenda instrumento --------------------------------------------------- */
+
+.leyenda { grid-column: span 4; display: grid; gap: 0.6rem; align-content: center; min-width: 0; }
+
+.leyendaTitulo { font-size: 12px; color: var(--senal-texto); letter-spacing: 0.1em; }
+
+.leyenda ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.1rem; }
+
+.leyenda li button, .leyenda li p {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin: 0;
+  padding: 0.4rem 0;
+  min-height: 34px;
+  width: 100%;
+  font-size: 13px;
+  color: var(--texto-2);
+  text-align: left;
+  transition: color var(--micro) var(--sal);
+}
+
+.leyenda i {
+  flex: none;
+  width: 14px; height: 14px;
+  background: var(--c, var(--senal));
+  outline: 1px solid color-mix(in srgb, var(--texto) 24%, transparent);
+  transition: transform var(--micro) var(--sal);
+}
+
+.leyenda li button:hover, .leyenda li button:focus-visible,
+.leyenda li button[aria-pressed='true'] { color: var(--texto); }
+.leyenda li button[aria-pressed='true'] i { transform: scale(1.2); }
+
+.nota { font-size: 12px; color: var(--texto-2); max-width: 44ch; }
+
+/* --- Localizador ----------------------------------------------------------- */
+
+.localizador {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: center;
+}
+
+.localizador .pieza { grid-column: span 7; }
+.localizadorDatos { grid-column: span 5; display: grid; gap: 0.7rem; align-content: center; }
+
+.foco { margin: 0; font-size: clamp(24px, 3vw, 46px); font-weight: 500; letter-spacing: -0.02em; }
+.coord { font-size: 12px; color: var(--texto-2); }
+
+.escala { display: flex; align-items: center; gap: 0.5rem; font-size: 12px; color: var(--texto-2); }
+.escala i { width: 56px; height: 1px; background: currentColor; position: relative; }
+.escala i::before, .escala i::after {
+  content: ''; position: absolute; top: -3px; width: 1px; height: 7px; background: currentColor;
+}
+.escala i::before { left: 0; }
+.escala i::after { right: 0; }
+
+.norte { width: 22px; height: 22px; fill: none; stroke: var(--senal-texto); stroke-width: 1.4; stroke-linecap: round; }
+
+/* --- Gradiente ------------------------------------------------------------- */
+
+.rampa { grid-column: span 4; display: grid; gap: 0.9rem; align-content: center; }
+
+/* Regla continua: la banda de color es una sola pieza y las marcas se apoyan
+   sobre ella. Ocho renglones sueltos partían un continuo en ocho categorías. */
+.rampaBanda { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 0.7rem; }
+.rampaColor { display: block; background: linear-gradient(to bottom, var(--tramos)); }
+.rampaBanda ol { list-style: none; margin: 0; padding: 0; display: grid; }
+
+.rampa button {
+  display: flex; align-items: center; gap: 0.6rem;
+  width: 100%; min-height: 30px; padding: 0;
+  font-size: 13px; color: var(--texto-2); text-align: left;
+  transition: color var(--micro) var(--sal);
+}
+
+/* La marca es una muesca sobre la regla, no otra muestra de color. */
+.rampa i { flex: none; width: 12px; height: 1px; background: var(--texto-2); }
+.rampa button[aria-pressed='true'], .rampa button:hover { color: var(--texto); }
+.rampa button[aria-pressed='true'] i { width: 22px; height: 2px; background: var(--texto); }
+
+.rampaActivo { margin: 0; display: flex; align-items: baseline; gap: 0.6rem; }
+.rampaActivo b {
+  font-size: clamp(28px, 3.4vw, 46px);
+  font-weight: 500; line-height: 1; letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.rampaActivo span { font-size: 12px; color: var(--texto-2); }
+
+/* --- Nodos ----------------------------------------------------------------- */
+
+.nodos { position: absolute; inset: 0; bottom: 2.1rem; width: 100%; }
+
+.nodos circle {
+  fill: var(--senal);
+  stroke: color-mix(in srgb, var(--tinta) 60%, transparent);
+  stroke-width: 0.2;
+  vector-effect: non-scaling-stroke;
+  /* Convergen en secuencia, no todos de golpe. */
+  animation: llega 460ms var(--sal) backwards;
+  animation-delay: calc(var(--i) * 26ms);
+  transition: r var(--micro) var(--sal);
+}
+
+.nodos circle[data-on] { fill: var(--optico); }
+
+@keyframes llega { from { opacity: 0; transform: scale(0.4) } to { opacity: 1; transform: none } }
+
+.contador { grid-column: span 4; display: grid; gap: 0.3rem; align-content: center; }
+.contadorCifra {
+  margin: 0;
+  font-size: clamp(48px, 7vw, 108px);
+  font-weight: 500; line-height: 0.9; letter-spacing: -0.04em;
+  color: var(--senal-texto);
+}
+.contadorEtiqueta { font-size: 13px; color: var(--texto-2); }
+
+/* --- Métricas -------------------------------------------------------------- */
+
+.metricas {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: end;
+}
+
+.metricas dl { grid-column: span 8; margin: 0; display: grid; gap: 1.2rem; }
+
+.metricas > dl > div {
+  display: grid;
+  gap: 0.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.metricas dd {
+  margin: 0;
+  font-size: clamp(30px, 4.5vw, 72px);
+  font-weight: 500; line-height: 0.95; letter-spacing: -0.03em;
+  /* Cifras tabulares: los decimales caen en la misma columna y las cantidades
+     se comparan de un vistazo en vez de bailar con el ancho del glifo. */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Regla comparativa; sólo aparece cuando las cifras comparten unidad. */
+.reglaCifra { display: block; height: 2px; width: var(--w); background: var(--acento); }
+.metricas dl[data-comparable] > div { padding-bottom: 0.55rem; }
+
+.metricas dt { font-size: 12px; color: var(--texto-2); }
+
+/* Especímenes numerados: enunciados, no cifras. */
+.especimenes {
+  grid-column: span 12;
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+}
+.especimenes li {
+  display: grid; gap: 0.5rem; align-content: start;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--linea);
+}
+.especimenNum {
+  justify-self: start;
+  display: grid; place-items: center;
+  width: 20px; height: 20px;
+  font-size: 11px; color: var(--tinta); background: var(--senal);
+}
+.especimenValor {
+  margin: 0;
+  font-size: clamp(20px, 2.1vw, 30px);
+  font-weight: 500; line-height: 1.12; letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.especimenPie { margin: 0; font-size: 12px; color: var(--texto-2); }
+
+.apoyo { grid-column: span 4; }
+
+.apoyoDetalle { margin: 0; display: grid; gap: 0.4rem; }
+.apoyoDetalle figcaption { font-size: 11px; color: var(--texto-2); }
+
+/* --- Comparador ------------------------------------------------------------ */
+
+.comparador { display: grid; gap: 1rem; justify-items: center; }
+
+.comparadorCaja {
+  position: relative;
+  width: min(100%, 1100px);
+  display: grid;
+  touch-action: pan-y;
+  cursor: ew-resize;
+}
+
+.comparadorCaja img { grid-area: 1 / 1; width: 100%; height: auto; max-height: 72svh; object-fit: contain; }
+
+/* El corte revela el estado B sobre el A. `clip-path` no recalcula layout. */
+.compB { clip-path: inset(0 0 0 var(--x)); transition: clip-path var(--micro) linear; }
+
+.divisor {
+  position: absolute; top: 0; bottom: 0; left: var(--x);
+  width: 1px; background: var(--senal);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--tinta) 40%, transparent);
+}
+
+.compEtiqueta {
+  position: absolute; top: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 12px;
+  background: color-mix(in srgb, var(--fondo) 86%, transparent);
+}
+
+.compEtiqueta[data-lado='a'] { left: 0.6rem; }
+.compEtiqueta[data-lado='b'] { right: 0.6rem; }
+
+.compControles { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: center; }
+
+.deslizador { display: flex; align-items: center; gap: 0.6rem; font-size: 12px; color: var(--texto-2); }
+.deslizador input { width: clamp(120px, 18vw, 220px); accent-color: var(--senal); }
+
+/* --- Atlas de detalles ------------------------------------------------------ */
+
+.atlas {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  /* Estirado, no centrado: los tres recortes tienen que caber junto al mapa en
+     la misma pantalla. Con altura libre medían 450 px cada uno y el capítulo
+     se convertía en una tira vertical donde nunca se veían mapa y detalles a
+     la vez, que es justo lo que el instrumento tiene que enseñar. */
+  align-items: stretch;
+  max-height: 82svh;
+  position: relative;
+}
+
+/* Llamadas medidas entre marca y recorte. Van por encima del mapa y por debajo
+   de los controles, y no interceptan el puntero. */
+.llamadas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+.llamadas line {
+  stroke: var(--texto-2);
+  stroke-width: 1;
+  opacity: 0.4;
+  transition: opacity var(--micro) var(--sal), stroke var(--micro) var(--sal);
+}
+.llamadas line[data-on] { stroke: var(--senal-texto); opacity: 1; }
+
+.atlasMapa { grid-column: span 7; min-width: 0; display: grid; }
+
+.marca {
+  position: absolute;
+  left: var(--mx); top: var(--my);
+  transform: translate(-50%, -50%);
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  color: var(--texto);
+}
+
+.marca i {
+  position: absolute;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--senal);
+  outline: 1px solid var(--tinta);
+  transition: transform var(--micro) var(--sal);
+}
+
+.marca span {
+  position: absolute; left: calc(50% + 16px);
+  font-size: 11px;
+  opacity: 0.55;
+  transition: opacity var(--micro) var(--sal);
+}
+
+.marca[data-on] i { transform: scale(1.5); }
+.marca[data-on] span { opacity: 1; }
+
+.atlasDetalles {
+  grid-column: span 5;
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  min-height: 0;
+}
+
+.atlasDetalles li {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.35rem;
+  min-height: 0;
+  opacity: 0.62;
+  transition: opacity var(--micro) var(--sal);
+}
+.atlasDetalles li[data-on] { opacity: 1; }
+.atlasDetalles li[data-on] .factor { opacity: 1; }
+.factor { margin-left: auto; opacity: 0.5; transition: opacity var(--micro) var(--sal); }
+
+/* Recorte a `background-size` fijo: alinea un punto focal sin ampliar el
+   recurso por encima de su resolución. */
+.recorte {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background-repeat: no-repeat;
+  /* El acercamiento lo fija `--zoom`, el mismo número que rotula la etiqueta.
+     Por debajo no se distingue del mapa general; por encima se pasaría de la
+     resolución del recurso. */
+  background-size: calc(var(--zoom, 3) * 100%);
+  outline: 1px solid var(--linea);
+  transition: outline-color var(--micro) var(--sal);
+}
+
+.atlasDetalles li[data-on] .recorte { outline-color: var(--senal-texto); }
+
+.atlasDetalles p { margin: 0; display: flex; gap: 0.5rem; font-size: 12px; color: var(--texto-2); }
+.atlasDetalles b {
+  display: grid; place-items: center;
+  width: 17px; height: 17px; flex: none;
+  font-size: 10px; color: var(--tinta); background: var(--senal);
+}
+
+/* --- Sincronía mapa–perfil -------------------------------------------------- */
+
+.sincro {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: center;
+}
+
+.sincro .mapaCaja { grid-column: span 7; }
+.perfilCaja { grid-column: span 5; display: grid; gap: 0.9rem; align-content: center; min-width: 0; }
+
+.bandas { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+
+.bandas button {
+  display: flex; align-items: center; gap: 0.6rem;
+  width: 100%; min-height: 36px; padding: 0.3rem 0;
+  font-size: 13px; color: var(--texto-2); text-align: left;
+  transition: color var(--micro) var(--sal);
+}
+
+.bandas i {
+  flex: none; width: 40px; height: 14px; background: var(--c);
+  /* El intervalo `> 50 %` es casi negro: sin filo se pierde contra la tinta y
+     deja de leerse como muestra. */
+  outline: 1px solid var(--linea);
+}
+.bandas button[aria-pressed='true'], .bandas button:hover { color: var(--texto); }
+.bandas button[aria-pressed='true'] i { outline: 1px solid var(--texto); }
+
+/* --- Criterios -------------------------------------------------------------- */
+
+.criterios {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: center;
+}
+
+.matriz { grid-column: span 7; list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+
+.matriz li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'nombre peso' 'regla regla';
+  gap: 0.3rem 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--linea);
+  opacity: 0.7;
+  transition: opacity var(--micro) var(--sal);
+}
+
+.matriz li[data-on] { opacity: 1; }
+
+.criterioNombre { grid-area: nombre; font-size: 14px; }
+.criterioPeso {
+  grid-area: peso; font-size: 13px; color: var(--senal-texto);
+  font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1;
+}
+
+/* La suma cierra la matriz: se calcula desde los pesos, nunca se escribe. */
+.matriz li[data-suma] { opacity: 1; border-bottom: none; border-top: 1px solid var(--texto-2); padding-top: 0.5rem; }
+.matriz li[data-suma] .criterioNombre { color: var(--texto-2); }
+.matriz li[data-suma] .criterioRegla { display: none; }
+
+.fuenteCriterios { margin: 0.7rem 0 0; font-size: 11px; color: var(--texto-2); }
+
+/* La regla dibuja el peso a escala: 0.25 es exactamente el doble de 0.125. */
+.criterioRegla {
+  grid-area: regla;
+  height: 3px;
+  width: var(--w);
+  background: var(--acento);
+  transition: width var(--capitulo) var(--sal);
+}
+
+.criteriosMapa { grid-column: span 5; min-width: 0; }
+
+/* --- Evidencia --------------------------------------------------------------- */
+
+.evidencia {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: start;
+}
+
+.evidencia li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.8rem; }
+
+/* Banda de contacto: la numeración es del pliego, no del territorio. */
+.contactoNum {
+  align-self: start;
+  font-size: 11px; color: var(--tinta); background: var(--senal);
+  display: grid; place-items: center;
+  width: 20px; height: 20px;
+}
+
+/* --- Flujo ------------------------------------------------------------------- */
+
+.cauce {
+  position: absolute; inset: 0; bottom: 2.1rem;
+  width: 100%; pointer-events: none;
+}
+
+.cauce path {
+  fill: none;
+  stroke: var(--senal-texto);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 3 5;
+}
+
+/* Una sola pasada por activación: entra en pantalla, recorre y se detiene. */
+.cauce path[data-pase] { animation: baja 2.4s linear 3; }
+
+@keyframes baja { to { stroke-dashoffset: -32 } }
+
+/* --- Salida ------------------------------------------------------------------ */
+
+.salida {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: clamp(2rem, 6vh, 4rem) var(--margen) 0;
+  display: grid;
+  gap: 1.6rem;
+  scroll-margin-top: 5rem;
+}
+
+.notas { border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+
+.notas summary {
+  min-height: 44px; display: flex; align-items: center;
+  font-size: 13px; cursor: pointer; list-style: none;
+}
+.notas summary::-webkit-details-marker { display: none; }
+.notas summary::after { content: ' +'; color: var(--senal-texto); }
+.notas[open] summary::after { content: ' −'; }
+
+.notas dl { margin: 0 0 1.2rem; display: grid; gap: 0.6rem; max-width: 90ch; }
+.notas dl > div { display: grid; grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr); gap: 1rem; }
+.notas dt { font-size: 12px; color: var(--texto-2); }
+.notas dd { margin: 0; font-size: 13px; line-height: 1.5; max-width: 60ch; }
+
+.saltos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: end;
+  border-top: 1px solid var(--linea);
+  padding-top: 1.4rem;
+}
+
+.salto { display: grid; gap: 0.25rem; min-height: 44px; color: var(--texto); text-decoration: none; }
+.salto[data-dir='adelante'] { justify-items: end; text-align: right; }
+.saltoDir { font-size: 12px; color: var(--texto-2); }
+.saltoNum { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 12px; color: var(--senal-texto); }
+.saltoCorto { font-size: clamp(18px, 2.4vw, 30px); font-weight: 500; letter-spacing: -0.02em; }
+
+.centro { display: flex; gap: 0.5rem; }
+
+/* --- Movimiento reducido ------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .mascara, .nodos circle { animation: none; }
+  .cauce path { animation: none; stroke-dasharray: none; }
+  .mapaCaja .pieza img, .criterioRegla, .compB { transition: none; }
+  .indice i, .indice span { transition: none; }
+}
+
+/* --- Tableta ------------------------------------------------------------------ */
+
+@media (max-width: 1100px) {
+  .apertura, .mesa, .localizador, .metricas, .atlas, .sincro, .criterios {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+  .aperturaTexto, .localizadorDatos { grid-column: span 8; }
+  .heroObra, .mapaCaja, .atlasMapa, .sincro .mapaCaja, .matriz { grid-column: span 8; }
+  .leyenda, .rampa, .contador, .atlasDetalles, .perfilCaja, .criteriosMapa, .apoyo,
+  .metricas dl, .localizador .pieza { grid-column: span 8; }
+}
+
+/* --- Móvil --------------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .apertura, .mesa, .localizador, .metricas, .atlas, .sincro, .criterios {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    min-height: auto;
+  }
+
+  .aperturaTexto, .heroObra, .mapaCaja, .leyenda, .rampa, .contador,
+  .atlasMapa, .atlasDetalles, .perfilCaja, .matriz, .criteriosMapa,
+  .localizador .pieza, .localizadorDatos, .metricas dl, /* Especímenes numerados: enunciados, no cifras. */
+.especimenes {
+  grid-column: span 12;
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+}
+.especimenes li {
+  display: grid; gap: 0.5rem; align-content: start;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--linea);
+}
+.especimenNum {
+  justify-self: start;
+  display: grid; place-items: center;
+  width: 20px; height: 20px;
+  font-size: 11px; color: var(--tinta); background: var(--senal);
+}
+.especimenValor {
+  margin: 0;
+  font-size: clamp(20px, 2.1vw, 30px);
+  font-weight: 500; line-height: 1.12; letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.especimenPie { margin: 0; font-size: 12px; color: var(--texto-2); }
+
+.apoyo { grid-column: span 4; }
+
+.apoyoDetalle { margin: 0; display: grid; gap: 0.4rem; }
+.apoyoDetalle figcaption { font-size: 11px; color: var(--texto-2); }
+
+  .apertura { padding-top: calc(var(--margen) + 4.2rem); }
+
+  .titulo { font-size: min(clamp(44px, 12vw, 58px), calc(90vw / var(--largo, 14) * 2.5)); }
+
+  /* El índice se reduce a puntos y se queda al pie, fuera del contenido. */
+  .indice {
+    position: fixed; top: auto; bottom: calc(3.6rem + env(safe-area-inset-bottom, 0px));
+    left: 0; right: 0;
+    display: flex; justify-content: center;
+    padding: 0.3rem;
+    background: none; backdrop-filter: none;
+  }
+  .indice ol { grid-auto-flow: column; gap: 0.7rem; overflow: visible; }
+  .indice span { display: none; }
+  .indice a { min-height: 24px; min-width: 24px; justify-content: center; }
+
+  .pieza img { max-height: 58svh; }
+
+  .leyenda li button, .leyenda li p, .rampa button, .bandas button { min-height: 44px; font-size: 14px; }
+  .nota, .coord, .ficha, .pieza figcaption, .capituloNombre { font-size: 14px; }
+
+  /* Comparador táctil: el corte se opera con los botones, no con un tirador de
+     un píxel. El deslizador queda como refuerzo, no como único control. */
+  .comparadorCaja { cursor: default; }
+  .deslizador { width: 100%; justify-content: space-between; }
+  .deslizador input { width: 60%; }
+
+  /* Un detalle por vez, deslizable, con el mapa completo arriba. */
+  .atlas { max-height: none; }
+  .atlasDetalles {
+    grid-template-rows: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 78%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .atlasDetalles li { scroll-snap-align: center; opacity: 1; }
+  .recorte { aspect-ratio: 1.3; height: auto; }
+
+  .evidencia { grid-template-columns: minmax(0, 1fr); }
+
+  .saltos { grid-template-columns: minmax(0, 1fr); }
+  .salto[data-dir='adelante'] { justify-items: start; text-align: left; }
+  .centro { order: 3; }
+
+  .notas dl > div { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+  .notas summary, .notas dd { font-size: 14px; }
+}
+
+/* --- Preludio de apertura ----------------------------------------------------
+   El microinstrumento del primer viewport: la operación del proyecto anticipada
+   con su material real. Va dentro de la composición, no en una tarjeta. */
+
+.preludio {
+  margin: 0.6rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.preludio b {
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--senal-texto);
+}
+
+/* Cinta cromática: las clases reales del proyecto, en su orden. */
+.preludioCinta, .preludioReglas { list-style: none; margin: 0; padding: 0; display: flex; }
+
+.preludioCinta li { width: 22px; height: 12px; background: var(--c); }
+
+.preludioReglas { flex-direction: column; gap: 2px; width: 88px; }
+.preludioReglas li { height: 3px; width: var(--w); background: var(--acento); }
+
+/* --- Estado activo y resolución del capítulo -------------------------------- */
+
+.leyendaTitulo span {
+  margin-left: 0.6rem;
+  color: var(--texto-2);
+}
+
+/* Muestra grande: la clase seleccionada se lee sin volver a la lista. */
+.activo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0.5rem 0;
+  border-block: 1px solid var(--linea);
+}
+
+.activo i {
+  width: 30px; height: 30px;
+  flex: none;
+  background: var(--c);
+  outline: 1px solid color-mix(in srgb, var(--texto) 24%, transparent);
+}
+
+.activo b {
+  font-size: clamp(15px, 1.6vw, 20px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--texto);
+}
+
+/* Resolución: la síntesis del capítulo y el regreso al conjunto. */
+.resuelto {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.2rem 0 0;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.resuelto button {
+  min-height: 32px;
+  padding: 0.2rem 0.6rem;
+  font: inherit;
+  color: var(--texto);
+  border: 1px solid var(--linea);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color var(--micro) var(--sal), color var(--micro) var(--sal);
+}
+
+.resuelto button:hover, .resuelto button:focus-visible {
+  border-color: var(--senal-texto);
+  color: var(--senal-texto);
+}
+
+/* --- Hero estable ------------------------------------------------------------
+   La caja se reserva con la proporción exacta del recurso, así que el título no
+   se mueve cuando la imagen termina de decodificar. */
+
+.pieza[data-prioridad] { aspect-ratio: var(--ratio); }
+.pieza[data-prioridad] img { height: 100%; }
+
+@media (max-width: 720px) {
+  .preludio b { font-size: clamp(20px, 6vw, 30px); }
+  .preludio, .resuelto, .leyendaTitulo { font-size: 14px; }
+  .resuelto button { min-height: 44px; }
+}

@@ -33,11 +33,24 @@ from PIL import Image, ImageChops, ImageDraw
 
 Image.MAX_IMAGE_PIXELS = None
 
+def fuente(variable, descripcion):
+    """Raiz del material de origen, tomada del entorno.
+
+    Los originales viven en el archivo de trabajo local y no se versionan: el
+    repositorio publica los derivados. Antes esta ruta estaba escrita en el
+    codigo, y publicarla exponia el arbol de carpetas del autor sin describir
+    mejor la procedencia.
+    """
+    ruta = os.environ.get(variable)
+    if not ruta:
+        raise SystemExit(
+            f"Falta {variable}: ruta al material de origen ({descripcion}). "
+            "Vive en el archivo de trabajo local, fuera del repositorio."
+        )
+    return ruta
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC_SVG = (
-    "/Users/nestorarriagagallegos/Documents/EPI /GRANULAR/"
-    "DISEÑO IMAGEN Y PRESENTACION/B VECTORES SVG AI EPS/EPI CIHEAM/ELEMENTOS"
-)
+SRC_SVG = fuente("ATLAS_FUENTES_SVG", "vectores del atlas")
 OUT_RASTER = os.path.join(ROOT, "public", "atlas", "raster")
 OUT_VECTOR = os.path.join(ROOT, "public", "atlas", "vector")
 MANIFEST = os.path.join(ROOT, "public", "atlas", "atlas-manifest.json")

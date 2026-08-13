@@ -21,8 +21,24 @@ import sys
 import tempfile
 import unicodedata
 
+def fuente(variable, descripcion):
+    """Raiz del material de origen, tomada del entorno.
+
+    Los originales viven en el archivo de trabajo local y no se versionan: el
+    repositorio publica los derivados. Antes esta ruta estaba escrita en el
+    codigo, y publicarla exponia el arbol de carpetas del autor sin describir
+    mejor la procedencia.
+    """
+    ruta = os.environ.get(variable)
+    if not ruta:
+        raise SystemExit(
+            f"Falta {variable}: ruta al material de origen ({descripcion}). "
+            "Vive en el archivo de trabajo local, fuera del repositorio."
+        )
+    return ruta
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC_GIS = "/Users/nestorarriagagallegos/Documents/self/PORTAFOLIO GIS"
+SRC_GIS = fuente("GIS_FUENTES", "salidas GIS de los proyectos")
 OUT_GEO = os.path.join(ROOT, "public", "atlas", "geo")
 OUT_VEC = os.path.join(ROOT, "public", "atlas", "vector")
 

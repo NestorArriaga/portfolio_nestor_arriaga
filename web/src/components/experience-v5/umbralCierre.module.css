@@ -1,0 +1,232 @@
+/* Rostro territorial y contacto. */
+
+.oculto {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --- Rostro --------------------------------------------------------------- */
+
+.rostro { position: relative; height: 300svh; background: var(--grafito); }
+
+.rostroMarco {
+  position: sticky; top: 0; height: 100svh; overflow: clip;
+  display: grid; place-items: center;
+}
+
+/* Ocupa la pantalla. La profundidad del puntero son 8 px, ni uno más. */
+.rostroSvg {
+  width: min(94vw, 106svh);
+  height: 94svh;
+  color: color-mix(in srgb, var(--papel) 94%, transparent);
+  overflow: visible;
+  transform:
+    translate3d(var(--px, 0px), var(--py, 0px), 0)
+    scale(var(--z, 1));
+  transition: transform 700ms var(--sal);
+}
+
+/* Al cambiar de lectura, la anterior se retira despacio: se percibe que son
+   capas de una misma pieza sin llegar a superponerse. */
+.base { opacity: 0; transition: opacity 640ms var(--sal); }
+.base[data-on] { opacity: 1; }
+.base[data-previa] { opacity: 0.16; }
+
+.trazo { clip-path: inset(0 calc((1 - var(--e, 0)) * 100%) 0 0); transition: clip-path 1100ms var(--sal); }
+
+.cauce, .red { pathLength: 1; stroke-dasharray: 1; stroke-width: 1.6; }
+.cauce { stroke: var(--papel); stroke-dashoffset: calc(1 - clamp(0, var(--e, 0) * 2.6, 1)); }
+.red { stroke: var(--senal); stroke-dashoffset: calc(1 - clamp(0, (var(--e, 0) - 0.68) * 3.1, 1)); }
+
+/* Marcas laterales inscritas en el borde, no pestañas rectangulares. */
+.lecturas {
+  position: absolute; right: var(--margen); top: 50%;
+  transform: translateY(-50%);
+  display: grid; gap: 0.1rem;
+}
+
+.lectura {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0;
+  border: 0; background: transparent;
+  color: var(--texto-2);
+  cursor: pointer;
+  transition: color 200ms var(--sal);
+}
+
+.lectura i {
+  width: 22px; height: 1px;
+  background: color-mix(in srgb, var(--papel) 30%, transparent);
+  transition: width 200ms var(--sal), background-color 200ms var(--sal);
+}
+
+.lectura:hover { color: var(--optico); }
+.lectura[aria-pressed='true'] { color: var(--optico); }
+.lectura[aria-pressed='true'] i { width: 40px; background: var(--senal); }
+
+.palabras {
+  position: absolute; left: var(--margen); bottom: calc(var(--margen) + 3rem);
+  margin: 0; color: var(--texto-2); letter-spacing: 0.14em;
+}
+
+/* --- Contacto ------------------------------------------------------------- */
+
+.contacto { position: relative; height: 200svh; background: var(--tinta); }
+
+.contactoMarco {
+  position: sticky; top: 0; height: 100svh; overflow: clip;
+  display: grid; place-items: center;
+}
+
+/* El globo asoma por abajo: el nombre se apoya sobre negro limpio. */
+.globoCierre {
+  position: absolute; left: 50%; top: 86%;
+  width: 130svh; height: 130svh;
+  transform: translate(-50%, -50%) scale(var(--z, 1));
+  clip-path: inset(38% 0 0 0);
+  opacity: 0.92;
+}
+
+.globoHueco { width: 100%; height: 100%; }
+
+.bloque {
+  position: relative; z-index: 3;
+  align-self: start; margin-top: 10svh;
+  display: grid; justify-items: center; gap: 0.35rem; text-align: center;
+  padding: 0 var(--margen);
+}
+
+.arrobaCierre { margin-bottom: 1rem; }
+
+.nombre { font-size: clamp(1.8rem, 5vw, 4.2rem); color: var(--optico); }
+.grado { margin: 0.3rem 0 0; color: var(--texto-2); }
+.vocabulario { margin: 0; color: var(--texto-2); letter-spacing: 0.06em; }
+
+.acciones { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: stretch; justify-content: center; margin-top: 1.5rem; }
+
+/* El HUD es fijo y mide unos 3 rem: sin este colchón, al llegar desde el botón
+   de portada el bloque de acciones quedaba justo detrás de él. */
+.contactoMarco { padding-bottom: calc(var(--margen) + 3.4rem); }
+
+.contacto:focus { outline: none; }
+.contacto:focus-visible { outline: 2px solid var(--senal); outline-offset: -4px; }
+
+/* Correo y acciones comparten altura, relleno y línea de base: son una sola
+   fila de controles, no tres piezas de tamaños distintos. */
+/* Clase doblada para ganarle a `.v5 .mono`, que si no fija 12 px en unos
+   controles que la dirección quiere a 14. No hace falta `!important`. */
+.correo.correo, .accion.accion {
+  min-height: 44px;
+  padding: 0.7rem 1.15rem;
+  font-size: 14px;
+  display: inline-flex; align-items: center;
+  line-height: 1;
+}
+
+/* Nunca blanco sobre amarillo: el correo lleva tinta real. */
+.correo {
+  background: var(--senal);
+  color: #080908;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--senal);
+  transition: background-color 200ms var(--sal), border-color 200ms var(--sal);
+}
+
+.correo:hover { background: var(--optico); border-color: var(--optico); color: #080908; }
+
+.correo:focus-visible {
+  outline: 2px solid var(--optico);
+  outline-offset: 2px;
+  background: var(--senal);
+  color: #080908;
+}
+
+.accion {
+  border: 1px solid var(--linea);
+  background: transparent;
+  color: var(--optico);
+  cursor: pointer;
+  transition: border-color 200ms var(--sal), color 200ms var(--sal), background-color 200ms var(--sal);
+}
+
+.accion:hover, .accion:focus-visible { border-color: var(--senal); color: var(--senal); }
+.accion:focus-visible { outline: 2px solid var(--senal); outline-offset: 2px; }
+
+/* Copiado: amarillo sobre negro. La otra combinación sería blanco sobre
+   amarillo por herencia, que es justo lo que no puede pasar. */
+.accion[data-copiado] {
+  border-color: var(--senal);
+  background: var(--senal);
+  color: #080908;
+}
+
+.descarga {
+  margin-top: 0.9rem;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-block: 0.7rem;
+}
+
+.descargaMeta { font-size: 12px; opacity: 0.72; }
+
+.aviso { margin: 0.5rem 0 0; min-height: 1.1em; font-size: 13px; color: var(--senal); }
+
+@media (max-width: 720px) {
+  /* El correo ocupa una fila completa y las acciones se reparten debajo. */
+  .acciones {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .correo {
+    grid-column: 1 / -1;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .accion { justify-content: center; min-height: 44px; padding: 0.7rem 0.5rem; }
+
+  /* Cuatro controles no caben en una fila a 360 px: el correo y la descarga
+     ocupan la suya y las tres acciones forman una cuadrícula. */
+  .descarga { grid-column: 1 / -1; margin-top: 0; }
+}
+
+@media (max-width: 900px) {
+  .rostro { height: 240svh; }
+  .rostroSvg { width: calc(100vw - 6px); height: 74svh; }
+  /* Los controles no tapan el rostro: bajan a una bandeja bajo el dibujo. */
+  .lecturas {
+    right: var(--margen); left: var(--margen); top: auto;
+    bottom: calc(var(--margen) + env(safe-area-inset-bottom, 0px) + 3.2rem);
+    transform: none;
+    grid-auto-flow: column; justify-content: space-between;
+  }
+  .lectura { flex-direction: column; gap: 0.3rem; font-size: 0.7rem; }
+  .lectura i { width: 18px; }
+  .lectura[aria-pressed='true'] i { width: 26px; }
+  .palabras { bottom: calc(var(--margen) + 7rem); font-size: 0.68rem; }
+  .contacto { height: 170svh; }
+  .globoCierre { width: 132vw; height: 132vw; top: 92%; }
+  .nombre { font-size: clamp(1.7rem, 9vw, 2.5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rostro, .contacto { height: auto; }
+  .rostroMarco, .contactoMarco { position: static; height: auto; min-height: 100svh; }
+  .rostroSvg, .globoCierre { transform: none; }
+  .trazo { clip-path: none; }
+  .cauce, .red { stroke-dashoffset: 0; }
+  .base { transition: none; }
+}
+
+/* Autoría del portafolio: sobria, al pie del bloque de contacto. */
+.autoria {
+  margin: 1.4rem 0 0;
+  max-width: 62ch;
+  font-size: 11px;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--optico, #f6f7f2) 58%, transparent);
+}
+.autoria span { display: block; }

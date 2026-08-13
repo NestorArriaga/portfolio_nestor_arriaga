@@ -1,0 +1,310 @@
+/* P15 · Urban Challenge. Papel cálido y tinta negra de punta a punta: los
+   dibujos están hechos sobre blanco y componerlos sobre negro obligaría a
+   invertirlos. */
+
+.parque {
+  --papel: #f1eee6;
+  --tinta: #13140f;
+  --senal: #e9ff3a;
+  --madera: #a5784c;
+  --margen: clamp(24px, 3.5vw, 64px);
+  --sal: cubic-bezier(.16, 1, .3, 1);
+  --micro: 210ms;
+
+  --texto-2: #55564e;
+  --linea: color-mix(in srgb, var(--tinta) 22%, transparent);
+
+  background: var(--papel);
+  color: var(--tinta);
+  min-height: 100svh;
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+}
+
+.rotulo {
+  margin: 0 0 0.8rem;
+  font-size: clamp(24px, 4vw, 54px);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 0.94;
+}
+
+.pie { margin: 0.5rem 0 0; font-size: 12px; color: var(--texto-2); }
+
+/* --- 1 · VISTAZO ----------------------------------------------------------- */
+
+.vistazo {
+  padding: calc(var(--margen) + 3.4rem) var(--margen) clamp(2rem, 6vh, 4rem);
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr) minmax(150px, 2.4fr);
+  grid-template-areas: 'encabezado planta bandeja';
+  gap: clamp(1.2rem, 3vw, 3rem);
+  align-items: center;
+}
+
+.encabezado { grid-area: encabezado; display: grid; gap: 0.8rem; align-content: center; }
+
+.num { font-size: 12px; letter-spacing: 0.14em; color: var(--madera); }
+
+/* «Challenge» no parte por espacio, así que el cuerpo lo fija la palabra más
+   larga contra el ancho de su columna —unos 27vw—, no el viewport entero. A
+   6.4vw la palabra medía más que la columna y se metía debajo de la planta. */
+.titulo {
+  margin: 0;
+  font-size: clamp(36px, 4.8vw, 92px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-weight: 560;
+}
+
+.ficha { margin: 0.4rem 0 0; display: grid; gap: 0.3rem; font-size: 12px; }
+.ficha > div { display: flex; gap: 0.7rem; }
+.ficha dt { color: var(--texto-2); min-width: 5.5rem; }
+.ficha dd { margin: 0; }
+
+.plantaCaja { grid-area: planta; position: relative; display: grid; place-items: center; min-width: 0; }
+
+.planta, .dibujo { display: block; width: 100%; max-height: 74svh; transition: opacity var(--micro) var(--sal); }
+.planta[data-off] { opacity: 0.2; }
+
+.hotspot {
+  position: absolute;
+  left: var(--hx); top: var(--hy);
+  transform: translate(-50%, -50%);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  min-height: 44px; padding: 0 0.4rem;
+  font-size: 12px;
+  color: var(--tinta);
+}
+
+.hotspot i {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--senal);
+  outline: 1px solid var(--tinta);
+  transition: transform var(--micro) var(--sal);
+}
+
+.hotspot span {
+  padding: 0.16rem 0.4rem;
+  background: color-mix(in srgb, var(--papel) 92%, transparent);
+  opacity: 0.66;
+  transition: opacity var(--micro) var(--sal);
+}
+
+.hotspot[data-on] i { transform: scale(1.4); }
+.hotspot[data-on] span { opacity: 1; }
+
+.bandeja { grid-area: bandeja; display: grid; gap: clamp(0.8rem, 2vh, 1.6rem); align-content: center; min-width: 0; }
+
+.recorte {
+  margin: 0;
+  position: relative;
+  width: 100%;
+  background-image: url('/projects/park/dise-o-parque-yuc-2200.webp');
+  background-repeat: no-repeat;
+  outline: 1px solid transparent;
+  transition: outline-color var(--micro) var(--sal), transform var(--micro) var(--sal);
+}
+
+.recorte[data-on] { outline-color: var(--senal); transform: scale(1.03); }
+
+.recorte figcaption {
+  position: absolute; left: 0; bottom: -1.35rem;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.recorte[data-on] figcaption { color: var(--tinta); }
+
+/* --- 2 · SISTEMA ----------------------------------------------------------- */
+
+.sistema {
+  padding: clamp(2rem, 6vh, 4rem) var(--margen);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 200px);
+  grid-template-areas: 'rotulo rotulo' 'planta selector';
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: center;
+}
+
+.sistema .rotulo { grid-area: rotulo; }
+
+.circulacion {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  transition: opacity var(--micro) var(--sal);
+  pointer-events: none;
+}
+
+.circulacion g { stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.circulacion[data-off] { opacity: 0.12; }
+
+.selector { grid-area: selector; display: grid; gap: 0.3rem; align-content: center; justify-items: start; }
+
+.opcion {
+  min-height: 44px; padding: 0.4rem 0.7rem;
+  font-size: 13px;
+  color: var(--texto-2);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+}
+
+.opcion:hover, .opcion:focus-visible { color: var(--tinta); }
+.opcion[aria-pressed='true'] { color: var(--tinta); border-color: var(--senal); }
+
+/* --- 3 · VARIACIONES ------------------------------------------------------- */
+
+.variaciones {
+  padding: clamp(2rem, 6vh, 4rem) var(--margen);
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 3fr);
+  grid-template-areas: 'rotulo rotulo' 'principal alternativas';
+  gap: clamp(1rem, 2.4vw, 2.4rem);
+  align-items: center;
+}
+
+.variaciones .rotulo { grid-area: rotulo; }
+
+.principal { grid-area: principal; min-width: 0; }
+.principal:focus-visible { outline: 2px solid var(--senal); outline-offset: 6px; }
+
+.alternativas { grid-area: alternativas; display: grid; gap: clamp(0.6rem, 2vh, 1.4rem); align-content: center; }
+
+/* Misma caja para las dos alternativas: comparar exige encuadre igual. */
+.alternativa {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  border: 1px solid var(--linea);
+  transition: border-color var(--micro) var(--sal);
+}
+
+.alternativa:hover, .alternativa:focus-visible { border-color: var(--senal); }
+.alternativa span { font-size: 12px; color: var(--texto-2); padding: 0 0.4rem 0.4rem; }
+.alternativa .dibujo { max-height: 26svh; }
+
+/* --- 4 · DETALLE ----------------------------------------------------------- */
+
+.detalle { padding: clamp(2rem, 6vh, 4rem) var(--margen); }
+.detalleCaja { display: grid; place-items: center; }
+.detalleCaja .dibujo { max-height: 76svh; }
+
+/* --- Proceso --------------------------------------------------------------- */
+
+.proceso { padding: 0 var(--margen) clamp(2rem, 6vh, 4rem); }
+
+.proceso details { border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+
+.proceso summary {
+  min-height: 44px; display: flex; align-items: center;
+  font-size: 13px; cursor: pointer; list-style: none;
+}
+
+.proceso summary::-webkit-details-marker { display: none; }
+.proceso summary::after { content: ' +'; color: var(--madera); }
+.proceso details[open] summary::after { content: ' −'; }
+
+.procesoCuerpo {
+  padding-bottom: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(1rem, 2.4vw, 2rem);
+}
+
+.procesoPieza { margin: 0; display: grid; gap: 0.4rem; }
+.procesoPieza img { width: 100%; height: auto; max-height: 40svh; object-fit: contain; }
+.procesoPieza figcaption { display: grid; gap: 0.2rem; font-size: 12px; }
+.procesoPieza b { font-weight: 500; }
+.procesoPieza span { color: var(--texto-2); max-width: 44ch; line-height: 1.5; }
+
+/* --- Salida ---------------------------------------------------------------- */
+
+.salida {
+  padding: 1.4rem var(--margen) 0;
+  margin: 0 var(--margen);
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 1.4rem;
+  border-top: 1px solid var(--linea);
+  padding-inline: 0;
+}
+
+.salto { display: grid; gap: 0.2rem; text-decoration: none; color: var(--tinta); min-height: 44px; }
+.saltoDir { font-size: 12px; color: var(--texto-2); }
+.saltoNombre { font-size: clamp(18px, 2.4vw, 30px); font-weight: 500; letter-spacing: -0.02em; }
+
+.centro { display: flex; gap: 0.5rem; }
+
+.accion {
+  min-height: 44px; padding: 0.6rem 1rem;
+  display: inline-flex; align-items: center;
+  font-size: 13px; color: var(--tinta);
+  border: 1px solid var(--linea);
+  text-decoration: none;
+  transition: border-color var(--micro) var(--sal);
+}
+
+.accion:hover, .accion:focus-visible { border-color: var(--senal); }
+
+/* --- Móvil ----------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  /* Suelo tipográfico móvil: 14 px para todo lo funcional. Las reglas de
+     escritorio bajan a 12–13 y en pantalla estrecha eso no se lee. */
+  .num, .ficha, .fuente, .saltoDir, .saltoNum, .pagina, .marca, .variables,
+  .pastilla, .pastillaNum, .detalle, .municipios, .pie, .procesoPieza figcaption,
+  .recorte figcaption, .hotspot, .cifras dt, .datos dt, .notasLista dt,
+  .alcanceCuerpo p, .alcanceCuerpo li, .clave, .categoria b, .categoria span,
+  .accion, .opcion, .desliza, .atlas, .vistazo, .territorio, .posicion,
+  .corto, .alternativa span { font-size: 14px; }
+
+  /* Planta primero y las piezas en bandeja horizontal deslizable. */
+  .vistazo {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'encabezado' 'planta' 'bandeja';
+    gap: 1.2rem;
+  }
+
+  .titulo { font-size: clamp(40px, 12vw, 76px); }
+
+  /* Bandeja deslizable con la pieza completa a la vista: al 68 % del ancho la
+     axonometría siguiente asomaba cortada por el borde derecho y la actual
+     perdía su remate. Con `scroll-snap` y el 100 % menos el margen, cada pieza
+     se detiene entera. */
+  .bandeja, .procesoCuerpo, .alternativas {
+    grid-auto-flow: column;
+    grid-auto-columns: calc(100% - 1rem);
+    grid-template-columns: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding-bottom: 1.6rem;
+  }
+
+  .bandeja > *, .procesoCuerpo > *, .alternativas > * { scroll-snap-align: center; }
+
+  /* Los recortes del tablero se ven completos, no recortados por la caja. */
+  .recorte { background-size: contain; background-position: center; }
+  .recorte figcaption { position: static; margin-top: 0.5rem; }
+
+  .sistema, .variaciones {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'rotulo' 'planta' 'selector';
+  }
+
+  .variaciones { grid-template-areas: 'rotulo' 'principal' 'alternativas'; }
+
+
+
+  .planta, .dibujo { max-height: 52svh; }
+  .detalleCaja .dibujo { max-height: 56svh; }
+
+  .opcion, .proceso summary, .procesoPieza figcaption, .pie { font-size: 14px; }
+  .procesoPieza span { font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .planta, .dibujo, .circulacion, .recorte, .hotspot i, .hotspot span { transition: none; }
+}

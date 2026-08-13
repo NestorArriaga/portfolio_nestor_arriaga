@@ -1,0 +1,322 @@
+/* Un proyecto. Retícula con zonas reservadas: el título no aterriza nunca
+   sobre el mapa, y el mapa no se sale nunca de su guarda de densidad. */
+
+.momento {
+  position: relative;
+  height: var(--alto, 210svh);
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+.marco {
+  position: sticky; top: 0;
+  height: 100svh;
+  overflow: clip;
+  padding: var(--margen);
+  display: grid;
+  grid-template-columns: minmax(0, 3.1fr) minmax(0, 8.9fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'titulo      campo'
+    'instrumentos campo'
+    'pie         entrega';
+  column-gap: clamp(1rem, 3vw, 3rem);
+  row-gap: clamp(0.6rem, 1.6vh, 1.4rem);
+  align-items: start;
+}
+
+/* --- PULSO 1 · TÍTULO ------------------------------------------------------ */
+
+/* El título tiene su propia zona. Durante su momento se sale de ella y ocupa
+   el ancho de la escena; después se pliega, encoge y vuelve a su celda, donde
+   ya no estorba a nada. Sin `::before`: el rectángulo negro existía sólo para
+   poder leer el título encima del mapa, y ahora el título no va encima. */
+.titulo {
+  grid-area: titulo;
+  position: relative;
+  z-index: 5;
+  margin: 0;
+  display: grid;
+  gap: 0.3rem;
+  --plegado: clamp(0, calc((var(--e, 0) - 0.1) * 8), 1);
+  transform: scale(calc(1 - var(--plegado) * 0.62));
+  transform-origin: 0 0;
+  /* Mientras es grande se sale de su celda; plegado deja de hacerlo. */
+  width: calc(100% + (1 - var(--plegado)) * 190%);
+  pointer-events: none;
+  transition: transform 760ms var(--sal), width 760ms var(--sal);
+}
+
+.tituloNum {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--senal);
+}
+
+.tituloTexto {
+  display: block;
+  font-size: clamp(2.4rem, 8.4vw, 7.2rem);
+  font-weight: 560;
+  letter-spacing: -0.038em;
+  line-height: 0.92;
+  text-wrap: balance;
+  /* Entra por recorte, de una sola pasada. */
+  clip-path: inset(0 calc((1 - clamp(0, var(--e, 0) * 9, 1)) * 100%) 0 0);
+}
+
+/* --- PULSO 2 · COMPOSICIÓN ------------------------------------------------- */
+
+.campo {
+  grid-area: campo;
+  align-self: center;
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  /* La obra entra después del título, nunca a la vez. */
+  opacity: clamp(0, calc((var(--e, 0) - 0.14) * 6), 1);
+  transition: opacity 520ms var(--sal);
+}
+
+.obra {
+  /* Desplazamiento de entrada: 34 px, dentro del rango físico del sistema.
+     No hay escala: agrandar el ráster es lo que se retiró. */
+  transform: translate3d(0, calc((1 - clamp(0, (var(--e, 0) - 0.14) * 5, 1)) * 34px), 0);
+  transition: transform 720ms var(--sal);
+}
+
+/* Cada gesto cambia por dónde entra el territorio, con máscara sobre la misma
+   extensión. La obra no se mueve de sitio ni cambia de tamaño. */
+.momento[data-gesto='barrido'] .obra img,
+.momento[data-gesto='erosion'] .obra img {
+  clip-path: inset(0 calc(clamp(0, (0.44 - var(--e, 0)) * 3.4, 1) * 100%) 0 0);
+}
+
+.momento[data-gesto='flujo'] .obra img,
+.momento[data-gesto='criterios'] .obra img {
+  clip-path: inset(calc(clamp(0, (0.44 - var(--e, 0)) * 3.4, 1) * 100%) 0 0 0);
+}
+
+.momento[data-gesto='campo'] .obra img,
+.momento[data-gesto='concentracion'] .obra img,
+.momento[data-gesto='clasificacion'] .obra img,
+.momento[data-gesto='constelacion'] .obra img,
+.momento[data-gesto='recomposicion'] .obra img,
+.momento[data-gesto='sintesis'] .obra img {
+  clip-path: inset(calc(clamp(0, (0.42 - var(--e, 0)) * 3.4, 1) * 9%) 0);
+}
+
+/* --- PULSO 3 · LECTURA ----------------------------------------------------- */
+
+/* Los datos anclan dentro del encuadre de la obra, no del viewport. */
+.ancla {
+  position: absolute;
+  left: var(--ax); top: var(--ay);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: clamp(0, calc((var(--e, 0) - 0.46 - var(--i, 0) * 0.05) * 8), 1);
+  transition: opacity 420ms var(--sal);
+  pointer-events: none;
+}
+
+.ancla[data-lado='izq'] { flex-direction: row-reverse; transform: translate(-100%, -50%); }
+.ancla[data-lado='der'] { transform: translate(0, -50%); }
+
+.anclaPunto {
+  flex: none;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--senal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fondo) 70%, transparent);
+}
+
+.anclaLinea {
+  flex: none;
+  width: clamp(18px, 2.4vw, 34px);
+  height: 1px;
+  background: var(--senal);
+}
+
+/* Velo local bajo el dato, no bajo el título: aquí sí hace falta, porque el
+   dato vive sobre el mapa por definición. Es una etiqueta, no una barra. */
+.anclaTexto {
+  display: grid;
+  gap: 0.05rem;
+  padding: 0.3rem 0.5rem;
+  /* Opaco del todo: es una etiqueta sobre cartografía, y a 88 % el mapa se
+     leía por debajo del número. */
+  background: var(--fondo);
+  outline: 1px solid var(--linea);
+}
+
+.anclaTexto b { font-size: 13px; font-weight: 500; color: var(--texto); }
+.anclaTexto em { font-size: 12px; color: var(--texto-2); }
+
+.puntos {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.puntos circle {
+  fill: var(--senal);
+  opacity: clamp(0, calc((var(--e, 0) - 0.5 - var(--i, 0) * 0.012) * 10), 0.9);
+}
+
+/* La clase encendida se pinta con su propio color sobre la lámina, en el mismo
+   encuadre. El mapa no crece: sólo cambia lo que destaca. */
+/* La máscara llega en alfa puro y el color lo pone la clase, así que el color
+   vive en un solo sitio: el contenido. `contain` para quedar en el mismo
+   encuadre que la lámina, que también es `contain`. */
+.clase {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--c);
+  -webkit-mask-image: var(--m);
+  mask-image: var(--m);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: entraClase 320ms var(--sal);
+}
+
+@keyframes entraClase { from { opacity: 0 } to { opacity: 1 } }
+
+/* Con una clase encendida el resto de la lámina baja **un** punto, no diez.
+   Un `brightness` bajo sobre papel hacía desaparecer el mapa entero en vez de
+   subordinarlo: la zona destacaba porque no quedaba nada más. */
+.momento[data-clase] .obra img { opacity: 0.42; transition: opacity var(--ui) var(--sal); }
+
+/* --- Umbral amarillo -------------------------------------------------------
+   Uno de los dos únicos momentos de fondo amarillo completo que autoriza la
+   dirección: la salida de P08 hacia P09, donde el atlas pasa de observar a
+   RELACIONAR. Dura el último 12 % del tramo y todo lo que hay encima es tinta
+   negra — nunca texto blanco sobre amarillo. */
+/* La escena se apaga **antes** de que entre el color. Sin esto, durante la
+   transición el amarillo semitransparente dejaba ver el título y el pie en
+   blanco óptico por debajo: texto claro sobre amarillo, que es exactamente la
+   combinación prohibida. */
+/* Un solo elemento hace de velo y de contenido.
+   Pegajoso dentro de su sección, no fijo al viewport: fijo se quedaba puesto
+   después de pasar la escena, porque `--e` se queda en 1 y nunca vuelve a
+   bajar. Así entra con el tramo, cubre el HUD mientras dura y se va con él.
+   El margen negativo lo superpone a la banda del marco. */
+.momento[data-umbral] .umbral {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-top: -100svh;
+  z-index: 70;
+  display: grid;
+  place-content: center;
+  gap: 0.4rem;
+  justify-items: center;
+  background: var(--senal);
+  color: #080908;
+  opacity: clamp(0, calc((var(--e, 0) - 0.9) * 20), 1);
+  pointer-events: none;
+}
+
+.umbralActo {
+  font-size: clamp(2.6rem, 11vw, 9rem);
+  font-weight: 560;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  margin: 0;
+}
+
+.umbralPie { font-size: 13px; color: #080908; opacity: 0.72; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* El umbral no parpadea: se entrega completo. */
+  .momento[data-umbral] .umbral { opacity: 1; }
+}
+
+/* --- Pie y entrega --------------------------------------------------------- */
+
+.pie {
+  grid-area: pie;
+  align-self: end;
+  display: grid;
+  gap: 0.3rem;
+  z-index: 4;
+}
+
+.lugar { font-size: 13px; color: var(--texto-2); }
+
+.abrir {
+  justify-self: start;
+  font-size: 13px;
+  color: var(--texto);
+  border-bottom: 1px solid var(--senal);
+  padding-bottom: 2px;
+  transition: color var(--micro) var(--sal);
+}
+
+.abrir:hover, .abrir:focus-visible { color: var(--senal); }
+
+/* La entrega vive en su celda, no encima de la cartografía. */
+.entrega {
+  grid-area: entrega;
+  align-self: end;
+  justify-self: end;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* --- Movimiento reducido --------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Estado final completo: título plegado en su celda, obra entera y visible,
+     datos y leyenda presentes. */
+  .titulo { transform: scale(0.38); width: 100%; }
+  .tituloTexto { clip-path: none; }
+  .campo { opacity: 1; }
+  .obra { transform: none; }
+  .obra img { clip-path: none !important; }
+  .ancla { opacity: 1; }
+  .puntos circle { opacity: 0.9; }
+}
+
+/* --- Móvil ----------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  /* Orden vertical: título breve, obra completa, instrumentos, pie. La
+     composición de escritorio no se encoge — se reordena. */
+  .marco {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      'titulo'
+      'campo'
+      'instrumentos'
+      'pie';
+    row-gap: 0.7rem;
+    padding-bottom: calc(var(--margen) + 3.4rem);
+  }
+
+  .titulo { width: 100%; transform: scale(calc(1 - var(--plegado) * 0.52)); }
+  .tituloTexto { font-size: clamp(1.9rem, 9.4vw, 3rem); }
+
+  .campo { justify-self: center; }
+
+  /* Sobre pantalla estrecha los datos anclados taparían el mapa: se apagan y
+     la información sigue disponible en el propio caso. */
+  .ancla { display: none; }
+
+  .entrega { display: none; }
+
+  .pie {
+    grid-area: pie;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: end;
+  }
+}

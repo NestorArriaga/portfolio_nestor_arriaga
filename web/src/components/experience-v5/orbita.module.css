@@ -1,0 +1,221 @@
+/* Vistazo orbital: el índice que emana del Globe. */
+
+.fondo { position: fixed; inset: 0; z-index: 80; background: var(--tinta); }
+
+.panel { position: relative; height: 100svh; color: var(--optico); overflow: clip; }
+
+/* --- Anillos-instrumento -------------------------------------------------- */
+
+.anillos {
+  position: absolute; top: var(--margen); left: var(--margen);
+  z-index: 4; display: grid; gap: 0.1rem;
+}
+
+.anillo {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 0; min-height: 44px;
+  border: 0; background: transparent; color: var(--texto-2);
+  cursor: pointer;
+  transition: color 200ms var(--sal);
+}
+
+/* Un arco, no un chip: el eje se dibuja como parte del instrumento. */
+.anilloArco {
+  width: 26px; height: 13px;
+  border: 1px solid color-mix(in srgb, var(--optico) 28%, transparent);
+  border-bottom: 0;
+  border-radius: 26px 26px 0 0;
+  transition: border-color 200ms var(--sal), width 200ms var(--sal);
+}
+
+.anillo:hover { color: var(--optico); }
+.anillo[aria-pressed='true'] { color: var(--optico); }
+.anillo[aria-pressed='true'] .anilloArco { border-color: var(--senal); width: 40px; }
+
+/* --- Campo orbital -------------------------------------------------------- */
+
+.campo {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  touch-action: pan-y;
+  cursor: grab;
+}
+.campo:active { cursor: grabbing; }
+
+.nucleo, .nucleoHueco {
+  position: absolute;
+  width: min(38vw, 44svh); height: min(38vw, 44svh);
+  pointer-events: none;
+}
+
+/* Guías circulares, no elípticas: los nodos se colocan en un radio constante,
+   y una guía elíptica prometería una órbita que no es la que siguen. */
+.trazas { position: absolute; width: 100vmin; height: 100vmin; overflow: visible; }
+
+.traza {
+  fill: none;
+  stroke: color-mix(in srgb, var(--optico) 10%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transform-origin: 50% 50%;
+  transform: rotate(var(--giro, 0deg));
+}
+
+/* La órbita exterior cierra la `@`: núcleo, espiral y salida. */
+.salida {
+  fill: none;
+  stroke: var(--senal);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+  transform-origin: 50% 50%;
+  transform: rotate(var(--giro, 0deg));
+}
+
+/* --- Nodos ---------------------------------------------------------------- */
+
+.nodo {
+  position: absolute;
+  left: 50%; top: 50%;
+  /* Una etiqueta, no una caja: el nodo mide lo que mide su número. */
+  width: auto;
+  border: 0; background: transparent; padding: 0;
+  cursor: pointer;
+  display: grid; gap: 0.25rem; justify-items: center;
+  /* Posición polar: el ángulo del nodo más el giro del atlas. La órbita es
+     elíptica —0.62 de aplastamiento— para que se lea como órbita y no como
+     una rueda plana. */
+  /* El radio va en `vmin`, no en porcentaje: un `translate` porcentual se
+     resuelve contra el **propio nodo**, así que 30 % eran 30 px y los quince
+     se apilaban encima del globo en vez de salir a sus órbitas. */
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--a) + var(--giro, 0deg)))
+    translate(calc(var(--r) * 1vmin), 0)
+    rotate(calc((var(--a) + var(--giro, 0deg)) * -1));
+  transition: transform 620ms var(--sal);
+}
+
+/* El nodo es una etiqueta pequeña, así que su zona de toque se amplía con un
+   pseudoelemento centrado: 44 px reales sin engordar el rótulo. */
+.nodo::before {
+  content: '';
+  position: absolute; left: 50%; top: 50%;
+  width: 46px; height: 46px;
+  transform: translate(-50%, -50%);
+}
+
+.nodoPunto {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: color-mix(in srgb, var(--optico) 45%, transparent);
+  transition: background-color 200ms var(--sal), box-shadow 200ms var(--sal);
+}
+
+.nodoNum { color: var(--texto-2); transition: color 200ms var(--sal); }
+
+.nodo[data-on] .nodoPunto {
+  background: var(--senal);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--senal) 22%, transparent);
+}
+.nodo[data-on] .nodoNum { color: var(--senal); }
+
+/* Previsualización: aparece junto al nodo señalado, no como tarjeta suelta. */
+.nodoPrevia {
+  position: absolute;
+  left: 50%; top: calc(100% + 0.5rem);
+  transform: translateX(-50%) scale(0.96);
+  width: clamp(120px, 14vw, 200px);
+  display: grid; gap: 0.25rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 200ms var(--sal), transform 260ms var(--sal);
+}
+
+.nodoPlanta { background: var(--papel, #f3f2ec); }
+
+.nodoPrevia :where(img, .nodoPlanta) {
+  width: 100%; aspect-ratio: 1.25; object-fit: cover;
+  outline: 1px solid var(--senal);
+  background: color-mix(in srgb, var(--optico) 5%, transparent);
+}
+
+.nodoPreviaTitulo { color: var(--optico); text-align: center; }
+
+.nodo[data-on] .nodoPrevia { opacity: 1; transform: translateX(-50%) scale(1); }
+
+/* Hacia dentro del panel: arriba si el nodo está en la mitad baja, y pegada al
+   lado contrario si está cerca de un borde lateral. */
+.nodo[data-vert='arriba'] .nodoPrevia { top: auto; bottom: calc(100% + 0.5rem); }
+
+.nodo[data-lado='izq'] .nodoPrevia { left: auto; right: 0; transform: translateX(0) scale(0.96); }
+.nodo[data-lado='izq'][data-on] .nodoPrevia { transform: translateX(0) scale(1); }
+
+.nodo[data-lado='der'] .nodoPrevia { left: 0; transform: translateX(0) scale(0.96); }
+.nodo[data-lado='der'][data-on] .nodoPrevia { transform: translateX(0) scale(1); }
+
+/* --- Lectura y controles -------------------------------------------------- */
+
+.lectura {
+  position: absolute; left: var(--margen); bottom: calc(var(--margen) + 3.4rem);
+  z-index: 4; display: grid; gap: 0.15rem; max-width: calc(var(--col) * 4);
+  justify-items: start;
+}
+
+.lecturaNum { margin: 0; color: var(--senal); }
+.lecturaTitulo { margin: 0; font-size: clamp(1.1rem, 2vw, 1.7rem); font-weight: 520; letter-spacing: -0.02em; }
+.lecturaMeta { margin: 0; color: var(--texto-2); }
+
+.controles {
+  position: absolute; right: var(--margen); top: var(--margen);
+  z-index: 4; display: flex; gap: 0.3rem;
+}
+
+.control {
+  padding: 0.5rem 0.85rem; min-height: 44px;
+  border: 1px solid var(--linea); background: transparent; color: var(--optico);
+  cursor: pointer; display: inline-flex; align-items: center;
+  transition: border-color 200ms var(--sal), color 200ms var(--sal);
+}
+.control:hover, .control:focus-visible { border-color: var(--senal); color: var(--senal); }
+
+/* --- Vista lista (alternativa accesible) ---------------------------------- */
+
+.listaPlana {
+  position: absolute; inset: 0;
+  z-index: 5; margin: 0;
+  padding: calc(var(--margen) + 4rem) var(--margen) var(--margen);
+  list-style: none; overflow-y: auto;
+  background: var(--tinta);
+  display: grid; gap: 0.1rem; align-content: start;
+}
+
+.filaPlana {
+  width: 100%; display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  gap: 0.8rem; align-items: baseline;
+  padding: 0.8rem 0; min-height: 44px;
+  border: 0; border-bottom: 1px solid color-mix(in srgb, var(--optico) 9%, transparent);
+  background: transparent; color: var(--optico); text-align: left; cursor: pointer;
+}
+
+.filaNum { color: var(--senal); }
+.filaTitulo { font-size: 1rem; }
+.filaMeta { color: var(--texto-2); }
+
+/* --- Móvil: carrusel orbital vertical con la esfera asomando -------------- */
+
+@media (max-width: 900px) {
+  .nucleo, .nucleoHueco { width: 62vw; height: 62vw; top: 8%; }
+  .trazas { width: 150vw; height: 150vw; }
+  .nodoPrevia { width: 108px; }
+  .lectura { bottom: calc(var(--margen) + 4rem); max-width: none; right: var(--margen); }
+  .anillos { top: auto; bottom: var(--margen); flex-direction: row; grid-auto-flow: column; }
+  .anillo { font-size: 0.7rem; }
+  .anilloArco { width: 18px; height: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sin órbita: la lista es la vista, con toda la información. */
+  .nodo { transition: none; }
+  .traza, .salida { transform: none; }
+  .listaPlana { display: grid; }
+}

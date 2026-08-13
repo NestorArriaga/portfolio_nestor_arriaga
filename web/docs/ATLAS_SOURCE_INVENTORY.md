@@ -1,19 +1,21 @@
 # Inventario de fuentes del atlas — Fase 1a
 
 Qué material real existe, en qué estado, y qué láminas permite construir sin
-inventar datos. Generado por `scripts/build_atlas_sources.py` y
+inventar datos. Lo producen `scripts/build_atlas_sources.py` y
 `scripts/build_territory_masks.py`.
 
 ## Fuentes (fuera del repositorio, solo lectura)
 
-| Origen | Ruta | Contenido |
+| Origen | Variable de entorno | Contenido |
 |---|---|---|
-| SVG GRANULAR | `~/Documents/EPI /GRANULAR/DISEÑO IMAGEN Y PRESENTACION/B VECTORES SVG AI EPS/EPI CIHEAM/ELEMENTOS` | 102 SVG, 996 MB |
-| GIS portafolio | `~/Documents/self/PORTAFOLIO GIS` | 51 PNG, 6 shapefiles, 4 CSV del modelo de aptitud |
-| Documento factual | `PORTAFOLIO/Portafolio_Sd.pdf` | 93 páginas, A4 apaisado |
+| Vectores del atlas | `ATLAS_FUENTES_SVG` | 102 SVG, 996 MB |
+| Salidas GIS | `GIS_FUENTES` | 51 PNG, 6 shapefiles, 4 CSV del modelo de aptitud |
+| Documento factual | archivo de trabajo | 93 páginas, A4 apaisado |
 
-Las fuentes **no se copian ni se modifican**. Si se mueven, el pipeline deja de
-poder regenerarse; por eso los derivados sí se versionan.
+Las fuentes viven en el archivo de trabajo local y **no se copian ni se
+modifican**: los scripts leen la ruta del entorno, así que el repositorio no
+publica el árbol de carpetas del autor. Si las fuentes se mueven, el pipeline no
+puede regenerarse; por eso los derivados sí se versionan.
 
 ## Qué eran realmente los SVG
 
@@ -123,7 +125,7 @@ salía como un rectángulo de 4 puntos.
 
 ## Modelo de aptitud — dato tabular real
 
-`~/Documents/self/PORTAFOLIO GIS/MODELO APTITUD/` contiene el grafo de criterios
+La carpeta `MODELO APTITUD/` de las salidas GIS contiene el grafo de criterios
 con pesos reales de P10-P11:
 
 - **Agrícola**: 6 criterios, 6 aristas ponderadas (cobertura de suelo, cercanía a

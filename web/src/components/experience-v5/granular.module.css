@@ -1,0 +1,144 @@
+/* GRANULAR: capítulo de seis lecturas. Verde profundo, blanco óptico, amarillo
+   sólo para medir y enfocar. */
+
+/* --- Portada del capítulo -------------------------------------------------- */
+
+.portada { position: relative; height: 150svh; background: var(--tinta); }
+
+.portadaMarco {
+  position: sticky; top: 0; height: 100svh; overflow: clip;
+  display: grid; align-content: center; justify-items: start;
+  gap: 0.7rem; padding: 0 var(--margen);
+}
+
+.arrobaCapitulo { margin-bottom: 0.8rem; }
+
+.tituloCapitulo {
+  margin: 0;
+  font-size: clamp(3rem, 15vw, 13rem);
+  font-weight: 580; letter-spacing: -0.045em; line-height: 0.88;
+  color: var(--optico);
+  /* Entra por recorte, no por fundido. */
+  clip-path: inset(0 calc((1 - clamp(0, var(--e, 0) * 2.2, 1)) * 100%) 0 0);
+}
+
+.subtitulo { margin: 0; color: var(--texto-2); }
+
+.abrir {
+  margin-top: 0.6rem; color: var(--optico); text-decoration: none;
+  border-bottom: 1px solid var(--senal);
+  display: inline-flex; align-items: center; min-height: 44px;
+}
+.abrir:hover, .abrir:focus-visible { color: var(--senal); }
+
+/* --- Submomento ------------------------------------------------------------ */
+
+.escala { position: relative; height: 190svh; background: var(--tinta); }
+
+.escalaMarco {
+  position: sticky; top: 0; height: 100svh; overflow: clip;
+  display: grid; grid-template-areas: 'capa'; grid-template-rows: minmax(0, 1fr);
+}
+.escalaMarco > * { grid-area: capa; }
+
+/* La sangre completa sólo se conserva donde el material la aguanta.
+   `--nativo` es el ancho real del ráster de la capa; con el DPR del visitante
+   fija el ancho máximo al que sigue habiendo un píxel de origen por píxel de
+   pantalla. Una capa de 1000 px estirada a 1300 px CSS en una pantalla de DPR 2
+   daba densidad 0.38: se veía blanda y con el color en bloques. Ahora esa misma
+   capa se compone como pieza centrada y la que sí tiene 2000 px sigue llenando
+   el campo. */
+.capas {
+  position: relative;
+  justify-self: center; align-self: center;
+  width: min(100%, calc(var(--nativo, 2000) / var(--dpr, 1) * 1px));
+  height: 100%;
+}
+
+.base, .sobre {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: contain; object-position: center;
+}
+
+/* La capa entra por barrido registrado sobre el mismo encuadre: cada escala es
+   un estado completo, no una mezcla oscura de opacidades. */
+.base { clip-path: inset(0 0 0 calc((1 - clamp(0, var(--e, 0) * 2.4, 1)) * 100%)); }
+
+/* La segunda capa llega después y desde el lado contrario, así se entiende que
+   son dos lecturas del mismo territorio y no una sola imagen. */
+.sobre {
+  clip-path: inset(0 calc((1 - clamp(0, (var(--e, 0) - 0.34) * 2.4, 1)) * 100%) 0 0);
+  mix-blend-mode: screen;
+}
+
+.palabra {
+  position: relative; z-index: 3;
+  margin: 0; align-self: start; justify-self: start;
+  padding: var(--margen);
+  font-size: clamp(1.6rem, 5vw, 4rem);
+  font-weight: 560; letter-spacing: -0.035em;
+  color: var(--optico);
+  opacity: clamp(0, calc(var(--e, 0) * 3.4 - 0.2), 1);
+}
+
+/* --- Referencia espacial persistente --------------------------------------- */
+
+.referencia {
+  position: relative; z-index: 4;
+  align-self: end; justify-self: end;
+  padding: var(--margen);
+  display: grid; gap: 0.3rem; justify-items: end; text-align: right;
+  max-width: calc(var(--col) * 3.6);
+}
+
+.contador { margin: 0; color: var(--senal); }
+
+.regla { margin: 0; display: flex; align-items: center; gap: 0.5rem; color: var(--optico); }
+
+/* Barra de escala real, no un icono. */
+.reglaBarra {
+  width: clamp(38px, 5vw, 66px); height: 1px;
+  background: var(--optico);
+  position: relative;
+}
+.reglaBarra::before, .reglaBarra::after {
+  content: ''; position: absolute; top: -3px; width: 1px; height: 7px; background: var(--optico);
+}
+.reglaBarra::before { left: 0; }
+.reglaBarra::after { right: 0; }
+
+.nota { margin: 0; color: var(--texto-2); text-wrap: balance; }
+
+@media (max-width: 900px) {
+  .portada { height: 120svh; }
+  .tituloCapitulo { font-size: clamp(2.6rem, 22vw, 4.4rem); }
+  .escala { height: 160svh; }
+  .palabra { font-size: clamp(1.5rem, 10vw, 2.4rem); }
+  /* La referencia baja a una placa local, siempre legible. */
+  .referencia {
+    justify-self: start; justify-items: start; text-align: left;
+    max-width: none; padding-bottom: calc(var(--margen) + 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portada, .escala { height: auto; }
+  .portadaMarco, .escalaMarco { position: static; height: auto; min-height: 100svh; }
+  .tituloCapitulo { clip-path: none; }
+  .base, .sobre { clip-path: none; transform: none; }
+  .palabra { opacity: 1; }
+}
+
+/* Capa de entrega del capítulo: abajo al centro, sin tocar la referencia
+   espacial de la derecha ni la palabra de la izquierda. */
+.entrega {
+  position: absolute;
+  left: 50%; bottom: calc(var(--margen) + 2.4rem);
+  transform: translateX(-50%);
+  z-index: 6;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .entrega { bottom: calc(var(--margen) + 5.2rem); }
+}

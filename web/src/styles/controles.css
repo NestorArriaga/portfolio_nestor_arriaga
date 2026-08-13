@@ -1,0 +1,185 @@
+/* Sistema único de controles.
+
+   Todos los botones y enlaces de acción del sitio pertenecen a esta familia.
+   Antes cada componente definía su propio relleno, su altura y sus estados, y
+   el resultado eran controles del mismo peso visual con medidas distintas.
+
+   Cuatro variantes y un solo juego de estados:
+
+     .btn[data-v="senal"]   acción principal: amarillo con tinta negra
+     .btn[data-v="borde"]   estructura: transparente con filo
+     .btn[data-v="fantasma"] editorial: sin caja hasta que se interactúa
+     .btn[data-v="icono"]   utilidad: cuadrado de 44 px
+
+   Los colores del texto salen de la superficie actual (`--texto`, `--fondo`),
+   así que el mismo control funciona sobre tinta y sobre papel. La única
+   excepción es la variante de señal, que fija tinta negra: blanco sobre
+   amarillo no alcanza contraste a ningún tamaño. */
+
+.btn {
+  --alto: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--alto);
+  min-width: var(--alto);
+  padding: 0.6rem 1.05rem;
+  /* El sistema es dueño de su tipografía. Antes los controles llevaban además
+     la clase `mono`, cuya regla `.v5 .mono` pesa más que `.btn` y les fijaba
+     11–12 px: el tamaño del control acababa dependiendo de qué hoja cargara
+     después. */
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--texto, #f6f7f2);
+  cursor: pointer;
+  /* Sólo `color`, `background`, `border` y `transform`: nada que recalcule
+     layout durante la interacción. */
+  transition:
+    background-color 190ms cubic-bezier(.16, 1, .3, 1),
+    border-color 190ms cubic-bezier(.16, 1, .3, 1),
+    color 190ms cubic-bezier(.16, 1, .3, 1),
+    transform 190ms cubic-bezier(.16, 1, .3, 1);
+}
+
+/* --- Señal ---------------------------------------------------------------- */
+
+.btn[data-v='senal'] {
+  background: var(--senal, #e9ff3a);
+  border-color: var(--senal, #e9ff3a);
+  color: #080908;
+  font-weight: 500;
+}
+
+.btn[data-v='senal']:hover {
+  background: var(--optico, #f6f7f2);
+  border-color: var(--optico, #f6f7f2);
+  color: #080908;
+}
+
+.btn[data-v='senal']:active { transform: translateY(1px); }
+
+/* --- Borde ---------------------------------------------------------------- */
+
+.btn[data-v='borde'] {
+  border-color: color-mix(in srgb, currentColor 34%, transparent);
+}
+
+.btn[data-v='borde']:hover { border-color: var(--senal, #e9ff3a); color: var(--senal, #e9ff3a); }
+.btn[data-v='borde']:active { transform: translateY(1px); }
+
+.btn[data-v='borde'][aria-pressed='true'] {
+  border-color: var(--senal, #e9ff3a);
+  color: var(--senal, #e9ff3a);
+}
+
+/* --- Fantasma ------------------------------------------------------------- */
+
+.btn[data-v='fantasma'] {
+  padding-inline: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+}
+
+.btn[data-v='fantasma']:hover,
+.btn[data-v='fantasma']:focus-visible { border-bottom-color: var(--senal, #e9ff3a); }
+
+/* --- Icono ---------------------------------------------------------------- */
+
+.btn[data-v='icono'] { padding: 0; width: var(--alto); height: var(--alto); }
+
+/* --- Estados comunes ------------------------------------------------------ */
+
+/* El foco se ve sobre las dos superficies: filo de señal y separación oscura
+   por fuera, así que no desaparece ni sobre amarillo ni sobre papel. */
+.btn:focus-visible {
+  outline: 2px solid var(--senal, #e9ff3a);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--fondo, #080908) 70%, transparent);
+}
+
+.btn[data-v='senal']:focus-visible { outline-color: var(--optico, #f6f7f2); }
+
+.btn[disabled], .btn[aria-disabled='true'] {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn[data-cargando] { cursor: progress; }
+
+/* `copiado` es un estado del control de correo: tinta sobre señal, nunca
+   blanco sobre amarillo. */
+.btn[data-copiado] {
+  background: var(--senal, #e9ff3a);
+  border-color: var(--senal, #e9ff3a);
+  color: #080908;
+}
+
+@media (max-width: 720px) {
+  .btn { font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:active { transform: none; }
+}
+
+/* Salto al contenido. Oculto hasta recibir foco por teclado. */
+.saltar {
+  position: fixed;
+  left: 0.5rem;
+  top: 0.5rem;
+  z-index: 100;
+  padding: 0.7rem 1rem;
+  background: #e9ff3a;
+  color: #080908;
+  font-size: 13px;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 190ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.saltar:focus-visible { transform: none; outline: 2px solid #f6f7f2; outline-offset: 2px; }
+
+/* En papel no hay teclado ni foco: el salto al contenido no existe, y con
+   `transform` fuera de la caja el generador aún le reserva sitio. */
+@media print {
+  .saltar { display: none; }
+}
+
+/* --- Transición entre rutas -------------------------------------------------
+
+   La apertura de un proyecto es un cambio de contexto, no un parpadeo. Con
+   View Transitions el navegador funde el documento saliente y el entrante; sin
+   soporte, la regla simplemente no aplica y la navegación es la de siempre.
+
+   No se secuestra la rueda ni el toque, y no entra ninguna librería de scroll:
+   el desplazamiento sigue siendo el nativo. */
+
+@view-transition { navigation: auto; }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Fondo estable durante la transición: evita el destello blanco o negro entre
+   una superficie de tinta y una de papel. */
+html { background: #080908; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+}
+
+/* `scroll-behavior: smooth` se ha retirado para evitar dobles saltos con focus y animaciones. */

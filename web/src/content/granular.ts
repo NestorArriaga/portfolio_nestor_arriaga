@@ -569,13 +569,12 @@ export const pillars: Pillar[] = [
     limitations: {
       title: 'Alcance documentado',
       text:
-        'La clasificación en tres grupos se conserva como la presenta la fuente, con sus nombres alternativos y sin reconstruir el método.',
+        'La clasificación en tres grupos se documenta parcialmente en diagramas complementarios (K=3, Ward.D2, distancia euclídea, validación PAM y estandarización).',
       points: [
-        'No se documenta el algoritmo de clustering ni sus parámetros.',
-        'No se documenta qué variables entran en el modelo ni con qué peso.',
-        'No se presenta una tabla completa de asignación municipal.',
-        'No hay prueba de autocorrelación, contigüidad ni significancia espacial.',
-        'Los nombres de los grupos varían entre páginas de la fuente.',
+        'Se clasifican 14 municipios de los 15 que componen la Comarca Lagunera, sin documentar el motivo de exclusión.',
+        'Siguen sin documentarse las variables de entrada exactas, sus pesos y el tratamiento de datos faltantes.',
+        'No hay prueba explícita de autocorrelación, contigüidad ni significancia espacial.',
+        'Los nombres de los grupos varían entre páginas de la fuente y no deben interpretarse como una jerarquía causal.',
       ],
     },
     next: {

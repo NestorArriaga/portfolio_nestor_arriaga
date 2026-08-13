@@ -1,0 +1,50 @@
+/* La obra como objeto. Tres bandas de composición y una guarda de densidad
+   que ninguna de ellas puede saltarse. */
+
+.obra {
+  position: relative;
+  margin: 0;
+  display: block;
+  /* La banda propone un ancho; la guarda pone el techo. `min()` deja siempre
+     ganar al más pequeño de los dos, que es justo lo que impide que una lámina
+     de 1600 px nativos se estire a 1500 px CSS en una pantalla de DPR 1. */
+  width: min(var(--banda-w), calc(var(--nativo) / var(--dpr, 1) * 1px));
+  max-height: var(--banda-h);
+  aspect-ratio: var(--ratio);
+}
+
+/* Sobre negro la pieza puede respirar más: el campo oscuro la sostiene. */
+.obra[data-banda='negro'] {
+  --banda-w: clamp(320px, 62vw, 1100px);
+  --banda-h: 72svh;
+}
+
+/* Sobre papel la composición reserva sitio para título, detalles y leyenda. */
+.obra[data-banda='papel'] {
+  --banda-w: clamp(300px, 51vw, 900px);
+  --banda-h: 68svh;
+}
+
+.obra[data-banda='detalle'] {
+  --banda-w: clamp(120px, 16vw, 280px);
+  --banda-h: 30svh;
+}
+
+/* `contain`, nunca `cover`: la obra entra completa o no entra. */
+.pieza {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 720px) {
+  .obra[data-banda='negro'],
+  .obra[data-banda='papel'] {
+    --banda-w: min(92vw, calc(var(--nativo) / var(--dpr, 1) * 1px));
+    --banda-h: 56svh;
+  }
+
+  .obra[data-banda='detalle'] { --banda-w: 62vw; --banda-h: 34svh; }
+}

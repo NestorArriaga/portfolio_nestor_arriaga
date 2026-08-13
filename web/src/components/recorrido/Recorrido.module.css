@@ -1,0 +1,9 @@
+.main {
+  /* El riel de unidades vive fijo a la derecha en escritorio y al pie en
+     móvil: se reserva su carril para que ningún título quede debajo. */
+  padding-right: 0;
+}
+
+@media (min-width: 901px) {
+  .main { padding-right: 0; }
+}

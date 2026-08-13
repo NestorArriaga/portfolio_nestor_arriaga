@@ -1,0 +1,90 @@
+/* La `@`: núcleo, órbita y salida. Una sola geometría, cuatro papeles. */
+
+.arroba { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+.svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.nucleo { fill: var(--senal); }
+
+.orbita {
+  fill: none;
+  stroke: var(--senal);
+  stroke-width: 2.2;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  /* La órbita se dibuja: `pathLength` normaliza para que abrirse más o menos
+     no cambie la duración del trazo. */
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, var(--e, 1) * 1.6, 1));
+}
+
+.salida {
+  fill: none;
+  stroke: var(--senal);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+  pathLength: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, (var(--e, 1) - 0.55) * 2.6, 1));
+}
+
+.arroba[data-modo='origen']   { width: clamp(46px, 5.4vw, 78px); aspect-ratio: 1; }
+.arroba[data-modo='ancla']    { width: 15px; aspect-ratio: 1; }
+.arroba[data-modo='entrega']  { width: clamp(38px, 4.4vw, 62px); aspect-ratio: 1; }
+.arroba[data-modo='contacto'] { width: clamp(64px, 8vw, 120px); aspect-ratio: 1; }
+
+.lectura { display: grid; gap: 0.05rem; }
+.lectura b { font-weight: 500; color: var(--texto); }
+.lectura i { color: var(--texto-2); }
+
+/* --- Ancla: la `@` sobre un punto real de la obra ------------------------- */
+
+.ancla {
+  position: absolute;
+  left: var(--ax);
+  top: var(--ay);
+  display: flex;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  opacity: clamp(0, calc(var(--e, 0) * 4 - var(--i) * 0.6 - 0.55), 1);
+  transition: opacity 380ms var(--sal);
+}
+
+.ancla[data-lado='izq'] { flex-direction: row-reverse; }
+
+.anclaMarca { flex: none; }
+
+/* Línea de registro corta: el dato toca lo que explica. */
+.anclaLinea {
+  width: clamp(16px, 2.2vw, 30px);
+  height: 1px;
+  background: var(--senal);
+  flex: none;
+  transform-origin: left;
+  transform: scaleX(clamp(0, calc(var(--e, 0) * 4 - var(--i) * 0.6 - 0.7), 1));
+}
+
+.ancla[data-lado='izq'] .anclaLinea { transform-origin: right; }
+
+.anclaTexto {
+  display: grid;
+  gap: 0.02rem;
+  padding: 0.22rem 0.42rem;
+  background: color-mix(in srgb, var(--fondo) 86%, transparent);
+  white-space: nowrap;
+}
+
+.anclaTexto b { font-weight: 500; color: var(--texto); font-size: 0.92rem; }
+.anclaTexto i { color: var(--texto-2); }
+
+@media (max-width: 900px) {
+  .anclaLinea { width: 12px; }
+  .anclaTexto { padding: 0.18rem 0.32rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbita, .salida { stroke-dashoffset: 0; }
+  .ancla { opacity: 1; }
+  .anclaLinea { transform: scaleX(1); }
+}

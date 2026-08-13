@@ -1,6 +1,6 @@
 {
  "generated": "2026-08-07T16:20:00",
- "source_dir": "/Users/nestorarriagagallegos/Documents/EPI /GRANULAR/DISEÑO IMAGEN Y PRESENTACION/B VECTORES SVG AI EPS/EPI CIHEAM/ELEMENTOS",
+ "source_dir": "archivo de trabajo · GRANULAR · elementos vectoriales",
  "widths": [
   2000,
   1000,
@@ -1026,81 +1026,6 @@
     "file": "/atlas/vector/comarca-v3.svg"
    },
    "seconds": 1.14
-  },
-  {
-   "source": "Copia de Landscape Illustration_Tutorial Source File [Recuperado].svg",
-   "slug": "copia-de-landscape-illustration-tutorial-source-file-recuperado",
-   "source_bytes": 5938905,
-   "canvas": {
-    "user_box": [
-     0,
-     0,
-     2000,
-     1250
-    ],
-    "ratio": 1.6
-   },
-   "layers": [
-    {
-     "layer": 1,
-     "tiles": 0,
-     "native_px": [
-      2000,
-      1250
-     ],
-     "trimmed_px": [
-      2000,
-      1250
-     ],
-     "trim_ratio": 0.0,
-     "has_alpha": true,
-     "mean_saturation": 0.0032,
-     "opaque_ratio": 0.8462,
-     "role": "overlay",
-     "keyed_white": false,
-     "dominant": [],
-     "frame": [
-      0.0,
-      0.0,
-      1.0,
-      1.0
-     ],
-     "files": {
-      "color": {
-       "2000": "/atlas/raster/copia-de-landscape-illustration-tutorial-source-file-recuperado--l1-color-2000.webp",
-       "1000": "/atlas/raster/copia-de-landscape-illustration-tutorial-source-file-recuperado--l1-color-1000.webp",
-       "500": "/atlas/raster/copia-de-landscape-illustration-tutorial-source-file-recuperado--l1-color-500.webp"
-      }
-     }
-    }
-   ],
-   "vector": {
-    "elements": {
-     "rect": 32,
-     "line": 292,
-     "path": 9698,
-     "polyline": 126,
-     "polygon": 64,
-     "text": 6
-    },
-    "element_total": 10218,
-    "colors": {
-     "#231f20": 2,
-     "#241f20": 1,
-     "#000": 1,
-     "#fff": 1,
-     "#e1f4f3": 1,
-     "#e6f3f4": 1
-    },
-    "distinct_colors": 6,
-    "viewBox": "0 0 2880 1800",
-    "width": null,
-    "height": null,
-    "bytes": 5938905,
-    "file": "/atlas/vector/copia-de-landscape-illustration-tutorial-source-file-recuperado.svg"
-   },
-   "rasterized_from_vector": true,
-   "seconds": 2.17
   },
   {
    "source": "Cuencame.svg",

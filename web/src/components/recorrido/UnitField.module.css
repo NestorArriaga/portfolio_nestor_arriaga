@@ -1,0 +1,192 @@
+/* Las quince unidades. Capa fija, tres estados, una sola familia de elementos.
+
+   Cada unidad se posiciona con `left/top` en píxeles calculados y se centra con
+   un `translate(-50%, -50%)`. Es `transform` + `left/top`, no `transform` solo,
+   porque las tres posiciones vienen del componente ya resueltas: no hay una
+   caja base contra la que desplazarse. `left/top` sobre un elemento `fixed` no
+   provoca reflow del documento. */
+
+.field {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-chrome);
+  pointer-events: none;
+}
+
+.unit {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 46px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%) scale(var(--s));
+  /* Entrada escalonada de la portada: el retardo lo pone el índice, no el azar. */
+  opacity: 0;
+  animation: unit-in 420ms var(--ease-out) forwards;
+  animation-delay: calc(760ms + var(--i) * 45ms);
+  transition:
+    left 620ms var(--ease-out),
+    top 620ms var(--ease-out),
+    transform 620ms var(--ease-out);
+}
+
+@keyframes unit-in {
+  to { opacity: 1; }
+}
+
+.box {
+  position: absolute;
+  inset: 4px 3px;
+  border: var(--hairline) solid var(--white);
+  opacity: 0.5;
+  transition:
+    border-color var(--dur-micro) var(--ease-out),
+    opacity var(--dur-micro) var(--ease-out),
+    background-color var(--dur-micro) var(--ease-out);
+}
+
+.num {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  transition: color var(--dur-micro) var(--ease-out);
+}
+
+/* --- Estado riel ---------------------------------------------------------- */
+
+.field[data-rail] .unit {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* En el riel la marca se reduce a un trazo: quince rectángulos numerados a
+   tamaño completo compiten con el mapa. El número reaparece al activarse. */
+.field[data-rail] .num { opacity: 0; }
+.field[data-rail] .box {
+  inset: 11px 8px;
+  border-width: 0;
+  background: var(--white);
+  opacity: 0.28;
+}
+
+.field[data-rail] .unit:hover .box,
+.field[data-rail] .unit:focus-visible .box {
+  opacity: 0.8;
+}
+
+.field[data-rail] .unit[data-active] .box {
+  background: var(--accent);
+  opacity: 1;
+  inset: 9px 6px;
+}
+
+.unit:focus-visible {
+  outline: var(--line-strong) solid var(--white);
+  outline-offset: 2px;
+}
+
+/* --- Cierre: recuperan caja y número -------------------------------------- */
+
+.field[data-closing][data-rail] .num { opacity: 1; }
+
+.field[data-closing][data-rail] .box {
+  inset: 4px 3px;
+  border-width: var(--hairline);
+  border-color: var(--white);
+  background: transparent;
+  opacity: 0.45;
+}
+
+.field[data-closing][data-rail] .unit[data-active] .box,
+.field[data-closing][data-rail] .unit:hover .box,
+.field[data-closing][data-rail] .unit:focus-visible .box {
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+.field[data-closing][data-rail] .unit:hover .num,
+.field[data-closing][data-rail] .unit:focus-visible .num { color: var(--accent); }
+
+/* --- Rótulo de la marca activa -------------------------------------------- */
+
+.label {
+  position: absolute;
+  right: calc(100% + 8px);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.2rem 0.45rem;
+  background: color-mix(in srgb, var(--black) 88%, transparent);
+  border-right: var(--line-strong) solid var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(4px);
+  pointer-events: none;
+  transition:
+    opacity var(--dur-micro) var(--ease-out),
+    transform var(--dur-micro) var(--ease-out);
+}
+
+.labelNum { color: var(--accent); }
+.labelText { color: var(--ink); }
+
+.field:not([data-rail]) .label { display: none; }
+
+.field[data-rail] .unit[data-active] .label,
+.field[data-rail] .unit:hover .label,
+.field[data-rail] .unit:focus-visible .label {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Móvil ---------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .unit { width: 30px; height: 26px; }
+
+  /* El rótulo se coloca encima y no a la izquierda: el riel es horizontal. */
+  .label {
+    right: auto;
+    left: 50%;
+    bottom: calc(100% + 6px);
+    transform: translateX(-50%) translateY(4px);
+    border-right: 0;
+    border-bottom: var(--line-strong) solid var(--accent);
+  }
+
+  .field[data-rail] .unit[data-active] .label,
+  .field[data-rail] .unit:hover .label,
+  .field[data-rail] .unit:focus-visible .label {
+    transform: translateX(-50%);
+  }
+
+  /* Objetivo táctil de 44 px sin ensanchar la marca visible. */
+  .field[data-rail] .unit::after {
+    content: '';
+    position: absolute;
+    inset: -9px -2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unit {
+    animation: none;
+    opacity: 1;
+    transition: none;
+  }
+  .box, .num, .label { transition: none; }
+}

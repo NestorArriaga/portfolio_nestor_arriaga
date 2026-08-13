@@ -1,0 +1,83 @@
+{
+ "source": "derivados limpios de laminas con guias e insets",
+ "derivados": [
+  {
+   "slug": "p05-geomorfones-clean",
+   "source": "p05-geomorfones (recorte medido por componentes saturadas)",
+   "crop": [
+    0.21,
+    0.0,
+    0.79,
+    0.7
+   ],
+   "native_px": [
+    1604,
+    1493
+   ],
+   "ratio": 1.074347,
+   "files": {
+    "1604": "/projects/plates/p05-geomorfones-clean-1604.webp",
+    "1000": "/projects/plates/p05-geomorfones-clean-1000.webp",
+    "500": "/projects/plates/p05-geomorfones-clean-500.webp"
+   }
+  },
+  {
+   "slug": "p05-geomorfones-locator",
+   "source": "p05-geomorfones (recorte medido por componentes saturadas)",
+   "crop": [
+    0.0,
+    0.8381,
+    0.18,
+    0.1619
+   ],
+   "native_px": [
+    384,
+    365
+   ],
+   "ratio": 1.052055,
+   "files": {
+    "384": "/projects/plates/p05-geomorfones-locator-384.webp"
+   }
+  },
+  {
+   "slug": "p06-zonas-ecologicas-clean",
+   "source": "p06-zonas-ecologicas (recorte medido por componentes saturadas)",
+   "crop": [
+    0.0,
+    0.1324,
+    0.625,
+    0.8603
+   ],
+   "native_px": [
+    1274,
+    1197
+   ],
+   "ratio": 1.064327,
+   "files": {
+    "1274": "/projects/plates/p06-zonas-ecologicas-clean-1274.webp",
+    "1000": "/projects/plates/p06-zonas-ecologicas-clean-1000.webp",
+    "500": "/projects/plates/p06-zonas-ecologicas-clean-500.webp"
+   }
+  },
+  {
+   "slug": "p07-pendiente-clean",
+   "source": "p07-pendiente (recorte medido por componentes saturadas)",
+   "crop": [
+    0.0,
+    0.134,
+    0.96,
+    0.8612
+   ],
+   "native_px": [
+    1795,
+    1693
+   ],
+   "ratio": 1.060248,
+   "files": {
+    "1795": "/projects/plates/p07-pendiente-clean-1795.webp",
+    "1000": "/projects/plates/p07-pendiente-clean-1000.webp",
+    "500": "/projects/plates/p07-pendiente-clean-500.webp"
+   }
+  }
+ ]
+}

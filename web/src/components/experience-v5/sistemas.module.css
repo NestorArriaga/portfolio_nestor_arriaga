@@ -1,0 +1,219 @@
+/* SISTEMAS — cuatro capacidades digitales.
+
+   Superficie tinta en todo el capítulo: las cuatro aplicaciones son oscuras y
+   ponerlas sobre papel dejaría cuatro rectángulos negros flotando. Aquí el
+   fondo acompaña a la pieza en vez de pelearse con ella.
+
+   El color propio de cada aplicación vive dentro de su captura. Fuera de ella
+   sólo hay tinta, blanco óptico y amarillo de señal. */
+
+.apertura,
+.caso {
+  position: relative;
+  background: var(--tinta);
+  color: var(--optico, #f6f7f2);
+}
+
+.apertura { height: 130svh; }
+.caso { height: 175svh; }
+
+/* --- Apertura -------------------------------------------------------------- */
+
+.aperturaMarco {
+  position: sticky; top: 0;
+  height: 100svh;
+  overflow: clip;
+  padding: var(--margen);
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 0.5rem;
+}
+
+.serie { color: var(--senal); letter-spacing: 0.18em; font-size: 12px; }
+
+.aperturaTitulo {
+  margin: 0;
+  font-size: clamp(3.2rem, 12vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  /* Entra por recorte, igual que el resto de títulos del atlas. */
+  clip-path: inset(0 calc((1 - clamp(0.25, var(--e, 0) * 3, 1)) * 100%) 0 0);
+}
+
+.tresPalabras {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--optico, #f6f7f2) 62%, transparent);
+}
+
+/* --- Caso ------------------------------------------------------------------ */
+
+.marco {
+  position: sticky; top: 0;
+  height: 100svh;
+  overflow: clip;
+  padding: var(--margen);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    'cabecera lateral'
+    'pieza    lateral';
+  column-gap: clamp(1rem, 2.4vw, 2.4rem);
+  row-gap: clamp(0.5rem, 1.4vh, 1.2rem);
+}
+
+.marco > * { min-width: 0; min-height: 0; }
+
+.cabecera {
+  grid-area: cabecera;
+  display: flex; align-items: baseline; gap: 0.9rem; flex-wrap: wrap;
+}
+
+.folio { color: var(--senal); font-size: 12px; letter-spacing: 0.14em; }
+
+.nombre {
+  margin: 0;
+  font-size: clamp(1.7rem, 3.4vw, 3rem);
+  font-weight: 500; letter-spacing: -0.02em; line-height: 1;
+}
+
+.estado {
+  font-size: 11px;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in srgb, var(--optico, #f6f7f2) 28%, transparent);
+  color: color-mix(in srgb, var(--optico, #f6f7f2) 76%, transparent);
+}
+
+.pieza {
+  grid-area: pieza;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: clamp(0.6rem, 1.6vh, 1.2rem);
+  min-height: 0;
+}
+.pieza:has(> :only-child) { grid-template-rows: minmax(0, 1fr); }
+
+.lateral {
+  grid-area: lateral;
+  display: grid;
+  align-content: start;
+  gap: clamp(0.7rem, 1.8vh, 1.4rem);
+  overflow: clip;
+}
+
+.capacidad {
+  margin: 0;
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.acciones {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.3rem 1rem;
+  font-size: 11px; letter-spacing: 0.1em;
+  color: color-mix(in srgb, var(--optico, #f6f7f2) 58%, transparent);
+}
+
+.detalles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.6vw, 1.4rem);
+  max-height: 30svh;
+}
+.detalles:has(> :only-child) { grid-template-columns: minmax(0, 1fr); max-width: 46%; }
+
+.segundo { margin: 0; display: grid; gap: 0.4rem; }
+.segundo figcaption { display: flex; gap: 0.6rem; font-size: 11px; }
+.segundo b { color: var(--senal); font-weight: 500; }
+.segundo span { color: color-mix(in srgb, var(--optico, #f6f7f2) 55%, transparent); }
+
+.abrir {
+  justify-self: start;
+  min-height: 44px;
+  display: inline-flex; align-items: center;
+  font-size: 12px; letter-spacing: 0.1em;
+  color: var(--optico, #f6f7f2);
+  border-bottom: 1px solid var(--senal);
+}
+.abrir:hover, .abrir:focus-visible { color: var(--senal); }
+
+.contador {
+  position: absolute;
+  right: var(--margen); bottom: calc(var(--margen) * 0.6);
+  font-size: 11px;
+  color: color-mix(in srgb, var(--optico, #f6f7f2) 45%, transparent);
+}
+
+/* --- Captura --------------------------------------------------------------- */
+
+/* Guarda fina, sin ventana de navegador dibujada: la interfaz es la pieza y un
+   marco con semáforos de colores sería un adorno que además miente sobre dónde
+   corre el sistema. */
+.captura {
+  margin: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  min-height: 0;
+}
+
+.captura img {
+  /* Techo de resolución: nunca por encima del archivo, ni siquiera a DPR 2. */
+  width: min(100%, calc(var(--nativo) / var(--dpr, 1) * 1px));
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  justify-self: center;
+  border: 1px solid color-mix(in srgb, var(--optico, #f6f7f2) 22%, transparent);
+  /* Revelado por máscara al entrar en la escena, no un zoom sobre píxeles.
+     El revelado se cierra en el primer sexto del tramo. Proporcional a todo el
+     recorrido, llegar por `#s04` desde el índice dejaba la captura dibujada a
+     un tercio y con un hueco debajo: una escena a la que se entra por enlace
+     tiene que estar formada al llegar. */
+  clip-path: inset(0 0 calc((1 - clamp(0.5, var(--e, 0) * 6, 1)) * 100%) 0);
+}
+
+.captura figcaption {
+  font-size: 11px;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--optico, #f6f7f2) 55%, transparent);
+}
+
+.capturaChica figcaption {
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- Tableta y móvil -------------------------------------------------------
+   Sin sticky largo: cuatro escenas pegadas en una pantalla de 390 px obligan a
+   recorrer siete alturas para ver cuatro capturas. Aquí se apilan. */
+
+@media (max-width: 900px) {
+  .apertura { height: auto; }
+  .caso { height: auto; }
+
+  .aperturaMarco { position: static; height: auto; min-height: 60svh; }
+
+  .marco {
+    position: static;
+    height: auto;
+    padding-block: clamp(2rem, 8vh, 4rem);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'cabecera' 'pieza' 'lateral';
+    row-gap: 1rem;
+  }
+
+  .captura img { clip-path: none; }
+  .contador { position: static; justify-self: start; }
+  .detalles { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: none; }
+  /* En vertical sobra alto: el pie se lee entero en vez de cortarse. */
+  .capturaChica figcaption { display: block; overflow: visible; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aperturaTitulo, .captura img { clip-path: none; }
+}

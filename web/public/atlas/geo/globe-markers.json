@@ -1,0 +1,44 @@
+{
+ "srs_origen": "EPSG:6372",
+ "metodo": "inversa de Lambert conforme cónico (Snyder) sobre GRS80",
+ "sin_marcador": [
+  {
+   "territoryId": "comarca",
+   "motivo": "municipios.json no declara SRS; sus coordenadas son del viewBox"
+  },
+  {
+   "territoryId": "hidalgo",
+   "motivo": "no existe máscara territorial para la Reserva de Metztitlán"
+  }
+ ],
+ "marcadores": [
+  {
+   "territoryId": "aguascalientes",
+   "nombre": "Aguascalientes y Calvillo",
+   "lat": 22.04081,
+   "lng": -102.35515,
+   "origen": "centro de extent_m de «aguascalientes» en EPSG:6372"
+  },
+  {
+   "territoryId": "cdmx",
+   "nombre": "Ciudad de México",
+   "lat": 19.32159,
+   "lng": -99.15109,
+   "origen": "centro de extent_m de «ciudad-de-mexico» en EPSG:6372"
+  },
+  {
+   "territoryId": "merida",
+   "nombre": "Mérida, Yucatán",
+   "lat": 21.10034,
+   "lng": -89.92134,
+   "origen": "centro de extent_m de «yucatan» en EPSG:6372"
+  },
+  {
+   "territoryId": "veracruz",
+   "nombre": "Cuenca de Decozalapa",
+   "lat": 19.36397,
+   "lng": -96.89006,
+   "origen": "centro de extent_m de «decozalapa» en EPSG:6372"
+  }
+ ]
+}

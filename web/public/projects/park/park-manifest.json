@@ -1,0 +1,199 @@
+{
+ "source": "archivo de trabajo · Urban Challenge",
+ "files": [
+  {
+   "slug": "park-base",
+   "source": "SVG COLLECTION/park_base.svg",
+   "kind": "split",
+   "viewBox": "0 0 1184 864",
+   "ratio": 1.37037,
+   "layers": [
+    {
+     "name": "park-base-0",
+     "file": "/projects/park/park-base-0.svg",
+     "color": "#516345",
+     "elements": 366,
+     "bytes": 121861
+    },
+    {
+     "name": "park-base-1",
+     "file": "/projects/park/park-base-1.svg",
+     "color": "#839c5e",
+     "elements": 158,
+     "bytes": 67044
+    },
+    {
+     "name": "park-base-2",
+     "file": "/projects/park/park-base-2.svg",
+     "color": "#fbfcfb",
+     "elements": 84,
+     "bytes": 64382
+    }
+   ]
+  },
+  {
+   "slug": "park1",
+   "source": "SVG COLLECTION/park1.svg",
+   "kind": "split",
+   "viewBox": "0 0 1184 864",
+   "ratio": 1.37037,
+   "layers": [
+    {
+     "name": "park1-0",
+     "file": "/projects/park/park1-0.svg",
+     "color": "#e3e3e3",
+     "elements": 68,
+     "bytes": 38384
+    },
+    {
+     "name": "park1-1",
+     "file": "/projects/park/park1-1.svg",
+     "color": "#415d37",
+     "elements": 32,
+     "bytes": 41678
+    },
+    {
+     "name": "park1-2",
+     "file": "/projects/park/park1-2.svg",
+     "color": "#fdfdfd",
+     "elements": 4,
+     "bytes": 4467
+    }
+   ]
+  },
+  {
+   "slug": "park2",
+   "source": "SVG COLLECTION/park2.svg",
+   "kind": "split",
+   "viewBox": "0 0 1088 960",
+   "ratio": 1.133333,
+   "layers": [
+    {
+     "name": "park2-0",
+     "file": "/projects/park/park2-0.svg",
+     "color": "#a4b77c",
+     "elements": 253,
+     "bytes": 61400
+    },
+    {
+     "name": "park2-1",
+     "file": "/projects/park/park2-1.svg",
+     "color": "#fdfdfd",
+     "elements": 70,
+     "bytes": 58157
+    },
+    {
+     "name": "park2-2",
+     "file": "/projects/park/park2-2.svg",
+     "color": "#546444",
+     "elements": 40,
+     "bytes": 52727
+    }
+   ]
+  },
+  {
+   "slug": "park4",
+   "source": "SVG COLLECTION/park4.svg",
+   "kind": "split",
+   "viewBox": "0 0 1184 864",
+   "ratio": 1.37037,
+   "layers": [
+    {
+     "name": "park4-0",
+     "file": "/projects/park/park4-0.svg",
+     "color": "#3b5e2f",
+     "elements": 107,
+     "bytes": 51410
+    },
+    {
+     "name": "park4-1",
+     "file": "/projects/park/park4-1.svg",
+     "color": "#b6cd9d",
+     "elements": 73,
+     "bytes": 41873
+    },
+    {
+     "name": "park4-2",
+     "file": "/projects/park/park4-2.svg",
+     "color": "#fdfdfd",
+     "elements": 10,
+     "bytes": 11218
+    }
+   ]
+  },
+  {
+   "slug": "parkbase2",
+   "source": "SVG COLLECTION/parkbase2.svg",
+   "kind": "split",
+   "viewBox": "0 0 1280 720",
+   "ratio": 1.777778,
+   "layers": [
+    {
+     "name": "parkbase2-0",
+     "file": "/projects/park/parkbase2-0.svg",
+     "color": "#a4b77c",
+     "elements": 180,
+     "bytes": 43533
+    },
+    {
+     "name": "parkbase2-1",
+     "file": "/projects/park/parkbase2-1.svg",
+     "color": "#566446",
+     "elements": 107,
+     "bytes": 51511
+    },
+    {
+     "name": "parkbase2-2",
+     "file": "/projects/park/parkbase2-2.svg",
+     "color": "#fefefe",
+     "elements": 64,
+     "bytes": 49016
+    }
+   ]
+  },
+  {
+   "slug": "parkheat1",
+   "source": "SVG COLLECTION/parkheat1.svg",
+   "kind": "raster",
+   "viewBox": "0 0 831.5 498.5",
+   "ratio": 1.668004,
+   "files": {
+    "1600": "/projects/park/parkheat1-1600.webp",
+    "800": "/projects/park/parkheat1-800.webp"
+   }
+  },
+  {
+   "slug": "parkheat2",
+   "source": "SVG COLLECTION/parkheat2.svg",
+   "kind": "raster",
+   "viewBox": "0 0 1192 760",
+   "ratio": 1.568421,
+   "files": {
+    "1600": "/projects/park/parkheat2-1600.webp",
+    "800": "/projects/park/parkheat2-800.webp"
+   }
+  },
+  {
+   "slug": "parkheat3",
+   "source": "SVG COLLECTION/parkheat3.svg",
+   "kind": "raster",
+   "viewBox": "0 0 1268 621",
+   "ratio": 2.041868,
+   "files": {
+    "1600": "/projects/park/parkheat3-1600.webp",
+    "800": "/projects/park/parkheat3-800.webp"
+   }
+  },
+  {
+   "slug": "dise-o-parque-yuc",
+   "source": "dise\u00f1o_parque_yuc.svg",
+   "kind": "raster",
+   "viewBox": "0 0 841.89 595.28",
+   "ratio": 1.414276,
+   "files": {
+    "2200": "/projects/park/dise-o-parque-yuc-2200.webp",
+    "1100": "/projects/park/dise-o-parque-yuc-1100.webp"
+   }
+  }
+ ]
+}

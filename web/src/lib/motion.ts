@@ -42,7 +42,9 @@ type RevealOptions = {
  * Marca un elemento como revelado la primera vez que entra en viewport.
  * Se desconecta al disparar: la secuencia de una lámina ocurre una sola vez.
  */
-export function useReveal<T extends HTMLElement = HTMLDivElement>(
+// `Element` y no `HTMLElement`: IntersectionObserver observa cualquier Element,
+// y varias escenas revelan un <svg> directamente en vez de un div envolvente.
+export function useReveal<T extends Element = HTMLDivElement>(
   { threshold = 0.25, rootMargin = '0px 0px -10% 0px' }: RevealOptions = {},
 ) {
   const ref = useRef<T>(null);
@@ -106,8 +108,13 @@ export function useScrollProgress<T extends HTMLElement = HTMLDivElement>() {
       setProgress(Math.min(1, Math.max(0, raw)));
     };
 
+    // Cancelar y volver a pedir, no ignorar cuando ya hay uno pendiente.
+    // Un `requestAnimationFrame` pedido con la pestaña oculta no llega a
+    // ejecutarse, así que `frame` se quedaba con un identificador vivo y el
+    // atajo `|| frame` mataba todos los scrolls siguientes de forma permanente.
     const onScroll = () => {
-      if (!visible || frame) return;
+      if (!visible) return;
+      cancelAnimationFrame(frame);
       frame = requestAnimationFrame(measure);
     };
 
@@ -119,13 +126,15 @@ export function useScrollProgress<T extends HTMLElement = HTMLDivElement>() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
+    document.addEventListener('visibilitychange', onScroll);
     measure();
 
     return () => {
       observer.disconnect();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
-      if (frame) cancelAnimationFrame(frame);
+      document.removeEventListener('visibilitychange', onScroll);
+      cancelAnimationFrame(frame);
     };
   }, [reduced]);
 

@@ -1,0 +1,2100 @@
+{
+ "source": "archivo de trabajo · portafolio GIS",
+ "widths": [
+  2000,
+  1000,
+  500
+ ],
+ "assets": [
+  {
+   "slug": "ags-agricola",
+   "source": "MAPAS AGS/3.png",
+   "projects": [
+    "11"
+   ],
+   "role": "map",
+   "pages": [
+    36,
+    37
+   ],
+   "native_px": [
+    4406,
+    7031
+   ],
+   "trimmed_px": [
+    4306,
+    3741
+   ],
+   "frame": [
+    0.0,
+    0.172237,
+    0.977304,
+    0.532072
+   ],
+   "ratio": 1.151029,
+   "dominant": [
+    {
+     "hex": "#c03810",
+     "share": 0.2104
+    },
+    {
+     "hex": "#c85018",
+     "share": 0.06
+    },
+    {
+     "hex": "#c84818",
+     "share": 0.054
+    },
+    {
+     "hex": "#c85818",
+     "share": 0.0477
+    },
+    {
+     "hex": "#c83810",
+     "share": 0.0381
+    },
+    {
+     "hex": "#d89820",
+     "share": 0.0347
+    },
+    {
+     "hex": "#c84010",
+     "share": 0.0328
+    },
+    {
+     "hex": "#c84018",
+     "share": 0.0306
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/ags-agricola-2000.webp",
+    "1000": "/projects/raster/ags-agricola-1000.webp",
+    "500": "/projects/raster/ags-agricola-500.webp"
+   }
+  },
+  {
+   "slug": "ags-conservacion",
+   "source": "MAPAS AGS/2.png",
+   "projects": [
+    "10"
+   ],
+   "role": "map",
+   "pages": [
+    34,
+    35
+   ],
+   "native_px": [
+    4406,
+    7031
+   ],
+   "trimmed_px": [
+    4288,
+    3728
+   ],
+   "frame": [
+    0.014299,
+    0.193714,
+    0.973218,
+    0.530223
+   ],
+   "ratio": 1.150215,
+   "dominant": [
+    {
+     "hex": "#c8c0c0",
+     "share": 0.0578
+    },
+    {
+     "hex": "#c8c8c0",
+     "share": 0.0532
+    },
+    {
+     "hex": "#c0c0b8",
+     "share": 0.0454
+    },
+    {
+     "hex": "#d0c8c8",
+     "share": 0.0429
+    },
+    {
+     "hex": "#60a848",
+     "share": 0.0323
+    },
+    {
+     "hex": "#58a840",
+     "share": 0.0258
+    },
+    {
+     "hex": "#209000",
+     "share": 0.0235
+    },
+    {
+     "hex": "#289008",
+     "share": 0.0227
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/ags-conservacion-2000.webp",
+    "1000": "/projects/raster/ags-conservacion-1000.webp",
+    "500": "/projects/raster/ags-conservacion-500.webp"
+   }
+  },
+  {
+   "slug": "ags-mask",
+   "source": "AGUASCALIENTES.png",
+   "projects": [
+    "09",
+    "10",
+    "11",
+    "12",
+    "13"
+   ],
+   "role": "mask",
+   "pages": [
+    32,
+    39
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2658,
+    2270
+   ],
+   "frame": [
+    0.085,
+    0.026667,
+    0.830625,
+    0.945833
+   ],
+   "ratio": 1.170925,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/ags-mask-2000.webp",
+    "1000": "/projects/raster/ags-mask-1000.webp",
+    "500": "/projects/raster/ags-mask-500.webp"
+   }
+  },
+  {
+   "slug": "ags-vocaciones",
+   "source": "MAPAS AGS/4.png",
+   "projects": [
+    "09"
+   ],
+   "role": "map",
+   "pages": [
+    32,
+    33
+   ],
+   "native_px": [
+    4406,
+    7031
+   ],
+   "trimmed_px": [
+    4184,
+    3607
+   ],
+   "frame": [
+    0.017249,
+    0.206656,
+    0.949614,
+    0.513014
+   ],
+   "ratio": 1.159967,
+   "dominant": [
+    {
+     "hex": "#987038",
+     "share": 0.0408
+    },
+    {
+     "hex": "#906830",
+     "share": 0.0391
+    },
+    {
+     "hex": "#a07038",
+     "share": 0.0338
+    },
+    {
+     "hex": "#587840",
+     "share": 0.033
+    },
+    {
+     "hex": "#507038",
+     "share": 0.0323
+    },
+    {
+     "hex": "#688048",
+     "share": 0.0323
+    },
+    {
+     "hex": "#a87840",
+     "share": 0.0321
+    },
+    {
+     "hex": "#607840",
+     "share": 0.0288
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/ags-vocaciones-2000.webp",
+    "1000": "/projects/raster/ags-vocaciones-1000.webp",
+    "500": "/projects/raster/ags-vocaciones-500.webp"
+   }
+  },
+  {
+   "slug": "calvillo-subcuencas",
+   "source": "SUBCC.png",
+   "projects": [
+    "13"
+   ],
+   "role": "map",
+   "pages": [
+    39
+   ],
+   "native_px": [
+    3878,
+    6188
+   ],
+   "trimmed_px": [
+    3732,
+    4018
+   ],
+   "frame": [
+    0.02295,
+    0.178087,
+    0.962352,
+    0.649321
+   ],
+   "ratio": 0.92882,
+   "dominant": [
+    {
+     "hex": "#6898b0",
+     "share": 0.1451
+    },
+    {
+     "hex": "#589090",
+     "share": 0.0977
+    },
+    {
+     "hex": "#6898a8",
+     "share": 0.0829
+    },
+    {
+     "hex": "#68a0b0",
+     "share": 0.0691
+    },
+    {
+     "hex": "#6090a0",
+     "share": 0.0468
+    },
+    {
+     "hex": "#6098a8",
+     "share": 0.0439
+    },
+    {
+     "hex": "#508890",
+     "share": 0.0425
+    },
+    {
+     "hex": "#589098",
+     "share": 0.0334
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/calvillo-subcuencas-2000.webp",
+    "1000": "/projects/raster/calvillo-subcuencas-1000.webp",
+    "500": "/projects/raster/calvillo-subcuencas-500.webp"
+   }
+  },
+  {
+   "slug": "calvillo-suelo",
+   "source": "suelo.png",
+   "projects": [
+    "12"
+   ],
+   "role": "map",
+   "pages": [
+    38
+   ],
+   "native_px": [
+    4406,
+    7031
+   ],
+   "trimmed_px": [
+    4406,
+    5001
+   ],
+   "frame": [
+    0.0,
+    0.144361,
+    1.0,
+    0.711279
+   ],
+   "ratio": 0.881024,
+   "dominant": [
+    {
+     "hex": "#d05060",
+     "share": 0.1279
+    },
+    {
+     "hex": "#c04048",
+     "share": 0.0649
+    },
+    {
+     "hex": "#b8b8b0",
+     "share": 0.0604
+    },
+    {
+     "hex": "#c84858",
+     "share": 0.0489
+    },
+    {
+     "hex": "#d04860",
+     "share": 0.0384
+    },
+    {
+     "hex": "#b0b0b0",
+     "share": 0.0317
+    },
+    {
+     "hex": "#d04858",
+     "share": 0.031
+    },
+    {
+     "hex": "#c84050",
+     "share": 0.0248
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/calvillo-suelo-2000.webp",
+    "1000": "/projects/raster/calvillo-suelo-1000.webp",
+    "500": "/projects/raster/calvillo-suelo-500.webp"
+   }
+  },
+  {
+   "slug": "carbono-grafica",
+   "source": "GRAFICA CARBONO.png",
+   "projects": [
+    "02"
+   ],
+   "role": "figure",
+   "pages": [
+    22
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    1980,
+    1980
+   ],
+   "frame": [
+    0.190625,
+    0.0875,
+    0.61875,
+    0.825
+   ],
+   "ratio": 1.0,
+   "dominant": [
+    {
+     "hex": "#b00000",
+     "share": 0.2079
+    },
+    {
+     "hex": "#e00000",
+     "share": 0.1814
+    },
+    {
+     "hex": "#f81818",
+     "share": 0.1651
+    },
+    {
+     "hex": "#f84848",
+     "share": 0.1388
+    },
+    {
+     "hex": "#f88080",
+     "share": 0.1151
+    },
+    {
+     "hex": "#f8b0b0",
+     "share": 0.0919
+    },
+    {
+     "hex": "#f8e0e0",
+     "share": 0.0648
+    },
+    {
+     "hex": "#e80000",
+     "share": 0.0075
+    }
+   ],
+   "files": {
+    "1000": "/projects/raster/carbono-grafica-1000.webp",
+    "500": "/projects/raster/carbono-grafica-500.webp"
+   }
+  },
+  {
+   "slug": "cdmx-alcaldias",
+   "source": "Dise\u00f1o sin t\u00edtulo-4.png",
+   "projects": [
+    "01"
+   ],
+   "role": "map",
+   "pages": [
+    19
+   ],
+   "native_px": [
+    4406,
+    7031
+   ],
+   "trimmed_px": [
+    3150,
+    4281
+   ],
+   "frame": [
+    0.12256,
+    0.153463,
+    0.714934,
+    0.608875
+   ],
+   "ratio": 0.735809,
+   "dominant": [
+    {
+     "hex": "#484848",
+     "share": 0.9155
+    },
+    {
+     "hex": "#404040",
+     "share": 0.0391
+    },
+    {
+     "hex": "#383838",
+     "share": 0.0232
+    },
+    {
+     "hex": "#405048",
+     "share": 0.0163
+    },
+    {
+     "hex": "#385848",
+     "share": 0.0036
+    },
+    {
+     "hex": "#303030",
+     "share": 0.0008
+    },
+    {
+     "hex": "#306048",
+     "share": 0.0003
+    },
+    {
+     "hex": "#386048",
+     "share": 0.0002
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/cdmx-alcaldias-2000.webp",
+    "1000": "/projects/raster/cdmx-alcaldias-1000.webp",
+    "500": "/projects/raster/cdmx-alcaldias-500.webp"
+   }
+  },
+  {
+   "slug": "cdmx-contorno",
+   "source": "CDMX.png",
+   "projects": [
+    "01"
+   ],
+   "role": "mask",
+   "pages": [
+    18,
+    19
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    1843,
+    2159
+   ],
+   "frame": [
+    0.211875,
+    0.050417,
+    0.575937,
+    0.899583
+   ],
+   "ratio": 0.853636,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "1000": "/projects/raster/cdmx-contorno-1000.webp",
+    "500": "/projects/raster/cdmx-contorno-500.webp"
+   }
+  },
+  {
+   "slug": "cdmx-habitantes",
+   "source": "inhabitants.png",
+   "projects": [
+    "01"
+   ],
+   "role": "figure",
+   "pages": [
+    19
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2788,
+    476
+   ],
+   "frame": [
+    0.064375,
+    0.400833,
+    0.87125,
+    0.198333
+   ],
+   "ratio": 5.857143,
+   "dominant": [
+    {
+     "hex": "#80d0a0",
+     "share": 0.4456
+    },
+    {
+     "hex": "#28a868",
+     "share": 0.2655
+    },
+    {
+     "hex": "#28a870",
+     "share": 0.0741
+    },
+    {
+     "hex": "#80d8a0",
+     "share": 0.055
+    },
+    {
+     "hex": "#28a068",
+     "share": 0.0482
+    },
+    {
+     "hex": "#80d8a8",
+     "share": 0.0457
+    },
+    {
+     "hex": "#78d0a0",
+     "share": 0.0448
+    },
+    {
+     "hex": "#28b070",
+     "share": 0.0076
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/cdmx-habitantes-2000.webp",
+    "1000": "/projects/raster/cdmx-habitantes-1000.webp",
+    "500": "/projects/raster/cdmx-habitantes-500.webp"
+   }
+  },
+  {
+   "slug": "decozalapa-mask",
+   "source": "DECOZALAPA.png",
+   "projects": [
+    "02",
+    "03",
+    "04"
+   ],
+   "role": "mask",
+   "pages": [
+    22,
+    24
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2722,
+    1568
+   ],
+   "frame": [
+    0.105938,
+    0.166667,
+    0.850625,
+    0.653333
+   ],
+   "ratio": 1.735969,
+   "dominant": [
+    {
+     "hex": "#f0e8e8",
+     "share": 0.9294
+    },
+    {
+     "hex": "#f8f0f0",
+     "share": 0.0136
+    },
+    {
+     "hex": "#f8f0e8",
+     "share": 0.0094
+    },
+    {
+     "hex": "#f8e8e8",
+     "share": 0.0084
+    },
+    {
+     "hex": "#e8e0e0",
+     "share": 0.005
+    },
+    {
+     "hex": "#e0d8d8",
+     "share": 0.0044
+    },
+    {
+     "hex": "#d8d0d0",
+     "share": 0.0036
+    },
+    {
+     "hex": "#d0c8c8",
+     "share": 0.0033
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/decozalapa-mask-2000.webp",
+    "1000": "/projects/raster/decozalapa-mask-1000.webp",
+    "500": "/projects/raster/decozalapa-mask-500.webp"
+   }
+  },
+  {
+   "slug": "firma",
+   "source": "firma.png",
+   "projects": [],
+   "role": "signature",
+   "pages": [
+    5
+   ],
+   "native_px": [
+    4406,
+    7031
+   ],
+   "trimmed_px": [
+    4206,
+    3676
+   ],
+   "frame": [
+    0.028143,
+    0.241786,
+    0.954607,
+    0.522827
+   ],
+   "ratio": 1.144178,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/firma-2000.webp",
+    "1000": "/projects/raster/firma-1000.webp",
+    "500": "/projects/raster/firma-500.webp"
+   }
+  },
+  {
+   "slug": "glyph-agricultura",
+   "source": "AGRICULTURA.png",
+   "projects": [
+    "04"
+   ],
+   "role": "glyph",
+   "pages": [
+    24
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2554,
+    2154
+   ],
+   "frame": [
+    0.115,
+    0.067083,
+    0.798125,
+    0.8975
+   ],
+   "ratio": 1.185701,
+   "dominant": [
+    {
+     "hex": "#000000",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/glyph-agricultura-2000.webp",
+    "1000": "/projects/raster/glyph-agricultura-1000.webp",
+    "500": "/projects/raster/glyph-agricultura-500.webp"
+   }
+  },
+  {
+   "slug": "glyph-areas-verdes",
+   "source": "GREENAREA.png",
+   "projects": [
+    "01"
+   ],
+   "role": "glyph",
+   "pages": [
+    18,
+    19
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    1820,
+    2003
+   ],
+   "frame": [
+    0.215625,
+    0.065833,
+    0.56875,
+    0.834583
+   ],
+   "ratio": 0.908637,
+   "dominant": [
+    {
+     "hex": "#000000",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "1000": "/projects/raster/glyph-areas-verdes-1000.webp",
+    "500": "/projects/raster/glyph-areas-verdes-500.webp"
+   }
+  },
+  {
+   "slug": "glyph-cafe",
+   "source": "CAFE ROJO.png",
+   "projects": [
+    "03"
+   ],
+   "role": "glyph",
+   "pages": [
+    23
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2190,
+    2212
+   ],
+   "frame": [
+    0.155312,
+    0.013333,
+    0.684375,
+    0.921667
+   ],
+   "ratio": 0.990054,
+   "dominant": [
+    {
+     "hex": "#b00000",
+     "share": 0.9667
+    },
+    {
+     "hex": "#b80000",
+     "share": 0.0331
+    },
+    {
+     "hex": "#c00000",
+     "share": 0.0002
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/glyph-cafe-2000.webp",
+    "1000": "/projects/raster/glyph-cafe-1000.webp",
+    "500": "/projects/raster/glyph-cafe-500.webp"
+   }
+  },
+  {
+   "slug": "glyph-cafe-negro",
+   "source": "Dise\u00f1o sin t\u00edtulo.png",
+   "projects": [
+    "03"
+   ],
+   "role": "glyph",
+   "pages": [
+    23
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2190,
+    2212
+   ],
+   "frame": [
+    0.155312,
+    0.013333,
+    0.684375,
+    0.921667
+   ],
+   "ratio": 0.990054,
+   "dominant": [
+    {
+     "hex": "#000000",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/glyph-cafe-negro-2000.webp",
+    "1000": "/projects/raster/glyph-cafe-negro-1000.webp",
+    "500": "/projects/raster/glyph-cafe-negro-500.webp"
+   }
+  },
+  {
+   "slug": "glyph-co2",
+   "source": "CO2.png",
+   "projects": [
+    "02"
+   ],
+   "role": "glyph",
+   "pages": [
+    22
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2404,
+    2182
+   ],
+   "frame": [
+    0.112187,
+    0.045,
+    0.75125,
+    0.909167
+   ],
+   "ratio": 1.101742,
+   "dominant": [
+    {
+     "hex": "#000000",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/glyph-co2-2000.webp",
+    "1000": "/projects/raster/glyph-co2-1000.webp",
+    "500": "/projects/raster/glyph-co2-500.webp"
+   }
+  },
+  {
+   "slug": "glyph-conservacion",
+   "source": "CONSERVATION.png",
+   "projects": [
+    "10"
+   ],
+   "role": "glyph",
+   "pages": [
+    34,
+    35
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2066,
+    2212
+   ],
+   "frame": [
+    0.206875,
+    0.03875,
+    0.645625,
+    0.921667
+   ],
+   "ratio": 0.933996,
+   "dominant": [
+    {
+     "hex": "#000000",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/glyph-conservacion-2000.webp",
+    "1000": "/projects/raster/glyph-conservacion-1000.webp",
+    "500": "/projects/raster/glyph-conservacion-500.webp"
+   }
+  },
+  {
+   "slug": "glyph-geoformas",
+   "source": "LANDFORM.png",
+   "projects": [
+    "05"
+   ],
+   "role": "glyph",
+   "pages": [
+    26
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3085,
+    1156
+   ],
+   "frame": [
+    0.015312,
+    0.228333,
+    0.964063,
+    0.481667
+   ],
+   "ratio": 2.668685,
+   "dominant": [
+    {
+     "hex": "#000000",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/glyph-geoformas-2000.webp",
+    "1000": "/projects/raster/glyph-geoformas-1000.webp",
+    "500": "/projects/raster/glyph-geoformas-500.webp"
+   }
+  },
+  {
+   "slug": "glyph-uso-suelo",
+   "source": "LANDUSE.png",
+   "projects": [
+    "06"
+   ],
+   "role": "glyph",
+   "pages": [
+    27
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2216,
+    2217
+   ],
+   "frame": [
+    0.175313,
+    0.037917,
+    0.6925,
+    0.92375
+   ],
+   "ratio": 0.999549,
+   "dominant": [
+    {
+     "hex": "#000000",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/glyph-uso-suelo-2000.webp",
+    "1000": "/projects/raster/glyph-uso-suelo-1000.webp",
+    "500": "/projects/raster/glyph-uso-suelo-500.webp"
+   }
+  },
+  {
+   "slug": "hidalgo-mask",
+   "source": "HIDALGO.png",
+   "projects": [
+    "05",
+    "06",
+    "07",
+    "08"
+   ],
+   "role": "mask",
+   "pages": [
+    25,
+    29
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2084,
+    2297
+   ],
+   "frame": [
+    0.169687,
+    0.01625,
+    0.65125,
+    0.957083
+   ],
+   "ratio": 0.90727,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/hidalgo-mask-2000.webp",
+    "1000": "/projects/raster/hidalgo-mask-1000.webp",
+    "500": "/projects/raster/hidalgo-mask-500.webp"
+   }
+  },
+  {
+   "slug": "metz-apertura",
+   "source": "metz_base_2.jpeg",
+   "projects": [
+    "05",
+    "06",
+    "07",
+    "08"
+   ],
+   "role": "map",
+   "pages": [
+    25
+   ],
+   "native_px": [
+    9354,
+    6614
+   ],
+   "trimmed_px": [
+    9354,
+    6614
+   ],
+   "frame": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "ratio": 1.414273,
+   "dominant": [
+    {
+     "hex": "#404048",
+     "share": 0.6567
+    },
+    {
+     "hex": "#484848",
+     "share": 0.1411
+    },
+    {
+     "hex": "#786830",
+     "share": 0.0846
+    },
+    {
+     "hex": "#806830",
+     "share": 0.0628
+    },
+    {
+     "hex": "#404040",
+     "share": 0.0247
+    },
+    {
+     "hex": "#807030",
+     "share": 0.0076
+    },
+    {
+     "hex": "#484840",
+     "share": 0.0024
+    },
+    {
+     "hex": "#585040",
+     "share": 0.0021
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/metz-apertura-2000.webp",
+    "1000": "/projects/raster/metz-apertura-1000.webp",
+    "500": "/projects/raster/metz-apertura-500.webp"
+   }
+  },
+  {
+   "slug": "metz-geomorfologia",
+   "source": "METZ/14.png",
+   "projects": [
+    "05"
+   ],
+   "role": "map",
+   "pages": [
+    26
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2161,
+    2261
+   ],
+   "frame": [
+    0.13125,
+    0.039167,
+    0.675312,
+    0.942083
+   ],
+   "ratio": 0.955772,
+   "dominant": [
+    {
+     "hex": "#a860b0",
+     "share": 0.0043
+    },
+    {
+     "hex": "#d0d878",
+     "share": 0.0038
+    },
+    {
+     "hex": "#b0b050",
+     "share": 0.0038
+    },
+    {
+     "hex": "#b060b8",
+     "share": 0.0035
+    },
+    {
+     "hex": "#9870b0",
+     "share": 0.0034
+    },
+    {
+     "hex": "#9070a8",
+     "share": 0.0031
+    },
+    {
+     "hex": "#8878a8",
+     "share": 0.0031
+    },
+    {
+     "hex": "#a068b0",
+     "share": 0.0031
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/metz-geomorfologia-2000.webp",
+    "1000": "/projects/raster/metz-geomorfologia-1000.webp",
+    "500": "/projects/raster/metz-geomorfologia-500.webp"
+   }
+  },
+  {
+   "slug": "metz-patrones",
+   "source": "METZ/17.png",
+   "projects": [
+    "08"
+   ],
+   "role": "map",
+   "pages": [
+    29
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2661,
+    2154
+   ],
+   "frame": [
+    0.088125,
+    0.030833,
+    0.831562,
+    0.8975
+   ],
+   "ratio": 1.235376,
+   "dominant": [
+    {
+     "hex": "#387040",
+     "share": 0.0261
+    },
+    {
+     "hex": "#407048",
+     "share": 0.026
+    },
+    {
+     "hex": "#487850",
+     "share": 0.0255
+    },
+    {
+     "hex": "#407848",
+     "share": 0.0245
+    },
+    {
+     "hex": "#386840",
+     "share": 0.0239
+    },
+    {
+     "hex": "#508058",
+     "share": 0.0226
+    },
+    {
+     "hex": "#306038",
+     "share": 0.0223
+    },
+    {
+     "hex": "#286030",
+     "share": 0.0221
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/metz-patrones-2000.webp",
+    "1000": "/projects/raster/metz-patrones-1000.webp",
+    "500": "/projects/raster/metz-patrones-500.webp"
+   }
+  },
+  {
+   "slug": "metz-pendiente",
+   "source": "METZ/16.png",
+   "projects": [
+    "07"
+   ],
+   "role": "map",
+   "pages": [
+    28
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2767,
+    2068
+   ],
+   "frame": [
+    0.08375,
+    0.012083,
+    0.864688,
+    0.861667
+   ],
+   "ratio": 1.338008,
+   "dominant": [
+    {
+     "hex": "#305050",
+     "share": 0.0116
+    },
+    {
+     "hex": "#407070",
+     "share": 0.0113
+    },
+    {
+     "hex": "#385050",
+     "share": 0.0113
+    },
+    {
+     "hex": "#386060",
+     "share": 0.0112
+    },
+    {
+     "hex": "#283838",
+     "share": 0.0102
+    },
+    {
+     "hex": "#385858",
+     "share": 0.0102
+    },
+    {
+     "hex": "#386868",
+     "share": 0.0102
+    },
+    {
+     "hex": "#384848",
+     "share": 0.0101
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/metz-pendiente-2000.webp",
+    "1000": "/projects/raster/metz-pendiente-1000.webp",
+    "500": "/projects/raster/metz-pendiente-500.webp"
+   }
+  },
+  {
+   "slug": "metz-pendiente-grafica",
+   "source": "GRAFICO-SLOPE.png",
+   "projects": [
+    "07"
+   ],
+   "role": "figure",
+   "pages": [
+    28
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2790,
+    2233
+   ],
+   "frame": [
+    0.043125,
+    0.05875,
+    0.871875,
+    0.930417
+   ],
+   "ratio": 1.24944,
+   "dominant": [
+    {
+     "hex": "#203838",
+     "share": 0.2753
+    },
+    {
+     "hex": "#a070b0",
+     "share": 0.2175
+    },
+    {
+     "hex": "#285898",
+     "share": 0.1982
+    },
+    {
+     "hex": "#000000",
+     "share": 0.1978
+    },
+    {
+     "hex": "#283838",
+     "share": 0.0226
+    },
+    {
+     "hex": "#285890",
+     "share": 0.0101
+    },
+    {
+     "hex": "#a878b8",
+     "share": 0.0077
+    },
+    {
+     "hex": "#203030",
+     "share": 0.0057
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/metz-pendiente-grafica-2000.webp",
+    "1000": "/projects/raster/metz-pendiente-grafica-1000.webp",
+    "500": "/projects/raster/metz-pendiente-grafica-500.webp"
+   }
+  },
+  {
+   "slug": "metz-pendiente-perfil",
+   "source": "SLOPE_METZ.png",
+   "projects": [
+    "07"
+   ],
+   "role": "figure",
+   "pages": [
+    28
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2790,
+    2233
+   ],
+   "frame": [
+    0.043125,
+    0.05875,
+    0.871875,
+    0.930417
+   ],
+   "ratio": 1.24944,
+   "dominant": [
+    {
+     "hex": "#78d0a0",
+     "share": 0.2836
+    },
+    {
+     "hex": "#000000",
+     "share": 0.2196
+    },
+    {
+     "hex": "#285898",
+     "share": 0.2101
+    },
+    {
+     "hex": "#a070b0",
+     "share": 0.181
+    },
+    {
+     "hex": "#80d0a0",
+     "share": 0.0179
+    },
+    {
+     "hex": "#285890",
+     "share": 0.017
+    },
+    {
+     "hex": "#78c8a0",
+     "share": 0.0051
+    },
+    {
+     "hex": "#285090",
+     "share": 0.0039
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/metz-pendiente-perfil-2000.webp",
+    "1000": "/projects/raster/metz-pendiente-perfil-1000.webp",
+    "500": "/projects/raster/metz-pendiente-perfil-500.webp"
+   }
+  },
+  {
+   "slug": "metz-uso-suelo",
+   "source": "METZ/15.png",
+   "projects": [
+    "06"
+   ],
+   "role": "map",
+   "pages": [
+    27
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2891,
+    1970
+   ],
+   "frame": [
+    0.041563,
+    0.039167,
+    0.903438,
+    0.820833
+   ],
+   "ratio": 1.467513,
+   "dominant": [
+    {
+     "hex": "#e8a820",
+     "share": 0.0691
+    },
+    {
+     "hex": "#e8a020",
+     "share": 0.0519
+    },
+    {
+     "hex": "#78e088",
+     "share": 0.0401
+    },
+    {
+     "hex": "#d05860",
+     "share": 0.0381
+    },
+    {
+     "hex": "#60d8c8",
+     "share": 0.027
+    },
+    {
+     "hex": "#60d8d0",
+     "share": 0.0172
+    },
+    {
+     "hex": "#f0a820",
+     "share": 0.0166
+    },
+    {
+     "hex": "#d05058",
+     "share": 0.015
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/metz-uso-suelo-2000.webp",
+    "1000": "/projects/raster/metz-uso-suelo-1000.webp",
+    "500": "/projects/raster/metz-uso-suelo-500.webp"
+   }
+  },
+  {
+   "slug": "mexico-localizador",
+   "source": "mexico.png",
+   "projects": [],
+   "role": "mask",
+   "pages": [
+    8,
+    9
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3140,
+    2062
+   ],
+   "frame": [
+    0.009375,
+    0.052083,
+    0.98125,
+    0.859167
+   ],
+   "ratio": 1.522793,
+   "dominant": [
+    {
+     "hex": "#d8d8d8",
+     "share": 0.734
+    },
+    {
+     "hex": "#b0b0b0",
+     "share": 0.0472
+    },
+    {
+     "hex": "#d0d0d0",
+     "share": 0.044
+    },
+    {
+     "hex": "#b8b8b8",
+     "share": 0.0368
+    },
+    {
+     "hex": "#c8c8c8",
+     "share": 0.0327
+    },
+    {
+     "hex": "#c0c0c0",
+     "share": 0.032
+    },
+    {
+     "hex": "#a8a8a8",
+     "share": 0.019
+    },
+    {
+     "hex": "#e0e0e0",
+     "share": 0.0138
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/mexico-localizador-2000.webp",
+    "1000": "/projects/raster/mexico-localizador-1000.webp",
+    "500": "/projects/raster/mexico-localizador-500.webp"
+   }
+  },
+  {
+   "slug": "slab-1",
+   "source": "APTITUD/27.png",
+   "projects": [
+    "10",
+    "11"
+   ],
+   "role": "slab",
+   "pages": [
+    34,
+    37
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3063,
+    2107
+   ],
+   "frame": [
+    0.019375,
+    0.070417,
+    0.957187,
+    0.877917
+   ],
+   "ratio": 1.453726,
+   "dominant": [
+    {
+     "hex": "#80d0a0",
+     "share": 0.8515
+    },
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0464
+    },
+    {
+     "hex": "#78c898",
+     "share": 0.0187
+    },
+    {
+     "hex": "#78d098",
+     "share": 0.0164
+    },
+    {
+     "hex": "#78d0a0",
+     "share": 0.0137
+    },
+    {
+     "hex": "#e0f0e8",
+     "share": 0.0044
+    },
+    {
+     "hex": "#88d0a8",
+     "share": 0.0043
+    },
+    {
+     "hex": "#a0d8b8",
+     "share": 0.0037
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/slab-1-2000.webp",
+    "1000": "/projects/raster/slab-1-1000.webp",
+    "500": "/projects/raster/slab-1-500.webp"
+   }
+  },
+  {
+   "slug": "slab-2",
+   "source": "APTITUD/28.png",
+   "projects": [
+    "10",
+    "11"
+   ],
+   "role": "slab",
+   "pages": [
+    34,
+    37
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3063,
+    2107
+   ],
+   "frame": [
+    0.019375,
+    0.070417,
+    0.957187,
+    0.877917
+   ],
+   "ratio": 1.453726,
+   "dominant": [
+    {
+     "hex": "#487068",
+     "share": 0.848
+    },
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0445
+    },
+    {
+     "hex": "#406860",
+     "share": 0.0276
+    },
+    {
+     "hex": "#486868",
+     "share": 0.0123
+    },
+    {
+     "hex": "#406868",
+     "share": 0.0095
+    },
+    {
+     "hex": "#d0d8d8",
+     "share": 0.0039
+    },
+    {
+     "hex": "#d8e0e0",
+     "share": 0.0025
+    },
+    {
+     "hex": "#507070",
+     "share": 0.0022
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/slab-2-2000.webp",
+    "1000": "/projects/raster/slab-2-1000.webp",
+    "500": "/projects/raster/slab-2-500.webp"
+   }
+  },
+  {
+   "slug": "slab-3",
+   "source": "APTITUD/29.png",
+   "projects": [
+    "10",
+    "11"
+   ],
+   "role": "slab",
+   "pages": [
+    34,
+    37
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3063,
+    2107
+   ],
+   "frame": [
+    0.019375,
+    0.070417,
+    0.957187,
+    0.877917
+   ],
+   "ratio": 1.453726,
+   "dominant": [
+    {
+     "hex": "#28a868",
+     "share": 0.8489
+    },
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0438
+    },
+    {
+     "hex": "#28a068",
+     "share": 0.0207
+    },
+    {
+     "hex": "#20a060",
+     "share": 0.0128
+    },
+    {
+     "hex": "#20a068",
+     "share": 0.0128
+    },
+    {
+     "hex": "#c8e8d8",
+     "share": 0.0037
+    },
+    {
+     "hex": "#30a870",
+     "share": 0.0035
+    },
+    {
+     "hex": "#40b078",
+     "share": 0.0027
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/slab-3-2000.webp",
+    "1000": "/projects/raster/slab-3-1000.webp",
+    "500": "/projects/raster/slab-3-500.webp"
+   }
+  },
+  {
+   "slug": "slab-4",
+   "source": "APTITUD/30.png",
+   "projects": [
+    "10",
+    "11"
+   ],
+   "role": "slab",
+   "pages": [
+    34,
+    37
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3063,
+    2107
+   ],
+   "frame": [
+    0.019375,
+    0.070417,
+    0.957187,
+    0.877917
+   ],
+   "ratio": 1.453726,
+   "dominant": [
+    {
+     "hex": "#d81038",
+     "share": 0.8638
+    },
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0434
+    },
+    {
+     "hex": "#d80830",
+     "share": 0.0281
+    },
+    {
+     "hex": "#d80838",
+     "share": 0.0037
+    },
+    {
+     "hex": "#d81840",
+     "share": 0.0034
+    },
+    {
+     "hex": "#e04868",
+     "share": 0.0022
+    },
+    {
+     "hex": "#d82048",
+     "share": 0.0022
+    },
+    {
+     "hex": "#f8f0f0",
+     "share": 0.0021
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/slab-4-2000.webp",
+    "1000": "/projects/raster/slab-4-1000.webp",
+    "500": "/projects/raster/slab-4-500.webp"
+   }
+  },
+  {
+   "slug": "slab-5",
+   "source": "APTITUD/31.png",
+   "projects": [
+    "10",
+    "11"
+   ],
+   "role": "slab",
+   "pages": [
+    34,
+    37
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3063,
+    2107
+   ],
+   "frame": [
+    0.019375,
+    0.070417,
+    0.957187,
+    0.877917
+   ],
+   "ratio": 1.453726,
+   "dominant": [
+    {
+     "hex": "#b02020",
+     "share": 0.857
+    },
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0435
+    },
+    {
+     "hex": "#b01818",
+     "share": 0.0215
+    },
+    {
+     "hex": "#a81818",
+     "share": 0.0184
+    },
+    {
+     "hex": "#b02828",
+     "share": 0.0035
+    },
+    {
+     "hex": "#f8f0f0",
+     "share": 0.0031
+    },
+    {
+     "hex": "#e8c8c8",
+     "share": 0.0031
+    },
+    {
+     "hex": "#e8c0c0",
+     "share": 0.0027
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/slab-5-2000.webp",
+    "1000": "/projects/raster/slab-5-1000.webp",
+    "500": "/projects/raster/slab-5-500.webp"
+   }
+  },
+  {
+   "slug": "slab-6",
+   "source": "APTITUD/32.png",
+   "projects": [
+    "10",
+    "11"
+   ],
+   "role": "slab",
+   "pages": [
+    34,
+    37
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3063,
+    2107
+   ],
+   "frame": [
+    0.019375,
+    0.070417,
+    0.957187,
+    0.877917
+   ],
+   "ratio": 1.453726,
+   "dominant": [
+    {
+     "hex": "#880000",
+     "share": 0.8745
+    },
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0429
+    },
+    {
+     "hex": "#800000",
+     "share": 0.0212
+    },
+    {
+     "hex": "#901010",
+     "share": 0.0029
+    },
+    {
+     "hex": "#880808",
+     "share": 0.0029
+    },
+    {
+     "hex": "#e0c0c0",
+     "share": 0.0028
+    },
+    {
+     "hex": "#f8f0f0",
+     "share": 0.0027
+    },
+    {
+     "hex": "#901818",
+     "share": 0.0023
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/slab-6-2000.webp",
+    "1000": "/projects/raster/slab-6-1000.webp",
+    "500": "/projects/raster/slab-6-500.webp"
+   }
+  },
+  {
+   "slug": "textura-topografica",
+   "source": "BASE.png",
+   "projects": [],
+   "role": "texture",
+   "pages": [
+    18,
+    89
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    3200,
+    2400
+   ],
+   "frame": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "ratio": 1.333333,
+   "dominant": [
+    {
+     "hex": "#000000",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/textura-topografica-2000.webp",
+    "1000": "/projects/raster/textura-topografica-1000.webp",
+    "500": "/projects/raster/textura-topografica-500.webp"
+   }
+  },
+  {
+   "slug": "veracruz-contorno",
+   "source": "VERACRUZ.png",
+   "projects": [
+    "02",
+    "03",
+    "04"
+   ],
+   "role": "mask",
+   "pages": [
+    20,
+    24
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2066,
+    2302
+   ],
+   "frame": [
+    0.174375,
+    0.016667,
+    0.645625,
+    0.959167
+   ],
+   "ratio": 0.89748,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/veracruz-contorno-2000.webp",
+    "1000": "/projects/raster/veracruz-contorno-1000.webp",
+    "500": "/projects/raster/veracruz-contorno-500.webp"
+   }
+  },
+  {
+   "slug": "veracruz-mask",
+   "source": "VERACRUZ2.png",
+   "projects": [
+    "02",
+    "03",
+    "04"
+   ],
+   "role": "mask",
+   "pages": [
+    20,
+    24
+   ],
+   "native_px": [
+    3200,
+    2400
+   ],
+   "trimmed_px": [
+    2072,
+    2305
+   ],
+   "frame": [
+    0.174063,
+    0.01625,
+    0.6475,
+    0.960417
+   ],
+   "ratio": 0.898915,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 1.0
+    }
+   ],
+   "files": {
+    "2000": "/projects/raster/veracruz-mask-2000.webp",
+    "1000": "/projects/raster/veracruz-mask-1000.webp",
+    "500": "/projects/raster/veracruz-mask-500.webp"
+   }
+  }
+ ]
+}

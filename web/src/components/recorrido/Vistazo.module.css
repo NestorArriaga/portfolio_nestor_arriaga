@@ -1,0 +1,279 @@
+/* Vistazo. Mesa editorial sobre el recorrido: campo de coordenadas a la
+   izquierda y una sola ventana de previsualización a la derecha. */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: stretch;
+  padding: clamp(0px, 3vw, 40px);
+  background: color-mix(in srgb, var(--black) 82%, transparent);
+  backdrop-filter: blur(6px);
+  animation: scrim-in 180ms var(--ease-out);
+}
+
+@keyframes scrim-in { from { opacity: 0; } }
+
+.panel {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  background: var(--black);
+  border: var(--hairline) solid var(--line-dark);
+  overflow: clip;
+  animation: panel-in 260ms var(--ease-out);
+}
+
+.scrim[data-surface='paper'] .panel {
+  background: var(--paper);
+  --ink: #17171a;
+  --ink-muted: #55565a;
+  --ink-faint: #85868a;
+  --line-dark: var(--line-light);
+  color: var(--ink);
+}
+
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+/* --- Cabecera ------------------------------------------------------------- */
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.1rem var(--margin);
+  border-bottom: var(--hairline) solid var(--line-dark);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.count {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.close {
+  margin-left: auto;
+  min-height: 44px;
+  padding: 0.4rem 0.8rem;
+  border: var(--hairline) solid var(--line-dark);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+}
+
+.close:hover { color: var(--ink); border-color: var(--signal); }
+.close:focus-visible { outline: var(--line-strong) solid var(--signal); outline-offset: 2px; }
+
+/* --- Filtros -------------------------------------------------------------- */
+
+.filters {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.9rem var(--margin);
+  border-bottom: var(--hairline) solid var(--line-dark);
+}
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filterRow::-webkit-scrollbar { display: none; }
+
+.filterLabel {
+  flex: 0 0 auto;
+  width: 5.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.chip {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0.3rem 0.65rem;
+  border: var(--hairline) solid var(--line-dark);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+}
+
+.chip:hover { color: var(--ink); border-color: var(--ink-faint); }
+
+.chip[aria-pressed='true'] {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--black);
+}
+
+.chip:focus-visible { outline: var(--line-strong) solid var(--signal); outline-offset: 2px; }
+
+/* --- Cuerpo --------------------------------------------------------------- */
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(240px, 26vw, 360px);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding: 1.25rem var(--margin) var(--margin);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-self: start;
+}
+
+.item { display: block; }
+
+.item[data-hidden] {
+  /* Se retira del flujo, no se atenúa: quince filas apagadas bajo las visibles
+     convierten el filtro en ruido. El contador de la cabecera dice cuántas
+     quedan fuera. */
+  display: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr) auto auto;
+  align-items: baseline;
+  gap: 0.9rem;
+  min-height: 52px;
+  align-content: center;
+  padding: 0.55rem 0.6rem;
+  margin-inline: -0.6rem;
+  border-top: var(--hairline) solid var(--line-dark);
+  text-decoration: none;
+  color: var(--ink-muted);
+  border-left: var(--line-strong) solid transparent;
+  transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+}
+
+.row:hover,
+.row[data-active] {
+  color: var(--ink);
+  border-left-color: var(--accent);
+}
+
+.row:focus-visible { outline: var(--line-strong) solid var(--signal); outline-offset: -2px; }
+
+.rowNum {
+  font-family: var(--font-mono);
+  /* Número grande: es la coordenada de la mesa. */
+  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.rowTitle {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  letter-spacing: -0.015em;
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowPlace,
+.rowFamily {
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.rowFamily { min-width: 11ch; text-align: right; }
+
+/* --- Previsualización ----------------------------------------------------- */
+
+.preview {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  aspect-ratio: 1 / 1.15;
+  border: var(--hairline) solid var(--accent, var(--line-dark));
+  background: color-mix(in srgb, var(--accent, var(--charcoal)) 18%, var(--black));
+  overflow: clip;
+  opacity: 0;
+  transition: opacity var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+}
+
+.preview[data-on] { opacity: 1; }
+
+.previewImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.previewMark {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0.6rem;
+  background: color-mix(in srgb, var(--black) 78%, transparent);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.previewMark span:first-child { color: var(--accent); }
+
+@media (max-width: 900px) {
+  .scrim { padding: 0; }
+  .panel { border: 0; }
+  .body {
+    /* En móvil la ventana no cabe al lado: la lista ocupa todo y la
+       previsualización se ancla arriba, donde no tapa filas. */
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .preview { order: -1; aspect-ratio: 16 / 9; position: static; }
+  .row { grid-template-columns: 2.6rem minmax(0, 1fr); min-height: 56px; }
+  .rowPlace { grid-column: 2; }
+  .rowFamily { display: none; }
+  .filterLabel { width: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim, .panel { animation: none; }
+}

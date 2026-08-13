@@ -1,23 +1,22 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 
-import styles from './pilar.module.css';
 import { getPillar, granularProject, pillars } from '@/content/granular';
-import { PillarPlate } from '@/components/granular/PillarPlate';
-import { MunicipalIndex } from '@/components/granular/MunicipalIndex';
-import { FlowCycle } from '@/components/granular/FlowCycle';
-import { DetailStrip } from '@/components/granular/DetailStrip';
-import { getInsets, getMunicipios } from '@/lib/atlas';
-import { SignalPoster } from '@/components/atlas/SignalPoster';
-import { TextureOverlay } from '@/components/atlas/TextureOverlay';
+import { capa } from '@/components/experience-v5/registry';
+import { PilarGranular, PilarDatos } from '@/components/cuaderno/PilarGranular';
+import { RielCaso } from '@/components/global/RielCaso';
+import { atlasHref, projectHref, vistazoHref } from '@/lib/rutas';
 
 /**
  * Un pilar de GRANULAR.
  *
- * Cada pilar recorre la misma secuencia: apertura, variables conceptuales, una
- * lámina por mapa de la fuente, alcance documentado y paso al siguiente. Lo que
- * cambia entre pilares es el acento y las capas, no el orden de lectura.
+ * Conserva los siete pilares, sus mapas, sus categorías y sus cautelas. Lo que
+ * cambia es la presentación: la página anterior era un informe con tres
+ * párrafos de apertura, subtítulos explicativos y una barra de pilares que se
+ * cortaba en pantalla, y no parecía del mismo portafolio que el recorrido.
+ *
+ * Nada de la fuente se pierde: el planteamiento, las lecturas largas y las
+ * limitaciones viven en `Notas y alcance`, desplegable.
  */
 
 export function generateStaticParams() {
@@ -28,8 +27,8 @@ export function generateMetadata({ params }: { params: { pilar: string } }): Met
   const pillar = getPillar(params.pilar);
   if (!pillar) return {};
   return {
-    title: `${pillar.title} — GRANULAR | Néstor Arriaga`,
-    description: pillar.intro.paragraphs[0],
+    title: `${pillar.title} — GRANULAR`,
+    description: `P14 · ${granularProject.territory} · ${pillar.subtitle}.`,
   };
 }
 
@@ -37,164 +36,54 @@ export default function PilarPage({ params }: { params: { pilar: string } }) {
   const pillar = getPillar(params.pilar);
   if (!pillar) notFound();
 
-  const index = pillars.findIndex((p) => p.id === pillar.id);
-  const next = pillars[index + 1];
+  const i = pillars.findIndex((p) => p.id === pillar.id);
+  const next = pillars[i + 1];
 
-  // Los municipios que este pilar nombra, para marcarlos en el índice.
-  const named = Array.from(
-    new Set(pillar.plates.flatMap((p) => p.highlightMunicipios ?? [])),
-  );
-  const municipal = getMunicipios();
+  const laminas: PilarDatos['laminas'] = pillar.plates.map((p) => ({
+    id: p.id,
+    titulo: p.title,
+    pagina: p.page,
+    img: capa(p.layers[0]?.slug ?? '', 0),
+    // La segunda capa sólo se apila cuando la fuente la declara apilable: con
+    // `compare` cada capa trae su propia base opaca y superponerlas mostraría
+    // una prometiendo tres.
+    sobre: p.mode === 'stack' && p.layers[1] ? capa(p.layers[1].slug, 0) : null,
+    categorias: p.categories ?? [],
+    municipios: p.highlightMunicipios ?? [],
+    lectura: p.reading,
+    fuente: p.sourceNote,
+  }));
 
-  // Un recorte suelto no es una columna de detalles. El material solo da para
-  // varios en algunos pilares, y donde no los hay se dice.
-  const insets = getInsets(pillar.id);
+  const d: PilarDatos = {
+    id: pillar.id,
+    numero: pillar.number,
+    nombre: pillar.title,
+    variables: pillar.variables,
+    laminas,
+    datos: pillar.facts ?? [],
+    alcance: pillar.limitations,
+    parrafos: pillar.intro.paragraphs,
+    pilares: pillars.map((p) => ({
+      id: p.id, numero: p.number, nombre: p.title, href: `/granular/${p.id}`,
+    })),
+    siguiente: next ? { nombre: next.title, href: `/granular/${next.id}` } : undefined,
+    proyectoAnterior: { num: 'P13', nombre: 'Subcuencas y ríos', href: projectHref('13', 'subcuencas-y-rios-calvillo') },
+    proyectoSiguiente: { num: 'P15', nombre: 'Urban Challenge', href: projectHref('15', 'urban-challenge') },
+    atlasHref: atlasHref('14'),
+    vistazoHref: vistazoHref(),
+  };
 
   return (
-    <main style={{ ['--accent' as string]: pillar.accentVar }}>
-      {/* --- Apertura -------------------------------------------------------- */}
-      <header className={styles.opening}>
-        <div className={styles.marks}>
-          <span>
-            P{granularProject.id} · {granularProject.territory}
-          </span>
-          <span>{granularProject.region}</span>
-          <span>
-            p.{pillar.pages[0]}–{pillar.pages[1]}
-          </span>
-        </div>
-
-        <p className={styles.kicker}>
-          Pilar {pillar.number}
-        </p>
-        <h1 className={styles.title}>{pillar.title}</h1>
-        <p className={styles.subtitle}>{pillar.subtitle}</p>
-
-        <div className={styles.introGrid}>
-          <h2 className={styles.introTitle}>{pillar.intro.title}</h2>
-          <div className={styles.introText}>
-            {pillar.intro.paragraphs.map((p) => (
-              <p key={p.slice(0, 24)}>{p}</p>
-            ))}
-          </div>
-        </div>
-
-        <ul className={styles.variables}>
-          {pillar.variables.map((v, i) => (
-            <li key={v}>
-              <span className={styles.variableIndex}>{String(i + 1).padStart(2, '0')}</span>
-              {v}
-            </li>
-          ))}
-        </ul>
-
-        <TextureOverlay kind="grain" />
-      </header>
-
-      {/* --- Láminas ---------------------------------------------------------- */}
-      {pillar.plates.map((plate) => (
-        <PillarPlate key={plate.id} pillar={pillar} plate={plate} />
-      ))}
-
-      {/* --- Detalles de la fuente --------------------------------------------- */}
-      <section className={styles.details}>
-        <header className={styles.detailsHead}>
-          <h2 className={styles.sectionTitle}>Detalles de la fuente</h2>
-          {insets.length >= 2 ? (
-            <p className={styles.detailsLede}>
-              Recortes de las páginas {pillar.pages[0]}–{pillar.pages[1]}. No
-              llevan línea al mapa: el inventario no registra dónde cae cada uno
-              dentro del territorio.
-            </p>
-          ) : (
-            <p className={styles.detailsEmpty}>
-              Las páginas de este pilar no dejaron recortes de detalle
-              aprovechables: sus imágenes son el mapa completo, que la lámina ya
-              muestra a tamaño grande.
-            </p>
-          )}
-        </header>
-        {insets.length >= 2 ? (
-          <DetailStrip insets={insets} accent={pillar.accentVar} />
-        ) : null}
-      </section>
-
-      {/* --- Ciclo de flujo ---------------------------------------------------- */}
-      {pillar.cycle ? (
-        <section className={styles.cycle}>
-          <div className={styles.cycleGrid}>
-            <div className={styles.cycleText}>
-              <p className="technical">p.{pillar.cycle.page}</p>
-              <h2 className={styles.cycleTitle}>{pillar.cycle.title}</h2>
-              <p className={styles.cycleReading}>{pillar.cycle.reading}</p>
-              <p className={styles.cycleDisclaimer}>{pillar.cycle.disclaimer}</p>
-            </div>
-            <FlowCycle nodes={pillar.cycle.nodes} caption={pillar.cycle.caption} />
-          </div>
-        </section>
-      ) : null}
-
-      {/* --- Índice municipal -------------------------------------------------- */}
-      {municipal ? (
-        <section className={styles.municipal}>
-          <header className={styles.municipalHead}>
-            <h2 className={styles.sectionTitle}>Los quince municipios</h2>
-            <p className={styles.municipalLede}>
-              Geometría vectorial real del proyecto. Los marcados son los que el
-              texto de este pilar nombra.
-            </p>
-          </header>
-          <MunicipalIndex municipios={municipal.municipios} highlight={named} />
-        </section>
-      ) : null}
-
-      {/* --- Cifras de la fuente ---------------------------------------------- */}
-      {pillar.facts?.length ? (
-        <section className={styles.facts}>
-          <h2 className={styles.sectionTitle}>Cifras consignadas en la fuente</h2>
-          <dl className={styles.factGrid}>
-            {pillar.facts.map((f) => (
-              <div key={f.label}>
-                <dt>{f.label}</dt>
-                <dd>{f.value}</dd>
-                {f.note ? <p className={styles.factNote}>{f.note}</p> : null}
-              </div>
-            ))}
-          </dl>
-        </section>
-      ) : null}
-
-      {/* --- Alcance documentado ---------------------------------------------- */}
-      <section className={styles.limitations}>
-        <h2 className={styles.sectionTitle}>{pillar.limitations.title}</h2>
-        <p className={styles.limitationsText}>{pillar.limitations.text}</p>
-        <ul className={styles.limitationsList}>
-          {pillar.limitations.points.map((p) => (
-            <li key={p}>{p}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* --- Paso al siguiente pilar ------------------------------------------ */}
-      {next ? (
-        <Link href={`/granular/${next.id}`} className={styles.nextLink}>
-          <SignalPoster
-            words={[pillar.next.title]}
-            variant="mineral"
-            marks={[
-              { label: 'Siguiente', value: `Pilar ${pillar.next.number}` },
-              { label: 'Proyecto', value: 'P14 · GRANULAR' },
-              { label: 'Territorio', value: granularProject.territory },
-            ]}
-            note={pillar.next.desc}
-          />
-        </Link>
-      ) : (
-        <section className={styles.closing}>
-          <p className="technical">Fin del recorrido disponible</p>
-          <p className={styles.closingText}>{pillar.next.desc}</p>
-        </section>
-      )}
-    </main>
+    <>
+      <RielCaso
+        id="14"
+        corto={granularProject.title}
+        territorio={granularProject.territory}
+        superficie="tinta"
+        posicion={14}
+        total={15}
+      />
+      <PilarGranular d={d} />
+    </>
   );
 }

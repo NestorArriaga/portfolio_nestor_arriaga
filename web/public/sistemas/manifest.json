@@ -1,0 +1,220 @@
+{
+ "fuente": "capturas propias de aplicaciones del autor, optimizadas para publicacion",
+ "capturas": [
+  {
+   "id": "s01-sistema-parcela",
+   "caso": "s01-datos-aereos",
+   "proyecto": "Datos aéreos agrícolas",
+   "pantalla": "Parcela · resumen espacial",
+   "estado": "producto en desarrollo",
+   "papel": "principal",
+   "fecha": "2026-07-22",
+   "credito": "Imagen satelital de fondo: MAXAR, ESRI, AIRBUS.",
+   "nativo": [
+    1440,
+    900
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "1440": "/sistemas/s01-datos-aereos/s01-sistema-parcela-1440.webp",
+    "800": "/sistemas/s01-datos-aereos/s01-sistema-parcela-800.webp"
+   }
+  },
+  {
+   "id": "s01-demo-territorio",
+   "caso": "s01-datos-aereos",
+   "proyecto": "Demostrador operativo",
+   "pantalla": "Territorio · explorador de parcelas",
+   "estado": "demostrador",
+   "papel": "detalle",
+   "fecha": "2026-07-05",
+   "credito": "Imagen satelital de fondo: MAXAR, ESRI, AIRBUS. Datos simulados.",
+   "nativo": [
+    1440,
+    900
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "1440": "/sistemas/s01-datos-aereos/s01-demo-territorio-1440.webp",
+    "800": "/sistemas/s01-datos-aereos/s01-demo-territorio-800.webp"
+   }
+  },
+  {
+   "id": "s01-demo-indices",
+   "caso": "s01-datos-aereos",
+   "proyecto": "Demostrador operativo",
+   "pantalla": "Parcela · índices y serie temporal",
+   "estado": "demostrador",
+   "papel": "detalle",
+   "fecha": "2026-07-05",
+   "credito": "Datos simulados; la propia interfaz lo declara.",
+   "nativo": [
+    1440,
+    900
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "1440": "/sistemas/s01-datos-aereos/s01-demo-indices-1440.webp",
+    "800": "/sistemas/s01-datos-aereos/s01-demo-indices-800.webp"
+   }
+  },
+  {
+   "id": "s01-demo-resultados",
+   "caso": "s01-datos-aereos",
+   "proyecto": "Demostrador operativo",
+   "pantalla": "Resultado verificado · vigor antes y después de la aplicación",
+   "estado": "demostrador",
+   "papel": "detalle",
+   "fecha": "2026-07-05",
+   "credito": "Datos simulados; la propia interfaz lo declara.",
+   "nativo": [
+    700,
+    474
+   ],
+   "ratio": 1.476793,
+   "archivos": {
+    "700": "/sistemas/s01-datos-aereos/s01-demo-resultados-700.webp"
+   }
+  },
+  {
+   "id": "s02-diagnostico",
+   "caso": "s02-estrato",
+   "proyecto": "ESTRATO",
+   "pantalla": "Centro de diagnóstico · impacto y dictamen",
+   "estado": "prototipo",
+   "papel": "principal",
+   "fecha": "2026-08-11",
+   "credito": "Cartografía base OpenStreetMap. Proyecto y cifras de demostración.",
+   "nativo": [
+    2880,
+    1800
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "2400": "/sistemas/s02-estrato/s02-diagnostico-2400.webp",
+    "1600": "/sistemas/s02-estrato/s02-diagnostico-1600.webp",
+    "800": "/sistemas/s02-estrato/s02-diagnostico-800.webp"
+   }
+  },
+  {
+   "id": "s02-actores",
+   "caso": "s02-estrato",
+   "proyecto": "ESTRATO",
+   "pantalla": "Actores y redes",
+   "estado": "prototipo",
+   "papel": "detalle",
+   "fecha": "2026-08-11",
+   "credito": "Actores y relaciones de demostración.",
+   "nativo": [
+    2880,
+    1800
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "2400": "/sistemas/s02-estrato/s02-actores-2400.webp",
+    "1600": "/sistemas/s02-estrato/s02-actores-1600.webp",
+    "800": "/sistemas/s02-estrato/s02-actores-800.webp"
+   }
+  },
+  {
+   "id": "s02-escenarios",
+   "caso": "s02-estrato",
+   "proyecto": "ESTRATO",
+   "pantalla": "Comparación de escenarios",
+   "estado": "prototipo",
+   "papel": "detalle",
+   "fecha": "2026-08-11",
+   "credito": "Cartografía base OpenStreetMap. Escenarios de demostración.",
+   "nativo": [
+    2880,
+    1800
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "2400": "/sistemas/s02-estrato/s02-escenarios-2400.webp",
+    "1600": "/sistemas/s02-estrato/s02-escenarios-1600.webp",
+    "800": "/sistemas/s02-estrato/s02-escenarios-800.webp"
+   }
+  },
+  {
+   "id": "s03-distribucion",
+   "caso": "s03-maices",
+   "proyecto": "Maíces nativos",
+   "pantalla": "Distribución nacional con leyenda por variedad",
+   "estado": "prototipo",
+   "papel": "principal",
+   "fecha": "2026-08-11",
+   "credito": "Distribución: CONABIO. Cartografía base OpenStreetMap, Leaflet.",
+   "nativo": [
+    2880,
+    1800
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "2400": "/sistemas/s03-maices/s03-distribucion-2400.webp",
+    "1600": "/sistemas/s03-maices/s03-distribucion-1600.webp",
+    "800": "/sistemas/s03-maices/s03-distribucion-800.webp"
+   }
+  },
+  {
+   "id": "s03-raza",
+   "caso": "s03-maices",
+   "proyecto": "Maíces nativos",
+   "pantalla": "Filtro por raza y detalle de Cacahuacintle",
+   "estado": "prototipo",
+   "papel": "detalle",
+   "fecha": "2026-08-11",
+   "credito": "Distribución: CONABIO. Cartografía base OpenStreetMap, Leaflet.",
+   "nativo": [
+    2880,
+    1800
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "2400": "/sistemas/s03-maices/s03-raza-2400.webp",
+    "1600": "/sistemas/s03-maices/s03-raza-1600.webp",
+    "800": "/sistemas/s03-maices/s03-raza-800.webp"
+   }
+  },
+  {
+   "id": "s04-custf",
+   "caso": "s04-territoria",
+   "proyecto": "TERRITORIA",
+   "pantalla": "CUSTF · capas, alertas regulatorias e inventario",
+   "estado": "prototipo",
+   "papel": "principal",
+   "fecha": "2026-08-11",
+   "credito": "Expediente y cifras de demostración.",
+   "nativo": [
+    2880,
+    1800
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "2400": "/sistemas/s04-territoria/s04-custf-2400.webp",
+    "1600": "/sistemas/s04-territoria/s04-custf-1600.webp",
+    "800": "/sistemas/s04-territoria/s04-custf-800.webp"
+   }
+  },
+  {
+   "id": "s04-hidrica",
+   "caso": "s04-territoria",
+   "proyecto": "TERRITORIA",
+   "pantalla": "Gestión hídrica · indicadores y plan de manejo",
+   "estado": "prototipo",
+   "papel": "detalle",
+   "fecha": "2026-08-11",
+   "credito": "Indicadores de demostración.",
+   "nativo": [
+    2880,
+    1800
+   ],
+   "ratio": 1.6,
+   "archivos": {
+    "2400": "/sistemas/s04-territoria/s04-hidrica-2400.webp",
+    "1600": "/sistemas/s04-territoria/s04-hidrica-1600.webp",
+    "800": "/sistemas/s04-territoria/s04-hidrica-800.webp"
+   }
+  }
+ ]
+}

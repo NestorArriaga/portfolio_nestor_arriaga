@@ -1,0 +1,302 @@
+/* GRANULAR por pilar. Tinta, como el capítulo dentro del recorrido. */
+
+.pilar > * { min-width: 0; max-width: 100%; }
+
+.pilar {
+  --tinta: #080908;
+  --optico: #f6f7f2;
+  --senal: #e9ff3a;
+  --margen: clamp(24px, 3.5vw, 64px);
+  --sal: cubic-bezier(.16, 1, .3, 1);
+  --micro: 210ms;
+
+  --texto: var(--optico);
+  --texto-2: #a6a79f;
+  --linea: color-mix(in srgb, var(--optico) 20%, transparent);
+
+  background: var(--tinta);
+  color: var(--texto);
+  min-height: 100svh;
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+}
+
+/* --- Apertura -------------------------------------------------------------- */
+
+.apertura {
+  padding: calc(var(--margen) + 3.4rem) var(--margen) var(--margen);
+  display: grid;
+  gap: 0.7rem;
+  /* Sin esto, un hijo con contenido largo impone su ancho mínimo al grid y el
+     documento crece por encima del viewport. */
+  min-width: 0;
+  max-width: 100%;
+}
+
+.apertura > * { min-width: 0; max-width: 100%; }
+
+.marca { font-size: 12px; color: var(--senal); }
+
+.nombre {
+  margin: 0;
+  /* El segundo término reparte el ancho útil entre los caracteres del nombre,
+     así que `AGUA` llega al tope y `SOCIOECONOMÍA` baja lo justo para caber en
+     una línea sin deformarse ni cortarse. */
+  font-size: min(clamp(40px, 13vw, 190px), calc(92vw / var(--largo, 8) * 1.55));
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  font-weight: 560;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.variables {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.9rem;
+  font-size: 13px;
+  color: var(--texto-2);
+  letter-spacing: 0.06em;
+  min-width: 0;
+}
+
+/* El punto medio separa dentro de una línea; al envolver desaparece solo. */
+.variables li { position: relative; }
+.variables li + li::before {
+  content: '·';
+  position: absolute;
+  left: -0.55rem;
+  color: color-mix(in srgb, currentColor 50%, transparent);
+}
+
+/* --- Selector de pilares ---------------------------------------------------- */
+
+/* Envuelve. La versión anterior era una fila que se cortaba en el viewport. */
+.pilares {
+  padding: 0 var(--margen) clamp(1.4rem, 4vh, 2.4rem);
+  display: flex;
+  flex-wrap: wrap;
+  /* Filas estables: mismo alto y mismo ritmo, no una nube. */
+  align-items: stretch;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+  .pastilla { }
+
+.pastilla {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 40px;
+  padding: 0.4rem 0.8rem;
+  font-size: 12px;
+  color: var(--texto-2);
+  border: 1px solid var(--linea);
+  text-decoration: none;
+  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+}
+
+.pastilla:hover, .pastilla:focus-visible { color: var(--texto); border-color: var(--texto-2); }
+
+.pastilla[aria-current='page'] { color: var(--tinta); background: var(--senal); border-color: var(--senal); }
+
+.pastillaNum { opacity: 0.7; }
+
+/* --- Cifras ----------------------------------------------------------------- */
+
+.cifras {
+  margin: 0;
+  padding: 0 var(--margen) clamp(1.4rem, 4vh, 2.4rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: clamp(1rem, 3vw, 2.4rem);
+  min-width: 0;
+}
+
+.cifras > div { min-width: 0; }
+.cifras dd { overflow-wrap: break-word; }
+
+.cifras > div { display: grid; gap: 0.2rem; }
+.cifras dt { font-size: 12px; color: var(--texto-2); }
+.cifras dd {
+  margin: 0;
+  font-size: clamp(20px, 2.4vw, 34px);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+/* --- Bloque de lámina ------------------------------------------------------- */
+
+.bloque {
+  padding: clamp(2rem, 7vh, 5rem) var(--margen);
+  display: grid;
+  /* `minmax(240px, …)` imponía 240 px al grid aunque el viewport fuera 360:
+     con los márgenes, el documento crecía. */
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: clamp(1.4rem, 3vw, 3rem);
+  align-items: center;
+  min-width: 0;
+}
+
+.bloque > * { min-width: 0; }
+
+.mapaCaja { display: grid; place-items: center; min-width: 0; }
+
+.mapa {
+  position: relative;
+  margin: 0;
+  width: min(100%, calc(var(--nativo, 2000) / var(--dpr, 1) * 1px));
+}
+
+.mapa img {
+  display: block;
+  width: 100%;
+  max-height: 74svh;
+  object-fit: contain;
+}
+
+.sobre { position: absolute; inset: 0; }
+
+.lectura { display: grid; gap: 0.8rem; align-content: center; }
+
+.bloqueTitulo {
+  margin: 0;
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.pagina { font-size: 12px; color: var(--texto-2); }
+
+.categorias { display: grid; gap: 0.15rem; justify-items: start; }
+
+.categoria {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  min-height: 36px;
+  padding: 0.3rem 0;
+  color: var(--texto-2);
+  text-align: left;
+  transition: color var(--micro) var(--sal);
+}
+
+.categoria b { font-size: 13px; font-weight: 500; }
+.categoria span { font-size: 12px; }
+
+.categoria:hover, .categoria:focus-visible,
+.categoria[aria-pressed='true'] { color: var(--texto); }
+.categoria[aria-pressed='true'] { box-shadow: inset 3px 0 0 var(--senal); padding-left: 0.6rem; }
+
+/* Una descripción a la vez, corta. Altura reservada para que el bloque no
+   salte al señalar una categoría. */
+.detalle {
+  margin: 0;
+  min-height: 4.6em;
+  max-width: 46ch;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--texto-2);
+}
+
+.municipios { margin: 0; font-size: 12px; color: var(--texto-2); max-width: 46ch; }
+.municipios span { display: block; color: var(--senal); }
+
+/* --- Alcance ---------------------------------------------------------------- */
+
+.alcance { padding: 0 var(--margen) clamp(2rem, 6vh, 4rem); }
+
+.alcance details {
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+}
+
+.alcance summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.alcance summary::-webkit-details-marker { display: none; }
+.alcance summary::after { content: ' +'; color: var(--senal); }
+.alcance details[open] summary::after { content: ' −'; }
+
+.alcanceCuerpo {
+  display: grid;
+  gap: 0.9rem;
+  padding-bottom: 1.4rem;
+  max-width: 62ch;
+}
+
+.alcanceCuerpo p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--texto-2); }
+.alcanceCuerpo ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.35rem; }
+.alcanceCuerpo li { font-size: 13px; line-height: 1.6; color: var(--texto-2); }
+
+.alcanceTitulo { color: var(--texto) !important; }
+.fuente { color: var(--texto-2); }
+
+/* --- Salida ------------------------------------------------------------------ */
+
+.salida {
+  margin: 0 var(--margen);
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(1rem, 3vw, 3rem);
+  border-top: 1px solid var(--linea);
+  padding-top: 1.4rem;
+}
+
+.centro { display: flex; gap: 0.5rem; }
+
+.accion {
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--texto);
+  border: 1px solid var(--linea);
+  text-decoration: none;
+  transition: border-color var(--micro) var(--sal), color var(--micro) var(--sal);
+}
+
+.accion:hover, .accion:focus-visible { border-color: var(--senal); color: var(--senal); }
+
+.salto { display: grid; gap: 0.2rem; text-decoration: none; color: var(--texto); min-height: 44px; }
+.salto[data-dir='adelante'] { justify-items: end; text-align: right; }
+.saltoDir { font-size: 12px; color: var(--texto-2); }
+.saltoNombre { font-size: clamp(18px, 2.4vw, 30px); font-weight: 500; letter-spacing: -0.02em; }
+
+/* --- Móvil ------------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  /* Suelo tipográfico móvil: 14 px para todo lo funcional. Las reglas de
+     escritorio bajan a 12–13 y en pantalla estrecha eso no se lee. */
+  .num, .ficha, .fuente, .saltoDir, .saltoNum, .pagina, .marca, .variables,
+  .pastilla, .pastillaNum, .detalle, .municipios, .pie, .procesoPieza figcaption,
+  .recorte figcaption, .hotspot, .cifras dt, .datos dt, .notasLista dt,
+  .alcanceCuerpo p, .alcanceCuerpo li, .clave, .categoria b, .categoria span,
+  .accion, .opcion, .desliza, .atlas, .vistazo, .territorio, .posicion,
+  .corto, .alternativa span { font-size: 14px; }
+
+  .nombre { font-size: clamp(44px, 16vw, 76px); }
+  .bloque { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+  .mapa img { max-height: 54svh; }
+  .categoria { min-height: 44px; }
+  .categoria b, .categoria span { font-size: 14px; }
+  .detalle, .municipios, .alcanceCuerpo p, .alcanceCuerpo li { font-size: 14px; }
+  .alcance summary { font-size: 14px; }
+  .pastilla { min-height: 44px; }
+  .salida { grid-template-columns: minmax(0, 1fr); }
+  .salto[data-dir='adelante'] { justify-items: start; text-align: left; }
+  .centro { flex-wrap: wrap; }
+}

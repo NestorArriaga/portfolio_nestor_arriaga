@@ -1,0 +1,122 @@
+/* Instrumentos. Columna izquierda de la retícula, alineada con la obra.
+   Nada por debajo de 12 px, nada por debajo de AA. */
+
+.instrumentos {
+  grid-area: instrumentos;
+  align-self: center;
+  display: grid;
+  gap: clamp(0.9rem, 1.8vh, 1.6rem);
+  align-content: center;
+  justify-items: start;
+  /* Entran después de la obra, durante la lectura. */
+  opacity: clamp(0, calc((var(--e, 0) - 0.4) * 5), 1);
+  transform: translate3d(calc((1 - clamp(0, (var(--e, 0) - 0.4) * 5, 1)) * -10px), 0, 0);
+  transition: opacity 420ms var(--sal), transform 620ms var(--sal);
+}
+
+.acto {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--senal);
+}
+
+/* --- Coordenada ------------------------------------------------------------ */
+
+.coordenada {
+  margin: 0;
+  display: grid;
+  gap: 0.45rem;
+  width: clamp(96px, 10vw, 148px);
+}
+
+.coordenada svg {
+  width: 100%;
+  aspect-ratio: 32 / 19;
+  overflow: visible;
+}
+
+.malla { stroke: var(--linea); stroke-width: 0.6; vector-effect: non-scaling-stroke; }
+
+.cruz {
+  stroke: var(--senal);
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.55;
+}
+
+.punto { fill: var(--senal); }
+
+.coordenada figcaption {
+  display: grid;
+  gap: 0.1rem;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.coordenada figcaption b { font-weight: 500; color: var(--texto); }
+.coordenada figcaption span { color: var(--texto-2); }
+
+/* --- Leyenda como control -------------------------------------------------- */
+
+.leyenda {
+  display: grid;
+  gap: 0.1rem;
+  justify-items: start;
+}
+
+/* 13 px y color pleno: la leyenda es información, no una marca de agua. Los
+   estados inactivos bajan a `--texto-2`, que sigue cumpliendo AA sobre las dos
+   superficies, en lugar de desaparecer bajo una opacidad mínima. */
+.clase {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.32rem 0;
+  min-height: 28px;
+  font-size: 13px;
+  color: var(--texto-2);
+  text-align: left;
+  transition: color var(--micro) var(--sal);
+}
+
+.clase i {
+  flex: none;
+  width: 13px; height: 13px;
+  background: var(--c, var(--senal));
+  outline: 1px solid color-mix(in srgb, var(--texto) 22%, transparent);
+  transition: transform var(--micro) var(--sal), outline-color var(--micro) var(--sal);
+}
+
+.clase:hover,
+.clase:focus-visible,
+.clase[aria-pressed='true'] { color: var(--texto); }
+
+.clase[aria-pressed='true'] i,
+.clase:hover i { transform: scale(1.18); outline-color: var(--texto); }
+
+@media (prefers-reduced-motion: reduce) {
+  .instrumentos { opacity: 1; transform: none; }
+  .clase i { transition: none; }
+}
+
+@media (max-width: 720px) {
+  /* En móvil los instrumentos van debajo de la obra, en fila legible. */
+  .instrumentos {
+    justify-items: stretch;
+    gap: 0.7rem;
+    transform: none;
+  }
+
+  .coordenada { width: 88px; }
+
+  .leyenda {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 0.9rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-bottom: 0.2rem;
+  }
+
+  .clase { min-height: 44px; font-size: 13px; }
+}

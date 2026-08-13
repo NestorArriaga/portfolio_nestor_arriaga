@@ -1,0 +1,1032 @@
+{
+ "source": "Portafolio_Sd.pdf",
+ "widths": [
+  2000,
+  1000,
+  500
+ ],
+ "plates": [
+  {
+   "slug": "p01-areas-verdes",
+   "source": "Portafolio_Sd.pdf p.19",
+   "page": 19,
+   "projects": [
+    "01"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    0.732
+   ],
+   "alpha": false,
+   "native_px": [
+    2328,
+    2389
+   ],
+   "ratio": 0.974466,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 0.1348
+    },
+    {
+     "hex": "#d0d8d8",
+     "share": 0.0633
+    },
+    {
+     "hex": "#d8e0e0",
+     "share": 0.0551
+    },
+    {
+     "hex": "#e8e8e8",
+     "share": 0.0508
+    },
+    {
+     "hex": "#c8d0d0",
+     "share": 0.0474
+    },
+    {
+     "hex": "#e0e8e8",
+     "share": 0.0441
+    },
+    {
+     "hex": "#e0e0e0",
+     "share": 0.0398
+    },
+    {
+     "hex": "#f0f0f0",
+     "share": 0.037
+    }
+   ],
+   "files": {
+    "2000": "/projects/plates/p01-areas-verdes-2000.webp",
+    "1000": "/projects/plates/p01-areas-verdes-1000.webp",
+    "500": "/projects/plates/p01-areas-verdes-500.webp"
+   }
+  },
+  {
+   "slug": "p01-colonias-grafica",
+   "source": "Portafolio_Sd.pdf p.19",
+   "page": 19,
+   "projects": [
+    "01"
+   ],
+   "role": "figure",
+   "credit": null,
+   "crop": null,
+   "alpha": false,
+   "native_px": [
+    815,
+    987
+   ],
+   "ratio": 0.825735,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 0.6705
+    },
+    {
+     "hex": "#303840",
+     "share": 0.2617
+    },
+    {
+     "hex": "#283838",
+     "share": 0.0147
+    },
+    {
+     "hex": "#283038",
+     "share": 0.0099
+    },
+    {
+     "hex": "#283030",
+     "share": 0.0075
+    },
+    {
+     "hex": "#203030",
+     "share": 0.0056
+    },
+    {
+     "hex": "#284838",
+     "share": 0.0049
+    },
+    {
+     "hex": "#303838",
+     "share": 0.0047
+    }
+   ],
+   "files": {
+    "815": "/projects/plates/p01-colonias-grafica-815.webp",
+    "500": "/projects/plates/p01-colonias-grafica-500.webp"
+   }
+  },
+  {
+   "slug": "veracruz-foto",
+   "source": "Portafolio_Sd.pdf p.21",
+   "page": 21,
+   "projects": [
+    "02",
+    "03",
+    "04"
+   ],
+   "role": "photo",
+   "credit": "Veracruz en un viaje de estudio. Foto: N\u00e9stor Elihu Arriaga Gallegos",
+   "crop": null,
+   "alpha": false,
+   "native_px": [
+    745,
+    537
+   ],
+   "ratio": 1.387337,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0422
+    },
+    {
+     "hex": "#102010",
+     "share": 0.0111
+    },
+    {
+     "hex": "#081010",
+     "share": 0.0095
+    },
+    {
+     "hex": "#081008",
+     "share": 0.0093
+    },
+    {
+     "hex": "#081018",
+     "share": 0.0086
+    },
+    {
+     "hex": "#000808",
+     "share": 0.0082
+    },
+    {
+     "hex": "#101820",
+     "share": 0.0081
+    },
+    {
+     "hex": "#102008",
+     "share": 0.0081
+    }
+   ],
+   "files": {
+    "745": "/projects/plates/veracruz-foto-745.webp",
+    "500": "/projects/plates/veracruz-foto-500.webp"
+   }
+  },
+  {
+   "slug": "p02-carbono",
+   "source": "Portafolio_Sd.pdf p.22",
+   "page": 22,
+   "projects": [
+    "02"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    0.756
+   ],
+   "alpha": false,
+   "native_px": [
+    2478,
+    2586
+   ],
+   "ratio": 0.958237,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 0.5519
+    },
+    {
+     "hex": "#c0c0c0",
+     "share": 0.0747
+    },
+    {
+     "hex": "#e0e0e0",
+     "share": 0.0212
+    },
+    {
+     "hex": "#d8d8d8",
+     "share": 0.0207
+    },
+    {
+     "hex": "#f0f0f0",
+     "share": 0.0183
+    },
+    {
+     "hex": "#d0d0d0",
+     "share": 0.0169
+    },
+    {
+     "hex": "#e8e8e8",
+     "share": 0.0154
+    },
+    {
+     "hex": "#787878",
+     "share": 0.0139
+    }
+   ],
+   "files": {
+    "2000": "/projects/plates/p02-carbono-2000.webp",
+    "1000": "/projects/plates/p02-carbono-1000.webp",
+    "500": "/projects/plates/p02-carbono-500.webp"
+   }
+  },
+  {
+   "slug": "p03-zonas-optimas",
+   "source": "Portafolio_Sd.pdf p.23",
+   "page": 23,
+   "projects": [
+    "03"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": [
+    0.0,
+    0.0,
+    0.693,
+    1.0
+   ],
+   "alpha": false,
+   "native_px": [
+    1499,
+    1529
+   ],
+   "ratio": 0.980379,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0834
+    },
+    {
+     "hex": "#d8e0d8",
+     "share": 0.0739
+    },
+    {
+     "hex": "#d0d8d0",
+     "share": 0.026
+    },
+    {
+     "hex": "#d0e8c0",
+     "share": 0.0183
+    },
+    {
+     "hex": "#d0e0d0",
+     "share": 0.0151
+    },
+    {
+     "hex": "#d0d0c8",
+     "share": 0.0138
+    },
+    {
+     "hex": "#d0e8b8",
+     "share": 0.0137
+    },
+    {
+     "hex": "#d0d8c8",
+     "share": 0.0132
+    }
+   ],
+   "files": {
+    "1499": "/projects/plates/p03-zonas-optimas-1499.webp",
+    "1000": "/projects/plates/p03-zonas-optimas-1000.webp",
+    "500": "/projects/plates/p03-zonas-optimas-500.webp"
+   }
+  },
+  {
+   "slug": "p04-uso-optimo",
+   "source": "Portafolio_Sd.pdf p.24",
+   "page": 24,
+   "projects": [
+    "04"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": false,
+   "native_px": [
+    1909,
+    1301
+   ],
+   "ratio": 1.467333,
+   "dominant": [
+    {
+     "hex": "#a8d888",
+     "share": 0.0671
+    },
+    {
+     "hex": "#f8f8f8",
+     "share": 0.0391
+    },
+    {
+     "hex": "#a0d080",
+     "share": 0.0305
+    },
+    {
+     "hex": "#a8d080",
+     "share": 0.0237
+    },
+    {
+     "hex": "#b0e090",
+     "share": 0.023
+    },
+    {
+     "hex": "#a0c880",
+     "share": 0.0225
+    },
+    {
+     "hex": "#a8d088",
+     "share": 0.0214
+    },
+    {
+     "hex": "#b0d888",
+     "share": 0.0195
+    }
+   ],
+   "files": {
+    "1909": "/projects/plates/p04-uso-optimo-1909.webp",
+    "1000": "/projects/plates/p04-uso-optimo-1000.webp",
+    "500": "/projects/plates/p04-uso-optimo-500.webp"
+   }
+  },
+  {
+   "slug": "p05-geomorfones",
+   "source": "Portafolio_Sd.pdf p.26",
+   "page": 26,
+   "projects": [
+    "05"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    2166,
+    2271
+   ],
+   "ratio": 0.953765,
+   "dominant": [
+    {
+     "hex": "#9048f8",
+     "share": 0.0042
+    },
+    {
+     "hex": "#c0f058",
+     "share": 0.0041
+    },
+    {
+     "hex": "#98c830",
+     "share": 0.004
+    },
+    {
+     "hex": "#9050f8",
+     "share": 0.0029
+    },
+    {
+     "hex": "#b0e048",
+     "share": 0.0027
+    },
+    {
+     "hex": "#90c028",
+     "share": 0.0027
+    },
+    {
+     "hex": "#9850f8",
+     "share": 0.0027
+    },
+    {
+     "hex": "#8848f8",
+     "share": 0.0024
+    }
+   ],
+   "files": {
+    "2000": "/projects/plates/p05-geomorfones-2000.webp",
+    "1000": "/projects/plates/p05-geomorfones-1000.webp",
+    "500": "/projects/plates/p05-geomorfones-500.webp"
+   }
+  },
+  {
+   "slug": "p06-zonas-ecologicas",
+   "source": "Portafolio_Sd.pdf p.27",
+   "page": 27,
+   "projects": [
+    "06"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    2894,
+    1969
+   ],
+   "ratio": 1.469782,
+   "dominant": [
+    {
+     "hex": "#e89810",
+     "share": 0.0933
+    },
+    {
+     "hex": "#68f8b8",
+     "share": 0.0518
+    },
+    {
+     "hex": "#d83878",
+     "share": 0.0377
+    },
+    {
+     "hex": "#78f860",
+     "share": 0.0308
+    },
+    {
+     "hex": "#e8a010",
+     "share": 0.0209
+    },
+    {
+     "hex": "#f0a010",
+     "share": 0.0184
+    },
+    {
+     "hex": "#78f868",
+     "share": 0.015
+    },
+    {
+     "hex": "#d83078",
+     "share": 0.0134
+    }
+   ],
+   "files": {
+    "2000": "/projects/plates/p06-zonas-ecologicas-2000.webp",
+    "1000": "/projects/plates/p06-zonas-ecologicas-1000.webp",
+    "500": "/projects/plates/p06-zonas-ecologicas-500.webp"
+   }
+  },
+  {
+   "slug": "p07-pendiente",
+   "source": "Portafolio_Sd.pdf p.28",
+   "page": 28,
+   "projects": [
+    "07"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    1847,
+    1928
+   ],
+   "ratio": 0.957988,
+   "dominant": [
+    {
+     "hex": "#183028",
+     "share": 0.0096
+    },
+    {
+     "hex": "#081010",
+     "share": 0.0081
+    },
+    {
+     "hex": "#204038",
+     "share": 0.0068
+    },
+    {
+     "hex": "#102020",
+     "share": 0.0068
+    },
+    {
+     "hex": "#183830",
+     "share": 0.0067
+    },
+    {
+     "hex": "#102820",
+     "share": 0.0066
+    },
+    {
+     "hex": "#4850b0",
+     "share": 0.0065
+    },
+    {
+     "hex": "#204838",
+     "share": 0.0061
+    }
+   ],
+   "files": {
+    "1847": "/projects/plates/p07-pendiente-1847.webp",
+    "1000": "/projects/plates/p07-pendiente-1000.webp",
+    "500": "/projects/plates/p07-pendiente-500.webp"
+   }
+  },
+  {
+   "slug": "p07-pendiente-grafica",
+   "source": "Portafolio_Sd.pdf p.28",
+   "page": 28,
+   "projects": [
+    "07"
+   ],
+   "role": "figure",
+   "credit": null,
+   "crop": null,
+   "alpha": false,
+   "native_px": [
+    926,
+    690
+   ],
+   "ratio": 1.342029,
+   "dominant": [
+    {
+     "hex": "#f8f8f8",
+     "share": 0.6205
+    },
+    {
+     "hex": "#78c8a0",
+     "share": 0.1041
+    },
+    {
+     "hex": "#286098",
+     "share": 0.0842
+    },
+    {
+     "hex": "#000000",
+     "share": 0.0777
+    },
+    {
+     "hex": "#9070b0",
+     "share": 0.0593
+    },
+    {
+     "hex": "#9870b0",
+     "share": 0.0087
+    },
+    {
+     "hex": "#70c098",
+     "share": 0.0041
+    },
+    {
+     "hex": "#78c0a0",
+     "share": 0.0012
+    }
+   ],
+   "files": {
+    "926": "/projects/plates/p07-pendiente-grafica-926.webp",
+    "500": "/projects/plates/p07-pendiente-grafica-500.webp"
+   }
+  },
+  {
+   "slug": "p08-patrones",
+   "source": "Portafolio_Sd.pdf p.29",
+   "page": 29,
+   "projects": [
+    "08"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    1576,
+    1424
+   ],
+   "ratio": 1.106742,
+   "dominant": [
+    {
+     "hex": "#308828",
+     "share": 0.0155
+    },
+    {
+     "hex": "#309028",
+     "share": 0.0125
+    },
+    {
+     "hex": "#187008",
+     "share": 0.0125
+    },
+    {
+     "hex": "#288020",
+     "share": 0.0124
+    },
+    {
+     "hex": "#389030",
+     "share": 0.0117
+    },
+    {
+     "hex": "#409838",
+     "share": 0.0116
+    },
+    {
+     "hex": "#288820",
+     "share": 0.0114
+    },
+    {
+     "hex": "#308028",
+     "share": 0.0111
+    }
+   ],
+   "files": {
+    "1576": "/projects/plates/p08-patrones-1576.webp",
+    "1000": "/projects/plates/p08-patrones-1000.webp",
+    "500": "/projects/plates/p08-patrones-500.webp"
+   }
+  },
+  {
+   "slug": "calvillo-foto",
+   "source": "Portafolio_Sd.pdf p.30",
+   "page": 30,
+   "projects": [
+    "12",
+    "13"
+   ],
+   "role": "photo",
+   "credit": "Calvillo, Aguascalientes: mi pueblo natal. Foto: N\u00e9stor Elihu Arriaga Gallegos",
+   "crop": null,
+   "alpha": false,
+   "native_px": [
+    1446,
+    927
+   ],
+   "ratio": 1.559871,
+   "dominant": [
+    {
+     "hex": "#000808",
+     "share": 0.0568
+    },
+    {
+     "hex": "#081010",
+     "share": 0.046
+    },
+    {
+     "hex": "#080808",
+     "share": 0.0343
+    },
+    {
+     "hex": "#101818",
+     "share": 0.033
+    },
+    {
+     "hex": "#000008",
+     "share": 0.0273
+    },
+    {
+     "hex": "#000000",
+     "share": 0.0233
+    },
+    {
+     "hex": "#101010",
+     "share": 0.0211
+    },
+    {
+     "hex": "#101820",
+     "share": 0.0172
+    }
+   ],
+   "files": {
+    "1446": "/projects/plates/calvillo-foto-1446.webp",
+    "1000": "/projects/plates/calvillo-foto-1000.webp",
+    "500": "/projects/plates/calvillo-foto-500.webp"
+   }
+  },
+  {
+   "slug": "p09-vocaciones",
+   "source": "Portafolio_Sd.pdf p.33",
+   "page": 33,
+   "projects": [
+    "09"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    2199,
+    1897
+   ],
+   "ratio": 1.159199,
+   "dominant": [
+    {
+     "hex": "#408020",
+     "share": 0.0379
+    },
+    {
+     "hex": "#906828",
+     "share": 0.0362
+    },
+    {
+     "hex": "#387818",
+     "share": 0.0316
+    },
+    {
+     "hex": "#488828",
+     "share": 0.0292
+    },
+    {
+     "hex": "#886020",
+     "share": 0.0257
+    },
+    {
+     "hex": "#987030",
+     "share": 0.0254
+    },
+    {
+     "hex": "#806020",
+     "share": 0.0244
+    },
+    {
+     "hex": "#307010",
+     "share": 0.0219
+    }
+   ],
+   "files": {
+    "2000": "/projects/plates/p09-vocaciones-2000.webp",
+    "1000": "/projects/plates/p09-vocaciones-1000.webp",
+    "500": "/projects/plates/p09-vocaciones-500.webp"
+   }
+  },
+  {
+   "slug": "p10-conservacion",
+   "source": "Portafolio_Sd.pdf p.34",
+   "page": 34,
+   "projects": [
+    "10"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    2272,
+    1950
+   ],
+   "ratio": 1.165128,
+   "dominant": [
+    {
+     "hex": "#c0c8c8",
+     "share": 0.047
+    },
+    {
+     "hex": "#30d800",
+     "share": 0.0333
+    },
+    {
+     "hex": "#b8c0c0",
+     "share": 0.0315
+    },
+    {
+     "hex": "#c0c8c0",
+     "share": 0.0309
+    },
+    {
+     "hex": "#c8d0c8",
+     "share": 0.0227
+    },
+    {
+     "hex": "#50e020",
+     "share": 0.0203
+    },
+    {
+     "hex": "#b8c8c0",
+     "share": 0.0197
+    },
+    {
+     "hex": "#30e000",
+     "share": 0.0186
+    }
+   ],
+   "files": {
+    "2000": "/projects/plates/p10-conservacion-2000.webp",
+    "1000": "/projects/plates/p10-conservacion-1000.webp",
+    "500": "/projects/plates/p10-conservacion-500.webp"
+   }
+  },
+  {
+   "slug": "p11-agricola",
+   "source": "Portafolio_Sd.pdf p.37",
+   "page": 37,
+   "projects": [
+    "11"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    2248,
+    1960
+   ],
+   "ratio": 1.146939,
+   "dominant": [
+    {
+     "hex": "#c82000",
+     "share": 0.1111
+    },
+    {
+     "hex": "#c81800",
+     "share": 0.095
+    },
+    {
+     "hex": "#c01800",
+     "share": 0.0622
+    },
+    {
+     "hex": "#c82800",
+     "share": 0.0471
+    },
+    {
+     "hex": "#d89010",
+     "share": 0.0292
+    },
+    {
+     "hex": "#d04808",
+     "share": 0.0283
+    },
+    {
+     "hex": "#d88810",
+     "share": 0.028
+    },
+    {
+     "hex": "#c83000",
+     "share": 0.0264
+    }
+   ],
+   "files": {
+    "2000": "/projects/plates/p11-agricola-2000.webp",
+    "1000": "/projects/plates/p11-agricola-1000.webp",
+    "500": "/projects/plates/p11-agricola-500.webp"
+   }
+  },
+  {
+   "slug": "p12-degradacion",
+   "source": "Portafolio_Sd.pdf p.38",
+   "page": 38,
+   "projects": [
+    "12"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    1631,
+    1864
+   ],
+   "ratio": 0.875,
+   "dominant": [
+    {
+     "hex": "#d83080",
+     "share": 0.1159
+    },
+    {
+     "hex": "#a8b8b8",
+     "share": 0.0635
+    },
+    {
+     "hex": "#d03078",
+     "share": 0.0464
+    },
+    {
+     "hex": "#c02858",
+     "share": 0.0414
+    },
+    {
+     "hex": "#a8b8b0",
+     "share": 0.0339
+    },
+    {
+     "hex": "#c02050",
+     "share": 0.0278
+    },
+    {
+     "hex": "#d02870",
+     "share": 0.0244
+    },
+    {
+     "hex": "#d83078",
+     "share": 0.0213
+    }
+   ],
+   "files": {
+    "1631": "/projects/plates/p12-degradacion-1631.webp",
+    "1000": "/projects/plates/p12-degradacion-1000.webp",
+    "500": "/projects/plates/p12-degradacion-500.webp"
+   }
+  },
+  {
+   "slug": "p12-suelo-foto",
+   "source": "Portafolio_Sd.pdf p.38",
+   "page": 38,
+   "projects": [
+    "12"
+   ],
+   "role": "photo",
+   "credit": null,
+   "crop": null,
+   "alpha": false,
+   "native_px": [
+    768,
+    794
+   ],
+   "ratio": 0.967254,
+   "dominant": [
+    {
+     "hex": "#384040",
+     "share": 0.0105
+    },
+    {
+     "hex": "#182028",
+     "share": 0.01
+    },
+    {
+     "hex": "#202830",
+     "share": 0.0089
+    },
+    {
+     "hex": "#303838",
+     "share": 0.0087
+    },
+    {
+     "hex": "#202018",
+     "share": 0.0076
+    },
+    {
+     "hex": "#404848",
+     "share": 0.0072
+    },
+    {
+     "hex": "#283038",
+     "share": 0.0068
+    },
+    {
+     "hex": "#c0d0c0",
+     "share": 0.0066
+    }
+   ],
+   "files": {
+    "768": "/projects/plates/p12-suelo-foto-768.webp",
+    "500": "/projects/plates/p12-suelo-foto-500.webp"
+   }
+  },
+  {
+   "slug": "p13-subcuencas",
+   "source": "Portafolio_Sd.pdf p.39",
+   "page": 39,
+   "projects": [
+    "13"
+   ],
+   "role": "map",
+   "credit": null,
+   "crop": null,
+   "alpha": true,
+   "native_px": [
+    1600,
+    1704
+   ],
+   "ratio": 0.938967,
+   "dominant": [
+    {
+     "hex": "#60b8b8",
+     "share": 0.1824
+    },
+    {
+     "hex": "#58b0b0",
+     "share": 0.0964
+    },
+    {
+     "hex": "#48a890",
+     "share": 0.0635
+    },
+    {
+     "hex": "#50b090",
+     "share": 0.0384
+    },
+    {
+     "hex": "#48a088",
+     "share": 0.0371
+    },
+    {
+     "hex": "#58a8a8",
+     "share": 0.0307
+    },
+    {
+     "hex": "#50a890",
+     "share": 0.0271
+    },
+    {
+     "hex": "#50a8a8",
+     "share": 0.0208
+    }
+   ],
+   "files": {
+    "1600": "/projects/plates/p13-subcuencas-1600.webp",
+    "1000": "/projects/plates/p13-subcuencas-1000.webp",
+    "500": "/projects/plates/p13-subcuencas-500.webp"
+   }
+  }
+ ]
+}

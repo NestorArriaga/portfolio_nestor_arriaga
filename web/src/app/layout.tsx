@@ -3,9 +3,9 @@ import localFont from 'next/font/local';
 
 import '@/styles/tokens.css';
 import '@/styles/globals.css';
+import '@/styles/controles.css';
 import { CartoPatternDefs } from '@/components/atlas/CartoPatterns';
-import { AtlasNav } from '@/components/global/AtlasNav';
-import { pillars } from '@/content/granular';
+import { Dpr } from '@/components/global/Dpr';
 
 /**
  * Fuentes locales. Geist variable cubre los dos papeles que pide la dirección
@@ -29,14 +29,45 @@ const geistMono = localFont({
   display: 'swap',
 });
 
+/**
+ * Origen público del sitio.
+ *
+ * `metadataBase` decide sobre qué dominio se resuelven canonical y Open Graph.
+ * Se toma del entorno para que el despliegue no herede la dirección de
+ * desarrollo; sin variable, se usa el puerto local y nada apunta a un dominio
+ * que todavía no existe.
+ */
+const ORIGEN = process.env.NEXT_PUBLIC_SITIO ?? 'http://localhost:4100';
+
 export const metadata: Metadata = {
-  title: 'Néstor Elihu Arriaga Gallegos — Atlas territorial',
+  metadataBase: new URL(ORIGEN),
+  title: {
+    default: 'Nestor Elihu Arriaga Gallegos — Portafolio territorial',
+    template: '%s — Nestor Elihu Arriaga Gallegos',
+  },
   description:
-    'Atlas territorial interactivo: cartografía, análisis y proyectos de ordenamiento del territorio.',
+    'Portafolio de cartografía, análisis territorial y proyectos de ordenamiento. '
+    + 'Quince trabajos en seis territorios de México y cuatro sistemas digitales.',
+  authors: [{ name: 'Nestor Elihu Arriaga Gallegos' }],
+  creator: 'Nestor Elihu Arriaga Gallegos',
+  alternates: { canonical: '/' },
+  // El `@` del atlas, no una inicial: es el signo que usa el propio recorrido.
+  icons: { icon: [{ url: '/icon.svg', type: 'image/svg+xml' }] },
+  openGraph: {
+    type: 'website',
+    locale: 'es_MX',
+    url: '/',
+    siteName: 'Nestor Elihu Arriaga Gallegos',
+    title: 'Nestor Elihu Arriaga Gallegos — Portafolio territorial',
+    description:
+      'Cartografía, análisis territorial y proyectos de ordenamiento en seis territorios de México.',
+    images: [{ url: '/og.webp', width: 1200, height: 628, alt: 'Portada del atlas territorial' }],
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#050505',
+  // El mismo negro del recorrido, no un gris aproximado.
+  themeColor: '#080908',
   colorScheme: 'dark',
 };
 
@@ -65,17 +96,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {/* Los patrones se montan una sola vez para todo el documento. */}
+        {/* Salto al contenido: primer elemento tabulable del documento. */}
+        <a className="saltar" href="#contenido">Ir al contenido</a>
+        <Dpr />
         <CartoPatternDefs />
-        <AtlasNav
-          sections={[
-            { href: '/#indice', label: 'Índice' },
-            ...pillars.map((p) => ({
-              href: `/granular/${p.id}`,
-              kicker: p.number,
-              label: p.title,
-            })),
-          ]}
-        />
         {children}
       </body>
     </html>

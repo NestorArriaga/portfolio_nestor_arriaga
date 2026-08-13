@@ -1,0 +1,189 @@
+/* Vistazo y HUD. */
+
+/* --- Vistazo -------------------------------------------------------------- */
+
+.fondo { position: fixed; inset: 0; z-index: 80; background: var(--tinta); display: grid; }
+
+.panel { display: grid; grid-template-rows: auto auto minmax(0, 1fr); height: 100svh; color: var(--optico); }
+
+.cabecera {
+  display: flex; align-items: baseline; gap: 1rem;
+  padding: var(--margen) var(--margen) 0.9rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--optico) 10%, transparent);
+}
+
+.titulo { margin: 0; font-size: clamp(1.2rem, 2.2vw, 1.9rem); font-weight: 560; letter-spacing: -0.02em; }
+.cuenta { margin: 0; color: var(--texto-2); }
+
+.cerrar {
+  margin-left: auto; padding: 0.5rem 0.85rem;
+  border: 1px solid var(--linea); background: transparent; color: var(--optico);
+  cursor: pointer; display: inline-flex; align-items: center;
+}
+.cerrar:hover, .cerrar:focus-visible { background: var(--senal); border-color: var(--senal); color: var(--tinta); }
+
+.ejes {
+  display: grid; gap: 0.35rem;
+  padding: 0.8rem var(--margen);
+  border-bottom: 1px solid color-mix(in srgb, var(--optico) 8%, transparent);
+}
+
+.grupoEjes { display: flex; gap: 0.28rem; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.grupoEjes::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex: none; padding: 0.48rem 0.75rem; min-height: 44px;
+  border: 1px solid color-mix(in srgb, var(--optico) 13%, transparent);
+  background: transparent; color: var(--texto-2);
+  cursor: pointer; white-space: nowrap;
+  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+}
+.chip:hover { color: var(--optico); }
+.chip[aria-pressed='true'] { background: var(--optico); border-color: var(--optico); color: var(--tinta); }
+
+.mesa {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.6fr);
+  gap: clamp(1rem, 2.6vw, 2.4rem);
+  padding: 1rem var(--margen) var(--margen);
+  min-height: 0;
+}
+
+/* Campo cartográfico, no tarjetas repetidas: la miniatura manda y el rótulo
+   vive debajo, sin marco ni sombra. */
+.rejilla {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 13vw, 190px), 1fr));
+  gap: clamp(0.7rem, 1.4vw, 1.3rem);
+  overflow-y: auto; min-height: 0;
+}
+
+.ficha {
+  display: grid; gap: 0.28rem; width: 100%;
+  border: 0; background: transparent; text-align: left; cursor: pointer;
+  color: var(--optico);
+}
+
+.miniCaja {
+  display: block; width: 100%; aspect-ratio: 1.25;
+  overflow: clip; background: color-mix(in srgb, var(--optico) 5%, transparent);
+}
+
+.miniCaja img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform var(--ui) var(--sal);
+}
+
+.ficha:hover .miniCaja img, .ficha:focus-visible .miniCaja img { transform: scale(1.03); }
+
+.fichaNum { color: var(--senal); }
+.fichaTitulo { font-size: 0.92rem; line-height: 1.15; color: var(--texto-2); }
+.rejilla li[data-on] .fichaTitulo { color: var(--optico); }
+
+.detalle { display: grid; align-content: start; gap: 0.42rem; min-height: 0; }
+
+.detalleImg { margin: 0; width: 100%; aspect-ratio: 1.25; overflow: clip; }
+.detalleImg img { width: 100%; height: 100%; object-fit: cover; animation: entra var(--ui) var(--sal); }
+
+@keyframes entra { from { opacity: 0; transform: scale(1.02); } to { opacity: 1; transform: none; } }
+
+.detalleTitulo { margin: 0.4rem 0 0; font-size: clamp(1rem, 1.5vw, 1.3rem); font-weight: 520; }
+.detalleLugar, .detalleEjes { margin: 0; color: var(--texto-2); }
+
+.detalleCaso {
+  margin-top: 0.5rem; color: var(--optico); text-decoration: none;
+  border-bottom: 1px solid var(--senal);
+  display: inline-flex; align-items: center; min-height: 44px; width: fit-content;
+}
+
+/* --- HUD ------------------------------------------------------------------ */
+
+.hud {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(0.6rem, 1.6vw, 1.4rem);
+  padding: 0.45rem var(--margen) calc(0.45rem + env(safe-area-inset-bottom, 0px));
+  /* Velo bajo y corto. El anterior subía 82 % de tinta por toda su altura y
+     sobre las escenas claras se comía la parte baja de la composición. */
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--tinta) 62%, transparent) 0,
+    color-mix(in srgb, var(--tinta) 30%, transparent) 58%,
+    transparent 100%
+  );
+  color: var(--optico);
+  font-size: 12px;
+}
+
+/* Sobre papel el HUD se pinta en tinta con un velo del propio papel: el mismo
+   sitio, la otra superficie. */
+.hud[data-sup='papel'] {
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, #f1eee6 78%, transparent) 0,
+    color-mix(in srgb, #f1eee6 34%, transparent) 58%,
+    transparent 100%
+  );
+  color: #13140f;
+}
+
+.hud[data-sup='papel'] .hudInicio,
+.hud[data-sup='papel'] .hudVistazo { color: color-mix(in srgb, #13140f 72%, transparent); }
+.hud[data-sup='papel'] .hudInicio:hover,
+.hud[data-sup='papel'] .hudVistazo:hover { color: #13140f; }
+.hud[data-sup='papel'] .marcas li { background: color-mix(in srgb, #13140f 30%, transparent); }
+.hud[data-sup='papel'] .hudActo,
+.hud[data-sup='papel'] .hudTerritorio { color: color-mix(in srgb, #13140f 72%, transparent); }
+
+.hudInicio, .hudVistazo {
+  border: 0; background: transparent; color: var(--texto-2); cursor: pointer;
+  font-size: 12px;
+  padding: 0.5rem 0.2rem; min-height: 44px; display: inline-flex; align-items: center;
+  transition: color var(--micro) var(--sal);
+}
+.hudInicio:hover, .hudVistazo:hover, .hudInicio:focus-visible, .hudVistazo:focus-visible { color: var(--optico); }
+
+/* Quince marcas de 1 px. Nunca una barra gruesa de progreso. */
+.marcas { list-style: none; margin: 0; padding: 0; display: flex; gap: 3px; align-items: center; }
+.marcas li {
+  width: 100%; max-width: 22px; height: 1px;
+  background: color-mix(in srgb, var(--optico) 34%, transparent);
+  transition: background-color var(--micro) var(--sal), height var(--micro) var(--sal);
+}
+
+/* El indicador tiene que ganarle claramente a las inactivas. */
+.marcas li[data-on] { background: var(--senal); height: 4px; }
+
+.hudActivo {
+  margin: 0; display: flex; gap: 0.7rem; align-items: baseline;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  opacity: 0; transition: opacity var(--ui) var(--sal);
+}
+
+.hud[data-entero] .hudActivo { opacity: 1; }
+
+.hudNum { color: var(--senal); }
+.hudActo, .hudTerritorio { color: var(--texto-2); }
+
+@media (max-width: 900px) {
+  .mesa { grid-template-columns: 1fr; grid-template-rows: 26svh minmax(0, 1fr); }
+  .detalle { order: -1; }
+  .rejilla { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); }
+  /* Tres columnas y **tres** hijos. Antes se ocultaban sólo los textos de
+     `hudActivo`, pero el elemento seguía ocupando su celda: con cuatro hijos y
+     tres columnas, `Vistazo` se envolvía a una segunda fila y el HUD medía 112
+     px en vez de 56, invadiendo las acciones de la portada. */
+  .hud { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .hudActivo { display: none; }
+  /* A 390 px el nombre del proyecto no cabe junto a todo lo demás; las marcas
+     y el número ya dicen dónde estás. */
+  .hudActo, .hudTerritorio { display: none; }
+  .hudActivo { font-size: 0.7rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detalleImg img { animation: none; }
+  .miniCaja img { transition: none; }
+}

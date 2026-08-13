@@ -1,0 +1,96 @@
+/* P15 sobre papel de punta a punta. Los dibujos están hechos sobre blanco;
+   componerlos sobre negro obligaría a invertirlos, y un plano invertido deja de
+   ser el plano. */
+
+.case {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.case,
+.opening,
+.scene {
+  /* Modo laboratorio: invierte tinta y línea sin tocar los acentos. */
+  --ink: #17171a;
+  --ink-muted: #55565a;
+  --ink-faint: #85868a;
+  --line-dark: var(--line-light);
+}
+
+.opening {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(7rem, 14vw, 12rem) var(--margin) clamp(2.5rem, 5vw, 4rem);
+  max-width: 60rem;
+}
+
+.number {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  color: var(--p15-bosque);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(1.5rem, 4vw, 4rem);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+}
+
+.meta > div {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: 0.6rem;
+  border-top: var(--hairline) solid var(--line-light);
+  min-width: 9rem;
+}
+
+.meta dt {
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.meta dd { margin: 0; color: var(--ink); }
+
+.scene {
+  display: grid;
+  gap: 1.5rem;
+  padding: clamp(2.5rem, 6vw, 5rem) var(--margin);
+}
+
+/* Marca de escena: número y título, en el margen. Nada más. */
+.marks {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.marks span:first-child { color: var(--p15-bosque); }
+
+.note {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.6;
+  color: var(--ink-faint);
+}

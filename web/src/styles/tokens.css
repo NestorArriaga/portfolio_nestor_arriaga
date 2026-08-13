@@ -1,7 +1,6 @@
 /* ============================================================================
    Tokens del atlas territorial
-   Fuente: CLAUDE.md (color, retícula, tipografía, línea) y
-   PROMPTS_VISUALES_Y_MOVIMIENTO_V2.md (acabado, densidad, movimiento).
+   Color, retícula, tipografía y línea, más acabado, densidad y movimiento.
 
    Reglas duras que estos tokens hacen cumplir:
    - bordes rectos: no existe un token de radio mayor que 4px, y ese solo

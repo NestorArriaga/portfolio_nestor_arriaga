@@ -4,3 +4,13 @@
 .DS_Store
 *.tsbuildinfo
 next-env.d.ts
+.originkit/
+
+# Cachés y entorno: nada de esto pertenece al repositorio.
+__pycache__/
+*.py[cod]
+.env
+.env.*
+
+# Salida de la auditoría de rutas.
+qa-rutas.json

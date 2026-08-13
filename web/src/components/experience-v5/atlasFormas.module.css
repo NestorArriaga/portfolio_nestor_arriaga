@@ -1,0 +1,284 @@
+/* P05 · Geomorfología. Papel, mapa como objeto, detalles registrados y una
+   esquina reservada que ningún detalle puede invadir. */
+
+.escena {
+  position: relative;
+  height: var(--alto, 240svh);
+  background: var(--papel);
+  color: var(--texto);
+}
+
+.marco {
+  position: sticky; top: 0;
+  height: 100svh;
+  overflow: clip;
+  padding: var(--margen);
+  display: grid;
+  grid-template-columns: minmax(0, 3.4fr) minmax(0, 6fr) minmax(0, 2.6fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'patrones campo detalles'
+    'patrones campo detalles'
+    'rotulo   campo paso';
+  column-gap: clamp(1rem, 2.6vw, 2.6rem);
+  row-gap: clamp(0.6rem, 1.6vh, 1.4rem);
+}
+
+/* --- Mapa principal -------------------------------------------------------- */
+
+.campo {
+  grid-area: campo;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+}
+
+.mapa {
+  transform: translate3d(0, calc((1 - clamp(0, var(--e, 0) * 4, 1)) * 26px), 0);
+  opacity: clamp(0, calc(var(--e, 0) * 5), 1);
+  transition: transform 720ms var(--sal), opacity 460ms var(--sal);
+}
+
+/* Las marcas caen sobre el punto real de cada detalle. Aparecen una a una. */
+.marca {
+  position: absolute;
+  left: var(--mx); top: var(--my);
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  opacity: clamp(0, calc((var(--e, 0) - 0.3 - var(--i, 0) * 0.09) * 8), 1);
+  transition: opacity 380ms var(--sal);
+}
+
+.marcaPunto {
+  position: absolute;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--senal);
+  outline: 1px solid var(--tinta);
+  transition: transform var(--micro) var(--sal);
+}
+
+/* El conector es corto y sale del punto: no cruza la composición. */
+.marcaLinea {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 26px; height: 1px;
+  background: var(--tinta);
+  transform-origin: left center;
+  transform: scaleX(0.35);
+  opacity: 0.32;
+  transition: transform var(--ui) var(--sal), opacity var(--ui) var(--sal);
+}
+
+.marcaNum {
+  position: absolute;
+  left: calc(50% + 30px);
+  font-size: 12px;
+  color: var(--tinta);
+  opacity: 0.32;
+  transition: opacity var(--ui) var(--sal);
+}
+
+/* Sólo el detalle activo enseña su conector completo; los demás bajan
+   contraste pero siguen reconocibles. */
+.marca[data-on] .marcaPunto { transform: scale(1.35); }
+.marca[data-on] .marcaLinea { transform: scaleX(1); opacity: 1; }
+.marca[data-on] .marcaNum { opacity: 1; }
+
+/* --- Detalles -------------------------------------------------------------- */
+
+/* Tres filas iguales dentro de la altura disponible. Con `aspect-ratio` fijo
+   los detalles sumaban más alto que el viewport en pantallas de 657 px útiles
+   y el primero se salía por arriba. */
+.detalles {
+  grid-area: detalles;
+  align-self: stretch;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  align-content: center;
+  gap: clamp(0.5rem, 1.4vh, 1.2rem);
+  min-width: 0;
+  min-height: 0;
+}
+
+.detalle {
+  margin: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+  gap: 0.35rem;
+  opacity: clamp(0, calc((var(--e, 0) - 0.34 - var(--i, 0) * 0.09) * 8), 1);
+  transform: translate3d(calc((1 - clamp(0, (var(--e, 0) - 0.34 - var(--i, 0) * 0.09) * 8, 1)) * 14px), 0, 0);
+  transition: opacity 420ms var(--sal), transform 620ms var(--sal);
+}
+
+/* 17vw: dentro de la banda de detalle que fija la dirección, y suficiente para
+   que la forma se lea. Fondo y no `img` porque `background-position` en
+   porcentaje alinea el punto focal del recorte con el mismo punto del marco. */
+.recorte {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background-repeat: no-repeat;
+  background-size: 320%;
+  outline: 1px solid color-mix(in srgb, var(--tinta) 16%, transparent);
+  transition: outline-color var(--ui) var(--sal);
+}
+
+.detalle[data-on] .recorte { outline-color: var(--senal); outline-width: 2px; }
+
+.detalle figcaption {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 12px;
+  color: var(--texto-2);
+  transition: color var(--micro) var(--sal);
+}
+
+.detalle figcaption b {
+  display: grid; place-items: center;
+  width: 16px; height: 16px;
+  font-size: 11px;
+  color: var(--tinta);
+  background: var(--senal);
+}
+
+.detalle[data-on] figcaption { color: var(--texto); }
+
+/* --- Patrones -------------------------------------------------------------- */
+
+.patrones {
+  grid-area: patrones;
+  align-self: start;
+  list-style: none;
+  margin: 0; padding: 0;
+  display: grid;
+  gap: 0.15rem;
+  opacity: clamp(0, calc((var(--e, 0) - 0.42) * 6), 1);
+  transition: opacity 420ms var(--sal);
+}
+
+.patrones button {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.4rem 0;
+  min-height: 40px;
+  text-align: left;
+  width: 100%;
+}
+
+.patrones b {
+  font-size: 13px; font-weight: 500;
+  color: var(--texto-2);
+  transition: color var(--micro) var(--sal);
+}
+
+.patrones span { font-size: 12px; color: var(--texto-2); }
+
+/* Activo a texto pleno con su filo de señal; inactivo en secundario, que sobre
+   papel es #4f5049 y cumple AA. Ningún estado se apaga por opacidad. */
+.patrones li[data-on] b { color: var(--tinta); }
+.patrones li[data-on] button { box-shadow: inset 3px 0 0 var(--senal); padding-left: 0.6rem; }
+
+/* --- Zona reservada -------------------------------------------------------- */
+
+.rotulo {
+  grid-area: rotulo;
+  align-self: end;
+  display: grid;
+  gap: 0.3rem;
+  z-index: 4;
+}
+
+.num { font-size: 12px; letter-spacing: 0.14em; color: color-mix(in srgb, var(--tinta) 62%, transparent); }
+
+.titulo {
+  margin: 0;
+  font-size: clamp(1.9rem, 4.2vw, 3.6rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+  clip-path: inset(0 calc((1 - clamp(0, var(--e, 0) * 4, 1)) * 100%) 0 0);
+}
+
+.lugar { font-size: 13px; color: var(--texto-2); }
+
+.abrir {
+  justify-self: start;
+  font-size: 13px;
+  color: var(--tinta);
+  border-bottom: 1px solid var(--senal);
+  padding-bottom: 2px;
+}
+
+/* --- Paso a P06 ------------------------------------------------------------ */
+
+.paso {
+  grid-area: paso;
+  align-self: end;
+  justify-self: end;
+  display: grid;
+  gap: 0.6rem;
+  justify-items: end;
+  pointer-events: none;
+}
+
+.espiral {
+  opacity: clamp(0, calc((var(--e, 0) - 0.6) * 4), 1);
+  transition: opacity 460ms var(--sal);
+}
+
+/* --- Movimiento reducido --------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .mapa, .detalle { opacity: 1; transform: none; }
+  .marca, .patrones, .espiral { opacity: 1; }
+  .titulo { clip-path: none; }
+  .marcaLinea { transform: scaleX(1); opacity: 0.6; }
+  .marcaNum { opacity: 1; }
+}
+
+/* --- Móvil ----------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  /* Los detalles dejan de flotar alrededor: pasan a ser una secuencia debajo
+     del mapa, en una bandeja deslizable. */
+  .marco {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      'rotulo'
+      'campo'
+      'detalles'
+      'patrones';
+    row-gap: 0.7rem;
+    padding-bottom: calc(var(--margen) + 3.4rem);
+  }
+
+  .titulo { font-size: clamp(1.7rem, 8vw, 2.6rem); }
+
+  .detalles {
+    grid-template-rows: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 46%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    gap: 0.6rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .detalle { transform: none; grid-template-rows: none; }
+  .recorte { aspect-ratio: 1.25; height: auto; }
+
+  .patrones { grid-auto-flow: column; grid-auto-columns: max-content; gap: 1rem; overflow-x: auto; }
+  .patrones button { min-height: 44px; }
+
+  /* La correspondencia es obvia por secuencia: el conector sobra y estorba. */
+  .marcaLinea, .marcaNum { display: none; }
+
+  .paso { display: none; }
+}

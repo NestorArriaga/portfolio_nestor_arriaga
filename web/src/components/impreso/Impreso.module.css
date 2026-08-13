@@ -1,0 +1,600 @@
+/* Portafolio impreso — A4 horizontal, 297 × 210 mm.
+
+   Una hoja por `section`. Las medidas van en milímetros porque el destino es
+   papel: en píxeles, el mismo documento cambia de composición según el DPI del
+   generador. */
+
+@page {
+  size: 297mm 210mm;
+  margin: 0;
+}
+
+.doc {
+  --tinta: #080908;
+  --papel: #f1eee6;
+  --optico: #f6f7f2;
+  --senal: #e9ff3a;
+  /* El amarillo de señal vale como relleno en cualquier superficie, pero como
+     tinta sólo sobre negro: sobre papel marfil da 1.1:1 y el rótulo desaparece.
+     `--senal-texto` es el mismo color llevado a legible. */
+  --senal-texto: var(--senal);
+  --margen: 14mm;
+
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.hoja {
+  position: relative;
+  width: 297mm;
+  height: 210mm;
+  padding: var(--margen);
+  overflow: hidden;
+  background: var(--papel);
+  color: var(--tinta);
+  /* Cada hoja empieza en su propia página y nunca se parte. */
+  break-after: page;
+  page-break-after: always;
+  break-inside: avoid;
+  display: grid;
+  /* Una fila que puede encoger más el pie: sin `minmax(0, 1fr)` las filas se
+     dimensionan por su contenido y una imagen alta empuja la hoja fuera de su
+     caja. En pantalla eso sería scroll; en papel es un corte. */
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
+  gap: 6mm;
+  /* El pie va absoluto, así que el contenido reserva su banda. */
+  padding-bottom: 18mm;
+}
+
+.hoja > * { min-height: 0; min-width: 0; }
+
+.hoja:last-child { break-after: auto; page-break-after: auto; }
+
+.hoja[data-sup='tinta'] {
+  background: var(--tinta);
+  color: var(--optico);
+  --linea: color-mix(in srgb, var(--optico) 22%, transparent);
+  --texto-2: #a6a79f;
+}
+
+.hoja[data-sup='papel'] {
+  --linea: color-mix(in srgb, var(--tinta) 20%, transparent);
+  --texto-2: #55564e;
+  --senal-texto: #5f6b00;
+}
+
+/* --- Portada y cierre ------------------------------------------------------ */
+
+.hoja[data-portada], .hoja[data-cierre] { align-content: center; justify-items: start; gap: 4mm; grid-template-rows: none; }
+
+/* Hojas con rótulo propio encima del material: el rótulo mide lo que mide y el
+   material ocupa el resto. */
+.hoja:has(> .codigoChico) { grid-template-rows: auto minmax(0, 1fr); }
+.hoja:has(> .titulo2) { grid-template-rows: auto minmax(0, 1fr); }
+
+.marca { font-size: 9pt; letter-spacing: 0.14em; color: var(--senal-texto); }
+
+.nombre {
+  margin: 0;
+  font-size: 34pt;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  font-weight: 560;
+}
+
+.linea { font-size: 10pt; color: var(--texto-2); }
+
+.territorios { font-size: 8.5pt; color: var(--texto-2); max-width: 190mm; line-height: 1.7; }
+
+.correo { font-size: 12pt; margin: 4mm 0 0; }
+.correo a { color: var(--senal); text-decoration: none; }
+
+/* --- Encabezados ----------------------------------------------------------- */
+
+.titulo2 { margin: 0; font-size: 20pt; font-weight: 560; letter-spacing: -0.02em; }
+
+.codigo {
+  display: inline-flex; align-items: center; gap: 2.5mm;
+  font-size: 9pt; letter-spacing: 0.14em; color: var(--senal);
+}
+
+.codigoChico { font-size: 8.5pt; color: var(--texto-2); }
+
+.tituloProyecto {
+  margin: 0;
+  /* Cuerpo relativo a la longitud del rótulo: en una caja fija, un título
+     largo se salía de su columna. */
+  font-size: min(30pt, calc(560pt / var(--largo, 14)));
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  font-weight: 560;
+}
+
+.tituloPilar { margin: 0; font-size: 17pt; font-weight: 560; letter-spacing: -0.02em; }
+
+/* --- Apertura de proyecto -------------------------------------------------- */
+
+.aperturaMarco {
+  display: grid;
+  grid-template-columns: 88mm minmax(0, 1fr);
+  gap: 10mm;
+  align-items: center;
+  min-height: 0;
+  height: 100%;
+}
+
+.aperturaMarco > * { min-height: 0; min-width: 0; }
+
+.aperturaTexto { display: grid; gap: 3mm; align-content: center; }
+
+.ficha { display: grid; gap: 1.4mm; font-size: 8.5pt; }
+.ficha > div { display: flex; gap: 4mm; }
+.ficha dt { color: var(--texto-2); min-width: 24mm; }
+.ficha dd { margin: 0; }
+
+.visual { width: 100%; height: 100%; min-height: 0; object-fit: contain; object-position: center; }
+
+/* --- Lectura --------------------------------------------------------------- */
+
+.lecturaMarco {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 74mm;
+  gap: 9mm;
+  align-items: center;
+  min-height: 0;
+  height: 100%;
+}
+
+.lecturaMarco > * { min-height: 0; min-width: 0; }
+
+.mapa, .plano { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+
+.instrumento { display: grid; gap: 4mm; align-content: center; }
+.instrumento[hidden] { display: none; }
+
+/* Lámina a hoja completa: la fuente baja al pie. */
+.lecturaMarco[data-solo] { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; }
+.fuenteAlPie { font-size: 7.5pt; color: var(--texto-2); margin: 3mm 0 0; }
+
+/* Gráficas de fondo blanco sobre papel: multiplicar las funde con la hoja en
+   vez de dejar un recuadro pegado. */
+.hoja[data-clase='metricas'] .mapa { mix-blend-mode: multiply; }
+
+.datos { display: grid; gap: 3mm; margin: 0; }
+.datos > div { display: grid; gap: 0.8mm; }
+.datos dt { font-size: 8pt; color: var(--texto-2); }
+.datos dd { margin: 0; font-size: 13pt; font-weight: 500; line-height: 1.05; }
+
+.clave { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.2mm; font-size: 8.5pt; }
+.clave li { display: flex; align-items: center; gap: 2.5mm; }
+.clave i { width: 3mm; height: 3mm; background: var(--c); flex: none; }
+.clave[data-simple] li { display: flex; justify-content: space-between; gap: 4mm; }
+.clave[data-simple] b { font-weight: 500; color: var(--texto-2); }
+
+.variables { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1mm 4mm; font-size: 8pt; color: var(--texto-2); }
+
+.fuente { font-size: 8pt; color: var(--texto-2); line-height: 1.5; }
+
+/* --- Piezas ---------------------------------------------------------------- */
+
+.piezas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8mm;
+  align-items: stretch;
+  min-height: 0;
+  height: 100%;
+}
+
+.piezas[data-n='1'] { grid-template-columns: minmax(0, 1fr); }
+.piezas[data-n='3'] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.piezas figure { margin: 0; display: grid; gap: 2mm; min-height: 0; height: 100%; grid-template-rows: minmax(0, 1fr) auto; }
+.piezas img, .planoChico { width: 100%; height: 100%; object-fit: contain; min-height: 0; min-width: 0; }
+.piezas figcaption { font-size: 8pt; color: var(--texto-2); }
+
+.detalleMarco { min-height: 0; height: 100%; display: grid; place-items: center; }
+.detalleMarco > * { max-height: 100%; }
+
+/* --- GRANULAR -------------------------------------------------------------- */
+
+.pilaresLista {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 3mm; align-content: center;
+  font-size: 12pt;
+}
+
+.pilaresLista li { display: flex; gap: 5mm; align-items: baseline; }
+.pilaresLista span { color: var(--senal); min-width: 10mm; font-size: 9pt; }
+
+/* --- Índice ---------------------------------------------------------------- */
+
+.indice {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 1.6mm; font-size: 9pt;
+  /* Con el capítulo SISTEMAS el índice pasó de 20 a 25 renglones y se salía de
+     la caja. En dos columnas cabe entero y sigue leyéndose de arriba abajo. */
+  grid-auto-flow: column;
+  grid-template-rows: repeat(var(--filas, 13), auto);
+  column-gap: 12mm;
+}
+
+.indice li {
+  display: grid;
+  grid-template-columns: 26mm 1fr 12mm;
+  gap: 4mm;
+  align-items: center;
+  border-bottom: 0.2mm dotted var(--linea);
+  padding-bottom: 1.2mm;
+}
+
+.indiceCod { display: inline-flex; align-items: center; gap: 2mm; color: var(--senal-texto); }
+.indiceTit { color: var(--tinta); }
+.indiceFolio { text-align: right; color: var(--texto-2); }
+
+/* --- Créditos -------------------------------------------------------------- */
+
+.autoria { font-size: 8.5pt; margin: 0 0 5mm; line-height: 1.5; }
+.autoria b { font-weight: 560; }
+.autoria span { display: block; color: var(--texto-2); }
+
+.creditos { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; font-size: 8pt; }
+.creditos dl { margin: 0; display: grid; gap: 2mm; }
+.creditos > dl > div { display: grid; grid-template-columns: 12mm 1fr; gap: 3mm; }
+.creditos dt { color: var(--senal-texto); }
+.creditos dd { margin: 0; display: grid; gap: 0.8mm; color: var(--texto-2); line-height: 1.5; }
+.alcance { display: grid; gap: 2.2mm; color: var(--texto-2); line-height: 1.5; font-size: 7.6pt; align-content: start; }
+.alcance b { color: var(--tinta); }
+
+/* --- Pie de página --------------------------------------------------------- */
+
+.folio {
+  position: absolute;
+  left: var(--margen); right: var(--margen); bottom: 7mm;
+  display: flex; justify-content: space-between;
+  font-size: 7.5pt;
+  color: var(--texto-2);
+}
+
+.folioCod { color: var(--senal-texto); }
+
+/* Impresión: fondos exactos y nada de controles. */
+@media print {
+  .doc { background: none; }
+  .hoja { break-after: page; }
+}
+
+/* --- Instrumentos impresos -------------------------------------------------
+   Cada estado interactivo se traduce a una composición fija. La página no
+   simula la interfaz: dice lo mismo con los medios del papel —numeración,
+   conectores dibujados, dípticos calibrados y barras a escala. */
+
+.mapaFig { position: relative; margin: 0; height: 100%; min-height: 0; display: grid; }
+
+/* Nodos: en pantalla aparecen en secuencia; aquí están todos, y el contador
+   dice cuántos son. */
+.nodosImp { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nodosImp circle { fill: none; stroke: var(--senal); stroke-width: 1.1; vector-effect: non-scaling-stroke; }
+
+.contadorImp { margin: 0; display: grid; gap: 1mm; }
+.contadorImp b { font-size: 26pt; font-weight: 560; line-height: 0.9; letter-spacing: -0.03em; }
+.contadorImp span { font-size: 8pt; color: var(--texto-2); }
+
+/* Detalles: las ventanas ocupan la hoja y el mapa baja a localizador. */
+.detalleInvertido {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 62mm;
+  gap: 9mm;
+  align-items: center;
+  min-height: 0; height: 100%;
+}
+.detalleInvertido > * { min-height: 0; min-width: 0; }
+
+/* Tríptico asimétrico: la primera ventana manda y las otras dos la acompañan.
+   Tres marcos iguales en fila dejan media hoja vacía y ninguna jerarquía. */
+.ventanas {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: 1.32fr 1fr;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 5mm;
+  height: 100%; min-height: 0;
+}
+.ventanas > li:first-child { grid-row: span 2; }
+.ventanas[data-n='1'] { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
+.ventanas[data-n='2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
+.ventanas[data-n='2'] > li:first-child { grid-row: auto; }
+.ventanas li { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 2mm; min-height: 0; align-content: center; }
+/* Ventana a resolución nativa: se recorta, no se reescala. Cuadrada, porque una
+   franja vertical sobre un mapa casi cuadrado deja la mitad del marco en blanco
+   y el recorte deja de leerse como detalle. */
+.ventanas span {
+  display: block; min-height: 0; align-self: center;
+  height: 100%;
+  background-repeat: no-repeat; background-size: 430%;
+  border: 0.3mm solid var(--linea);
+}
+.ventanas p { margin: 0; font-size: 7.5pt; color: var(--texto-2); display: flex; gap: 2mm; }
+.ventanas b { color: var(--senal); font-weight: 500; }
+
+.localizador { position: relative; margin: 0; display: grid; }
+.origenPie { display: block; margin-top: 1.4mm; }
+.localizador img { width: 100%; height: auto; max-height: 78mm; object-fit: contain; }
+.localizador circle { stroke-width: 1.4; }
+
+.miniatura { width: 100%; height: auto; max-height: 46mm; object-fit: contain; }
+
+/* Criterios: barras a escala del mayor peso, y la suma calculada. */
+.hoja[data-clase='criterios'] .lecturaMarco { grid-template-columns: 84mm minmax(0, 1fr); }
+.matrizImp { list-style: none; margin: 0; padding: 0; display: grid; gap: 3mm; }
+.matrizImp li { display: grid; grid-template-columns: 1fr 26mm auto; align-items: center; gap: 3mm; font-size: 8.5pt; }
+.matrizImp i { display: block; height: 1.6mm; background: var(--linea); }
+.matrizImp i::before { content: ''; display: block; width: var(--w); height: 100%; background: var(--senal); }
+.matrizImp b { font-weight: 500; font-variant-numeric: tabular-nums; }
+.matrizImp li[data-suma] { border-top: 0.3mm solid var(--linea); padding-top: 2mm; color: var(--texto-2); }
+.matrizImp li[data-suma] i { visibility: hidden; }
+
+/* Cifras: alineadas por decimal, sin adorno. */
+.hoja[data-clase='metricas'] .lecturaMarco { grid-template-columns: 96mm minmax(0, 1fr); }
+.cifrasImp { margin: 0; display: grid; gap: 5mm; align-content: center; }
+/* Sin apoyo gráfico: una sola columna a página completa. */
+.lecturaMarco[data-solo] { grid-template-columns: minmax(0, 1fr); }
+.hoja[data-clase='metricas'] .lecturaMarco[data-solo] { grid-template-columns: minmax(0, 1fr); }
+.lecturaMarco[data-solo] .cifrasImp { gap: 9mm; max-width: 200mm; }
+.lecturaMarco[data-solo] .cifrasImp dd { font-size: 34pt; }
+.lecturaMarco[data-solo] .cifrasImp dt { font-size: 9pt; }
+.cifrasImp dd { margin: 0; font-size: 22pt; font-weight: 500; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.cifrasImp dt { font-size: 8pt; color: var(--texto-2); margin-top: 1.2mm; }
+
+/* Comparación: los dos estados al mismo tamaño y con su rótulo. */
+.hoja[data-clase='comparacion'] .piezas figcaption b { color: var(--senal); font-weight: 500; }
+.piezas figcaption b { color: var(--senal); font-weight: 500; }
+
+/* --- SISTEMAS ---------------------------------------------------------------
+   Capítulo de capacidad digital. Las capturas son interfaces: el pie dice de
+   qué proyecto son y en qué estado, porque dentro de un mismo caso conviven un
+   producto en desarrollo y su demostrador. */
+
+.hoja[data-separador] { align-content: center; justify-items: start; gap: 3mm; grid-template-rows: none; }
+
+.tituloFamilia {
+  margin: 0;
+  font-size: 44pt;
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.tresPalabras { font-size: 9pt; letter-spacing: 0.12em; color: var(--texto-2); }
+
+.listaSistemas {
+  list-style: none; margin: 6mm 0 0; padding: 0;
+  display: grid; gap: 2.4mm; font-size: 9pt;
+}
+.listaSistemas li { display: grid; grid-template-columns: 14mm 1fr auto; gap: 4mm; align-items: baseline; }
+.sisNombre { color: inherit; }
+.sisEstado { color: var(--texto-2); font-size: 8pt; }
+
+.sisMarco {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 74mm;
+  gap: 9mm;
+  align-items: start;
+  min-height: 0; height: 100%;
+}
+.sisMarco > * { min-height: 0; min-width: 0; }
+
+.sisPieza { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 4mm; min-height: 0; height: 100%; }
+/* Sin detalles, la captura principal toma la hoja entera: reservarles sitio
+   dejaba un tercio de página en blanco. */
+.sisPieza:has(> :only-child) { grid-template-rows: minmax(0, 1fr); }
+.sisDetalles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4mm; }
+.sisDetalles[data-n='1'] { grid-template-columns: minmax(0, 1fr); max-width: 88mm; }
+
+.sisCaptura { margin: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 1.6mm; min-height: 0; justify-items: center; }
+.sisCaptura figcaption { justify-self: stretch; }
+/* La guarda se dibuja sobre la imagen renderizada, no sobre el hueco de la
+   retícula: con `height: 100%` el borde encerraba franjas vacías arriba y abajo
+   de la captura. */
+.sisCaptura img {
+  width: auto; height: auto;
+  max-width: 100%; max-height: 100%;
+  min-height: 0;
+  justify-self: center; align-self: center;
+  border: 0.25mm solid var(--linea);
+}
+.sisCaptura figcaption { font-size: 7.5pt; line-height: 1.35; color: var(--texto-2); }
+.sisCaptura figcaption span { display: block; margin-top: 0.8mm; color: var(--senal); }
+
+/* Paso de la secuencia: rótulo del estado, delante del pie. */
+.sisPaso {
+  display: inline-block;
+  margin-right: 2mm;
+  padding: 0.4mm 1.6mm;
+  font-weight: 500;
+  color: var(--tinta);
+  background: var(--senal);
+}
+
+.sisCapacidad { margin: 0; font-size: 12pt; line-height: 1.15; letter-spacing: -0.01em; }
+
+.sisEstadoCaja {
+  justify-self: start;
+  font-size: 7.5pt;
+  padding: 1mm 2mm;
+  border: 0.25mm solid var(--linea);
+  color: var(--texto-2);
+}
+
+.sisAnotacion { margin: 0; font-size: 8.5pt; line-height: 1.5; color: var(--texto-2); }
+
+.sisFicha { display: grid; gap: 2mm; margin: 0; font-size: 8pt; }
+.sisFicha > div { display: grid; grid-template-columns: 14mm 1fr; gap: 3mm; }
+.sisFicha dt { color: var(--senal-texto); }
+.sisFicha dd { margin: 0; color: var(--texto-2); line-height: 1.45; }
+
+/* --- Apertura editorial: perfil y trayectoria -------------------------------
+   Dos hojas que abren el documento. No usan la retícula de un CV —etiqueta a la
+   izquierda, valor a la derecha, línea tras línea— sino la del atlas: un campo
+   principal, una banda de datos y aire suficiente para que se lean de un golpe. */
+
+.hoja[data-clase='perfil'],
+.hoja[data-clase='trayectoria'] { grid-template-rows: auto minmax(0, 1fr); }
+
+.perfilMarco {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 10mm;
+  /* El bloque ocupa el campo en vez de flotar en el centro: la hoja tiene
+     182 mm útiles y una composición de 60 dejaba muertas las dos terceras
+     partes. Texto y fichas arriba, banda de territorios abajo. */
+  /* Dos filas explícitas: las columnas se estiran hasta la banda inferior y
+     reparten su propio aire. Sin la fila elástica quedaba un hueco muerto entre
+     el final del texto y la banda, porque la altura la fijaba la columna más
+     alta y no la hoja. */
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: stretch;
+  height: 100%;
+  min-height: 0;
+  padding-block: 8mm 4mm;
+}
+
+.perfilTexto { grid-column: span 7; display: grid; gap: 8mm; align-content: space-between; }
+
+.perfilNombre {
+  margin: 0;
+  font-size: 46pt;
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.perfilLinea { margin: 0; font-size: 13.5pt; line-height: 1.6; max-width: 52ch; }
+
+.perfilLateral { grid-column: span 5; display: grid; gap: 7mm; align-content: space-between; }
+
+.perfilFichas { display: grid; gap: 5mm; margin: 0; font-size: 9.5pt; }
+.perfilFichas > div { display: grid; gap: 1mm; }
+.perfilFichas dt { color: var(--senal-texto); font-size: 7.5pt; letter-spacing: 0.1em; }
+.perfilFichas dd { margin: 0; color: var(--tinta); line-height: 1.45; }
+
+/* Banda de cierre a todo el ancho: los seis territorios del atlas, con su
+   glifo. La identidad se enseña con el trabajo. */
+.perfilGlifos {
+  grid-column: 1 / -1;
+  list-style: none; margin: 0; padding: 5mm 0 0;
+  border-top: 0.3mm solid var(--linea);
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4mm;
+  font-size: 8pt; color: var(--texto-2);
+}
+.perfilGlifos li { display: flex; align-items: center; gap: 2.5mm; }
+.perfilGlifos svg { flex: none; }
+
+/* --- Trayectoria ----------------------------------------------------------- */
+
+.trayMarco {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 10mm;
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+  height: 100%;
+  min-height: 0;
+  padding-block: 8mm 4mm;
+}
+
+/* Cuatro hitos en columna, cada uno con su año como ancla izquierda. La línea
+   vertical es la trayectoria; no hay flechas ni iconos añadidos. */
+.hitos {
+  grid-column: span 7;
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 13mm;
+  align-content: space-between;
+  border-left: 0.3mm solid var(--linea);
+  padding-left: 7mm;
+}
+
+.hitos li { display: grid; grid-template-columns: 24mm minmax(0, 1fr); gap: 1mm 5mm; position: relative; }
+.hitos li::before {
+  content: ''; position: absolute; left: -7.6mm; top: 2.4mm;
+  width: 1.6mm; height: 1.6mm; background: var(--senal);
+}
+.hitoAnio { grid-row: span 2; font-size: 8pt; color: var(--senal-texto); padding-top: 0.6mm; }
+.hitoDonde { font-size: 14pt; font-weight: 520; letter-spacing: -0.015em; }
+.hitoQue { font-size: 9pt; color: var(--texto-2); line-height: 1.45; }
+
+.trayLateral { grid-column: span 5; display: grid; gap: 8mm; align-content: space-between; }
+
+.capacidades { display: grid; gap: 6mm; margin: 0; }
+.capacidades > div { display: grid; gap: 1mm; }
+.capacidades dt { font-size: 11.5pt; font-weight: 520; }
+.capacidades dd { margin: 0; font-size: 8.6pt; color: var(--texto-2); line-height: 1.5; }
+
+.escalas { display: grid; gap: 4mm; padding-top: 6mm; border-top: 0.3mm solid var(--linea); }
+.escalasRotulo { font-size: 7.5pt; letter-spacing: 0.14em; color: var(--senal-texto); }
+.escalasLista { display: grid; gap: 2.6mm; margin: 0; }
+.escalasLista > div { display: grid; grid-template-columns: 34mm minmax(0, 1fr); gap: 4mm; align-items: baseline; }
+.escalasLista dt { font-size: 14pt; font-weight: 520; font-variant-numeric: tabular-nums; }
+.escalasLista dd { margin: 0; font-size: 8.4pt; color: var(--texto-2); }
+
+/* --- Fuentes y procedencia --------------------------------------------------
+   Por código, no por persona. La columna izquierda dice de dónde salió el dato;
+   la derecha, hasta dónde llega la lectura. */
+
+.hoja[data-clase='fuentes'] { grid-template-rows: auto minmax(0, 1fr); }
+
+.fuentesMarco {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 12mm;
+  align-content: start;
+  padding-top: 4mm;
+  min-height: 0;
+  /* La hoja mide 210 mm y el bloque de alcance crece con el texto: sin este
+     recorte la última línea caía fuera de la caja de impresión. */
+  overflow: hidden;
+}
+.fuentesMarco > * { min-width: 0; min-height: 0; }
+
+.fuentesRotulo {
+  font-size: 7.5pt;
+  letter-spacing: 0.14em;
+  color: var(--senal-texto);
+  margin: 0 0 2.4mm;
+}
+.fuentesLista + .fuentesRotulo { margin-top: 5mm; }
+
+.fuentesLista { display: grid; gap: 2.2mm; margin: 0; font-size: 7.8pt; }
+.fuentesLista > div { display: grid; grid-template-columns: 11mm minmax(0, 1fr); gap: 3mm; }
+.fuentesLista dt { color: inherit; }
+.fuentesLista dd { margin: 0; color: var(--texto-2); line-height: 1.45; }
+
+/* --- Cierre ----------------------------------------------------------------- */
+
+.hoja[data-cierre] .cierreMarco {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 14mm;
+  align-items: end;
+  width: 100%;
+}
+
+.cierreCampo { font-size: 8.5pt; color: var(--texto-2); margin: 3mm 0 0; }
+
+.cierreDatos { display: grid; gap: 3mm; margin: 0; font-size: 8.5pt; }
+.cierreDatos > div { display: grid; grid-template-columns: 20mm minmax(0, 1fr); gap: 4mm; }
+.cierreDatos dt { color: var(--senal); }
+.cierreDatos dd { margin: 0; color: var(--optico); }
+
+/* Enlaces reales del PDF: el amarillo aquí es tinta sobre negro, no relleno. */
+.cierreEnlace { color: var(--senal); text-decoration: none; }
+
+.cierreAutoria {
+  margin: 10mm 0 0;
+  font-size: 7.5pt;
+  color: var(--texto-2);
+  max-width: 120mm;
+  line-height: 1.5;
+}

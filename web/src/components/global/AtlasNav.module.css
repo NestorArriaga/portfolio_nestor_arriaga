@@ -17,6 +17,16 @@
     background-color var(--dur-micro) linear,
     border-color var(--dur-micro) linear;
   border-bottom: var(--hairline) solid transparent;
+  /* Velo mínimo permanente. Sin él, el riel se apoya en que lo que hay detrás
+     sea oscuro, y varias láminas —las de P01 a P04 son hojas impresas sobre
+     blanco— lo dejaban ilegible justo en el primer viewport. Es un degradado
+     de 3 rem, no un fondo: la lámina sigue llegando al borde superior. */
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 5, 0.72) 0%,
+    rgba(5, 5, 5, 0.42) 55%,
+    transparent 100%
+  );
 }
 
 /* Al bajar se retira: en una lámina a sangre, una barra permanente le come el
@@ -88,4 +98,42 @@
 @media (prefers-reduced-motion: reduce) {
   .nav { transition: none; }
   .nav[data-hidden='true'] { transform: none; }
+}
+
+/* --- Proyecto en curso ----------------------------------------------------
+   Solo aparece dentro de un caso. Dice número, nombre corto, territorio y
+   posición dentro de los quince: las cuatro cosas que se pierden en cuanto la
+   apertura sale de pantalla. */
+
+.current {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+  margin-left: auto;
+  padding-left: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.currentNum { color: var(--accent); }
+.currentName {
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.currentPlace { color: var(--ink-faint); }
+.currentOf {
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  /* En móvil solo caben número y posición; el nombre ya está en el título. */
+  .currentName,
+  .currentPlace { display: none; }
 }

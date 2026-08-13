@@ -1,0 +1,137 @@
+{
+ "pagina": {
+  "width": 2480.0,
+  "height": 3507.0,
+  "ratio": 0.707157
+ },
+ "origen": "archivo de trabajo · ELEMENTOS",
+ "trabajo": "archivo de trabajo · rostro territorial",
+ "trazos": {
+  "file": "/projects/rostro/rostro-trazos.svg",
+  "viewBox": "0 0 595.28 841.89",
+  "ratio": 0.707076,
+  "paths": 715,
+  "perfil": 29,
+  "bandas": [
+   44,
+   102,
+   116,
+   96,
+   158,
+   170
+  ],
+  "bytes": 88323
+ },
+ "rostroRaster": {
+  "2000": "/atlas/raster/rostro--l1-color-2000.webp",
+  "1000": "/atlas/raster/rostro--l1-color-1000.webp",
+  "500": "/atlas/raster/rostro--l1-color-500.webp"
+ },
+ "bases": [
+  {
+   "role": "atmosfera",
+   "slug": "hh",
+   "source": "hh}.svg",
+   "layer": 1,
+   "frame": [
+    -0.007661,
+    -0.011406,
+    1.054435,
+    1.020245
+   ],
+   "px": [
+    2615,
+    3578
+   ],
+   "files": {
+    "2000": "/atlas/raster/hh--l1-color-2000.webp",
+    "1000": "/atlas/raster/hh--l1-color-1000.webp",
+    "500": "/atlas/raster/hh--l1-color-500.webp"
+   }
+  },
+  {
+   "role": "atmosfera",
+   "slug": "hh",
+   "source": "hh}.svg",
+   "layer": 2,
+   "frame": [
+    0.0,
+    -0.0,
+    1.0,
+    1.000285
+   ],
+   "px": [
+    2480,
+    3508
+   ],
+   "files": {
+    "2000": "/atlas/raster/hh--l2-color-2000.webp",
+    "1000": "/atlas/raster/hh--l2-color-1000.webp",
+    "500": "/atlas/raster/hh--l2-color-500.webp"
+   }
+  },
+  {
+   "role": "relieve",
+   "slug": "hill",
+   "source": "hill.svg",
+   "layer": 1,
+   "frame": [
+    -0.001613,
+    -0.003992,
+    1.017742,
+    1.007984
+   ],
+   "px": [
+    2524,
+    3535
+   ],
+   "files": {
+    "2000": "/atlas/raster/hill--l1-color-2000.webp",
+    "1000": "/atlas/raster/hill--l1-color-1000.webp",
+    "500": "/atlas/raster/hill--l1-color-500.webp"
+   }
+  },
+  {
+   "role": "sombra",
+   "slug": "hillshade-base",
+   "source": "hillshade_base.svg",
+   "layer": 1,
+   "frame": [
+    -0.041129,
+    -0.023952,
+    1.092339,
+    1.046193
+   ],
+   "px": [
+    2709,
+    3669
+   ],
+   "files": {
+    "2000": "/atlas/raster/hillshade-base--l1-color-2000.webp",
+    "1000": "/atlas/raster/hillshade-base--l1-color-1000.webp",
+    "500": "/atlas/raster/hillshade-base--l1-color-500.webp"
+   }
+  },
+  {
+   "role": "satelite",
+   "slug": "satelite-base-rostro",
+   "source": "satelite_base_rostro.svg",
+   "layer": 1,
+   "frame": [
+    -0.050806,
+    -0.025663,
+    1.102419,
+    1.051326
+   ],
+   "px": [
+    2734,
+    3687
+   ],
+   "files": {
+    "2000": "/atlas/raster/satelite-base-rostro--l1-color-2000.webp",
+    "1000": "/atlas/raster/satelite-base-rostro--l1-color-1000.webp",
+    "500": "/atlas/raster/satelite-base-rostro--l1-color-500.webp"
+   }
+  }
+ ]
+}

@@ -1,0 +1,193 @@
+/* Interludio del rostro. Campo negro, silueta grande y mucho espacio negativo.
+   La silueta ocupa 45–65 % del viewport y nunca baja a miniatura. */
+
+.act {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: clamp(5rem, 10vw, 9rem) var(--margin);
+  background: #050505;
+  color: var(--ink);
+  border-top: var(--line-strong) solid var(--signal);
+  overflow: clip;
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem);
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  width: min(100%, 78rem);
+}
+
+.figure {
+  position: relative;
+  aspect-ratio: var(--ratio, 0.707);
+  /* 45–65 % del viewport en alto; el ancho lo fija la proporción A4. */
+  height: min(64svh, 46rem);
+  margin-inline: auto;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  color: var(--white);
+  overflow: visible;
+}
+
+/* --- Entrada por grupos ---------------------------------------------------- */
+
+/* Los siete grupos —perfil y seis bandas— entran escalonados. El perfil
+   primero: es el que la línea de P13 dibuja al llegar. */
+.maskInk :global(g),
+.stroke :global(g) {
+  opacity: 0;
+  transition: opacity 620ms var(--ease-out);
+}
+
+.act[data-revealed] .maskInk :global(g),
+.act[data-revealed] .stroke :global(g) { opacity: 1; }
+
+.maskInk :global(#perfil), .stroke :global(#perfil) { transition-delay: 240ms; }
+.maskInk :global(#banda0), .stroke :global(#banda0) { transition-delay: 620ms; }
+.maskInk :global(#banda1), .stroke :global(#banda1) { transition-delay: 720ms; }
+.maskInk :global(#banda2), .stroke :global(#banda2) { transition-delay: 820ms; }
+.maskInk :global(#banda3), .stroke :global(#banda3) { transition-delay: 920ms; }
+.maskInk :global(#banda4), .stroke :global(#banda4) { transition-delay: 1020ms; }
+.maskInk :global(#banda5), .stroke :global(#banda5) { transition-delay: 1120ms; }
+
+/* El trazo va encima de la textura, pero apagado: la lectura principal es el
+   territorio dentro de la silueta, no la tinta. */
+.stroke { opacity: 0.34; }
+
+/* --- Hilo de agua que llega de P13 ---------------------------------------- */
+
+.thread {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  opacity: 0.85;
+  transition: stroke-dashoffset 1100ms var(--ease-inout);
+}
+
+.act[data-revealed] .thread { stroke-dashoffset: 0; }
+
+/* --- Columna lateral ------------------------------------------------------- */
+
+.side {
+  display: grid;
+  gap: 1.5rem;
+  align-content: center;
+}
+
+.kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.layers {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+}
+
+.legend {
+  padding: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.layer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  padding: 0.3rem 0.4rem;
+  margin-inline: -0.4rem;
+  border-top: var(--hairline) solid var(--line-dark);
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: color var(--dur-micro) var(--ease-out);
+}
+
+.layer:last-child { border-bottom: var(--hairline) solid var(--line-dark); }
+.layer:hover { color: var(--ink); }
+
+.layer:has(.radio:checked) { color: var(--ink); }
+.layer:has(.radio:checked) .layerName { border-bottom: var(--line-strong) solid var(--signal); }
+
+.layer:has(.radio:focus-visible) {
+  outline: var(--line-strong) solid var(--signal);
+  outline-offset: 1px;
+}
+
+.radio { accent-color: var(--signal); margin: 0; }
+.layerName { padding-bottom: 2px; }
+
+.calls {
+  margin: 0;
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+}
+
+.calls > div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--gutter);
+  align-items: baseline;
+  padding: 0.35rem 0;
+  border-top: var(--hairline) solid var(--line-dark);
+}
+
+.calls dt { letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--ink-faint); }
+.calls dd { margin: 0; text-align: right; color: var(--ink); overflow-wrap: anywhere; }
+
+.note {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-technical);
+  line-height: 1.55;
+  color: var(--ink-faint);
+  text-wrap: pretty;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --- Responsive ------------------------------------------------------------ */
+
+@media (max-width: 1100px) {
+  /* Tableta: rostro centrado y llamadas fuera de la silueta. */
+  .stage { grid-template-columns: 1fr; gap: 2rem; }
+  .figure { height: min(56svh, 34rem); }
+  .side { justify-items: start; max-width: 34rem; margin-inline: auto; width: 100%; }
+}
+
+@media (max-width: 900px) {
+  /* Móvil: recorte vertical legible y controles debajo. Nunca miniatura. */
+  .act { padding: 6svh var(--margin) 12svh; }
+  .figure { height: min(52svh, 30rem); }
+  .calls dd { font-size: var(--type-technical); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Compuesto y alineado desde el primer render; los controles siguen
+     funcionando, que es lo que sustituye a la coreografía. */
+  .maskInk :global(g),
+  .stroke :global(g) { opacity: 1; transition: none; }
+  .thread { stroke-dashoffset: 0; transition: none; }
+}

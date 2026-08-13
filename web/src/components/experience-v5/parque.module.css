@@ -1,0 +1,377 @@
+/* P15 · Urban Challenge — capítulo en siete estados.
+
+   Superficie papel en todo el capítulo: es el único proyecto de dibujo
+   arquitectónico del atlas y su material está pintado para papel, no para
+   tinta. El cambio de superficie al entrar es parte de la transición. */
+
+.portada,
+.estado {
+  position: relative;
+  background: var(--papel);
+  color: var(--tinta);
+}
+
+.portada { height: 150svh; }
+.estado { height: 175svh; }
+
+.portadaMarco {
+  position: sticky; top: 0;
+  height: 100svh;
+  overflow: clip;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  padding: var(--margen);
+}
+
+/* El riel es una columna de la retícula, no una pieza flotante: como absoluto
+   se cruzaba con la bandeja de piezas y con la nota. */
+.marco {
+  position: sticky; top: 0;
+  height: 100svh;
+  overflow: clip;
+  padding: var(--margen);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, 12rem);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    'palabra riel'
+    'pieza   riel';
+  column-gap: clamp(1rem, 2.4vw, 2.4rem);
+  row-gap: clamp(0.5rem, 1.4vh, 1.2rem);
+}
+
+/* --- Portada del capítulo -------------------------------------------------- */
+
+.portadaMarco { align-content: center; justify-items: start; gap: 0.4rem; }
+
+.portadaNum { color: var(--madera, #a5784c); }
+
+.portadaTitulo {
+  font-size: clamp(3.2rem, 12vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  margin: 0;
+  /* Entra por recorte, como el resto de títulos del atlas. */
+  clip-path: inset(0 calc((1 - clamp(0, var(--e, 0) * 2.2, 1)) * 100%) 0 0);
+}
+
+.portadaPie { color: color-mix(in srgb, var(--tinta) 62%, transparent); }
+
+.abrir {
+  margin-top: 1.2rem;
+  color: var(--tinta);
+  border-bottom: 1px solid var(--madera, #a5784c);
+  padding-bottom: 2px;
+}
+
+/* --- Estado ---------------------------------------------------------------- */
+
+/* La pieza ocupa entre 60 % y 78 % del viewport: es el objeto, no una
+   ilustración dentro de una tarjeta. */
+.pieza {
+  grid-area: pieza;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+}
+
+.raster,
+.dibujo {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  overflow: visible;
+}
+
+.raster {
+  clip-path: inset(0 calc((1 - clamp(0, (var(--e, 0) - 0.06) * 2, 1)) * 100%) 0 0);
+}
+
+/* Cada capa entra en secuencia, no todas de golpe. */
+.capa {
+  opacity: clamp(0, calc((var(--e, 0) - 0.08 - var(--k, 0) * 0.06) * 5), 1);
+  transition: opacity 420ms var(--sal);
+}
+
+/* Filo sobre la capa viva cuando su relleno no contrasta con el papel. No
+   cambia el color del dibujo: sólo dibuja su borde. */
+.dibujo[data-realce] .capa[data-estado='viva'] {
+  stroke: var(--madera, #a5784c);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+/* La capa de referencia se queda atrás sin desaparecer: es la que permite
+   entender dónde cae lo que sí se está leyendo. */
+.capa[data-estado='fantasma'] { opacity: 0.18; }
+
+/* El contorno se va hacia el globo. */
+.regreso {
+  stroke: var(--madera, #a5784c);
+  stroke-width: 1.4;
+  stroke-dasharray: 1;
+  pathLength: 1;
+  stroke-dashoffset: calc(1 - clamp(0, (var(--e, 0) - 0.6) * 2.6, 1));
+}
+
+/* --- VISTAZO: planta grande + tres piezas de programa ---------------------- */
+
+.vistazo, .sistema {
+  width: 100%; height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.32fr);
+  align-items: center;
+  gap: clamp(0.8rem, 2vw, 2rem);
+}
+
+.plantaCaja { position: relative; height: 100%; display: grid; place-items: center; }
+
+/* El hotspot vive sobre la planta y expande su pieza sin taparla. */
+.hotspot {
+  position: absolute;
+  left: var(--hx); top: var(--hy);
+  transform: translate(-50%, -50%);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  min-height: 44px; padding: 0 0.4rem;
+  color: var(--tinta);
+  font-size: 12px;
+  opacity: clamp(0, calc((var(--e, 0) - 0.24 - var(--k, 0) * 0.07) * 8), 1);
+  transition: opacity 380ms var(--sal);
+}
+
+.hotspot i {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--senal);
+  outline: 1px solid var(--tinta);
+  transition: transform var(--micro) var(--sal);
+}
+
+.hotspot span {
+  padding: 0.16rem 0.4rem;
+  background: color-mix(in srgb, var(--papel) 92%, transparent);
+  opacity: 0.62;
+  transition: opacity var(--micro) var(--sal);
+}
+
+.hotspot[data-on] i { transform: scale(1.4); }
+.hotspot[data-on] span { opacity: 1; }
+
+.bandeja {
+  display: grid;
+  gap: clamp(0.5rem, 1.4vh, 1.1rem);
+  align-content: center;
+  min-width: 0;
+}
+
+.recorte {
+  margin: 0;
+  position: relative;
+  background-image: url('/projects/park/dise-o-parque-yuc-2200.webp');
+  background-repeat: no-repeat;
+  width: 100%;
+  outline: 1px solid transparent;
+  transition: outline-color var(--ui) var(--sal), transform var(--ui) var(--sal);
+  /* Entran una tras otra, de izquierda a derecha. */
+  opacity: clamp(0, calc((var(--e, 0) - 0.1 - var(--k, 0) * 0.12) * 6), 1);
+  transform: translate3d(0, calc((1 - clamp(0, (var(--e, 0) - 0.1 - var(--k, 0) * 0.12) * 6, 1)) * 16px), 0);
+  transition: opacity 460ms var(--sal), transform 620ms var(--sal);
+}
+
+.recorte[data-on] { outline-color: var(--senal); transform: scale(1.03); }
+
+.recorte figcaption {
+  position: absolute; left: 0; bottom: -1.35rem;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--tinta) 72%, transparent);
+}
+
+.recorte[data-on] figcaption { color: var(--tinta); }
+
+/* --- SISTEMA --------------------------------------------------------------- */
+
+/* La circulación llega de otra lámina y se registra encima con su viewBox. */
+.circulacion {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  opacity: clamp(0, calc((var(--e, 0) - 0.3) * 5), 1);
+  transition: opacity 420ms var(--sal);
+  pointer-events: none;
+}
+
+.circulacion g { stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+
+.circulacion[data-off], .capa[data-off] { opacity: 0.12; }
+
+.selector {
+  display: grid; gap: 0.3rem; align-content: center; justify-items: start;
+}
+
+.opcion {
+  min-height: 40px; padding: 0.4rem 0.6rem;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--tinta) 62%, transparent);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+}
+
+.opcion:hover, .opcion:focus-visible { color: var(--tinta); }
+.opcion[aria-pressed='true'] { color: var(--tinta); border-color: var(--senal); }
+
+/* --- VARIACIONES ----------------------------------------------------------- */
+
+.variantes {
+  width: 100%; height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* Estirados, no centrados: los tres dibujos vienen con viewBox distintos
+     (1184×864, 1088×960, 1280×720) y centrarlos los dejaba escalonados y de
+     tamaños distintos, que es justo lo que impide compararlos. Cada uno ocupa
+     ahora una caja idéntica y se ajusta dentro de ella. */
+  align-items: stretch;
+  gap: clamp(0.8rem, 2.4vw, 2.4rem);
+}
+
+.variante {
+  margin: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  opacity: clamp(0, calc((var(--e, 0) - 0.1 - var(--k, 0) * 0.1) * 6), 1);
+  transition: opacity 420ms var(--sal), transform 520ms var(--sal);
+}
+
+.variante svg {
+  width: 100%; height: 100%;
+  outline: 1px solid color-mix(in srgb, var(--tinta) 14%, transparent);
+  transition: outline-color 260ms var(--sal);
+}
+
+/* Señalar una la trae al frente sin esconder las otras: siguen comparables. */
+.variante[data-on] { transform: translate3d(0, -6px, 0); }
+.variante[data-on] svg { outline-color: var(--madera, #a5784c); }
+
+.variante figcaption { color: color-mix(in srgb, var(--tinta) 66%, transparent); }
+
+/* --- Palabra y riel -------------------------------------------------------- */
+
+.palabra {
+  grid-area: palabra;
+  margin: 0;
+  font-size: clamp(1.8rem, 5.4vw, 4.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: color-mix(in srgb, var(--tinta) 88%, transparent);
+  clip-path: inset(0 calc((1 - clamp(0, var(--e, 0) * 3, 1)) * 100%) 0 0);
+  pointer-events: none;
+}
+
+/* El riel es leyenda y selector a la vez. */
+.riel {
+  grid-area: riel;
+  align-self: center;
+  display: grid;
+  gap: 0.5rem;
+  justify-items: end;
+  text-align: right;
+}
+
+.riel ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.15rem; }
+
+.rielItem { font-size: 13px; }
+
+.contador { color: var(--madera, #a5784c); }
+
+.rielItem {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.28rem 0;
+  color: color-mix(in srgb, var(--tinta) 44%, transparent);
+  transition: color 200ms var(--sal);
+}
+
+.rielItem i {
+  width: 14px; height: 1px;
+  background: currentColor;
+  transition: width 240ms var(--sal), background-color 200ms var(--sal);
+}
+
+.rielItem:hover,
+.rielItem:focus-visible { color: var(--tinta); }
+
+.rielItem[data-on] { color: var(--tinta); }
+.rielItem[data-on] i { width: 30px; background: var(--madera, #a5784c); }
+
+.nota {
+  margin-top: 0.6rem;
+  color: color-mix(in srgb, var(--tinta) 58%, transparent);
+  text-wrap: balance;
+}
+
+.entrega {
+  grid-area: riel;
+  align-self: end;
+  justify-self: end;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* --- Movimiento reducido --------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Estado final completo: todas las capas, todos los recortes, el contorno
+     trazado y los títulos enteros. Nada queda a medio revelar. */
+  .portadaTitulo, .palabra { clip-path: none; }
+  .raster { clip-path: none; }
+  .capa { opacity: 1; }
+  .capa[data-estado='fantasma'] { opacity: 0.18; }
+  .regreso { stroke-dashoffset: 0; }
+  .recorte, .variante { opacity: 1; transform: none; }
+}
+
+/* --- Móvil ----------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .estado { height: 200svh; }
+
+  /* Planta primero, riel debajo en línea. */
+  .marco {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'palabra'
+      'pieza'
+      'riel';
+    padding-bottom: calc(var(--margen) + 3.2rem);
+  }
+
+  .riel { justify-items: start; text-align: left; }
+
+  .riel ol {
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    overflow-x: auto;
+    gap: 0.9rem;
+    padding-bottom: 0.3rem;
+  }
+
+  .rielItem i { display: none; }
+
+  /* En móvil las tres piezas no se aprietan: se recorren en horizontal, cada
+     una a tamaño legible. `grid-template-columns` tenía que desaparecer, no
+     convivir con `grid-auto-columns`: dos reglas contradictorias dejaban la
+     fila sin ancho y el material no se veía. */
+  .vistazo, .sistema { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; }
+
+  .bandeja, .variantes {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 80%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    align-items: center;
+    padding-bottom: 1.6rem;
+  }
+
+  .variante { grid-template-rows: minmax(0, 1fr) auto; }
+
+  .entrega { display: none; }
+}

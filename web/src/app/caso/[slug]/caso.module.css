@@ -1,0 +1,7 @@
+/* La página de caso no aporta cromo propio: cada escena trae su fondo y su
+   acento. Aquí solo se garantiza que el fondo del documento no se vea entre
+   dos escenas de superficie distinta. */
+
+.case {
+  background: var(--black);
+}
