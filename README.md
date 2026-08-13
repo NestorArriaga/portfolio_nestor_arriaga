@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portafolio Atlas — Nestor Elihu Arriaga Gallegos
 
-## Getting Started
+Atlas territorial interactivo: quince proyectos de cartografía, análisis territorial
+y ordenamiento en seis territorios de México, más cuatro sistemas digitales propios.
+El sitio y el PDF de 44 páginas se construyen desde los mismos registros.
 
-First, run the development server:
+![Portada del atlas territorial](web/public/portada.webp)
+
+## Estructura
+
+| Serie | Contenido |
+| --- | --- |
+| **P01–P13** | Proyectos territoriales. Cada uno tiene su página interior con instrumentos cartográficos: localizador, mapa con clases, gradiente, nodos, comparador, atlas de detalles, perfil sincronizado, criterios ponderados, evidencia y flujo. |
+| **P14** | GRANULAR — siete pilares con página propia en `/granular/[pilar]`. |
+| **P15** | Urban Challenge — capítulo de dibujo arquitectónico. |
+| **S01–S04** | SISTEMAS — capacidad digital aplicada al territorio: Datos aéreos agrícolas, ESTRATO, Maíces nativos y TERRITORIA, con página en `/sistema/[slug]`. |
+
+El recorrido de la portada sigue ese orden: `P01–P13 → rostro territorial → GRANULAR →
+Urban Challenge → SISTEMAS → contacto`. El índice orbital (*Vistazo*) reordena las
+diecinueve entradas por territorio, método o escala.
+
+### Fuentes del material
+
+- Las láminas de P01–P15 proceden del documento original del portafolio; la página de
+  origen se declara en cada proyecto y en el PDF.
+- Las capturas de SISTEMAS son pantallas reales de aplicaciones propias, optimizadas y
+  con su estado declarado —producto en desarrollo, demostrador o prototipo—. Las que
+  usan datos simulados lo indican y no se presentan como resultados productivos.
+- Ningún dato, cifra, escala o coordenada se completa cuando la fuente no lo registra.
+
+## Requisitos
+
+- Node.js 18.17 o superior
+- npm 9 o superior
+- Python 3.11+ con Pillow, sólo para regenerar activos derivados
+
+## Uso
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd web
+npm install
+
+npm run dev           # http://localhost:4100
+npm run typecheck     # TypeScript sin emitir
+npm run lint          # ESLint
+npm test              # pruebas de resolución de rutas
+npm run build         # build de producción
+npm run qa:rutas      # 26 rutas × 6 viewports: desbordes, imágenes rotas, consola
+npm run portfolio:pdf # genera el PDF desde /portafolio-impreso
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`qa:rutas` y `portfolio:pdf` necesitan el servidor levantado (`npm run dev` o
+`npm start`). Ambos terminan con código distinto de cero si encuentran una hoja
+desbordada, una imagen rota o un error de consola.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### PDF
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`npm run portfolio:pdf` escribe:
 
-## Learn More
+```
+web/public/downloads/Nestor-Arriaga-Gallegos-Portafolio-2026.pdf
+```
 
-To learn more about Next.js, take a look at the following resources:
+A4 horizontal (297 × 210 mm), 44 páginas, etiquetado y con índice navegable. El botón
+de descarga de la portada y el del cierre leen el peso y el número de páginas del
+archivo real, así que la etiqueta nunca queda desfasada.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Activos derivados
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Los rásteres, máscaras de clase, marcadores y capturas del sitio son derivados de
+material original que no se versiona. Los scripts de `web/scripts` los regeneran:
 
-## Deploy on Vercel
+```bash
+npm run atlas:sources        # láminas y manifiestos del atlas
+npm run atlas:masks          # máscaras territoriales
+SISTEMAS_FUENTES=<ruta/sistemas-fuentes.json> npm run sistemas
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`SISTEMAS_FUENTES` apunta a un archivo de procedencia guardado fuera del repositorio:
+contiene las rutas locales de las capturas originales. Lo que se publica es sólo el
+manifiesto neutral `web/public/sistemas/manifest.json` y las imágenes optimizadas.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Despliegue
+
+La raíz de despliegue es `web/`. No hay `basePath` ni exportación estática: el sitio
+usa el App Router de Next.js con rutas dinámicas prerenderizadas
+(`generateStaticParams` en `/caso/[slug]`, `/granular/[pilar]` y `/sistema/[slug]`).
+
+Define `NEXT_PUBLIC_SITIO` con el origen público para que `canonical`, Open Graph y
+el sitemap resuelvan sobre el dominio real; sin esa variable se usa el puerto local.
+
+Comprobaciones recomendadas en integración continua, en este orden: instalación limpia,
+`typecheck`, `lint`, `test`, `build` y `qa:rutas`.
+
+## Autoría y créditos
+
+Dirección, diseño editorial, cartografía y desarrollo del portafolio:
+**Nestor Elihu Arriaga Gallegos**.
+
+Créditos y colaboraciones específicas se indican en cada proyecto. Las coautorías,
+instituciones y fuentes cartográficas de los trabajos originales se conservan en la
+página de fuentes del PDF y en las notas de cada proyecto. Las capturas de SISTEMAS
+llevan el crédito de la cartografía base y de las imágenes satelitales que muestran.
+
+## Licencia
+
+El código de este repositorio no se publica bajo una licencia abierta. El contenido
+—mapas, textos, dibujos, fotografías y capturas— pertenece a sus autores y a las
+instituciones acreditadas en cada proyecto; no puede reutilizarse sin autorización.
