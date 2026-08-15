@@ -128,7 +128,9 @@ function Sistema({ d }: { d: ParqueDatos }) {
 
   return (
     <section className={styles.sistema} aria-label="Sistema">
-      <p className={styles.rotulo}>SISTEMA</p>
+      <p className={`${styles.rotulo} mono`}>
+        Sistema<span>vegetación y circulación sobre la misma planta</span>
+      </p>
 
       <div className={styles.plantaCaja}>
         <Planta dibujo={d.planta} atenuada={sola === 'circulación'} />
@@ -167,7 +169,9 @@ function Variaciones({ d }: { d: ParqueDatos }) {
 
   return (
     <section className={styles.variaciones} aria-label="Variaciones">
-      <p className={styles.rotulo}>VARIACIONES</p>
+      <p className={`${styles.rotulo} mono`}>
+        Variaciones<span>una propuesta y sus alternativas</span>
+      </p>
 
       <div
         className={styles.principal}
@@ -205,7 +209,9 @@ function Detalle({ d }: { d: ParqueDatos }) {
   if (!d.detalle) return null;
   return (
     <section className={styles.detalle} aria-label="Detalle">
-      <p className={styles.rotulo}>DETALLE</p>
+      <p className={`${styles.rotulo} mono`}>
+        Detalle<span>foro y mirador circular</span>
+      </p>
       <div className={styles.detalleCaja}><Dibujo d={d.detalle} /></div>
       <p className={`${styles.pie} mono`}>Acercamiento al foro y al mirador circular</p>
     </section>

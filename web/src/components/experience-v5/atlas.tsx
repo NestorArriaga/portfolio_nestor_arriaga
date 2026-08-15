@@ -292,7 +292,7 @@ export function Hud({
       </p>
 
       <button ref={vistazoRef} type="button" className={`${styles.hudVistazo} mono`}
-              data-touch aria-label="Abrir índice de proyectos"
+              data-touch aria-label="Vistazo · abrir índice de proyectos"
               onClick={onVistazo}>Vistazo</button>
     </div>
   );

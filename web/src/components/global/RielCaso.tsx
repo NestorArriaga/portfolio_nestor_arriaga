@@ -122,7 +122,7 @@ function Riel({ id, corto, territorio, superficie, posicion, total, from }: Riel
       <p className={`${styles.posicion} mono`}>{`${posicion}/${total}`}</p>
 
       <Link className={`${styles.vistazo} btn`} data-v="fantasma" href={vistazoHref()}
-            aria-label="Abrir índice de proyectos">
+            aria-label="Vistazo · abrir índice de proyectos">
         Vistazo
       </Link>
     </nav>

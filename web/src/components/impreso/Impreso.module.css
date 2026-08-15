@@ -20,6 +20,8 @@
   --senal-texto: var(--senal);
   --margen: 14mm;
 
+  --texto: var(--tinta);
+
   background: var(--papel);
   color: var(--tinta);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
@@ -55,6 +57,7 @@
 .hoja[data-sup='tinta'] {
   background: var(--tinta);
   color: var(--optico);
+  --texto: var(--optico);
   --linea: color-mix(in srgb, var(--optico) 22%, transparent);
   --texto-2: #a6a79f;
 }
@@ -313,7 +316,22 @@
 .ventanas span {
   display: block; min-height: 0; align-self: center;
   height: 100%;
-  background-repeat: no-repeat; background-size: 430%;
+  background-image: var(--img);
+  background-position: var(--fx) var(--fy);
+  /* Acercamiento de 2×.
+
+     A 430 % el recorte pedía más detalle del que tiene la lámina y se imprimía
+     a 85 ppp, la mitad del mínimo; a 300 % la ventana que sostenía ese detalle
+     quedaba tan pequeña que la hoja se veía vacía. A 2× hay la mitad del ancho
+     de la lámina detrás de cada ventana, que a 160 ppp da una caja de tamaño
+     editorial y sigue siendo un acercamiento legible. */
+  background-repeat: no-repeat; background-size: 200%;
+  /* `justify-self: center` sobre un bloque sin ancho intrínseco lo dejaba en
+     cero: la ventana necesita ocupar su celda y sólo después topar con la
+     guarda. El centrado lo hacen los márgenes automáticos. */
+  width: 100%;
+  max-width: calc(var(--nativo, 2000) / 2 * 0.15875mm);
+  margin-inline: auto;
   border: 0.3mm solid var(--linea);
 }
 .ventanas p { margin: 0; font-size: 7.5pt; color: var(--texto-2); display: flex; gap: 2mm; }
@@ -598,3 +616,182 @@
   max-width: 120mm;
   line-height: 1.5;
 }
+
+/* --- GRANULAR impreso ---------------------------------------------------------
+   Cinco familias de página con márgenes, folio y ritmo comunes: apertura de
+   capítulo, instrumento, díptico, tríptico y medición. Ninguna incrusta una
+   captura de la pantalla ni resuelve su composición con estilos en línea. */
+
+/* La apertura del capítulo reserva una columna estrecha para el índice de
+   pilares y deja el campo a la caracterización regional. */
+.aperturaMarco[data-granular] { grid-template-columns: 60mm minmax(0, 1fr); }
+
+.granularCampo {
+  margin: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 2mm;
+  place-items: center;
+}
+
+.granularCampo img { max-height: 100%; }
+.granularCampo figcaption { justify-self: start; }
+
+.pilaresLista { margin-top: 6mm; }
+
+/* Procedencia y método: presentes, sin competir con la obra. */
+.fuenteTenue {
+  font-size: 7.4pt;
+  line-height: 1.5;
+  color: var(--texto-2);
+  opacity: 0.78;
+}
+
+/* La cautela va marcada con un filete, como en el sitio. */
+.alcanceImpreso {
+  font-size: 7.4pt;
+  line-height: 1.5;
+  color: var(--texto-2);
+  padding-left: 3mm;
+  border-left: 0.4mm solid var(--senal);
+}
+
+.alcanceImpreso b { color: var(--texto); font-weight: 500; }
+
+/* Tríptico: tres lecturas del mismo conjunto, a lo ancho de la hoja. */
+.tripticoMarco {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 4mm;
+}
+
+.tripticoMarco .fuente { display: grid; gap: 1.5mm; max-width: 210mm; }
+
+/* Medición: la gráfica se dibuja, no se incrusta. */
+.medicion {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 4mm;
+  align-content: center;
+}
+
+.medicionGrupos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6mm;
+  align-content: center;
+}
+
+.medicionGrupos li {
+  display: grid;
+  grid-template-columns: 16mm minmax(0, 1fr) auto;
+  grid-template-areas:
+    'clave nombre cifra'
+    'regla regla  regla';
+  align-items: baseline;
+  gap: 2mm 4mm;
+}
+
+.medicionClave {
+  grid-area: clave;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  margin: 0;
+  font-size: 8.5pt;
+}
+
+.medicionClave i { width: 3mm; height: 3mm; background: var(--c); flex: none; }
+
+.medicionNombre { grid-area: nombre; margin: 0; font-size: 10pt; color: var(--texto-2); }
+
+.medicionCifra { grid-area: cifra; margin: 0; display: flex; align-items: baseline; gap: 3mm; }
+
+.medicionCifra b {
+  font-size: 24pt;
+  font-weight: 560;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--c);
+  font-variant-numeric: tabular-nums;
+}
+
+.medicionCifra span { font-size: 8.5pt; color: var(--texto-2); font-variant-numeric: tabular-nums; }
+
+/* El ancho de la regla es la proporción del grupo: el dato, no un adorno. */
+.medicionRegla {
+  grid-area: regla;
+  display: block;
+  height: 1.2mm;
+  width: var(--w);
+  background: var(--c);
+}
+
+.medicionFigura {
+  margin: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 1.5mm;
+}
+
+.medicionFigura img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.medicionFigura figcaption { font-size: 7.4pt; color: var(--texto-2); }
+
+/* --- Guarda de densidad en papel ----------------------------------------------
+   Ningún ráster se compone por encima del ancho en el que conserva la densidad
+   mínima de impresión. `--nativo` es el ancho del archivo servido más grande;
+   a 160 ppp, ese ancho equivale a `nativo / 160` pulgadas = `nativo * 0.15875`
+   milímetros. Es lo que impide que una fotografía de 745 px se estire a 215 mm
+   —88 ppp— sólo porque la caja de la hoja lo permite. */
+.guarda {
+  max-width: calc(var(--nativo) * 0.15875mm);
+  justify-self: center;
+}
+
+/* Especímenes numerados: enunciados, no cifras. La numeración y el filete son
+   los que convierten tres frases sueltas en una enumeración compuesta. */
+.especimenesImp {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 70mm), 1fr));
+  gap: 8mm;
+  align-content: center;
+}
+
+.especimenesImp li {
+  display: grid;
+  gap: 2.5mm;
+  align-content: start;
+  padding-top: 3mm;
+  border-top: 0.3mm solid var(--linea);
+}
+
+.especimenNumImp {
+  justify-self: start;
+  display: grid;
+  place-items: center;
+  width: 5mm;
+  height: 5mm;
+  font-size: 7.5pt;
+  color: var(--tinta);
+  background: var(--senal);
+}
+
+.especimenValorImp {
+  margin: 0;
+  font-size: 14pt;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.especimenPieImp { margin: 0; font-size: 7.5pt; color: var(--texto-2); }

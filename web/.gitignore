@@ -14,3 +14,7 @@ __pycache__/
 
 # Salida de la auditoría de rutas.
 qa-rutas.json
+
+# Resultado del QA visual: capturas e informes que se regeneran a voluntad.
+.qa-visual/
+.qa-*/

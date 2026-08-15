@@ -98,7 +98,7 @@ function CasoSistema({ s, i, n, quieto }: { s: Sistema; i: number; n: number; qu
 
           {s.segundo?.imagen ? (
             <figure className={styles.segundo}>
-              <Captura im={s.segundo.imagen} sizes="(max-width: 900px) 92vw, 21vw" chico />
+              <Captura im={s.segundo.imagen} sizes="(max-width: 900px) 92vw, 34vw" chico />
               <figcaption className="mono">
                 <b>{s.segundo.titulo}</b>
                 <span>{s.segundo.estado}</span>

@@ -1,0 +1,372 @@
+/* GRANULAR — sistema visual del capítulo.
+
+   Sustituye a la hoja anterior, que resolvía la composición con estilos en
+   línea y presentaba cada pieza como una caja gris con cuatro campos. Aquí
+   todo sale de los mismos tokens del atlas: tinta, papel, señal, línea y la
+   retícula de doce columnas. Las diferencias entre pilares las pone el color
+   del dato, no siete hojas distintas.
+
+   Reglas de la familia:
+   - las figuras van montadas sobre papel, con filo, nunca recortadas encima;
+   - los metadatos son un pie editorial en una línea, no una barra;
+   - los controles son los del atlas, con estado `aria-pressed` visible;
+   - nada se mueve si `prefers-reduced-motion` está activo. */
+
+.ambito {
+  --tinta: #080908;
+  --grafito: #141512;
+  --papel: #f1eee6;
+  --optico: #f6f7f2;
+  --senal: #e9ff3a;
+  --texto: var(--optico);
+  --texto-2: #a6a79f;
+  /* 4.81:1 sobre la tinta. En #75766f se quedaba en 4.35 y las microetiquetas
+     —folios, claves y unidades— no llegaban al mínimo AA. */
+  --texto-3: #7d7e77;
+  --linea: color-mix(in srgb, var(--optico) 18%, transparent);
+  --linea-fuerte: color-mix(in srgb, var(--optico) 34%, transparent);
+  --sal: cubic-bezier(.16, 1, .3, 1);
+  --micro: 210ms;
+  --capa: 620ms;
+
+  /* Acento del pilar. Cada página lo redefine; los componentes sólo leen esto. */
+  --acento: var(--senal);
+
+  min-width: 0;
+}
+
+/* --- Acto: cada momento del capítulo ---------------------------------------- */
+
+.acto {
+  display: grid;
+  gap: clamp(1rem, 2.4vh, 1.8rem);
+  padding: clamp(2rem, 5.5vh, 4.5rem) 0 0;
+  scroll-margin-top: 5.5rem;
+  min-width: 0;
+}
+
+.actoTitulo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin: 0;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--linea);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.actoNum {
+  color: var(--acento);
+  font-variant-numeric: tabular-nums;
+}
+
+.actoNota {
+  margin-left: auto;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--texto-3);
+}
+
+/* --- Figura editorial -------------------------------------------------------- */
+
+.figura {
+  margin: 0;
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+/* Montaje: la lámina se apoya sobre su propia superficie de papel y lleva
+   filo. Sin esto, un diagrama de fondo blanco parecía pegado sobre la tinta. */
+.montaje {
+  position: relative;
+  background: var(--papel);
+  outline: 1px solid var(--linea);
+  overflow: hidden;
+  display: grid;
+  min-width: 0;
+}
+
+.montaje img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Variante sobre tinta: para piezas que ya traen fondo oscuro propio. */
+.montaje[data-fondo='tinta'] { background: var(--grafito); }
+
+.pie {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.pieTitulo {
+  margin: 0;
+  font-size: clamp(15px, 1.5vw, 19px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--texto);
+}
+
+/* Los metadatos en una sola línea técnica, separados por filetes. Antes eran
+   cuatro celdas dentro de un recuadro gris que competía con la figura. */
+.pieDatos {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.pieDatos > div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0 0.9rem;
+  border-left: 1px solid var(--linea);
+}
+
+.pieDatos > div:first-child { padding-left: 0; border-left: none; }
+.pieDatos dt { color: var(--texto-3); }
+.pieDatos dd { margin: 0; }
+
+.pieLectura {
+  margin: 0;
+  max-width: 74ch;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--texto-2);
+}
+
+/* La cautela se declara, pero no se convierte en protagonista visual. */
+.alcance {
+  margin: 0;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--acento);
+  max-width: 74ch;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--texto-2);
+}
+
+.alcance b { color: var(--texto); font-weight: 500; }
+
+/* --- Controles --------------------------------------------------------------- */
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.controlesFin { margin-left: auto; }
+
+/* Selector de estado: filete bajo la etiqueta activa, sin pastillas. */
+.estados {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0;
+  font-size: 13px;
+  color: var(--texto-2);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+}
+
+.estado i {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  background: var(--c, var(--acento));
+  opacity: 0.45;
+  transition: opacity var(--micro) var(--sal), transform var(--micro) var(--sal);
+}
+
+.estado:hover, .estado:focus-visible { color: var(--texto); }
+
+.estado[aria-pressed='true'], .estado[aria-selected='true'] {
+  color: var(--texto);
+  border-bottom-color: var(--acento);
+}
+
+.estado[aria-pressed='true'] i, .estado[aria-selected='true'] i {
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+.estadoNum {
+  font-size: 11px;
+  color: var(--texto-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Escenario de capas ------------------------------------------------------ */
+
+/* Una sola fuente de progreso: la capa activa se descubre con `clip-path` y
+   las demás se atenúan. No hay dos relojes ni animación escondida. */
+.escenario {
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+
+.escenario > img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* El velo atenúa todo menos la franja activa.
+
+   Se recorta con una máscara de dos paradas duras —opaca fuera de `--a`…`--b`,
+   transparente dentro— en lugar de con un polígono con hueco: un `clip-path`
+   de diez vértices para dibujar un marco es frágil y en la práctica no llegaba
+   a taparse nada. Sólo se animan `mask-position` y `opacity`. */
+.velo {
+  grid-area: 1 / 1;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--papel) 72%, transparent);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0 var(--a, 0%), transparent var(--a, 0%) var(--b, 100%), #000 var(--b, 100%) 100%);
+  mask-image: linear-gradient(
+    to right,
+    #000 0 var(--a, 0%), transparent var(--a, 0%) var(--b, 100%), #000 var(--b, 100%) 100%);
+  transition: opacity var(--capa) var(--sal);
+}
+
+/* Sobre una pieza de fondo oscuro el velo tiene que oscurecer, no aclarar.
+
+   Al 74 % la franja atenuada dejaba de leerse y el gesto pasaba de destacar a
+   tapar; el conjunto tiene que seguir presente. */
+.montaje[data-fondo='tinta'] .velo {
+  background: color-mix(in srgb, var(--tinta) 56%, transparent);
+}
+
+/* --- Comparador de dos estados ----------------------------------------------- */
+
+.parejaEstados {
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+
+.parejaEstados img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity var(--capa) var(--sal);
+}
+
+.parejaEstados img[data-on='false'] { opacity: 0; }
+
+/* --- Díptico ------------------------------------------------------------------ */
+
+.diptico {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1px;
+  background: var(--linea);
+  outline: 1px solid var(--linea);
+}
+
+.dipticoHoja {
+  margin: 0;
+  background: var(--papel);
+  display: grid;
+  gap: 0;
+}
+
+.dipticoHoja img { display: block; width: 100%; height: auto; }
+
+.dipticoRotulo {
+  padding: 0.5rem 0.7rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  background: var(--papel);
+  border-bottom: 1px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+}
+
+/* --- Visor de detalle --------------------------------------------------------- */
+
+.visorFondo {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: color-mix(in srgb, var(--tinta) 94%, transparent);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  padding: clamp(0.8rem, 2vw, 1.6rem);
+}
+
+.visorBarra {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.visorTitulo {
+  margin: 0;
+  font-size: 13px;
+  color: var(--texto-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.visorLienzo {
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  place-items: center;
+  background: var(--papel);
+  outline: 1px solid var(--linea);
+}
+
+/* La imagen se adapta al visor. La regla anterior imponía 1000 px mínimos y en
+   un teléfono el detalle se salía de la pantalla por los dos lados. */
+.visorLienzo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Por encima de la tableta sí se permite pasar del ancho del visor: ahí el
+   desplazamiento dentro del lienzo es un gesto razonable para leer el detalle. */
+@media (min-width: 900px) {
+  .visorLienzo img { max-width: none; width: min(160%, 1600px); }
+}
+
+/* --- Movimiento reducido ------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .velo, .parejaEstados img, .estado, .estado i { transition: none; }
+}

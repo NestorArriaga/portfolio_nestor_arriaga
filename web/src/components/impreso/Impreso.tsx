@@ -1,10 +1,30 @@
 import { CSSProperties } from 'react';
 
 import { Glifo } from '@/components/cuaderno/Glifo';
+import { granularVisuals, type GranularVisual } from '@/content/granularVisuals';
+import {
+  clusteringClasificados, clusteringGrupos, clusteringMetodo, clusteringPorcentaje,
+  comarcaMunicipios,
+} from '@/content/granularClustering';
+import { hojasDePilar, type HojaGranular } from './granularHojas';
+import { anchoServido } from '@/lib/densidad';
+import { atributosImpresos } from './densidadImpresa';
 import type { Lamina } from '@/components/experience-v5/registry';
 import type { HojaImpresa, HojaSistema } from './hojas';
 import type { Imagen } from '@/components/sistemas/registro';
 import styles from './Impreso.module.css';
+
+/**
+ * Guarda de densidad de una figura impresa.
+ *
+ * Publica el ancho del archivo más grande que existe para la lámina. La hoja de
+ * estilo lo convierte en un ancho máximo en milímetros para que ningún ráster
+ * se imprima por debajo de la densidad mínima: la fotografía de la cuenca, de
+ * 745 px nativos, se estaba componiendo a 215 mm, es decir a 88 ppp.
+ */
+function densidad(img: { srcSet?: string; width: number }): CSSProperties {
+  return { '--nativo': String(anchoServido(img)) } as CSSProperties;
+}
 
 /**
  * Portafolio impreso — A4 horizontal, 297 × 210 mm.
@@ -96,7 +116,7 @@ export function Impreso({
   type Hoja =
     | { tipo: 'hoja'; h: HojaImpresa }
     | { tipo: 'granular' }
-    | { tipo: 'granularCustom'; pilarId: string; vista: string; titulo: string; numero: string }
+    | { tipo: 'granularHoja'; h: HojaGranular }
     | { tipo: 'pilar'; pilar: Pilar }
     | { tipo: 'parque' }
     | { tipo: 'parqueVar' }
@@ -108,21 +128,11 @@ export function Impreso({
 
   const hojas: Hoja[] = hojasProyecto.map((h) => ({ tipo: 'hoja' as const, h }));
   hojas.push({ tipo: 'granular' });
+  // Cada pilar abre con su lámina cartográfica y añade después las hojas
+  // propias que el registro le declara. El orden es el mismo del sitio.
   granular.pilares.forEach((pilar) => {
-    if (pilar.numero === 'I') {
-      hojas.push({ tipo: 'granularCustom', pilarId: 'agua', vista: 'radar', titulo: 'Tensiones y políticas hídricas', numero: pilar.numero });
-      hojas.push({ tipo: 'pilar', pilar }); // Include the rest of the pillar (calidad, acuiferos)
-    } else if (pilar.numero === 'II') {
-      hojas.push({ tipo: 'granularCustom', pilarId: 'agropecuario', vista: 'paisaje', titulo: 'Dos paisajes productivos', numero: pilar.numero });
-      hojas.push({ tipo: 'granularCustom', pilarId: 'agropecuario', vista: 'flujos', titulo: 'Estructura agrícola · Flujos', numero: pilar.numero });
-      hojas.push({ tipo: 'pilar', pilar }); // Include the rest of the pillar
-    } else if (pilar.numero === 'VII') {
-      hojas.push({ tipo: 'granularCustom', pilarId: 'clustering', vista: 'loc-clas', titulo: 'Localización y clasificación', numero: pilar.numero });
-      hojas.push({ tipo: 'granularCustom', pilarId: 'clustering', vista: 'tamano', titulo: 'Tamaño de los grupos', numero: pilar.numero });
-      hojas.push({ tipo: 'pilar', pilar }); // Also include the standard plates of clustering if any
-    } else {
-      hojas.push({ tipo: 'pilar', pilar });
-    }
+    hojas.push({ tipo: 'pilar', pilar });
+    hojasDePilar(pilar.numero).forEach((h) => hojas.push({ tipo: 'granularHoja', h }));
   });
   hojas.push({ tipo: 'parque' });
   if (parque.variaciones.length) hojas.push({ tipo: 'parqueVar' });
@@ -158,7 +168,7 @@ export function Impreso({
     switch (h.tipo) {
       case 'hoja': return <HojaProyecto key={`${h.h.proyecto}${h.h.clase}${i}`} h={h.h} folio={folio} total={total} />;
       case 'granular': return <PaginaGranular key="g0" granular={granular} folio={folio} total={total} />;
-      case 'granularCustom': return <GranularCustomImpresa key={`gc${i}`} pilarId={h.pilarId} vista={h.vista} titulo={h.titulo} numero={h.numero} folio={folio} total={total} />;
+      case 'granularHoja': return <HojaGranularImpresa key={`gh${i}`} h={h.h} folio={folio} total={total} />;
       case 'pilar': return <PilarImpreso key={`g${h.pilar.numero}`} pilar={h.pilar} folio={folio} total={total} />;
       case 'parque': return <ParqueApertura key="pk0" parque={parque} folio={folio} total={total} />;
       case 'parqueVar': return <ParqueVariaciones key="pk1" parque={parque} folio={folio} total={total} />;
@@ -410,9 +420,9 @@ function MapaHoja({ h }: { h: HojaImpresa }) {
   return (
     <div className={styles.lecturaMarco} data-solo={instrumentos ? undefined : ''}>
       {r ? (
-        <figure className={styles.mapaFig}>
+        <figure className={`${styles.mapaFig} ${styles.guarda}`} style={densidad(r.img)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className={styles.mapa} src={r.img.src} srcSet={r.img.srcSet} sizes="186mm"
+          <img className={styles.mapa} {...atributosImpresos(r.img, 186)}
                width={r.img.width} height={r.img.height} alt={r.pie} />
           {/* El `viewBox` toma las dimensiones nativas de la lámina y el `<svg>`
               cubre la misma caja que el `<img>`: al encajar ambos por «meet»,
@@ -472,9 +482,9 @@ function Diptico({ h }: { h: HojaImpresa }) {
   return (
     <div className={styles.piezas} data-n="2">
       {h.recursos.slice(0, 2).map((r, i) => (
-        <figure key={r.img.src}>
+        <figure key={r.img.src} className={styles.guarda} style={densidad(r.img)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={r.img.src} srcSet={r.img.srcSet} sizes="130mm"
+          <img {...atributosImpresos(r.img, 130)}
                width={r.img.width} height={r.img.height} alt={r.pie} />
           <figcaption className="mono">
             <b>{h.etiquetas?.[i] ?? ''}</b> {r.pie}
@@ -500,12 +510,18 @@ function AtlasDetalle({ h }: { h: HojaImpresa }) {
 
   return (
     <div className={styles.detalleInvertido}>
-      <ol className={styles.ventanas} data-n={String(puntos.length)}>
+      {/* La ventana no puede crecer más allá de lo que sostiene el recorte: a
+          300 % sólo hay un tercio del ancho de la lámina detrás de cada una. */}
+      <ol className={styles.ventanas} data-n={String(puntos.length)}
+          style={densidad(r.img)}>
         {puntos.map((pt, i) => (
           <li key={i}>
+            {/* El recorte se compone con variables, como el resto de la hoja:
+                la posición focal es dato y la hoja de estilo la coloca. */}
             <span style={{
-              backgroundImage: `url(${r.img.src})`,
-              backgroundPosition: `${pt.x}% ${pt.y}%`,
+              '--img': `url(${r.img.src})`,
+              '--fx': `${pt.x}%`,
+              '--fy': `${pt.y}%`,
             } as CSSProperties} />
             <p className="mono"><b>{String(i + 1).padStart(2, '0')}</b>{pt.nombre}</p>
           </li>
@@ -513,9 +529,9 @@ function AtlasDetalle({ h }: { h: HojaImpresa }) {
       </ol>
 
       <div className={styles.instrumento}>
-        <figure className={styles.localizador}>
+        <figure className={`${styles.localizador} ${styles.guarda}`} style={densidad(r.img)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={r.img.src} srcSet={r.img.srcSet} sizes="58mm"
+          <img {...atributosImpresos(r.img, 58)}
                width={r.img.width} height={r.img.height} alt={r.pie} />
           <svg className={styles.nodosImp} viewBox={`0 0 ${r.img.width} ${r.img.height}`} aria-hidden="true">
             {puntos.map((pt, i) => (
@@ -540,7 +556,8 @@ function PerfilImpreso({ h }: { h: HojaImpresa }) {
     <div className={styles.lecturaMarco}>
       {perfil ? (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img className={styles.mapa} src={perfil.img.src} srcSet={perfil.img.srcSet} sizes="170mm"
+        <img className={`${styles.mapa} ${styles.guarda}`} {...atributosImpresos(perfil.img, 170)}
+             style={densidad(perfil.img)}
              width={perfil.img.width} height={perfil.img.height} alt={perfil.pie} />
       ) : null}
       <div className={styles.instrumento}>
@@ -555,7 +572,8 @@ function PerfilImpreso({ h }: { h: HojaImpresa }) {
         ) : null}
         {mapa ? (
           /* eslint-disable-next-line @next/next/no-img-element */
-          <img className={styles.miniatura} src={mapa.img.src} srcSet={mapa.img.srcSet} sizes="60mm"
+          <img className={`${styles.miniatura} ${styles.guarda}`} {...atributosImpresos(mapa.img, 60)}
+               style={densidad(mapa.img)}
                width={mapa.img.width} height={mapa.img.height} alt={mapa.pie} />
         ) : null}
         {perfil?.origen ? <p className={`${styles.fuente} mono`}>{perfil.origen}</p> : null}
@@ -590,7 +608,8 @@ function Matriz({ h }: { h: HojaImpresa }) {
       <Pesos criterios={h.criterios ?? []} />
       {r ? (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img className={styles.mapa} src={r.img.src} srcSet={r.img.srcSet} sizes="110mm"
+        <img className={`${styles.mapa} ${styles.guarda}`} {...atributosImpresos(r.img, 110)}
+             style={densidad(r.img)}
              width={r.img.width} height={r.img.height} alt={r.pie} />
       ) : null}
     </div>
@@ -599,12 +618,36 @@ function Matriz({ h }: { h: HojaImpresa }) {
 
 /** Contacto editorial: las fotografías numeradas con su pie completo. */
 function Contacto2({ h }: { h: HojaImpresa }) {
+  // Con una sola fotografía la banda de contacto deja de tener sentido: la
+  // pieza se compone contra una columna de lectura en vez de quedarse sola en
+  // medio de la hoja. Ampliarla no es opción —son 745 px nativos— y a 160 ppp
+  // no puede pasar de unos 118 mm.
+  if (h.recursos.length === 1) {
+    const r = h.recursos[0];
+    return (
+      <div className={styles.lecturaMarco}>
+        <figure className={`${styles.mapaFig} ${styles.guarda}`} style={densidad(r.img)}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className={styles.mapa} {...atributosImpresos(r.img, 118)}
+               width={r.img.width} height={r.img.height} alt={r.pie} />
+        </figure>
+        <div className={styles.instrumento}>
+          <p className={`${styles.codigoChico} mono`}>{`P${h.proyecto} · evidencia`}</p>
+          <h3 className={styles.tituloPilar}>{h.titulo}</h3>
+          <p className={`${styles.fuente} mono`}>{r.pie}</p>
+          {r.origen ? <p className={`${styles.fuenteTenue} mono`}>{r.origen}</p> : null}
+          {h.fuente ? <p className={`${styles.fuenteTenue} mono`}>{h.fuente}</p> : null}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.piezas} data-n={String(h.recursos.length)}>
       {h.recursos.map((r, i) => (
-        <figure key={r.img.src}>
+        <figure key={r.img.src} className={styles.guarda} style={densidad(r.img)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={r.img.src} srcSet={r.img.srcSet} sizes="130mm"
+          <img {...atributosImpresos(r.img, 130)}
                width={r.img.width} height={r.img.height} alt={r.pie} />
           <figcaption className="mono">
             <b>{String(i + 1).padStart(2, '0')}</b> {r.pie}{r.origen ? ` · ${r.origen}` : ''}
@@ -618,18 +661,49 @@ function Contacto2({ h }: { h: HojaImpresa }) {
 /** Cifras alineadas con su apoyo gráfico, si existe. */
 function Cifras({ h }: { h: HojaImpresa }) {
   const r = h.recursos[0];
+  const metricas = h.metricas ?? [];
+
+  // Hay capítulos donde las «cifras» no son cifras sino enunciados —los tres
+  // patrones dominantes de una reserva—. Compuestos como cifra quedan tres
+  // frases sueltas en medio del papel; como especímenes numerados se leen como
+  // lo que son: una enumeración de lo que la fuente observa.
+  const textual = metricas.length > 0 && metricas.every((m) => !/\d/.test(m.valor));
+
+  if (textual) {
+    return (
+      <div className={styles.lecturaMarco} data-solo={r ? undefined : ''}>
+        <ol className={styles.especimenesImp}>
+          {metricas.map((m, i) => (
+            <li key={m.etiqueta}>
+              <span className={`${styles.especimenNumImp} mono`}>{String(i + 1).padStart(2, '0')}</span>
+              <p className={styles.especimenValorImp}>{m.valor}</p>
+              <p className={`${styles.especimenPieImp} mono`}>{m.etiqueta}</p>
+            </li>
+          ))}
+        </ol>
+        {r ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img className={`${styles.mapa} ${styles.guarda}`} style={densidad(r.img)}
+               {...atributosImpresos(r.img, 100)}
+               width={r.img.width} height={r.img.height} alt={r.pie} />
+        ) : null}
+      </div>
+    );
+  }
+
   // Sin apoyo gráfico la hoja deja de ser una lectura a dos columnas: las
   // cifras se componen a página completa en vez de dejar media hoja vacía.
   return (
     <div className={styles.lecturaMarco} data-solo={r ? undefined : ''}>
       <dl className={`${styles.cifrasImp} mono`}>
-        {h.metricas?.map((m) => (
+        {metricas.map((m) => (
           <div key={m.etiqueta}><dd>{m.valor}</dd><dt>{m.etiqueta}</dt></div>
         ))}
       </dl>
       {r ? (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img className={styles.mapa} src={r.img.src} srcSet={r.img.srcSet} sizes="100mm"
+        <img className={`${styles.mapa} ${styles.guarda}`} style={densidad(r.img)}
+             {...atributosImpresos(r.img, 100)}
              width={r.img.width} height={r.img.height} alt={r.pie} />
       ) : null}
     </div>
@@ -684,13 +758,13 @@ function HojaSistemaImpresa({ s, folio, total }: { s: HojaSistema; folio: number
       <div className={styles.sisMarco}>
         <div className={styles.sisPieza}>
           {s.principal ? (
-            <CapturaImpresa im={s.principal} ancho="176mm"
+            <CapturaImpresa im={s.principal} caja={176}
                             estado={s.secuencia?.[0]} conPie={!s.secuencia} />
           ) : null}
           {s.detalles.length ? (
             <div className={styles.sisDetalles} data-n={String(s.detalles.length)}>
               {s.detalles.map((d, k) => (
-                <CapturaImpresa key={d.src} im={d} ancho="86mm"
+                <CapturaImpresa key={d.src} im={d} caja={86}
                                 estado={s.secuencia?.[k + 1]} conPie={!s.secuencia} />
               ))}
             </div>
@@ -727,12 +801,12 @@ function HojaSistemaImpresa({ s, folio, total }: { s: HojaSistema; folio: number
  * sola vez— y se queda con lo que distingue a esta pantalla.
  */
 function CapturaImpresa({
-  im, ancho, estado, conPie = true,
-}: { im: Imagen; ancho: string; estado?: string; conPie?: boolean }) {
+  im, caja, estado, conPie = true,
+}: { im: Imagen; /** Ancho de la caja en milímetros. */ caja: number; estado?: string; conPie?: boolean }) {
   return (
     <figure className={styles.sisCaptura}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={im.src} srcSet={im.srcSet} sizes={ancho}
+      <img {...atributosImpresos(im, caja)}
            width={im.width} height={im.height} alt={im.pie} />
       <figcaption className="mono">
         {estado ? <b className={styles.sisPaso}>{estado}</b> : null}
@@ -743,13 +817,24 @@ function CapturaImpresa({
   );
 }
 
+/**
+ * Apertura de GRANULAR: caracterización regional e índice de pilares.
+ *
+ * Funciona como la portadilla del capítulo. La lámina de caracterización ocupa
+ * el campo y la columna declara territorio, región y los siete pilares en su
+ * orden de lectura.
+ */
 function PaginaGranular({
   granular, folio, total,
-}: { granular: { titulo: string; territorio: string; region: string; pilares: Pilar[] }; folio: number; total: number }) {
+}: {
+  granular: { titulo: string; territorio: string; region: string; pilares: Pilar[] };
+  folio: number; total: number;
+}) {
+  const car = granularVisuals.caracterizacion;
   return (
     <section className={styles.hoja} data-sup="tinta">
-      <div className={styles.aperturaMarco}>
-        <div className={styles.aperturaTexto} style={{ flex: '0 0 auto', width: '60mm' }}>
+      <div className={styles.aperturaMarco} data-granular="">
+        <div className={styles.aperturaTexto}>
           <p className={`${styles.codigo} mono`}><Glifo id="14" tam={20} />P14</p>
           <h2 className={styles.tituloProyecto} style={{ '--largo': '26' } as CSSProperties}>GRANULAR</h2>
           <dl className={`${styles.ficha} mono`}>
@@ -758,70 +843,200 @@ function PaginaGranular({
             <div><dt>Región</dt><dd>{granular.region}</dd></div>
             <div><dt>Pilares</dt><dd>{`${granular.pilares.length}`}</dd></div>
           </dl>
-          <ol className={`${styles.pilaresLista} mono`} style={{ marginTop: '2rem' }}>
+          <ol className={`${styles.pilaresLista} mono`}>
             {granular.pilares.map((p) => (
               <li key={p.numero}><span>{p.numero}</span>{p.nombre}</li>
             ))}
           </ol>
         </div>
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <figure className={styles.granularCampo}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/projects/granular/analisis/p14-comarca-caracterizacion.svg" alt="Caracterizacion" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-        </div>
+          <img className={styles.visual} {...impreso(car, 175)} alt={car.alt} />
+          <figcaption className={`${styles.fuente} mono`}>{car.source}</figcaption>
+        </figure>
       </div>
       <Pie folio={folio} total={total} codigo="P14" />
     </section>
   );
 }
 
-function GranularCustomImpresa({ pilarId, vista, titulo, numero, folio, total }: { pilarId: string; vista: string; titulo: string; numero: string; folio: number; total: number; }) {
-  const { granularVisuals } = require('@/content/granularVisuals');
-  
-  let v1 = null;
-  let v2 = null;
-  if (vista === 'radar') v1 = granularVisuals.aguaRadar;
-  if (vista === 'paisaje') {
-    v1 = granularVisuals.paisajeAgricola;
-    v2 = granularVisuals.paisajeAgropecuario;
-  }
-  if (vista === 'flujos') v1 = granularVisuals.cultivosFlujos;
-  if (vista === 'loc-clas') {
-    v1 = granularVisuals.clusteringLoc;
-    v2 = granularVisuals.clusteringCoropletico;
-  }
-  if (vista === 'tamano') v1 = granularVisuals.clusteringSize;
+/**
+ * Atributos de impresión de una figura de GRANULAR.
+ *
+ * Devuelve la escalera completa y la caja declarada en milímetros, de modo que
+ * el navegador escoja el derivado que corresponde a esa caja. Antes se
+ * incrustaba siempre el archivo de 2480 px: en una hoja donde la figura ocupa
+ * media página eso son más de 700 ppp, cuatro veces la densidad útil, y el
+ * documento entero pesaba lo que pesaban esos excesos.
+ */
+function impreso(v: GranularVisual, cajaMm: number) {
+  const img = {
+    src: v.asset.printSrc ?? v.asset.src,
+    srcSet: v.asset.printSrcSet,
+    width: Math.round(v.asset.width),
+  };
+  return atributosImpresos(img, cajaMm);
+}
 
+/**
+ * Columna editorial compartida por las hojas de GRANULAR.
+ *
+ * Mismo orden en todas: código, título, lectura, procedencia y alcance. Es lo
+ * que hace que cinco composiciones distintas se lean como un solo capítulo.
+ */
+function ColumnaGranular({
+  numero, titulo, lectura, fuente, alcance,
+}: {
+  numero: string; titulo: string; lectura?: string; fuente?: string; alcance?: string;
+}) {
+  return (
+    <div className={styles.instrumento}>
+      <p className={`${styles.codigoChico} mono`}>{`P14.${numero}`}</p>
+      <h3 className={styles.tituloPilar}>{titulo}</h3>
+      {lectura ? <p className={`${styles.fuente} mono`}>{lectura}</p> : null}
+      {fuente ? <p className={`${styles.fuenteTenue} mono`}>{fuente}</p> : null}
+      {alcance ? (
+        <p className={`${styles.alcanceImpreso} mono`}><b>Alcance. </b>{alcance}</p>
+      ) : null}
+    </div>
+  );
+}
+
+/** Una figura dominante con su columna editorial. */
+function GranularInstrumento({
+  h, folio, total,
+}: { h: Extract<HojaGranular, { clase: 'instrumento' }>; folio: number; total: number }) {
   return (
     <section className={styles.hoja} data-sup="tinta">
       <div className={styles.lecturaMarco}>
-        {v1 && !v2 && (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img className={styles.mapa} src={v1.asset.src} style={{ objectFit: 'contain', width: '100%', height: '100%' }} alt={titulo} />
-        )}
-        {v1 && v2 && (
-          <div className={styles.piezas} data-n="2" style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <figure>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={v1.asset.src} style={{ objectFit: 'contain', width: '100%', maxHeight: '100%' }} alt={v1.title} />
-              <figcaption className="mono" style={{ fontSize: '0.65rem' }}>{v1.title}</figcaption>
-            </figure>
-            <figure>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={v2.asset.src} style={{ objectFit: 'contain', width: '100%', maxHeight: '100%' }} alt={v2.title} />
-              <figcaption className="mono" style={{ fontSize: '0.65rem' }}>{v2.title}</figcaption>
-            </figure>
-          </div>
-        )}
-        <div className={styles.instrumento}>
-          <p className={`${styles.codigoChico} mono`}>{`P14.${numero}`}</p>
-          <h3 className={styles.tituloPilar} style={{ fontSize: '1rem', marginTop: '1rem' }}>{titulo}</h3>
-          <p className={`${styles.fuente} mono`} style={{ marginTop: '1rem' }}>{v1?.caption}</p>
-          <p className={`${styles.fuente} mono`} style={{ opacity: 0.6 }}>{v1?.source}</p>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className={styles.mapa} {...impreso(h.visual, 186)} alt={h.visual.alt} />
+        <ColumnaGranular numero={h.numero} titulo={h.titulo}
+                         lectura={h.visual.caption} fuente={h.visual.source}
+                         alcance={h.visual.limitations} />
       </div>
-      <Pie folio={folio} total={total} codigo={`P14.${numero}`} />
+      <Pie folio={folio} total={total} codigo={`P14.${h.numero}`} />
     </section>
   );
+}
+
+/** Díptico: dos figuras comparables, con el mismo peso y rotuladas. */
+function GranularDiptico({
+  h, folio, total,
+}: { h: Extract<HojaGranular, { clase: 'diptico' }>; folio: number; total: number }) {
+  return (
+    <section className={styles.hoja} data-sup="tinta">
+      <div className={styles.lecturaMarco}>
+        <div className={styles.piezas} data-n="2">
+          {[h.a, h.b].map((v) => (
+            <figure key={v.id}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img {...impreso(v, 92)} alt={v.alt} />
+              <figcaption className="mono">{v.title}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <ColumnaGranular numero={h.numero} titulo={h.titulo}
+                         lectura={h.lectura} fuente={h.a.source}
+                         alcance={h.a.limitations ?? h.b.limitations} />
+      </div>
+      <Pie folio={folio} total={total} codigo={`P14.${h.numero}`} />
+    </section>
+  );
+}
+
+/** Tríptico: tres lecturas del mismo conjunto, en una sola hoja rotulada. */
+function GranularTriptico({
+  h, folio, total,
+}: { h: Extract<HojaGranular, { clase: 'triptico' }>; folio: number; total: number }) {
+  return (
+    <section className={styles.hoja} data-sup="tinta">
+      <p className={`${styles.codigoChico} mono`}>{`P14.${h.numero} · ${h.titulo}`}</p>
+      <div className={styles.tripticoMarco}>
+        <div className={styles.piezas} data-n="3">
+          {h.piezas.map((v) => (
+            <figure key={v.id}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img {...impreso(v, 85)} alt={v.alt} />
+              <figcaption className="mono">{v.title.replace(/^.*·\s*/, '')}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <p className={`${styles.fuente} mono`}>
+          {h.lectura}
+          <span className={styles.fuenteTenue}>{h.piezas[0].source}</span>
+        </p>
+      </div>
+      <Pie folio={folio} total={total} codigo={`P14.${h.numero}`} />
+    </section>
+  );
+}
+
+/**
+ * Medición: la gráfica de tamaños **dibujada**, no incrustada.
+ *
+ * La versión anterior imprimía aquí un JPG de una gráfica de oficina. Los
+ * mismos valores compuestos con el sistema salen nítidos a cualquier tamaño,
+ * pesan lo que pesa el texto y el PDF los conserva seleccionables.
+ */
+function GranularMedicion({
+  h, folio, total,
+}: { h: Extract<HojaGranular, { clase: 'medicion' }>; folio: number; total: number }) {
+  const mayor = Math.max(...clusteringGrupos.map((g) => g.municipios));
+  return (
+    <section className={styles.hoja} data-sup="tinta">
+      <div className={styles.lecturaMarco}>
+        <div className={styles.medicion}>
+          <ol className={styles.medicionGrupos}>
+            {clusteringGrupos.map((g) => (
+              <li key={g.clave}
+                  style={{
+                    '--c': g.color,
+                    '--w': `${(g.municipios / mayor) * 100}%`,
+                  } as CSSProperties}>
+                <p className={`${styles.medicionClave} mono`}><i aria-hidden="true" />{g.clave}</p>
+                <p className={styles.medicionNombre}>{g.nombre}</p>
+                <p className={styles.medicionCifra}>
+                  <b>{g.municipios}</b>
+                  <span className="mono">{`${clusteringPorcentaje(g).toFixed(1)} %`}</span>
+                </p>
+                <span className={styles.medicionRegla} aria-hidden="true" />
+              </li>
+            ))}
+          </ol>
+          <p className={`${styles.fuenteTenue} mono`}>
+            {`${clusteringClasificados} municipios clasificados de ${comarcaMunicipios}`
+              + ` · método: ${clusteringMetodo.join(' · ')}`}
+          </p>
+        </div>
+
+        <div className={styles.instrumento}>
+          <p className={`${styles.codigoChico} mono`}>{`P14.${h.numero}`}</p>
+          <h3 className={styles.tituloPilar}>{h.titulo}</h3>
+          <figure className={styles.medicionFigura}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img {...impreso(h.visual, 70)} alt={h.visual.alt} />
+            <figcaption className="mono">{h.visual.title}</figcaption>
+          </figure>
+          <p className={`${styles.fuenteTenue} mono`}>{h.visual.source}</p>
+        </div>
+      </div>
+      <Pie folio={folio} total={total} codigo={`P14.${h.numero}`} />
+    </section>
+  );
+}
+
+/** Despacha una hoja de GRANULAR a su composición. */
+function HojaGranularImpresa({
+  h, folio, total,
+}: { h: HojaGranular; folio: number; total: number }) {
+  switch (h.clase) {
+    case 'instrumento': return <GranularInstrumento h={h} folio={folio} total={total} />;
+    case 'diptico': return <GranularDiptico h={h} folio={folio} total={total} />;
+    case 'triptico': return <GranularTriptico h={h} folio={folio} total={total} />;
+    case 'medicion': return <GranularMedicion h={h} folio={folio} total={total} />;
+    default: return null;
+  }
 }
 
 function PilarImpreso({ pilar, folio, total }: { pilar: Pilar; folio: number; total: number }) {
@@ -831,8 +1046,8 @@ function PilarImpreso({ pilar, folio, total }: { pilar: Pilar; folio: number; to
       <div className={styles.lecturaMarco}>
         {l?.img ? (
           /* eslint-disable-next-line @next/next/no-img-element */
-          <img className={styles.mapa} src={l.img.src} srcSet={l.img.srcSet}
-               sizes="186mm"
+          <img className={`${styles.mapa} ${styles.guarda}`} style={densidad(l.img)}
+               {...atributosImpresos(l.img, 186)}
                width={l.img.width} height={l.img.height}
                alt={`${l.titulo}. Comarca Lagunera.`} />
         ) : null}

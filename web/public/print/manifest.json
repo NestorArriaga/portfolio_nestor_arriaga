@@ -1,0 +1,247 @@
+{
+ "/projects/plates/p01-areas-verdes-2000.webp": {
+  "archivo": "/print/p01-areas-verdes-2000-1238-080908.jpg",
+  "ancho": 1238,
+  "fondo": "#080908"
+ },
+ "/projects/plates/p01-colonias-grafica-815.webp": {
+  "archivo": "/print/p01-colonias-grafica-815-815-f1eee6.jpg",
+  "ancho": 815,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p02-carbono-2000.webp": {
+  "archivo": "/print/p02-carbono-2000-1218-f1eee6.jpg",
+  "ancho": 1218,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/veracruz-foto-745.webp": {
+  "archivo": "/print/veracruz-foto-745-745-f1eee6.jpg",
+  "ancho": 745,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p03-zonas-optimas-1499.webp": {
+  "archivo": "/print/p03-zonas-optimas-1499-1246-f1eee6.jpg",
+  "ancho": 1246,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p04-uso-optimo-1909.webp": {
+  "archivo": "/print/p04-uso-optimo-1909-1677-f1eee6.jpg",
+  "ancho": 1677,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p05-geomorfones-clean-1604.webp": {
+  "archivo": "/print/p05-geomorfones-clean-1604-1289-f1eee6.jpg",
+  "ancho": 1289,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p05-geomorfones-clean-500.webp": {
+  "archivo": "/print/p05-geomorfones-clean-500-488-f1eee6.jpg",
+  "ancho": 488,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p06-zonas-ecologicas-clean-1274.webp": {
+  "archivo": "/print/p06-zonas-ecologicas-clean-1274-1274-f1eee6.jpg",
+  "ancho": 1274,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p07-pendiente-clean-1795.webp": {
+  "archivo": "/print/p07-pendiente-clean-1795-1347-f1eee6.jpg",
+  "ancho": 1347,
+  "fondo": "#f1eee6"
+ },
+ "/projects/raster/metz-pendiente-perfil-2000.webp": {
+  "archivo": "/print/metz-pendiente-perfil-2000-1464-f1eee6.jpg",
+  "ancho": 1464,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p07-pendiente-clean-500.webp": {
+  "archivo": "/print/p07-pendiente-clean-500-384-f1eee6.jpg",
+  "ancho": 384,
+  "fondo": "#f1eee6"
+ },
+ "/projects/plates/p08-patrones-1576.webp": {
+  "archivo": "/print/p08-patrones-1576-1406-080908.jpg",
+  "ancho": 1406,
+  "fondo": "#080908"
+ },
+ "/projects/plates/p08-patrones-500.webp": {
+  "archivo": "/print/p08-patrones-500-488-080908.jpg",
+  "ancho": 488,
+  "fondo": "#080908"
+ },
+ "/projects/plates/p09-vocaciones-2000.webp": {
+  "archivo": "/print/p09-vocaciones-2000-1464-080908.jpg",
+  "ancho": 1464,
+  "fondo": "#080908"
+ },
+ "/projects/plates/p10-conservacion-2000.webp": {
+  "archivo": "/print/p10-conservacion-2000-1464-080908.jpg",
+  "ancho": 1464,
+  "fondo": "#080908"
+ },
+ "/projects/plates/p11-agricola-2000.webp": {
+  "archivo": "/print/p11-agricola-2000-1456-080908.jpg",
+  "ancho": 1456,
+  "fondo": "#080908"
+ },
+ "/projects/plates/p12-degradacion-1631.webp": {
+  "archivo": "/print/p12-degradacion-1631-1001-080908.jpg",
+  "ancho": 1001,
+  "fondo": "#080908"
+ },
+ "/projects/plates/p12-suelo-foto-768.webp": {
+  "archivo": "/print/p12-suelo-foto-768-768-080908.jpg",
+  "ancho": 768,
+  "fondo": "#080908"
+ },
+ "/projects/plates/calvillo-foto-1446.webp": {
+  "archivo": "/print/calvillo-foto-1446-1028-080908.jpg",
+  "ancho": 1028,
+  "fondo": "#080908"
+ },
+ "/projects/plates/p13-subcuencas-1600.webp": {
+  "archivo": "/print/p13-subcuencas-1600-1074-080908.jpg",
+  "ancho": 1074,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-comarca-caracterizacion-1440.webp": {
+  "archivo": "/print/p14-comarca-caracterizacion-1440-1440-080908.jpg",
+  "ancho": 1440,
+  "fondo": "#080908"
+ },
+ "/atlas/raster/calidad-agua-total--l1-color-1000.webp": {
+  "archivo": "/print/calidad-agua-total--l1-color-1000-1000-080908.jpg",
+  "ancho": 1000,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-2480.webp": {
+  "archivo": "/print/p14-agua-tensiones-politicas-1990-2025-2480-1464-080908.jpg",
+  "ancho": 1464,
+  "fondo": "#080908"
+ },
+ "/atlas/raster/agricultura-riego--l1-color-1000.webp": {
+  "archivo": "/print/agricultura-riego--l1-color-1000-1000-080908.jpg",
+  "ancho": 1000,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-paisaje-agricola-960.webp": {
+  "archivo": "/print/p14-paisaje-agricola-960-701-080908.jpg",
+  "ancho": 701,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-paisaje-agropecuario-960.webp": {
+  "archivo": "/print/p14-paisaje-agropecuario-960-701-080908.jpg",
+  "ancho": 701,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-cultivos-flujos-960.webp": {
+  "archivo": "/print/p14-cultivos-flujos-960-664-080908.jpg",
+  "ancho": 664,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-cultivos-concentracion-960.webp": {
+  "archivo": "/print/p14-cultivos-concentracion-960-664-080908.jpg",
+  "ancho": 664,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-cultivos-red-radial-960.webp": {
+  "archivo": "/print/p14-cultivos-red-radial-960-664-080908.jpg",
+  "ancho": 664,
+  "fondo": "#080908"
+ },
+ "/atlas/raster/anp--l1-color-1000.webp": {
+  "archivo": "/print/anp--l1-color-1000-1000-080908.jpg",
+  "ancho": 1000,
+  "fondo": "#080908"
+ },
+ "/atlas/raster/commuting-bajo--l1-color-2000.webp": {
+  "archivo": "/print/commuting-bajo--l1-color-2000-1235-080908.jpg",
+  "ancho": 1235,
+  "fondo": "#080908"
+ },
+ "/atlas/raster/class-edaf--l1-color-1000.webp": {
+  "archivo": "/print/class-edaf--l1-color-1000-1000-080908.jpg",
+  "ancho": 1000,
+  "fondo": "#080908"
+ },
+ "/atlas/raster/conectividad--l1-color-1000.webp": {
+  "archivo": "/print/conectividad--l1-color-1000-1000-080908.jpg",
+  "ancho": 1000,
+  "fondo": "#080908"
+ },
+ "/atlas/raster/comarca-caracterizacion--l1-color-1000.webp": {
+  "archivo": "/print/comarca-caracterizacion--l1-color-1000-1000-080908.jpg",
+  "ancho": 1000,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-clustering-localizacion-960.webp": {
+  "archivo": "/print/p14-clustering-localizacion-960-701-080908.jpg",
+  "ancho": 701,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-clustering-clasificacion-960.webp": {
+  "archivo": "/print/p14-clustering-clasificacion-960-701-080908.jpg",
+  "ancho": 701,
+  "fondo": "#080908"
+ },
+ "/projects/granular/analisis/webp/p14-clustering-relaciones-960.webp": {
+  "archivo": "/print/p14-clustering-relaciones-960-583-080908.jpg",
+  "ancho": 583,
+  "fondo": "#080908"
+ },
+ "/sistemas/s01-datos-aereos/s01-sistema-parcela-1440.webp": {
+  "archivo": "/print/s01-sistema-parcela-1440-1440-080908.jpg",
+  "ancho": 1440,
+  "fondo": "#080908"
+ },
+ "/sistemas/s01-datos-aereos/s01-demo-territorio-1440.webp": {
+  "archivo": "/print/s01-demo-territorio-1440-1006-080908.jpg",
+  "ancho": 1006,
+  "fondo": "#080908"
+ },
+ "/sistemas/s01-datos-aereos/s01-demo-indices-800.webp": {
+  "archivo": "/print/s01-demo-indices-800-717-080908.jpg",
+  "ancho": 717,
+  "fondo": "#080908"
+ },
+ "/sistemas/s01-datos-aereos/s01-demo-resultados-700.webp": {
+  "archivo": "/print/s01-demo-resultados-700-700-080908.jpg",
+  "ancho": 700,
+  "fondo": "#080908"
+ },
+ "/sistemas/s02-estrato/s02-diagnostico-1600.webp": {
+  "archivo": "/print/s02-diagnostico-1600-1021-080908.jpg",
+  "ancho": 1021,
+  "fondo": "#080908"
+ },
+ "/sistemas/s02-estrato/s02-actores-800.webp": {
+  "archivo": "/print/s02-actores-800-717-080908.jpg",
+  "ancho": 717,
+  "fondo": "#080908"
+ },
+ "/sistemas/s02-estrato/s02-escenarios-800.webp": {
+  "archivo": "/print/s02-escenarios-800-717-080908.jpg",
+  "ancho": 717,
+  "fondo": "#080908"
+ },
+ "/sistemas/s03-maices/s03-distribucion-1600.webp": {
+  "archivo": "/print/s03-distribucion-1600-999-080908.jpg",
+  "ancho": 999,
+  "fondo": "#080908"
+ },
+ "/sistemas/s03-maices/s03-raza-800.webp": {
+  "archivo": "/print/s03-raza-800-693-080908.jpg",
+  "ancho": 693,
+  "fondo": "#080908"
+ },
+ "/sistemas/s04-territoria/s04-custf-1600.webp": {
+  "archivo": "/print/s04-custf-1600-1044-080908.jpg",
+  "ancho": 1044,
+  "fondo": "#080908"
+ },
+ "/sistemas/s04-territoria/s04-hidrica-800.webp": {
+  "archivo": "/print/s04-hidrica-800-693-080908.jpg",
+  "ancho": 693,
+  "fondo": "#080908"
+ }
+}

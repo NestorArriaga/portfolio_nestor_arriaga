@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { CSSProperties, useState } from 'react';
 
-import { anchoServido } from '@/components/experience-v5/obra';
+import { anchoServido } from '@/lib/densidad';
 import type { Lamina } from '@/components/experience-v5/registry';
 import styles from './PilarGranular.module.css';
 import { RadarTensiones } from './granular/RadarTensiones';
@@ -33,6 +33,8 @@ export type LaminaPilar = {
   sobre: Lamina | null;
   categorias: { name: string; range?: string; desc: string; warning?: string }[];
   municipios: string[];
+  /** Pie documentado de la lámina. Es lo que la fuente afirma que se ve. */
+  pie?: string;
   /** Lectura larga de la fuente. Va a la bandeja, no al flujo. */
   lectura?: string;
   fuente?: string;
@@ -43,6 +45,8 @@ export type PilarDatos = {
   numero: string;
   nombre: string;
   variables: string[];
+  /** Color de dato del pilar, tal como lo declara el registro. */
+  acento: string;
   laminas: LaminaPilar[];
   datos: { label: string; value: string; note?: string }[];
   alcance: { title: string; text: string; points: string[] };
@@ -58,7 +62,10 @@ export type PilarDatos = {
 
 export function PilarGranular({ d }: { d: PilarDatos }) {
   return (
-    <main id="contenido" tabIndex={-1} className={styles.pilar}>
+    <main id="contenido" tabIndex={-1} className={styles.pilar}
+          /* El acento documentado del pilar entra una sola vez: los
+             instrumentos lo leen de aquí y no lo declaran cada uno. */
+          style={{ '--acento': d.acento } as CSSProperties}>
       {/* Nombre grande y cuatro variables. Sin párrafo de apertura. */}
       <header className={styles.apertura}>
         <p className={`${styles.marca} mono`}>{`P14 · Comarca Lagunera · ${d.numero}`}</p>
@@ -99,32 +106,30 @@ export function PilarGranular({ d }: { d: PilarDatos }) {
         </dl>
       ) : null}
 
-      {d.id === 'agua' && (
-        <section style={{ marginBottom: '4rem', marginTop: '2rem' }}>
+      {d.id === 'agua' ? (
+        <section className={styles.instrumento} aria-label="Radar de tensiones y políticas hídricas">
           <RadarTensiones />
         </section>
-      )}
+      ) : null}
 
-      {d.id === 'agropecuario' && (
-        <section style={{ marginBottom: '4rem', marginTop: '2rem' }}>
+      {d.id === 'agropecuario' ? (
+        <section className={styles.instrumento} aria-label="Comparador de paisajes productivos">
           <PaisajeComparado />
         </section>
-      )}
+      ) : null}
 
-      {d.id === 'clustering' && (
-        <section style={{ marginBottom: '4rem', marginTop: '2rem' }}>
-          <ClusteringStory />
-        </section>
-      )}
+      {d.id === 'clustering' ? (
+        <div className={styles.instrumento}><ClusteringStory /></div>
+      ) : null}
 
       {d.laminas.map((l, index) => (
         <Fragment key={l.id}>
           <LaminaBloque l={l} />
-          {d.id === 'agropecuario' && index === d.laminas.length - 1 && (
-            <section style={{ marginBottom: '4rem', marginTop: '2rem' }}>
+          {d.id === 'agropecuario' && index === d.laminas.length - 1 ? (
+            <section className={styles.instrumento} aria-label="Explorador de la estructura agrícola">
               <CultivosExplorer />
             </section>
-          )}
+          ) : null}
         </Fragment>
       ))}
 
@@ -192,7 +197,8 @@ function LaminaBloque({ l }: { l: LaminaPilar }) {
   const cat = l.categorias.find((c) => c.name === activa) ?? null;
 
   return (
-    <section className={styles.bloque} aria-label={l.titulo}>
+    <section className={styles.bloque} aria-label={l.titulo}
+             data-instrumento={l.categorias.length || l.municipios.length ? '' : undefined}>
       <div className={styles.mapaCaja}>
         {l.img ? (
           <figure className={styles.mapa}
@@ -215,6 +221,10 @@ function LaminaBloque({ l }: { l: LaminaPilar }) {
       <div className={styles.lectura}>
         <p className={styles.bloqueTitulo}>{l.titulo}</p>
         <p className={`${styles.pagina} mono`}>{`p.${l.pagina}`}</p>
+
+        {/* El pie documentado de la lámina. Sin él, una lámina sin categorías
+            dejaba media composición con el título y el folio por toda lectura. */}
+        {l.pie ? <p className={styles.pie}>{l.pie}</p> : null}
 
         {l.categorias.length ? (
           <div className={styles.categorias} role="group" aria-label="Categorías">

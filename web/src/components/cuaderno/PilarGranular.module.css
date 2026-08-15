@@ -278,6 +278,14 @@
 
 /* --- Móvil ------------------------------------------------------------------- */
 
+/* En táctil no hay señalar: la descripción de una categoría sólo aparece al
+   tocarla, así que reservar cinco renglones para ella deja un hueco permanente
+   de media pantalla. El bloque crece cuando el lector lo pide, que es un
+   cambio provocado por él y no un salto de carga. */
+@media (hover: none) {
+  .detalle { min-height: 0; }
+}
+
 @media (max-width: 720px) {
   /* Suelo tipográfico móvil: 14 px para todo lo funcional. Las reglas de
      escritorio bajan a 12–13 y en pantalla estrecha eso no se lee. */
@@ -299,4 +307,48 @@
   .salida { grid-template-columns: minmax(0, 1fr); }
   .salto[data-dir='adelante'] { justify-items: start; text-align: left; }
   .centro { flex-wrap: wrap; }
+}
+
+/* --- Instrumentos del pilar --------------------------------------------------
+   Los bloques que aportan Agua, Agropecuario y Clustering comparten el ritmo y
+   el margen del resto del capítulo, en lugar de traer cada uno el suyo. */
+
+.instrumento {
+  padding: clamp(1.6rem, 5vh, 3.4rem) var(--margen) 0;
+  min-width: 0;
+}
+
+/* Pie documentado de la lámina. Es la lectura que la fuente afirma; sin él las
+   láminas sin categorías dejaban la columna con el título y el folio a secas. */
+.pie {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--texto-2);
+  max-width: 46ch;
+}
+
+/* Cuando la lámina no trae instrumento —ni categorías ni municipios— la
+   composición deja de reservar una columna que quedaría vacía y presenta la
+   figura al ancho editorial con su lectura debajo. */
+.bloque:not([data-instrumento]) {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: clamp(0.9rem, 2vh, 1.4rem);
+}
+
+.bloque:not([data-instrumento]) .lectura {
+  width: min(100%, 1600px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  align-items: start;
+}
+
+.bloque:not([data-instrumento]) .pie { grid-column: 1 / -1; }
+
+/* Altura de lámina: 74svh dejaba secciones de casi dos viewports. */
+.mapa img { max-height: 66svh; }
+
+@media (max-width: 720px) {
+  .pie { font-size: 14px; }
+  .mapa img { max-height: 58svh; }
 }

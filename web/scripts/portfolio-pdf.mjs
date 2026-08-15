@@ -10,6 +10,7 @@
  * caja o si el documento queda vacío: un PDF con una página rota es peor que no
  * tener PDF.
  */
+import { execFileSync } from 'node:child_process';
 import { mkdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { chromium } from 'playwright';
@@ -78,13 +79,18 @@ const SALIDA = resolve('public/downloads/Nestor-Arriaga-Gallegos-Portafolio-2026
 const navegador = await chromium.launch();
 /**
  * 1123 × 794 px es A4 horizontal a 96 dpi, la caja que el CSS declara en mm.
- * `deviceScaleFactor` 1.5 hace que el navegador escoja candidatos del `srcSet`
- * a vez y media el tamaño impreso: suficiente para papel —unos 145 dpi en la
- * caja del mapa— sin embeber los rásteres de 2000 px, que triplicaban el peso.
+ *
+ * `deviceScaleFactor` multiplica el ancho con el que el navegador elige del
+ * `srcSet`, así que fija la resolución efectiva del papel: a 1.9 una lámina que
+ * ocupa 186 mm de caja recibe unos 2130 px de origen, es decir **≈ 290 ppp**
+ * antes de la compresión. Bajarlo a 1.3 —como se llegó a probar para recortar
+ * peso— deja las figuras con texto fino por debajo de los 200 ppp y el
+ * documento se lee blando; la nitidez tiene prioridad sobre el peso mientras el
+ * archivo se mantenga bajo el límite.
  */
 const ctx = await navegador.newContext({
   viewport: { width: 1123, height: 794 },
-  deviceScaleFactor: 1.5,
+  deviceScaleFactor: 1.9,
 });
 const page = await ctx.newPage();
 
@@ -167,11 +173,41 @@ const pdf = await page.pdf({
 writeFileSync(SALIDA, conMetadatos(pdf));
 await navegador.close();
 
+/**
+ * Linearización.
+ *
+ * Reordena los objetos para que la primera página se pueda mostrar antes de
+ * descargar el archivo entero, y comprime los flujos de estructura. No toca las
+ * imágenes: no rasteriza ni recomprime nada, así que la nitidez es exactamente
+ * la misma antes y después.
+ *
+ * Si `qpdf` no está instalado el documento se entrega igual, sólo sin ese
+ * reordenamiento; no es motivo para no tener PDF.
+ */
+function linearizar(ruta) {
+  try {
+    execFileSync('qpdf', ['--linearize', '--object-streams=generate', ruta, `${ruta}.tmp`],
+      { stdio: 'pipe' });
+    execFileSync('mv', [`${ruta}.tmp`, ruta]);
+    return true;
+  } catch (e) {
+    // qpdf devuelve 3 en avisos recuperables y aun así escribe el archivo.
+    if (e.status === 3) {
+      try { execFileSync('mv', [`${ruta}.tmp`, ruta]); return true; } catch { /* sin salida */ }
+    }
+    console.warn('  (sin linearizar: qpdf no disponible o rechazó el archivo)');
+    return false;
+  }
+}
+
+const linearizado = linearizar(SALIDA);
+
 const bytes = statSync(SALIDA).size;
 const mb = bytes / 1024 / 1024;
 console.log(`${SALIDA}`);
 console.log(`hojas compuestas: ${diagnostico.hojas}`);
 console.log(`peso: ${mb.toFixed(1)} MB`);
+console.log(`linearizado: ${linearizado ? 'sí' : 'no'}`);
 
 if (bytes === 0) { console.error('El PDF quedó vacío.'); process.exit(1); }
 if (mb > 40) {

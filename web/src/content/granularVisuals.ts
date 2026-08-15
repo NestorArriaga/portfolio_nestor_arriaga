@@ -23,9 +23,27 @@ export type GranularVisual = {
   pillar: string; // O ruta general si aplica
   asset: {
     src: string;
+    /**
+     * Escalera para pantalla.
+     *
+     * Sin ella el navegador servía siempre el derivado de 1440 px y en una
+     * pantalla de 1920 la figura se pintaba a 1792: por debajo de la densidad
+     * a la que el diagrama se lee. Es la misma escalera de impresión, en WebP.
+     */
+    srcSet?: string;
     width: number;
     height: number;
-    /** Original canónico para impresión */
+    /**
+     * Escalera de derivados para impresión.
+     *
+     * Un único archivo obligaba a elegir entre imprimir a 700 ppp una figura
+     * que ocupa media hoja —tres veces más de lo necesario y el triple de
+     * peso— o servir a todas la variante pequeña. Con la escalera, la
+     * composición declara su caja en milímetros y el navegador toma el
+     * derivado que corresponde a esa caja.
+     */
+    printSrcSet?: string;
+    /** Mayor derivado disponible; se usa como `src` de impresión. */
     printSrc?: string;
   };
   scope: string;
@@ -45,7 +63,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'entrada',
     asset: {
       src: '/projects/granular/analisis/webp/p14-comarca-caracterizacion-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-comarca-caracterizacion-960.webp 960w, /projects/granular/analisis/webp/p14-comarca-caracterizacion-1440.webp 1440w, /projects/granular/analisis/webp/p14-comarca-caracterizacion-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-comarca-caracterizacion-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-comarca-caracterizacion-960.webp 960w, /projects/granular/analisis/webp/p14-comarca-caracterizacion-1440.webp 1440w, /projects/granular/analisis/webp/p14-comarca-caracterizacion-2480.webp 2480w',
       width: 1138.0038,
       height: 711.2501,
     },
@@ -54,7 +74,7 @@ export const granularVisuals: Record<string, GranularVisual> = {
     unit: 'Población y superficie',
     source: 'Procedencia gráfica: EPI CIHEAM',
     caption: 'Composición de la Comarca Lagunera con indicadores demográficos básicos y división municipal.',
-    alt: 'Mapa de la Comarca Lagunera mostrando 15 municipios. Población 1,629,629 (49.2% / 50.8%).',
+    alt: 'Mapa de la Comarca Lagunera con sus 15 municipios. Población 1,628,629, repartida 49.2 % / 50.8 %.',
     limitations: 'La composición no documenta el año exacto del dato poblacional. Los 15 municipios mostrados son la base regional, pero contrastan con los 14 municipios clasificados en modelos posteriores.',
   },
   aguaRadar: {
@@ -64,7 +84,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'agua',
     asset: {
       src: '/projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-960.webp 960w, /projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-1440.webp 1440w, /projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-960.webp 960w, /projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-1440.webp 1440w, /projects/granular/analisis/webp/p14-agua-tensiones-politicas-1990-2025-2480.webp 2480w',
       width: 733.8936,
       height: 574.047,
     },
@@ -83,7 +105,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'agropecuario',
     asset: {
       src: '/projects/granular/analisis/webp/p14-paisaje-agricola-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-paisaje-agricola-960.webp 960w, /projects/granular/analisis/webp/p14-paisaje-agricola-1440.webp 1440w, /projects/granular/analisis/webp/p14-paisaje-agricola-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-paisaje-agricola-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-paisaje-agricola-960.webp 960w, /projects/granular/analisis/webp/p14-paisaje-agricola-1440.webp 1440w, /projects/granular/analisis/webp/p14-paisaje-agricola-2480.webp 2480w',
       width: 841.89,
       height: 595.28,
     },
@@ -101,7 +125,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'agropecuario',
     asset: {
       src: '/projects/granular/analisis/webp/p14-paisaje-agropecuario-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-paisaje-agropecuario-960.webp 960w, /projects/granular/analisis/webp/p14-paisaje-agropecuario-1440.webp 1440w, /projects/granular/analisis/webp/p14-paisaje-agropecuario-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-paisaje-agropecuario-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-paisaje-agropecuario-960.webp 960w, /projects/granular/analisis/webp/p14-paisaje-agropecuario-1440.webp 1440w, /projects/granular/analisis/webp/p14-paisaje-agropecuario-2480.webp 2480w',
       width: 841.89,
       height: 595.28,
     },
@@ -119,7 +145,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'agropecuario',
     asset: {
       src: '/projects/granular/analisis/webp/p14-cultivos-flujos-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-cultivos-flujos-960.webp 960w, /projects/granular/analisis/webp/p14-cultivos-flujos-1440.webp 1440w, /projects/granular/analisis/webp/p14-cultivos-flujos-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-cultivos-flujos-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-cultivos-flujos-960.webp 960w, /projects/granular/analisis/webp/p14-cultivos-flujos-1440.webp 1440w, /projects/granular/analisis/webp/p14-cultivos-flujos-2480.webp 2480w',
       width: 841.68,
       height: 595.44,
     },
@@ -137,7 +165,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'agropecuario',
     asset: {
       src: '/projects/granular/analisis/webp/p14-cultivos-concentracion-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-cultivos-concentracion-960.webp 960w, /projects/granular/analisis/webp/p14-cultivos-concentracion-1440.webp 1440w, /projects/granular/analisis/webp/p14-cultivos-concentracion-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-cultivos-concentracion-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-cultivos-concentracion-960.webp 960w, /projects/granular/analisis/webp/p14-cultivos-concentracion-1440.webp 1440w, /projects/granular/analisis/webp/p14-cultivos-concentracion-2480.webp 2480w',
       width: 841.68,
       height: 595.44,
     },
@@ -155,7 +185,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'agropecuario',
     asset: {
       src: '/projects/granular/analisis/webp/p14-cultivos-red-radial-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-cultivos-red-radial-960.webp 960w, /projects/granular/analisis/webp/p14-cultivos-red-radial-1440.webp 1440w, /projects/granular/analisis/webp/p14-cultivos-red-radial-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-cultivos-red-radial-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-cultivos-red-radial-960.webp 960w, /projects/granular/analisis/webp/p14-cultivos-red-radial-1440.webp 1440w, /projects/granular/analisis/webp/p14-cultivos-red-radial-2480.webp 2480w',
       width: 841.68,
       height: 595.44,
     },
@@ -173,7 +205,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'clustering',
     asset: {
       src: '/projects/granular/analisis/webp/p14-clustering-localizacion-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-clustering-localizacion-960.webp 960w, /projects/granular/analisis/webp/p14-clustering-localizacion-1440.webp 1440w, /projects/granular/analisis/webp/p14-clustering-localizacion-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-clustering-localizacion-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-clustering-localizacion-960.webp 960w, /projects/granular/analisis/webp/p14-clustering-localizacion-1440.webp 1440w, /projects/granular/analisis/webp/p14-clustering-localizacion-2480.webp 2480w',
       width: 2480,
       height: 3507,
     },
@@ -192,7 +226,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'clustering',
     asset: {
       src: '/projects/granular/analisis/webp/p14-clustering-clasificacion-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-clustering-clasificacion-960.webp 960w, /projects/granular/analisis/webp/p14-clustering-clasificacion-1440.webp 1440w, /projects/granular/analisis/webp/p14-clustering-clasificacion-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-clustering-clasificacion-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-clustering-clasificacion-960.webp 960w, /projects/granular/analisis/webp/p14-clustering-clasificacion-1440.webp 1440w, /projects/granular/analisis/webp/p14-clustering-clasificacion-2480.webp 2480w',
       width: 576,
       height: 403.2,
     },
@@ -211,7 +247,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'clustering',
     asset: {
       src: '/projects/granular/analisis/webp/p14-clustering-tamano-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-clustering-tamano-960.webp 960w, /projects/granular/analisis/webp/p14-clustering-tamano-1440.webp 1440w, /projects/granular/analisis/webp/p14-clustering-tamano-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-clustering-tamano-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-clustering-tamano-960.webp 960w, /projects/granular/analisis/webp/p14-clustering-tamano-1440.webp 1440w, /projects/granular/analisis/webp/p14-clustering-tamano-2480.webp 2480w',
       width: 540,
       height: 360,
     },
@@ -229,7 +267,9 @@ export const granularVisuals: Record<string, GranularVisual> = {
     pillar: 'clustering',
     asset: {
       src: '/projects/granular/analisis/webp/p14-clustering-relaciones-1440.webp',
+      srcSet: '/projects/granular/analisis/webp/p14-clustering-relaciones-960.webp 960w, /projects/granular/analisis/webp/p14-clustering-relaciones-1440.webp 1440w, /projects/granular/analisis/webp/p14-clustering-relaciones-2480.webp 2480w',
       printSrc: '/projects/granular/analisis/webp/p14-clustering-relaciones-2480.webp',
+      printSrcSet: '/projects/granular/analisis/webp/p14-clustering-relaciones-960.webp 960w, /projects/granular/analisis/webp/p14-clustering-relaciones-1440.webp 1440w, /projects/granular/analisis/webp/p14-clustering-relaciones-2480.webp 2480w',
       width: 626.4,
       height: 626.4,
     },

@@ -4,14 +4,24 @@ import Link from 'next/link';
 import { granularProject, pillars } from '@/content/granular';
 import { RielCaso } from '@/components/global/RielCaso';
 import { CaracterizacionComarca } from '@/components/cuaderno/granular/CaracterizacionComarca';
+import { IndicePilares } from '@/components/cuaderno/granular/IndicePilares';
 import { atlasHref, vistazoHref } from '@/lib/rutas';
 import styles from '@/components/cuaderno/PilarGranular.module.css';
+import entrada from '@/components/cuaderno/granular/Entrada.module.css';
 
 export const metadata: Metadata = {
   title: `${granularProject.title} — GRANULAR`,
   description: `P14 · ${granularProject.territory} · ${granularProject.subtitle}.`,
 };
 
+/**
+ * Entrada de GRANULAR.
+ *
+ * Orienta primero —territorio, cifras y municipios— y después ofrece el índice
+ * de los siete pilares a lo ancho de la página. La versión anterior componía
+ * esta página con estilos en línea y dejaba el índice comprimido en una columna
+ * estrecha con una gran superficie negra sin función a su derecha.
+ */
 export default function GranularPage() {
   return (
     <>
@@ -23,36 +33,30 @@ export default function GranularPage() {
         posicion={14}
         total={15}
       />
-      
+
       <main id="contenido" tabIndex={-1} className={styles.pilar}>
-        <header className={styles.apertura} style={{ paddingBottom: '3rem' }}>
-          <p className={`${styles.marca} mono`}>{`P14 · GRANULAR`}</p>
+        <header className={styles.apertura}>
+          <p className={`${styles.marca} mono`}>P14 · GRANULAR</p>
           <h1 className={styles.nombre} style={{ '--largo': '8' } as React.CSSProperties}>
             GRANULAR
           </h1>
           <ul className={`${styles.variables} mono`}>
             <li>{granularProject.territory.toUpperCase()}</li>
             <li>{granularProject.region.toUpperCase()}</li>
+            <li>{`${pillars.length} PILARES`}</li>
           </ul>
         </header>
 
-        <section style={{ marginBottom: '4rem' }}>
+        <section className={entrada.seccion} aria-label="Caracterización regional">
           <CaracterizacionComarca />
         </section>
 
-        <section style={{ marginBottom: '4rem' }}>
-          <h2 className="mono" style={{ fontSize: '1rem', marginBottom: '1.5rem', textTransform: 'uppercase' }}>
-            Siete Pilares
+        <section className={entrada.seccion}>
+          <h2 className={`${entrada.rotulo} mono`}>
+            <span>Siete pilares</span>
+            <span className={entrada.rotuloNota}>de la caracterización a la clasificación</span>
           </h2>
-          <nav className={styles.pilares} aria-label="Pilares de GRANULAR" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-start' }}>
-            {pillars.map((p) => (
-              <Link key={p.id} href={`/granular/${p.id}`} data-touch
-                    className={`${styles.pastilla} btn`} data-v="borde"
-                    style={{ width: '100%', maxWidth: '400px', justifyContent: 'flex-start' }}>
-                <span className={styles.pastillaNum}>{p.number}</span>{p.title}
-              </Link>
-            ))}
-          </nav>
+          <IndicePilares />
         </section>
 
         <footer className={styles.salida}>

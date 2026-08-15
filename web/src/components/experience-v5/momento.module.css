@@ -50,7 +50,7 @@
 .tituloNum {
   font-size: 12px;
   letter-spacing: 0.14em;
-  color: var(--senal);
+  color: var(--senal-texto);
 }
 
 .tituloTexto {

@@ -1,0 +1,86 @@
+/* Índice de los siete pilares.
+
+   Retícula que se reparte el ancho editorial. Cada entrada es una lámina de
+   catálogo: número, nombre, lectura corta, variables y páginas de origen. El
+   color de la regla superior es el acento documentado del pilar, así que la
+   diferencia entre capítulos la marca el dato y no siete plantillas. */
+
+.indice { min-width: 0; }
+
+/* La separación se dibuja con filetes en cada entrada, no con un fondo bajo
+   una rejilla de un píxel: con siete piezas la última fila queda incompleta y
+   ese fondo pintaba una celda fantasma donde no hay ningún pilar. */
+.indice ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: clamp(0.8rem, 1.6vw, 1.4rem);
+}
+
+.indice li { min-width: 0; }
+
+.indice a {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  height: 100%;
+  min-height: 190px;
+  padding: 0.9rem 1rem 0.8rem;
+  color: var(--texto, #f6f7f2);
+  text-decoration: none;
+  border-top: 3px solid var(--acento);
+  border-inline: 1px solid var(--linea, rgba(246, 247, 242, 0.18));
+  border-bottom: 1px solid var(--linea, rgba(246, 247, 242, 0.18));
+  transition: background 210ms cubic-bezier(.16, 1, .3, 1),
+              border-color 210ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.indice a:hover, .indice a:focus-visible {
+  background: color-mix(in srgb, var(--acento) 12%, transparent);
+  border-inline-color: color-mix(in srgb, var(--acento) 45%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--acento) 45%, transparent);
+}
+
+.num {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--acento);
+}
+
+.nombre {
+  font-size: clamp(19px, 2vw, 26px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.subtitulo {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--texto-2, #a6a79f);
+  align-self: start;
+}
+
+/* Las variables identifican de qué está hecho el pilar; se leen en segundo
+   plano y por eso no compiten con el nombre. */
+.variables {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--texto-3, #7d7e77);
+}
+
+.paginas {
+  font-size: 11px;
+  color: var(--texto-3, #7d7e77);
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--linea, rgba(246, 247, 242, 0.18));
+}
+
+@media (max-width: 720px) {
+  .indice a { min-height: 0; padding: 0.9rem 1rem; }
+  .subtitulo { font-size: 14px; }
+  .variables, .paginas { font-size: 12px; }
+}

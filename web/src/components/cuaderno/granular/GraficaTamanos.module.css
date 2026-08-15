@@ -1,0 +1,105 @@
+/* Tamaño de los grupos. Cifra dominante, regla a escala y clave de color.
+   Sin marco, sin fondo blanco y sin retícula de fondo: la comparación la hace
+   la longitud de la regla, no una caja. */
+
+.grafica {
+  display: grid;
+  gap: clamp(1rem, 2.4vh, 1.6rem);
+  min-width: 0;
+}
+
+.grupos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(0.9rem, 2.2vh, 1.5rem);
+}
+
+.grupos li {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  grid-template-areas:
+    'clave nombre cifra'
+    'regla regla  regla';
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+}
+
+.clave {
+  grid-area: clave;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 13px;
+  color: var(--texto, #f6f7f2);
+}
+
+.clave i {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  background: var(--c);
+  outline: 1px solid color-mix(in srgb, currentColor 26%, transparent);
+}
+
+.nombre {
+  grid-area: nombre;
+  margin: 0;
+  font-size: clamp(14px, 1.4vw, 17px);
+  color: var(--texto-2, #a6a79f);
+}
+
+.cifra {
+  grid-area: cifra;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+.cifra b {
+  font-size: clamp(30px, 4.4vw, 62px);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c);
+}
+
+.cifra span { font-size: 13px; color: var(--texto-2, #a6a79f); font-variant-numeric: tabular-nums; }
+
+/* La regla es el dato: su ancho es la proporción del grupo, no una decoración. */
+.regla {
+  grid-area: regla;
+  display: block;
+  height: 4px;
+  width: var(--w);
+  background: var(--c);
+  border-bottom: 1px solid color-mix(in srgb, var(--texto, #f6f7f2) 14%, transparent);
+}
+
+.total {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin: 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid color-mix(in srgb, var(--texto, #f6f7f2) 18%, transparent);
+  font-size: 12px;
+  color: var(--texto-2, #a6a79f);
+}
+
+.total span { color: var(--texto-3, #7d7e77); }
+
+@media (max-width: 720px) {
+  .grupos li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'clave  cifra'
+      'nombre cifra'
+      'regla  regla';
+  }
+  .nombre, .total { font-size: 14px; }
+}

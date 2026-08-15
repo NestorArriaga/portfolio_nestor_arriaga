@@ -50,6 +50,7 @@ export default function PilarPage({ params }: { params: { pilar: string } }) {
     sobre: p.mode === 'stack' && p.layers[1] ? capa(p.layers[1].slug, 0) : null,
     categorias: p.categories ?? [],
     municipios: p.highlightMunicipios ?? [],
+    pie: p.caption,
     lectura: p.reading,
     fuente: p.sourceNote,
   }));
@@ -59,6 +60,7 @@ export default function PilarPage({ params }: { params: { pilar: string } }) {
     numero: pillar.number,
     nombre: pillar.title,
     variables: pillar.variables,
+    acento: pillar.accentVar,
     laminas,
     datos: pillar.facts ?? [],
     alcance: pillar.limitations,

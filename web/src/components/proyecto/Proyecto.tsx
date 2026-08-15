@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { CSSProperties, useEffect, useRef, useState } from 'react';
 
 import { Glifo } from '@/components/cuaderno/Glifo';
+import { anchoServido } from '@/lib/densidad';
 import type { Capitulo, Clase, Plano, Recurso } from './blueprints';
 import { useConectores } from './conectores';
 import styles from './Proyecto.module.css';
@@ -89,6 +90,26 @@ export function Proyecto({
 /* Apertura                                                                    */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Medidas del rótulo, para que el cuerpo salga del ancho real de su columna.
+ *
+ * El tamaño no puede depender sólo del viewport: `Geomorfología` es una sola
+ * palabra de trece signos que no admite corte, y a 7.2vw medía casi 740 px
+ * dentro de una columna de 540 px, así que se metía debajo de la obra. Se
+ * publican dos medidas y el CSS aplica la más restrictiva:
+ *
+ * - `--palabra`: la palabra más larga, que tiene que caber en un renglón;
+ * - `--largo`: el rótulo completo, que tiene que caber en dos.
+ */
+function medidaRotulo(rotulo: string): CSSProperties {
+  const palabras = rotulo.split(/\s+/).filter(Boolean);
+  const palabra = Math.max(...palabras.map((w) => w.length), 1);
+  return {
+    '--largo': String(rotulo.length),
+    '--palabra': String(palabra),
+  } as CSSProperties;
+}
+
 function Apertura({ p }: { p: Plano }) {
   return (
     <header id="apertura" data-capitulo="" className={styles.apertura}>
@@ -96,7 +117,7 @@ function Apertura({ p }: { p: Plano }) {
         <p className={`${styles.codigo} mono`}>
           <Glifo id={p.id} tam={22} />{`P${p.id}`}
         </p>
-        <h1 className={styles.titulo} style={{ '--largo': String(p.corto.length) } as CSSProperties}>
+        <h1 className={styles.titulo} style={medidaRotulo(p.corto)}>
           {p.corto}
         </h1>
         <dl className={`${styles.ficha} mono`}>
@@ -119,7 +140,7 @@ function Apertura({ p }: { p: Plano }) {
       </div>
 
       {p.hero.recurso
-        ? <Pieza r={p.hero.recurso} clase={styles.heroObra} sizes="52vw" prioridad
+        ? <Pieza r={p.hero.recurso} clase={styles.heroObra} tramo={7} prioridad
                  nombreVista={`obra-p${p.id}`} />
         : null}
     </header>
@@ -135,46 +156,82 @@ function Apertura({ p }: { p: Plano }) {
  * sería peor que el espacio.
  */
 function Preludio({ p }: { p: Plano }) {
-  const c = p.capitulos.find((x) =>
-    x.tipo === 'gradiente' || x.tipo === 'nodos' || x.tipo === 'criterios'
-    || x.tipo === 'perfil' || x.tipo === 'mapa');
-  if (!c) return null;
-
-  if (c.tipo === 'nodos') {
-    return (
-      <p className={`${styles.preludio} mono`}>
-        <b>{c.nodos.length}</b>{c.etiqueta}
-      </p>
-    );
+  // Se recorren los capítulos en su orden y se dibuja el primero con material
+  // medible. Antes se buscaba por una lista fija de tipos, así que P05 —cuyo
+  // primer mapa no declara clases— caía en el vacío y su apertura se quedaba
+  // sin instrumento aunque el proyecto sí tiene tres ventanas de detalle.
+  for (const c of p.capitulos) {
+    const pieza = preludioDe(c);
+    if (pieza) return pieza;
   }
+  return null;
+}
 
-  if (c.tipo === 'criterios') {
-    const suma = c.criterios.reduce((a, x) => a + x.peso, 0);
-    const max = Math.max(...c.criterios.map((x) => x.peso));
-    return (
-      <div className={styles.preludio}>
-        <ul className={styles.preludioReglas} aria-hidden="true">
-          {c.criterios.map((k) => (
-            <li key={k.nombre} style={{ '--w': `${(k.peso / max) * 100}%` } as CSSProperties} />
-          ))}
-        </ul>
-        {/* La suma se calcula desde los pesos, no se escribe a mano. */}
-        <span className="mono">{`${c.criterios.length} criterios · ${suma.toFixed(2)}`}</span>
-      </div>
-    );
+function preludioDe(c: Capitulo) {
+  switch (c.tipo) {
+    case 'nodos':
+      return (
+        <p className={`${styles.preludio} mono`}>
+          <b>{c.nodos.length}</b>{c.etiqueta}
+        </p>
+      );
+
+    case 'criterios': {
+      const suma = c.criterios.reduce((a, x) => a + x.peso, 0);
+      const max = Math.max(...c.criterios.map((x) => x.peso));
+      return (
+        <div className={styles.preludio}>
+          <ul className={styles.preludioReglas} aria-hidden="true">
+            {c.criterios.map((k) => (
+              <li key={k.nombre} style={{ '--w': `${(k.peso / max) * 100}%` } as CSSProperties} />
+            ))}
+          </ul>
+          {/* La suma se calcula desde los pesos, no se escribe a mano. */}
+          <span className="mono">{`${c.criterios.length} criterios · ${suma.toFixed(2)}`}</span>
+        </div>
+      );
+    }
+
+    case 'detalles':
+      return (
+        <p className={`${styles.preludio} mono`}>
+          <b>{c.puntos.length}</b>ventanas de detalle
+        </p>
+      );
+
+    case 'comparador':
+      return (
+        <p className={`${styles.preludio} mono`}>
+          <b>2</b>{`${c.etiquetaA} / ${c.etiquetaB}`}
+        </p>
+      );
+
+    case 'evidencia':
+      return (
+        <p className={`${styles.preludio} mono`}>
+          <b>{c.piezas.length}</b>
+          {c.piezas.length === 1 ? 'registro de campo' : 'registros de campo'}
+        </p>
+      );
+
+    case 'mapa':
+    case 'gradiente':
+    case 'perfil':
+    case 'flujo': {
+      if (!c.clases.length) return null;
+      return (
+        <div className={styles.preludio}>
+          <ul className={styles.preludioCinta} aria-hidden="true">
+            {c.clases.map((k) => <li key={k.label} style={{ '--c': k.color } as CSSProperties} />)}
+          </ul>
+          <span className="mono">{`${c.clases.length} clases`}</span>
+        </div>
+      );
+    }
+
+    default:
+      return null;
   }
-
-  const clases = c.tipo === 'mapa' || c.tipo === 'gradiente' || c.tipo === 'perfil' ? c.clases : [];
-  if (!clases.length) return null;
-
-  return (
-    <div className={styles.preludio}>
-      <ul className={styles.preludioCinta} aria-hidden="true">
-        {clases.map((k) => <li key={k.label} style={{ '--c': k.color } as CSSProperties} />)}
-      </ul>
-      <span className="mono">{`${clases.length} clases`}</span>
-    </div>
-  );
 }
 
 /* -------------------------------------------------------------------------- */
@@ -208,6 +265,24 @@ function contenido(c: Capitulo, p: Plano) {
 }
 
 /**
+ * Anchos servidos, deducidos del tramo que la pieza ocupa en la retícula.
+ *
+ * Los valores de `sizes` se escribían a mano y hacía tiempo que no coincidían
+ * con la composición: la banda de evidencia declaraba `34vw` sobre una caja de
+ * 745 px, así que el navegador descargaba el derivado de 500 px y la fotografía
+ * llegaba a dos tercios de la densidad necesaria. Al salir del mismo número de
+ * columnas que usa la hoja de estilo, el anuncio y la caja no pueden separarse.
+ *
+ * El ancho editorial ocupa alrededor del 92 % del viewport, de ahí el factor.
+ * Bajo 1100 px la retícula apila a una columna y la pieza pasa a ocupar
+ * prácticamente todo el ancho útil.
+ */
+function anchos(tramo: number): string {
+  const escritorio = Math.round((tramo / 12) * 92);
+  return `(max-width: 720px) 92vw, (max-width: 1100px) 94vw, ${escritorio}vw`;
+}
+
+/**
  * Una pieza dentro de su guarda de densidad. Nunca por encima de 1:1.
  *
  * `prioridad` reserva la caja con la proporción exacta del recurso y pide la
@@ -216,9 +291,13 @@ function contenido(c: Capitulo, p: Plano) {
  * un proyecto era su crédito.
  */
 function Pieza({
-  r, clase, sizes = '62vw', prioridad, nombreVista, children,
+  r, clase, tramo = 8, prioridad, nombreVista, children,
 }: {
-  r: Recurso; clase?: string; sizes?: string; prioridad?: boolean;
+  r: Recurso;
+  clase?: string;
+  /** Columnas de la retícula de 12 que ocupa la pieza en escritorio. */
+  tramo?: number;
+  prioridad?: boolean;
   /** Nombre de transición: el mismo que lleva la obra en la portada. */
   nombreVista?: string;
   children?: React.ReactNode;
@@ -228,12 +307,17 @@ function Pieza({
       className={`${styles.pieza}${clase ? ` ${clase}` : ''}`}
       data-prioridad={prioridad || undefined}
       style={{
-        '--nativo': String(r.nativo[0]), '--ratio': String(r.img.ratio),
+        /* El techo es el archivo que el navegador puede descargar de verdad; el
+           nativo del documento sólo cuenta si existe un derivado de ese tamaño.
+           Con `r.nativo` a secas la guarda autorizaba anchos para los que no
+           hay píxeles servidos. */
+        '--nativo': String(Math.min(r.nativo[0], anchoServido(r.img))),
+        '--ratio': String(r.img.ratio),
         ...(nombreVista ? { viewTransitionName: nombreVista } : null),
       } as CSSProperties}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={r.img.src} srcSet={r.img.srcSet} sizes={sizes}
+      <img src={r.img.src} srcSet={r.img.srcSet} sizes={anchos(tramo)}
            width={r.img.width} height={r.img.height}
            alt={r.pie}
            loading={prioridad ? 'eager' : 'lazy'}
@@ -258,12 +342,19 @@ function Pieza({
 function Localizador({ c }: { c: Extract<Capitulo, { tipo: 'localizador' }> }) {
   return (
     <div className={styles.localizador}>
-      {c.contorno ? <Pieza r={c.contorno} sizes="46vw" /> : null}
+      {c.contorno ? <Pieza r={c.contorno} tramo={5} /> : null}
       <div className={styles.localizadorDatos}>
         <p className={styles.foco}>{c.foco}</p>
-        {c.coordenada ? <p className={`${styles.coord} mono`}>{c.coordenada}</p> : null}
-        <Escala />
-        <Norte />
+        {/* Los tres datos de orientación se reparten el ancho de la columna en
+            vez de apilarse en un margen: la banda técnica es lo que convierte
+            una imagen situada en una lectura territorial. */}
+        <dl className={`${styles.orientacion} mono`}>
+          {c.coordenada ? (
+            <div><dt>coordenada</dt><dd>{c.coordenada}</dd></div>
+          ) : null}
+          <div><dt>escala</dt><dd><Escala /></dd></div>
+          <div><dt>norte</dt><dd><Norte /></dd></div>
+        </dl>
       </div>
     </div>
   );
@@ -491,7 +582,7 @@ function Metricas({ c }: { c: Extract<Capitulo, { tipo: 'metricas' }> }) {
             </li>
           ))}
         </ol>
-        {c.apoyo ? <Pieza r={c.apoyo} clase={styles.apoyo} sizes="26vw" /> : null}
+        {c.apoyo ? <Pieza r={c.apoyo} clase={styles.apoyo} tramo={4} /> : null}
       </div>
     );
   }
@@ -510,7 +601,7 @@ function Metricas({ c }: { c: Extract<Capitulo, { tipo: 'metricas' }> }) {
           </div>
         ))}
       </dl>
-      {c.apoyo ? <Pieza r={c.apoyo} clase={styles.apoyo} sizes="26vw" /> : null}
+      {c.apoyo ? <Pieza r={c.apoyo} clase={styles.apoyo} tramo={4} /> : null}
     </div>
   );
 }
@@ -541,10 +632,10 @@ function Comparador({ c }: { c: Extract<Capitulo, { tipo: 'comparador' }> }) {
       <div className={styles.comparadorCaja} ref={caja} onPointerMove={mover}
            style={{ '--x': `${corte}%` } as CSSProperties}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={styles.compA} src={c.a.img.src} srcSet={c.a.img.srcSet} sizes="62vw"
+        <img className={styles.compA} src={c.a.img.src} srcSet={c.a.img.srcSet} sizes={anchos(11)}
              width={c.a.img.width} height={c.a.img.height} alt={c.a.pie} loading="lazy" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={styles.compB} src={c.b.img.src} srcSet={c.b.img.srcSet} sizes="62vw"
+        <img className={styles.compB} src={c.b.img.src} srcSet={c.b.img.srcSet} sizes={anchos(11)}
              width={c.b.img.width} height={c.b.img.height} alt={c.b.pie} loading="lazy" />
         <span className={styles.divisor} aria-hidden="true" />
         <span className={`${styles.compEtiqueta} mono`} data-lado="a">{c.etiquetaA}</span>
@@ -598,7 +689,7 @@ function Detalles({ c }: { c: Extract<Capitulo, { tipo: 'detalles' }> }) {
       </svg>
 
       <div className={styles.atlasMapa}>
-        <Pieza r={c.recurso} sizes="46vw">
+        <Pieza r={c.recurso} tramo={7}>
           {c.puntos.map((pt, i) => (
             <button key={i} type="button" className={styles.marca}
                     ref={(n) => { marcas.current[i] = n; }}
@@ -670,7 +761,7 @@ function Perfil({ c }: { c: Extract<Capitulo, { tipo: 'perfil' }> }) {
       </svg>
 
       <div className={styles.mapaCaja} ref={mapa} data-aislado={clase?.mascara ? '' : undefined}>
-        <Pieza r={c.mapa} sizes="42vw">
+        <Pieza r={c.mapa} tramo={7}>
           {clase?.mascara ? (
             <span className={styles.mascara} aria-hidden="true"
                   style={{ '--c': clase.color, '--m': `url(${clase.mascara})` } as CSSProperties} />
@@ -679,7 +770,7 @@ function Perfil({ c }: { c: Extract<Capitulo, { tipo: 'perfil' }> }) {
       </div>
 
       <div className={styles.perfilCaja}>
-        <Pieza r={c.perfil} sizes="34vw" />
+        <Pieza r={c.perfil} tramo={5} />
         <ul className={styles.bandas} role="group" aria-label="Intervalos de pendiente">
           {c.clases.map((k, n) => (
             <li key={k.label} ref={(el) => { bandas.current[n] = el; }}
@@ -732,7 +823,7 @@ function Criterios({ c, fuente }: { c: Extract<Capitulo, { tipo: 'criterios' }>;
         </li>
       </ol>
       <div className={styles.criteriosMapa}>
-        <Pieza r={c.recurso} sizes="40vw" />
+        <Pieza r={c.recurso} tramo={5} />
         {fuente ? <p className={`${styles.fuenteCriterios} mono`}>{fuente}</p> : null}
       </div>
     </div>
@@ -753,7 +844,8 @@ function Evidencia({ c }: { c: Extract<Capitulo, { tipo: 'evidencia' }> }) {
           <span className={`${styles.contactoNum} mono`} aria-hidden="true">
             {String(i + 1).padStart(2, '0')}
           </span>
-          <Pieza r={r} sizes="34vw" />
+          {/* La banda reparte el ancho editorial entre las piezas que trae. */}
+          <Pieza r={r} tramo={Math.max(4, Math.floor(12 / c.piezas.length))} />
         </li>
       ))}
     </ol>
@@ -788,7 +880,7 @@ function Flujo({ c }: { c: Extract<Capitulo, { tipo: 'flujo' }> }) {
   return (
     <div className={styles.mesa} ref={caja}>
       <div className={styles.mapaCaja} data-aislado={clase?.mascara ? '' : undefined}>
-        <Pieza r={c.recurso} sizes="46vw">
+        <Pieza r={c.recurso} tramo={8}>
           {clase?.mascara ? (
             <span className={styles.mascara} aria-hidden="true"
                   style={{ '--c': clase.color, '--m': `url(${clase.mascara})` } as CSSProperties} />
@@ -809,7 +901,7 @@ function Flujo({ c }: { c: Extract<Capitulo, { tipo: 'flujo' }> }) {
         </button>
         {c.detalle ? (
           <figure className={styles.apoyoDetalle}>
-            <Pieza r={c.detalle} clase={styles.apoyo} sizes="22vw" />
+            <Pieza r={c.detalle} clase={styles.apoyo} tramo={4} />
             <figcaption className="mono">Detalle a mayor aumento del mismo encuadre</figcaption>
           </figure>
         ) : null}
@@ -886,7 +978,7 @@ function Salida({
         <div className={styles.centro}>
           <Link className="btn" data-v="borde" href={atlasHref}>Atlas</Link>
           <Link className="btn" data-v="borde" href={vistazoHref}
-                aria-label="Abrir índice de proyectos">Vistazo</Link>
+                aria-label="Vistazo · abrir índice de proyectos">Vistazo</Link>
         </div>
 
         {vecinos.siguiente ? (

@@ -72,12 +72,19 @@
   border-color: color-mix(in srgb, currentColor 34%, transparent);
 }
 
-.btn[data-v='borde']:hover { border-color: var(--senal, #e9ff3a); color: var(--senal, #e9ff3a); }
+/* El amarillo de señal vale como filo sobre cualquier superficie, pero como
+   tinta sólo sobre negro: sobre el papel marfil su contraste es de 1.1:1 y el
+   rótulo del control activo desaparecía. `--senal-texto` es el mismo color
+   llevado a legible, y cada superficie lo define; sobre tinta son el mismo. */
+.btn[data-v='borde']:hover {
+  border-color: var(--senal, #e9ff3a);
+  color: var(--senal-texto, var(--senal, #e9ff3a));
+}
 .btn[data-v='borde']:active { transform: translateY(1px); }
 
 .btn[data-v='borde'][aria-pressed='true'] {
   border-color: var(--senal, #e9ff3a);
-  color: var(--senal, #e9ff3a);
+  color: var(--senal-texto, var(--senal, #e9ff3a));
 }
 
 /* --- Fantasma ------------------------------------------------------------- */

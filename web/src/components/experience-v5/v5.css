@@ -7,6 +7,11 @@
   --papel: #f1eee6;
   --optico: #f6f7f2;
   --senal: #e9ff3a;
+  /* El amarillo de señal vale como relleno, filo y foco en cualquier
+     superficie, pero como tinta sólo sobre negro. Sobre papel marfil su
+     contraste es de 1.04:1 y el rótulo simplemente no está. `--senal-texto` es
+     el mismo color llevado a legible; sobre tinta son el mismo. */
+  --senal-texto: var(--senal);
 
   --texto: var(--optico);
   /* Sin gris de bajo contraste: el secundario es el óptico al 72 %. */
@@ -43,6 +48,7 @@
   --texto-2: color-mix(in srgb, #13140f 74%, transparent);
   --linea: color-mix(in srgb, #13140f 20%, transparent);
   --fondo: var(--papel);
+  --senal-texto: #5f6b00;
 }
 
 .v5 [data-sup='grafito'] { --fondo: var(--grafito); }

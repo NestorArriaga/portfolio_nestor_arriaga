@@ -145,7 +145,9 @@
   position: absolute;
   right: var(--margen); bottom: calc(var(--margen) * 0.6);
   font-size: 11px;
-  color: color-mix(in srgb, var(--optico, #f6f7f2) 45%, transparent);
+  /* Al 45 % el contador se quedaba en 4.25:1 sobre la tinta. A 11 px el mínimo
+     es 4.5:1, y este número es la única referencia de cuántas capturas quedan. */
+  color: color-mix(in srgb, var(--optico, #f6f7f2) 52%, transparent);
 }
 
 /* --- Captura --------------------------------------------------------------- */

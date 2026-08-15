@@ -7,12 +7,22 @@
   --tinta: #13140f;
   --senal: #e9ff3a;
   --madera: #a5784c;
+  /* La madera vale como filo y como trazo, pero como tinta sobre papel marfil
+     se queda en 3.36:1. Ésta es la misma madera llevada a 4.85:1. */
+  --madera-texto: #8a5f36;
   --margen: clamp(24px, 3.5vw, 64px);
   --sal: cubic-bezier(.16, 1, .3, 1);
   --micro: 210ms;
 
+  /* La superficie declara su tinta: los controles del sistema leen `--texto`
+     y sin ella caían al blanco óptico por defecto, ilegible sobre marfil. */
+  --texto: var(--tinta);
   --texto-2: #55564e;
   --linea: color-mix(in srgb, var(--tinta) 22%, transparent);
+  /* Toda la página es papel marfil: el amarillo puro no llega ni a 1.2:1 como
+     tinta, así que el rótulo del control activo usa su variante legible. El
+     filo sí conserva el amarillo, que ahí sí funciona. */
+  --senal-texto: #5f6b00;
 
   background: var(--papel);
   color: var(--tinta);
@@ -20,12 +30,31 @@
   padding-bottom: clamp(3rem, 8vh, 6rem);
 }
 
+/* Rótulo de sección.
+
+   Era una palabra de hasta 54 px en negro. En el resto del atlas el nombre del
+   capítulo es una microetiqueta técnica de 12 px sobre un filete, y una sola
+   familia gritando sus títulos era justo lo que hacía que P15 no pareciera del
+   mismo trabajo. La nota de la derecha dice qué se está mirando. */
 .rotulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 1.2rem;
   margin: 0 0 0.8rem;
-  font-size: clamp(24px, 4vw, 54px);
-  font-weight: 560;
-  letter-spacing: -0.03em;
-  line-height: 0.94;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--linea);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tinta);
+}
+
+.rotulo span {
+  margin-left: auto;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--texto-2);
 }
 
 .pie { margin: 0.5rem 0 0; font-size: 12px; color: var(--texto-2); }
@@ -43,7 +72,7 @@
 
 .encabezado { grid-area: encabezado; display: grid; gap: 0.8rem; align-content: center; }
 
-.num { font-size: 12px; letter-spacing: 0.14em; color: var(--madera); }
+.num { font-size: 12px; letter-spacing: 0.14em; color: var(--madera-texto); }
 
 /* «Challenge» no parte por espacio, así que el cuerpo lo fija la palabra más
    larga contra el ancho de su columna —unos 27vw—, no el viewport entero. A
@@ -138,19 +167,39 @@
 .circulacion g { stroke-width: 1.6; vector-effect: non-scaling-stroke; }
 .circulacion[data-off] { opacity: 0.12; }
 
-.selector { grid-area: selector; display: grid; gap: 0.3rem; align-content: center; justify-items: start; }
+/* Selector de capa: el mismo lenguaje de control que la leyenda del atlas —una
+   fila por estado, con filete inferior— y no tres pastillas sueltas. */
+.selector { grid-area: selector; display: grid; align-content: center; }
 
 .opcion {
-  min-height: 44px; padding: 0.4rem 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.4rem 0;
   font-size: 13px;
+  text-align: left;
   color: var(--texto-2);
-  border: 1px solid transparent;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--linea);
   cursor: pointer;
   transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
 }
 
+.opcion::before {
+  content: '';
+  width: 14px; height: 2px;
+  flex: none;
+  background: currentColor;
+  transition: width var(--micro) var(--sal), background var(--micro) var(--sal);
+}
+
 .opcion:hover, .opcion:focus-visible { color: var(--tinta); }
-.opcion[aria-pressed='true'] { color: var(--tinta); border-color: var(--senal); }
+
+.opcion[aria-pressed='true'] { color: var(--tinta); border-bottom-color: var(--tinta); }
+.opcion[aria-pressed='true']::before { width: 24px; background: var(--madera); }
 
 /* --- 3 · VARIACIONES ------------------------------------------------------- */
 
@@ -203,7 +252,7 @@
 }
 
 .proceso summary::-webkit-details-marker { display: none; }
-.proceso summary::after { content: ' +'; color: var(--madera); }
+.proceso summary::after { content: ' +'; color: var(--madera-texto); }
 .proceso details[open] summary::after { content: ' −'; }
 
 .procesoCuerpo {

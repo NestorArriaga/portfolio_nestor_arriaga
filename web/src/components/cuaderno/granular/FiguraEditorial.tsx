@@ -1,89 +1,94 @@
-import { CSSProperties, ReactNode } from 'react';
-import type { GranularVisual } from '@/content/granularVisuals';
-import styles from './GranularVisuals.module.css';
+import { ReactNode } from 'react';
 
-interface Props {
-  visual: GranularVisual;
-  children?: ReactNode;
-  /** Componente inyectado para mostrar la visualización interactiva si la hay */
-  renderAsset?: () => ReactNode;
-  className?: string;
+import type { GranularVisual } from '@/content/granularVisuals';
+import styles from './Granular.module.css';
+
+/**
+ * Figura de GRANULAR con su pie editorial.
+ *
+ * La versión anterior colgaba de cada imagen una rejilla de cuatro celdas —
+ * ámbito, periodo, unidad y procedencia— dentro de un recuadro que pesaba más
+ * que la propia lámina y hacía que siete pilares distintos parecieran el mismo
+ * formulario. Aquí los mismos datos se componen como una línea técnica: se leen
+ * cuando hacen falta y no compiten con la evidencia.
+ *
+ * Los campos que la fuente no documenta no se imprimen. Un `Periodo: año no
+ * indicado` convierte la ausencia de dato en protagonista visual; la cautela va
+ * en `alcance`, que es donde la fuente la declara.
+ */
+
+/** Marcas de «este campo no consta» que la fuente escribe como si fueran valor. */
+const SIN_DATO = [
+  'no aplica',
+  'año no indicado explícitamente',
+  'año no documentado',
+  'año no indicado',
+  'sin unidad',
+  'fuente específica no indicada en la composición',
+];
+
+function util(valor?: string): string | undefined {
+  if (!valor) return undefined;
+  return SIN_DATO.includes(valor.trim().toLowerCase()) ? undefined : valor;
 }
 
-export function FiguraEditorial({ visual, children, renderAsset, className = '' }: Props) {
-  // Hide empty/burocratic fields
-  const showPeriod = visual.period && visual.period.toLowerCase() !== 'no aplica' && visual.period !== 'Año no indicado explícitamente' && visual.period !== 'Año no documentado' && visual.period !== 'Año no indicado';
-  const showUnit = visual.unit && visual.unit.toLowerCase() !== 'sin unidad';
-  const showScope = visual.scope;
-  const sourceText = visual.source === 'Fuente específica no indicada en la composición' ? undefined : visual.source;
+export function FiguraEditorial({
+  visual, children, obra, fondo, tituloComo = 'p',
+}: {
+  visual: GranularVisual;
+  /** Controles del instrumento; van bajo el pie, no encima de la obra. */
+  children?: ReactNode;
+  /** Composición propia del instrumento. Sin ella se monta la lámina base. */
+  obra?: ReactNode;
+  /** Superficie del montaje cuando la pieza ya trae fondo oscuro. */
+  fondo?: 'papel' | 'tinta';
+  tituloComo?: 'p' | 'h3';
+}) {
+  const datos = [
+    ['Ámbito', util(visual.scope)],
+    ['Periodo', util(visual.period)],
+    ['Unidad', util(visual.unit)],
+    ['Procedencia', util(visual.source)],
+  ].filter((x): x is [string, string] => Boolean(x[1]));
+
+  const Titulo = tituloComo;
 
   return (
-    <figure className={`${styles.figuraEditorial} ${styles.granularScope} ${className}`} aria-label={visual.title}>
-      <div className={styles.assetContainer}>
-        {renderAsset ? (
-          renderAsset()
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
+    <figure className={styles.figura}>
+      <div className={styles.montaje} data-fondo={fondo === 'tinta' ? 'tinta' : undefined}>
+        {obra ?? (
+          /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={visual.asset.src}
+            srcSet={visual.asset.srcSet}
+            sizes="92vw"
             alt={visual.alt}
-            width={visual.asset.width}
-            height={visual.asset.height}
+            width={Math.round(visual.asset.width)}
+            height={Math.round(visual.asset.height)}
             loading="lazy"
             decoding="async"
-            style={{
-              aspectRatio: `${visual.asset.width} / ${visual.asset.height}`,
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-              objectFit: 'contain',
-            }}
           />
         )}
       </div>
 
-      <figcaption className={styles.figcaption}>
-        <div className={styles.metaRow}>
-          <p className={styles.figTitle}>{visual.title}</p>
-        </div>
+      <figcaption className={styles.pie}>
+        <Titulo className={styles.pieTitulo}>{visual.title}</Titulo>
 
-        <div className={styles.metaGrid}>
-          {showScope && (
-            <div className={styles.metaGroup}>
-              <span className={`${styles.metaLabel} mono`}>Ámbito</span>
-              <span className={`${styles.metaValue} mono`}>{visual.scope}</span>
-            </div>
-          )}
-          {showPeriod && (
-            <div className={styles.metaGroup}>
-              <span className={`${styles.metaLabel} mono`}>Periodo</span>
-              <span className={`${styles.metaValue} mono`}>{visual.period}</span>
-            </div>
-          )}
-          {showUnit && (
-            <div className={styles.metaGroup}>
-              <span className={`${styles.metaLabel} mono`}>Unidad</span>
-              <span className={`${styles.metaValue} mono`}>{visual.unit}</span>
-            </div>
-          )}
-          {sourceText && (
-            <div className={styles.metaGroup}>
-              <span className={`${styles.metaLabel} mono`}>Procedencia</span>
-              <span className={`${styles.metaValue} mono`}>{sourceText}</span>
-            </div>
-          )}
-        </div>
+        {datos.length ? (
+          <dl className={`${styles.pieDatos} mono`}>
+            {datos.map(([k, v]) => (
+              <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+            ))}
+          </dl>
+        ) : null}
 
-        {visual.caption && (
-          <p className={`${styles.captionText} mono`}>{visual.caption}</p>
-        )}
+        {visual.caption ? <p className={styles.pieLectura}>{visual.caption}</p> : null}
 
-        {visual.limitations && (
-          <p className={`${styles.limitations} mono`}>
-            <strong>Alcance: </strong>
-            {visual.limitations}
+        {visual.limitations ? (
+          <p className={`${styles.alcance} mono`}>
+            <b>Alcance. </b>{visual.limitations}
           </p>
-        )}
+        ) : null}
 
         {children}
       </figcaption>

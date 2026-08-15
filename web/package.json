@@ -8,13 +8,16 @@
     "start": "next start -p 4100",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test": "node --test scripts/test-rutas.mjs scripts/test-entrega.mjs",
+    "qa:rutas": "node scripts/qa-rutas.mjs",
+    "qa:navegacion": "node scripts/qa-navegacion.mjs",
+    "qa:visual": "node scripts/qa-visual.mjs",
+    "qa:impresion": "node scripts/qa-impresion.mjs",
+    "print:derivados": "node scripts/build-print-derivatives.mjs",
+    "portfolio:pdf": "node scripts/build-print-derivatives.mjs && node scripts/portfolio-pdf.mjs",
     "atlas:sources": "python3 scripts/build_atlas_sources.py",
     "atlas:masks": "python3 scripts/build_territory_masks.py",
-    "portfolio:pdf": "node scripts/portfolio-pdf.mjs",
-    "qa:rutas": "node scripts/qa-rutas.mjs",
-    "test": "node --test scripts/test-rutas.mjs",
-    "sistemas": "python3 scripts/build_sistemas.py --fuentes \"$SISTEMAS_FUENTES\"",
-    "qa:navegacion": "node scripts/qa-navegacion.mjs"
+    "sistemas": "python3 scripts/build_sistemas.py --fuentes \"$SISTEMAS_FUENTES\""
   },
   "dependencies": {
     "d3-geo": "^3.1.1",

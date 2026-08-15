@@ -44,7 +44,9 @@
 
 .portadaMarco { align-content: center; justify-items: start; gap: 0.4rem; }
 
-.portadaNum { color: var(--madera, #a5784c); }
+/* Rotulado en la madera llevada a legible: el tono pleno se queda en 3.36:1
+   sobre el papel marfil. El filo y el trazo sí conservan la madera. */
+.portadaNum { color: var(--madera-texto, #8a5f36); }
 
 .portadaTitulo {
   font-size: clamp(3.2rem, 12vw, 11rem);
@@ -279,12 +281,16 @@
 
 .rielItem { font-size: 13px; }
 
-.contador { color: var(--madera, #a5784c); }
+/* El contador se lee: la madera plena se queda en 3.36:1 sobre el papel. */
+.contador { color: var(--madera-texto, #8a5f36); }
 
 .rielItem {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.28rem 0;
-  color: color-mix(in srgb, var(--tinta) 44%, transparent);
+  /* Al 44 % el estado en reposo del riel se quedaba en 3.01:1 sobre el papel:
+     por debajo del mínimo AA para 13 px. La jerarquía entre el paso activo y
+     los demás la siguen marcando el tono pleno y la longitud de la marca. */
+  color: color-mix(in srgb, var(--tinta) 66%, transparent);
   transition: color 200ms var(--sal);
 }
 

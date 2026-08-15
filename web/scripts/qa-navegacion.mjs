@@ -119,7 +119,9 @@ for (const [ruta, patron, nombre] of [
 await ir('/caso/geomorfologia-metztitlan');
 ok((await page.getAttribute('nav a:has-text("Atlas")', 'aria-label')) === 'Atlas · volver al recorrido',
   'Atlas tiene nombre accesible permanente');
-ok((await page.getAttribute('nav a:has-text("Vistazo")', 'aria-label')) === 'Abrir índice de proyectos',
+// El nombre accesible empieza por la etiqueta visible, igual que en Atlas: quien
+// dicta «Vistazo» por voz tiene que activar el control que dice «Vistazo».
+ok((await page.getAttribute('nav a:has-text("Vistazo")', 'aria-label')) === 'Vistazo · abrir índice de proyectos',
   'Vistazo tiene nombre accesible permanente');
 
 /* --- 4 · Abrir proyecto y volver al ancla -------------------------------- */

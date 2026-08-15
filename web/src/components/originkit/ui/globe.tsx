@@ -233,6 +233,41 @@ export default function Globe({
     );
     const scaleMultiplier = mapScaleUiToMultiplier(scale);
 
+    /**
+     * Identidad estable de los marcadores.
+     *
+     * `markerConfig` llega como objeto literal desde quien monta el globo, así
+     * que cambia de identidad en cada render del padre. Como estaba en las
+     * dependencias del efecto de montaje, bastaba pasar el puntero por encima
+     * —eso provoca un render— para destruir el contexto WebGL, volver a
+     * construir la escena, releer la geometría del mundo y devolver la rotación
+     * a su ángulo inicial. Eso era el temblor. Aquí se compara el contenido,
+     * que es lo que de verdad obliga a rehacer la geometría.
+     */
+    const markerColor = markerConfig.color;
+    const markersClave = markerConfig.markers
+        .map((m) => `${m.lat},${m.lng}`)
+        .join(";");
+    const markersRef = useRef(markerConfig.markers);
+    markersRef.current = markerConfig.markers;
+
+    /**
+     * Parámetros vivos del movimiento.
+     *
+     * Velocidad, suavizado, arrastre y la pausa al señalar cambian durante la
+     * interacción —el recorrido detiene el globo cuando la escena no está en
+     * foco—, pero ninguno describe la geometría. Se leen desde el bucle, que ya
+     * está corriendo, en vez de reconstruir la escena para cambiar un número.
+     */
+    const vivo = useRef({ rotationSpeed, smoothingN, stopOnHover, dragSpeed });
+    vivo.current = { rotationSpeed, smoothingN, stopOnHover, dragSpeed };
+
+    /** Arranque del bucle desde fuera del efecto de montaje. */
+    const arrancarRef = useRef<(() => void) | null>(null);
+    useEffect(() => {
+        if (rotationSpeed !== 0) arrancarRef.current?.();
+    }, [rotationSpeed]);
+
     useEffect(() => {
         if (!containerRef.current) return;
         const container = containerRef.current;
@@ -271,7 +306,7 @@ export default function Globe({
         const resolvedOceanColor = oceanColor;
         const resolvedOutlineColor = outlineColor;
         const resolvedDotColor = dotColor;
-        const resolvedMarkerColor = markerConfig.color;
+        const resolvedMarkerColor = markerColor;
         const resolvedGraticuleColor = graticuleColor;
         const resolvedFillColor = fillColor;
         const oceanRgba = parseColorToRgba(resolvedOceanColor);
@@ -724,7 +759,8 @@ export default function Globe({
         const updateMarkers = () => {
             markerMeshes.forEach((mesh) => globeGroup.remove(mesh));
             markerMeshes = [];
-            if (markerConfig.markers && markerConfig.markers.length > 0) {
+            const marcadores = markersRef.current;
+            if (marcadores && marcadores.length > 0) {
                 const markerSize = 0.01 * markerRadiusMultiplier;
                 const markerGeometry = new SphereGeometry(markerSize, 16, 16);
                 const markerColorObj = resolvedMarkerColor
@@ -733,7 +769,7 @@ export default function Globe({
                 const markerMaterial = new MeshBasicMaterial({
                     color: markerColorObj,
                 });
-                markerConfig.markers.forEach((marker) => {
+                marcadores.forEach((marker) => {
                     if (
                         !marker ||
                         typeof marker.lat !== "number" ||
@@ -769,9 +805,7 @@ export default function Globe({
         let lastMouseX = 0;
         let lastMouseY = 0;
         let animationFrameId: number | null = null;
-        const lerpFactor =
-            smoothingN === 0 ? 1 : mapLinear(smoothingN, 0, 1, 0.4, 0.03);
-        const velocityDecay = mapLinear(smoothingN, 0, 1, 0.7, 0.96);
+        let anterior = 0;
 
         const globeGroup = new Group();
         globeGroup.rotation.y = initialLongitudeRad;
@@ -784,15 +818,45 @@ export default function Globe({
         globeGroup.add(continentOutlineGroup);
         markerMeshes.forEach((mesh) => globeGroup.add(mesh));
 
-        const animate = () => {
+        const animate = (ahora: number) => {
             let needsRender = false;
             const threshold = 0.01;
+
+            /* Paso de tiempo, no de fotograma.
+             *
+             * El giro avanzaba una cantidad fija por fotograma: a 120 Hz corría
+             * al doble que a 60, y cada vez que el navegador agrupaba o perdía
+             * fotogramas —cosa que pasa continuamente en una página con
+             * recorrido— el globo daba tirones. Medido en tiempo, el
+             * movimiento es el mismo a cualquier frecuencia.
+             *
+             * `dt` se expresa en fotogramas de 60 Hz para conservar la escala
+             * de las constantes originales, y se limita a tres: al volver de
+             * otra pestaña el reloj trae un salto de segundos y el globo
+             * pegaría un latigazo. */
+            const dt = anterior
+                ? Math.min(3, Math.max(0.2, (ahora - anterior) / 16.667))
+                : 1;
+            anterior = ahora;
+
+            const { rotationSpeed, smoothingN, stopOnHover } = vivo.current;
+            const lerpBase =
+                smoothingN === 0 ? 1 : mapLinear(smoothingN, 0, 1, 0.4, 0.03);
+            // Persecución exponencial: el mismo destino se alcanza en el mismo
+            // tiempo real, con independencia de cuántos fotogramas haga falta.
+            const lerpFactor =
+                lerpBase >= 1 ? 1 : 1 - Math.pow(1 - lerpBase, dt);
+            const velocityDecay = Math.pow(
+                mapLinear(smoothingN, 0, 1, 0.7, 0.96),
+                dt
+            );
+
             if (
                 !isDragging &&
                 rotationSpeed !== 0 &&
                 (!stopOnHover || !isHovering)
             ) {
-                targetRotation.x += rotationSpeed * 0.01;
+                targetRotation.x += rotationSpeed * 0.01 * dt;
             }
             if (!isDragging && smoothingN > 0) {
                 if (
@@ -849,10 +913,15 @@ export default function Globe({
 
         const startAnimation = () => {
             if (animationFrameId === null) {
+                // El reloj se reinicia al arrancar: si se guardara el instante
+                // de la última parada, el primer paso valdría lo que durase la
+                // pausa y el globo entraría de golpe.
+                anterior = 0;
                 animationFrameId = requestAnimationFrame(animate);
             }
         };
-        if (rotationSpeed !== 0) {
+        arrancarRef.current = startAnimation;
+        if (vivo.current.rotationSpeed !== 0) {
             startAnimation();
         }
 
@@ -864,7 +933,9 @@ export default function Globe({
             lastMouseY = event.clientY;
             startAnimation();
             const handleMouseMoveDrag = (moveEvent: MouseEvent) => {
-                const sensitivity = mapDragSpeedUiToSensitivity(dragSpeed);
+                const sensitivity = mapDragSpeedUiToSensitivity(
+                    vivo.current.dragSpeed
+                );
                 const dx = moveEvent.clientX - lastMouseX;
                 const dy = moveEvent.clientY - lastMouseY;
                 targetRotation.x += dx * sensitivity;
@@ -891,7 +962,7 @@ export default function Globe({
         const raycaster = new Raycaster();
         const mouse = new Vector2();
         const handleMouseMove = (event: MouseEvent) => {
-            if (!stopOnHover) return;
+            if (!vivo.current.stopOnHover) return;
             const rect = canvas.getBoundingClientRect();
             mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -900,6 +971,20 @@ export default function Globe({
             isHovering = intersects.length > 0;
         };
         canvas.addEventListener("mousemove", handleMouseMove);
+
+        /* Salir del lienzo cancela la pausa.
+         *
+         * `isHovering` sólo se calculaba al mover el puntero **sobre** el
+         * lienzo, así que al salir se quedaba con el último valor: el globo se
+         * detenía para siempre. No se notaba porque cada entrada y cada salida
+         * reconstruían el componente entero y con él un estado limpio; en
+         * cuanto la escena dejó de rehacerse, el fallo quedó a la vista. */
+        const handleMouseLeave = () => {
+            if (!isHovering) return;
+            isHovering = false;
+            startAnimation();
+        };
+        canvas.addEventListener("mouseleave", handleMouseLeave);
 
         const resizeObserver = new ResizeObserver(() => {
             const newWidth =
@@ -923,15 +1008,22 @@ export default function Globe({
                 cancelAnimationFrame(animationFrameId);
             canvas.removeEventListener("mousedown", handleMouseDown);
             canvas.removeEventListener("mousemove", handleMouseMove);
+            canvas.removeEventListener("mouseleave", handleMouseLeave);
             resizeObserver.disconnect();
             renderer.dispose();
             container.removeChild(canvas);
         };
+    /* Sólo lo que obliga a rehacer la escena.
+     *
+     * `dots` y `markerConfig` llegan como objetos literales y estaban aquí: con
+     * ellos en la lista, cualquier render del padre —señalar el globo ya provoca
+     * uno— destruía el contexto WebGL y volvía a construirlo todo. De ellos se
+     * comparan ahora sus valores, que es lo que de verdad cambia la geometría.
+     *
+     * Velocidad, dirección, suavizado, arrastre y la pausa al señalar salieron
+     * de la lista: describen el movimiento, no la forma, y viajan por `vivo`. */
     // eslint-disable-next-line react-hooks/exhaustive-deps -- componente de OriginKit: no se reescribe su ciclo de vida.
     }, [
-        speed,
-        smoothing,
-        dots,
         fill,
         fillColor,
         allDots,
@@ -939,9 +1031,8 @@ export default function Globe({
         dotSize,
         dotColor,
         scale,
-        stopOnHover,
-        markerConfig,
-        direction,
+        markerColor,
+        markersClave,
         initialLatitude,
         initialLongitude,
         oceanColor,
@@ -950,9 +1041,7 @@ export default function Globe({
         graticuleColor,
         showGrid,
         outlineWidth,
-        dragSpeed,
         detail,
-        rotationSpeed,
         dotSpacing,
         dotSizeMultiplier,
         markerRadiusMultiplier,

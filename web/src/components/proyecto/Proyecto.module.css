@@ -62,22 +62,46 @@
   min-height: 88svh;
 }
 
-.aperturaTexto { grid-column: span 5; display: grid; gap: 0.9rem; min-width: 0; }
+/* Contenedor de medida: el rótulo se dimensiona con el ancho real de esta
+   columna, no con el del viewport. */
+.aperturaTexto {
+  grid-column: span 5;
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+  container-type: inline-size;
+  container-name: rotulo;
+}
 
 .codigo {
   display: inline-flex; align-items: center; gap: 0.6rem;
   font-size: 12px; letter-spacing: 0.14em; color: var(--senal-texto);
 }
 
-/* Dos líneas como máximo en escritorio: el cuerpo responde al ancho disponible
-   y también a la longitud real del rótulo. */
+/* Dos renglones como máximo, y siempre dentro de su columna.
+
+   `100cqw` es el ancho real de `.aperturaTexto`, no el del viewport: es la
+   única medida que impide que el rótulo se meta bajo la obra cuando la columna
+   es estrecha. Los divisores salen del avance medio de Geist a este cuerpo
+   —0.55 em por signo—, así que `ancho / (0.55 · signos)` es el tamaño en el que
+   la línea toca justo el borde; se deja un 6 % de holgura.
+
+   La palabra más larga manda cuando no se puede partir; el rótulo completo
+   manda cuando sí cabe repartido en dos renglones. */
 .titulo {
   margin: 0;
-  font-size: min(clamp(58px, 7.2vw, 124px), calc(46vw / var(--largo, 14) * 2.5));
+  font-size: min(
+    clamp(58px, 7.2vw, 124px),
+    calc(100cqw / var(--palabra, 10) * 1.7),
+    calc(100cqw / var(--largo, 14) * 3.4)
+  );
   line-height: 0.9;
   letter-spacing: -0.04em;
   font-weight: 560;
   text-wrap: balance;
+  /* Guarda dura: si alguna combinación futura se pasara, el rótulo se ajusta
+     al contenedor en lugar de invadir la obra. */
+  max-width: 100%;
 }
 
 .ficha { display: grid; gap: 0.35rem; font-size: 12px; margin: 0.4rem 0 0; }
@@ -167,10 +191,16 @@
 
 /* --- Capítulo -------------------------------------------------------------- */
 
+/* Ritmo entre capítulos.
+
+   A 9vh por lado el salto entre dos instrumentos llegaba a 224 px de nada, y
+   sumado a la altura libre de las figuras producía las transiciones vacías de
+   P01 y P05. El aire sigue existiendo, pero por debajo del medio viewport que
+   fija la dirección visual. */
 .capitulo {
   max-width: var(--ancho);
   margin: 0 auto;
-  padding: clamp(2.5rem, 9vh, 7rem) var(--margen);
+  padding: clamp(2rem, 5.5vh, 4.5rem) var(--margen);
   display: grid;
   gap: clamp(0.9rem, 2vh, 1.6rem);
   scroll-margin-top: 5rem;
@@ -210,7 +240,9 @@
   color: var(--texto-2);
 }
 
-.pieza figcaption span { color: color-mix(in srgb, var(--texto-2) 74%, transparent); }
+/* La procedencia va por debajo del pie, pero sigue siendo un dato que hay que
+   poder leer: al 74 % sobre papel se quedaba en 3.55:1. */
+.pieza figcaption span { color: color-mix(in srgb, var(--texto-2) 88%, transparent); }
 
 /* --- Mesa: mapa + instrumento ---------------------------------------------- */
 
@@ -289,13 +321,39 @@
   align-items: center;
 }
 
-.localizador .pieza { grid-column: span 7; }
-.localizadorDatos { grid-column: span 5; display: grid; gap: 0.7rem; align-content: center; }
+/* El localizador sitúa; no es la obra del proyecto.
 
-.foco { margin: 0; font-size: clamp(24px, 3vw, 46px); font-weight: 500; letter-spacing: -0.02em; }
+   Con siete columnas la figura ocupaba casi un viewport y medio —muchas son
+   verticales— y la columna de datos, que son cuatro líneas, dejaba media
+   pantalla en negro a su derecha. Invertido, el nombre del lugar es lo que
+   manda y el contorno acompaña a la escala que le corresponde. */
+.localizador .pieza { grid-column: span 5; }
+.localizador .pieza img { max-height: 54svh; }
+.localizadorDatos { grid-column: span 7; display: grid; gap: 0.7rem; align-content: center; }
+
+.foco { margin: 0; font-size: clamp(24px, 3.4vw, 54px); font-weight: 500; letter-spacing: -0.02em; }
 .coord { font-size: 12px; color: var(--texto-2); }
 
-.escala { display: flex; align-items: center; gap: 0.5rem; font-size: 12px; color: var(--texto-2); }
+/* Banda de orientación: coordenada, escala y norte a lo ancho de la columna. */
+.orientacion {
+  margin: 1.4rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 0 clamp(1rem, 2.4vw, 2.4rem);
+}
+
+.orientacion > div {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--linea);
+}
+
+.orientacion dt { font-size: 12px; color: var(--texto-2); letter-spacing: 0.1em; }
+.orientacion dd { margin: 0; font-size: 13px; min-height: 22px; display: flex; align-items: center; }
+
+.escala { display: flex; align-items: center; gap: 0.5rem; margin: 0; font-size: 12px; color: var(--texto-2); }
 .escala i { width: 56px; height: 1px; background: currentColor; position: relative; }
 .escala i::before, .escala i::after {
   content: ''; position: absolute; top: -3px; width: 1px; height: 7px; background: currentColor;
@@ -428,6 +486,15 @@
 
 .apoyoDetalle { margin: 0; display: grid; gap: 0.4rem; }
 .apoyoDetalle figcaption { font-size: 11px; color: var(--texto-2); }
+
+/* Montaje de la figura secundaria.
+
+   Varias de estas piezas traen su propio fondo de papel y sobre la tinta se
+   leían como un recorte pegado encima. Un filo de un píxel las convierte en
+   una lámina montada, que es lo que son. */
+.apoyo img, .perfilCaja .pieza img, .criteriosMapa .pieza img {
+  outline: var(--hairline, 1px) solid var(--linea);
+}
 
 /* --- Comparador ------------------------------------------------------------ */
 
@@ -764,43 +831,23 @@
     min-height: auto;
   }
 
+  /* Una sola columna: en cuatro columnas todo ocupa el ancho completo. */
   .aperturaTexto, .heroObra, .mapaCaja, .leyenda, .rampa, .contador,
   .atlasMapa, .atlasDetalles, .perfilCaja, .matriz, .criteriosMapa,
-  .localizador .pieza, .localizadorDatos, .metricas dl, /* Especímenes numerados: enunciados, no cifras. */
-.especimenes {
-  grid-column: span 12;
-  list-style: none; margin: 0; padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-  gap: clamp(1rem, 2.4vw, 2.4rem);
-}
-.especimenes li {
-  display: grid; gap: 0.5rem; align-content: start;
-  padding-top: 0.8rem;
-  border-top: 1px solid var(--linea);
-}
-.especimenNum {
-  justify-self: start;
-  display: grid; place-items: center;
-  width: 20px; height: 20px;
-  font-size: 11px; color: var(--tinta); background: var(--senal);
-}
-.especimenValor {
-  margin: 0;
-  font-size: clamp(20px, 2.1vw, 30px);
-  font-weight: 500; line-height: 1.12; letter-spacing: -0.02em;
-  text-wrap: balance;
-}
-.especimenPie { margin: 0; font-size: 12px; color: var(--texto-2); }
-
-.apoyo { grid-column: span 4; }
-
-.apoyoDetalle { margin: 0; display: grid; gap: 0.4rem; }
-.apoyoDetalle figcaption { font-size: 11px; color: var(--texto-2); }
+  .localizador .pieza, .localizadorDatos, .metricas dl, .especimenes,
+  .apoyo, .sincro .mapaCaja {
+    grid-column: span 4;
+  }
 
   .apertura { padding-top: calc(var(--margen) + 4.2rem); }
 
-  .titulo { font-size: min(clamp(44px, 12vw, 58px), calc(90vw / var(--largo, 14) * 2.5)); }
+  .titulo {
+    font-size: min(
+      clamp(40px, 12vw, 58px),
+      calc(100cqw / var(--palabra, 10) * 1.7),
+      calc(100cqw / var(--largo, 14) * 3.4)
+    );
+  }
 
   /* El índice se reduce a puntos y se queda al pie, fuera del contenido. */
   .indice {

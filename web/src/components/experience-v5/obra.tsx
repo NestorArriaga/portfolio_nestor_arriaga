@@ -2,6 +2,7 @@
 
 import { CSSProperties } from 'react';
 
+import { anchoServido } from '@/lib/densidad';
 import type { Guarda, Lamina } from './registry';
 import styles from './obra.module.css';
 
@@ -25,18 +26,9 @@ import styles from './obra.module.css';
  * o cambia de capa; no agranda el ráster.
  */
 
-/**
- * Ancho del archivo más grande que se sirve para una lámina.
- *
- * No sirve el ancho nativo del manifiesto: el ancho nativo dice qué resolución
- * hay dentro del PDF, pero la guarda tiene que mirar el archivo que el
- * navegador va a descargar de verdad. Se lee del `srcSet`, que es la lista
- * literal de los derivados existentes.
- */
-export function anchoServido(img: { srcSet?: string; width: number }): number {
-  const anchos = [...(img.srcSet ?? '').matchAll(/\s(\d+)w/g)].map((m) => Number(m[1]));
-  return anchos.length ? Math.max(...anchos) : img.width;
-}
+/* La guarda vive en `@/lib/densidad`: la comparte con la composición impresa,
+   que se resuelve en el servidor y no puede importar de un módulo de cliente. */
+export { anchoServido };
 
 export function Obra({
   img, guarda, alt, banda = 'negro', clase, nombreVista, children,

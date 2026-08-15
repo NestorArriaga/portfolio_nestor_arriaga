@@ -1,0 +1,64 @@
+/* Agua · instrumento del radar de tensiones y políticas. */
+
+.instrumento {
+  display: grid;
+  gap: 0.9rem;
+  padding-top: 0.4rem;
+  min-width: 0;
+}
+
+/* Marca temporal del propio diagrama. Sin ella el recorrido no dice sobre qué
+   periodo está leyendo. */
+.tiempo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  font-size: 12px;
+  color: var(--texto-3);
+}
+
+.tiempo i {
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+  max-width: 22rem;
+}
+
+.tiempo i::before, .tiempo i::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 7px;
+  background: currentColor;
+}
+
+.tiempo i::before { left: 0; }
+.tiempo i::after { right: 0; }
+
+.lectura {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--texto-2);
+  max-width: 62ch;
+  /* Reserva de altura: la lectura cambia de estado y el bloque no debe saltar. */
+  min-height: 3.2em;
+}
+
+.cautela {
+  margin: 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--linea);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--texto-3);
+  max-width: 62ch;
+}
+
+@media (max-width: 720px) {
+  .lectura, .cautela { font-size: 14px; }
+  .lectura { min-height: 4.4em; }
+}

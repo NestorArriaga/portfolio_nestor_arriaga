@@ -303,8 +303,11 @@ export function PerfilV5({
             <div key={r.palabra} className={styles.recorte}
                  style={{ '--nativo': String(anchoServido(r.img)) } as CSSProperties}
                  data-forma={r.forma} data-on={activa === r.palabra || undefined}>
+              {/* El recorte ocupa el ancho completo del umbral, no cuatro quintos:
+                  con `80vw` el navegador traía la variante de 1152 px para una
+                  caja de 1440 y las palabras se abrían sobre una imagen blanda. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={r.img.src} srcSet={r.img.srcSet} sizes="80vw"
+              <img src={r.img.src} srcSet={r.img.srcSet} sizes="100vw"
                    width={r.img.width} height={r.img.height} alt=""
                    loading="lazy" decoding="async" />
             </div>

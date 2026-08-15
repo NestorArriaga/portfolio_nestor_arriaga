@@ -45,6 +45,12 @@ export function SistemaPagina({
   const leer = useAyuda('sistema-leer', listo, 1000);
   useCerrarAlDesplazar(leer.visible, leer.cerrar);
 
+  // Cuántas capturas comparten la banda de flujo. Con una sola, la rejilla le
+  // da el ancho editorial entero y el anuncio de `44vw` hacía que el navegador
+  // descargara la variante de 800 px para una caja de 1339: la interfaz llegaba
+  // a menos de la mitad de la densidad necesaria y el texto se leía blando.
+  const pasos = caso.detalles.length + (caso.segundo?.imagen ? 1 : 0);
+
   return (
     <main className={styles.sistema} id="contenido" tabIndex={-1}>
       <nav className={styles.riel} aria-label="Navegación del sistema">
@@ -52,7 +58,7 @@ export function SistemaPagina({
         <span className={styles.rielCentro}>
           <Link className="btn" data-v="borde" href={origen}>Atlas</Link>
           <Link className="btn" data-v="borde" href={vistazoHref()}
-                aria-label="Abrir índice de proyectos">Vistazo</Link>
+                aria-label="Vistazo · abrir índice de proyectos">Vistazo</Link>
         </span>
       </nav>
 
@@ -86,7 +92,7 @@ export function SistemaPagina({
           <ol className={styles.estados}>
             {caso.segundo?.imagen ? (
               <li>
-                <Lamina im={caso.segundo.imagen} sizes="(max-width: 900px) 92vw, 44vw" />
+                <Lamina im={caso.segundo.imagen} sizes={anchoEstado(pasos)} />
                 {/* El estado y el crédito ya viven bajo la captura, como
                     etiqueta permanente; aquí sólo se nombra el paso. */}
                 <p className={`${styles.estadoPie} mono`}>
@@ -96,7 +102,7 @@ export function SistemaPagina({
             ) : null}
             {caso.detalles.map((d, i) => (
               <li key={d.src}>
-                <Lamina im={d} sizes="(max-width: 900px) 92vw, 44vw" />
+                <Lamina im={d} sizes={anchoEstado(pasos)} />
                 {/* Sólo el número del paso: el pie de la captura ya dice qué
                     se ve, y el estado vive en la etiqueta permanente. */}
                 <p className={`${styles.estadoPie} mono`}>
@@ -148,6 +154,11 @@ export function SistemaPagina({
       </footer>
     </main>
   );
+}
+
+/** Ancho servido de una captura de la banda de flujo, según cuántas comparten fila. */
+function anchoEstado(pasos: number): string {
+  return pasos > 1 ? '(max-width: 900px) 92vw, 45vw' : '(max-width: 900px) 92vw, 92vw';
 }
 
 /** Captura con su pie y su techo de resolución. */

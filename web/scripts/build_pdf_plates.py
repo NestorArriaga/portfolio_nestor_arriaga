@@ -20,7 +20,7 @@ Se extrae **por pagina declarada**, no barriendo el documento entero:
 - La p.17 lleva un mural de Diego Rivera. Es obra de un tercero y no se extrae.
 
 Las fotografias si se extraen cuando el propio PDF las acredita al autor
-("Foto: Néstor Elihu Arriaga Gallegos"); ese credito es lo que las hace
+("Foto: Nestor Elihu Arriaga Gallegos"); ese credito es lo que las hace
 publicables aqui, y va con ellas al manifiesto.
 """
 from __future__ import annotations
@@ -86,7 +86,7 @@ PLATES = [
     ("p01-areas-verdes",     19, 0, ["01"], "map",    None),
     ("p01-colonias-grafica", 19, 1, ["01"], "figure", None),
     ("veracruz-foto",        21, 0, ["02", "03", "04"], "photo",
-     "Veracruz en un viaje de estudio. Foto: Néstor Elihu Arriaga Gallegos"),
+     "Veracruz en un viaje de estudio. Foto: Nestor Elihu Arriaga Gallegos"),
     ("p02-carbono",          22, 0, ["02"], "map",    None),
     ("p03-zonas-optimas",    23, 0, ["03"], "map",    None),
     ("p04-uso-optimo",       24, 0, ["04"], "map",    None),
@@ -96,7 +96,7 @@ PLATES = [
     ("p07-pendiente-grafica", 28, 1, ["07"], "figure", None),
     ("p08-patrones",         29, 0, ["08"], "map",    None),
     ("calvillo-foto",        30, 0, ["12", "13"], "photo",
-     "Calvillo, Aguascalientes: mi pueblo natal. Foto: Néstor Elihu Arriaga Gallegos"),
+     "Calvillo, Aguascalientes: mi pueblo natal. Foto: Nestor Elihu Arriaga Gallegos"),
     ("p09-vocaciones",       33, 0, ["09"], "map",    None),
     ("p10-conservacion",     34, 0, ["10"], "map",    None),
     ("p11-agricola",         37, 0, ["11"], "map",    None),
