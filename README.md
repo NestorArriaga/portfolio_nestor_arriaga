@@ -30,8 +30,8 @@ diecinueve entradas por territorio, método o escala.
 
 ## Requisitos
 
-- Node.js 18.17 o superior
-- npm 9 o superior
+- Node.js 24.x
+- npm 10 o superior
 - Python 3.11+ con Pillow, sólo para regenerar activos derivados
 
 ## Uso
