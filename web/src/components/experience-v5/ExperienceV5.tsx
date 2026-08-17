@@ -13,10 +13,11 @@ import { CapituloSistemas } from './sistemas';
 import { CapituloGranular, Submomento } from './granular';
 import { PortadaV5, PerfilV5, Marcador } from './umbral';
 import { Hud, Ficha } from './atlas';
-import { VistazoOrbital } from './orbita';
+import { VistazoOrbital, type Territorio } from './orbita';
 import { Rostro, Contacto, BaseRostro } from './umbralCierre';
 import { Suave } from './suave';
 import type { Momento, EstadoParque } from './registry';
+import type { Catalogo } from '@/components/global/Descargas';
 import type { Sistema } from '@/components/sistemas/registro';
 import type { Pieza } from './relevo';
 import './v5.css';
@@ -31,7 +32,8 @@ import './v5.css';
  */
 
 export function Atlas({
-  momentos, granular, parque, sistemas, marcadores, recortes, fichas, actos, rostro, descarga,
+  momentos, granular, parque, sistemas, marcadores, recortes, fichas, actos, rostro,
+  territorios, descargas,
 }: {
   momentos: Momento[];
   granular: Submomento[];
@@ -42,7 +44,8 @@ export function Atlas({
   fichas: Ficha[];
   actos: Record<string, string>;
   rostro: { trazos: string; viewBox: string; bases: BaseRostro[] } | null;
-  descarga: { href: string; mb: string; paginas: number } | null;
+  territorios: Territorio[];
+  descargas: Catalogo;
 }) {
   /**
    * La secuencia real del atlas, en el orden en que se recorre. El relevo de
@@ -261,7 +264,7 @@ export function Atlas({
       <Suave />
       <main id="contenido" tabIndex={-1}>
         <PortadaV5
-          marcadores={marcadores} quieto={quieto} descarga={descarga} tapada={atlas}
+          marcadores={marcadores} quieto={quieto} descargas={descargas} tapada={atlas}
           onRecorrer={() => ir('perfil')}
           onVistazo={abrirAtlas}
           onContacto={() => irYEnfocar('contacto')}
@@ -326,7 +329,7 @@ export function Atlas({
         <Contacto
           marcadores={marcadores}
           correo="nestorarriaga.irnr@gmail.com"
-          descarga={descarga}
+          descargas={descargas}
           quieto={quieto}
           onVistazo={abrirAtlas}
           onInicio={() => ir('portada')}
@@ -341,6 +344,7 @@ export function Atlas({
       />
 
       <VistazoOrbital
+          territorios={territorios}
         abierto={atlas} fichas={fichas}
         marcadores={marcadores.map((m) => ({ lat: m.lat, lng: m.lng }))}
         onCerrar={cerrarAtlas} onElegir={elegir}

@@ -17,6 +17,8 @@ export type Ficha = {
   id: string;
   num: string;
   titulo: string;
+  /** Territorio al que pertenece, o `sistemas`. Agrupa el Explorador. */
+  territorioId: string;
   lugar: string;
   territorio: string;
   metodo: string;

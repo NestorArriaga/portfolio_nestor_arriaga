@@ -33,14 +33,35 @@ console.log('portada');
 await ir('/');
 const acciones = await page.$$eval('#portada .btn', (ns) => ns.map((n) => n.textContent.trim()));
 ok(acciones.length === 4, 'la portada ofrece cuatro acciones', acciones.join(' / '));
-ok(acciones.some((t) => /Descargar/.test(t)), 'incluye la descarga del PDF');
+ok(acciones.some((t) => /Descargas/.test(t)), 'incluye el centro de descargas');
 
-const pdf = await page.$('#portada a[download]');
-ok(!!pdf, 'el botón de PDF lleva `download`');
-const hrefPdf = await pdf?.getAttribute('href');
-ok(/Nestor-Arriaga-Gallegos-Portafolio-2026\.pdf$/.test(hrefPdf ?? ''), 'nombre de archivo estable', hrefPdf ?? '');
-const etiqueta = await pdf?.getAttribute('aria-label');
-ok(/páginas/.test(etiqueta ?? ''), 'la descarga tiene nombre accesible completo', etiqueta ?? '');
+/* Los tres documentos viven detrás de una sola puerta: el portafolio y los dos
+   currículos. Antes el PDF era un enlace suelto en la portada y los currículos
+   no existían en el sitio. */
+await page.getByRole('button', { name: 'Descargas', exact: true }).first().click();
+await page.waitForTimeout(700);
+
+const docs = await page.$$eval('[role="dialog"] a[download]', (ns) => ns.map((n) => ({
+  href: n.getAttribute('href'),
+  lang: n.getAttribute('hreflang'),
+  texto: n.textContent.trim(),
+})));
+
+ok(docs.length === 3, 'el centro ofrece los tres documentos', `${docs.length}`);
+ok(docs.some((d) => /Nestor-Arriaga-Gallegos-Portafolio-2026\.pdf$/.test(d.href ?? '')),
+  'nombre de archivo estable del portafolio', docs.map((d) => d.href).join(' '));
+ok(docs.some((d) => /Nestor-Arriaga-CV-ES\.pdf$/.test(d.href ?? '') && d.lang === 'es'),
+  'el CV en español se declara en su idioma');
+ok(docs.some((d) => /Nestor-Arriaga-CV-EN\.pdf$/.test(d.href ?? '') && d.lang === 'en'),
+  'el CV en inglés se declara en su idioma');
+ok(docs.every((d) => d.texto.length > 3), 'cada descarga se nombra con palabras',
+  docs.map((d) => d.texto).join(' | '));
+
+const fichas = await page.$$eval('[role="dialog"]', (ns) => ns[0].textContent);
+ok(/páginas/.test(fichas ?? ''), 'el centro dice cuántas páginas tiene cada documento');
+
+await page.keyboard.press('Escape');
+await page.waitForTimeout(500);
 
 await page.waitForTimeout(1400);
 ok((await page.locator('#portada [role="status"]').allTextContents()).some((t) => /recorrer/.test(t)),
@@ -80,14 +101,14 @@ const disparador = await page.$('#portada .btn:nth-child(2)');
 await disparador?.click();
 await page.waitForTimeout(900);
 ok(await page.$('[role="dialog"]') !== null, 'el índice abre desde la portada');
-ok(/Selecciona un proyecto/.test(await page.locator('[role="dialog"]').innerText()),
+ok(/Elige un territorio/.test(await page.locator('[role="dialog"]').innerText()),
   'el índice explica cómo elegir');
 ok(await page.evaluate(() => document.querySelectorAll('[data-id]').length) === 19,
   'el índice reúne los quince proyectos y los cuatro sistemas');
 await page.keyboard.press('Escape');
 await page.waitForTimeout(600);
 ok(await page.$('[role="dialog"]') === null, 'Esc cierra el índice');
-ok(await page.evaluate(() => document.activeElement?.textContent?.trim()) === 'Índice de proyectos',
+ok(await page.evaluate(() => document.activeElement?.textContent?.trim()) === 'Explorar proyectos',
   'el foco vuelve al control que lo abrió');
 
 /* --- 3 · Vistazo → proyectos y sistemas ---------------------------------- */
@@ -169,7 +190,14 @@ console.log('contacto');
 await ir('/#contacto');
 const mailto = await page.$eval('a[href^="mailto:"]', (n) => n.getAttribute('href'));
 ok(/^mailto:.+@.+/.test(mailto), 'el correo es un enlace mailto válido', mailto);
-ok(await page.$$eval('a[download]', (ns) => ns.length) >= 1, 'el cierre conserva la descarga');
+/* Contacto reutiliza el mismo centro de descargas, no una copia de su lógica. */
+const desdeContacto = page.getByRole('button', { name: 'Descargas', exact: true }).last();
+ok(await desdeContacto.count() === 1, 'el cierre conserva el acceso a las descargas');
+await desdeContacto.click();
+await page.waitForTimeout(700);
+ok(await page.$$eval('[role="dialog"] a[download]', (ns) => ns.length) === 3,
+  'desde contacto se llega a los tres documentos');
+await page.keyboard.press('Escape');
 
 /* --- 8 · Accesibilidad --------------------------------------------------- */
 console.log('accesibilidad');

@@ -1,0 +1,251 @@
+/* Currículum impreso — A4 vertical, 210 × 297 mm.
+
+   Medidas en milímetros: el destino es papel y en píxeles la composición
+   cambiaría con el DPI del generador. Dos hojas, la misma retícula de rótulo y
+   campo en las dos, y el mismo papel marfil del portafolio. */
+
+@page {
+  size: 210mm 297mm;
+  margin: 0;
+}
+
+.doc {
+  --tinta: #080908;
+  --papel: #f1eee6;
+  --senal: #e9ff3a;
+  --texto-2: color-mix(in srgb, #080908 62%, transparent);
+  --texto-3: color-mix(in srgb, #080908 45%, transparent);
+  --linea: color-mix(in srgb, #080908 18%, transparent);
+  --margen: 15mm;
+
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  /* Nada en cursiva en todo el documento. */
+  font-style: normal;
+}
+
+.doc :where(i, em, cite) { font-style: normal; }
+
+.hoja {
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  padding: var(--margen) var(--margen) 16mm;
+  overflow: hidden;
+  background: var(--papel);
+  break-after: page;
+  page-break-after: always;
+  break-inside: avoid;
+}
+
+.hoja:last-child { break-after: auto; page-break-after: auto; }
+
+.cuerpo {
+  display: grid;
+  gap: 2.8mm;
+  align-content: start;
+}
+
+/* --- Cabecera -------------------------------------------------------------- */
+
+.cabecera {
+  display: grid;
+  gap: 1.1mm;
+  padding-bottom: 2.8mm;
+  border-bottom: 0.4mm solid var(--tinta);
+}
+
+.tipo {
+  font-size: 7pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--texto-3);
+}
+
+.nombre {
+  margin: 0;
+  font-size: 21pt;
+  font-weight: 560;
+  letter-spacing: -0.028em;
+  line-height: 1.02;
+}
+
+.oficio {
+  margin: 0;
+  font-size: 8.8pt;
+  color: var(--texto-2);
+}
+
+/* El contacto es dato, no prosa: va monoespaciado y separado por filetes. */
+.contacto {
+  list-style: none;
+  margin: 1mm 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2.6mm;
+  font-size: 6.9pt;
+  color: var(--texto-2);
+}
+
+.contacto li + li { padding-left: 3mm; border-left: 0.25mm solid var(--linea); }
+
+/* --- Bloque: rótulo a la izquierda, campo a la derecha ---------------------- */
+
+.bloque {
+  display: grid;
+  grid-template-columns: 30mm minmax(0, 1fr);
+  gap: 4mm;
+  padding-top: 1.8mm;
+  border-top: 0.25mm solid var(--linea);
+}
+
+.rotulo {
+  margin: 0;
+  font-size: 7pt;
+  font-weight: 400;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  color: var(--tinta);
+}
+
+.campo { min-width: 0; }
+
+.parrafo {
+  margin: 0;
+  font-size: 7.6pt;
+  line-height: 1.38;
+  color: var(--texto-2);
+}
+
+.areas {
+  margin: 0;
+  font-size: 8.3pt;
+  line-height: 1.4;
+  color: var(--tinta);
+}
+
+/* --- Rejilla de pares ------------------------------------------------------ */
+
+.rejilla {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.4mm 5mm;
+}
+
+.rejilla > div { min-width: 0; }
+.rejilla dt { font-size: 8.1pt; font-weight: 520; }
+.rejilla dd {
+  margin: 0.6mm 0 0;
+  font-size: 7.5pt;
+  line-height: 1.38;
+  color: var(--texto-2);
+}
+
+/* --- Puestos --------------------------------------------------------------- */
+
+.puestos, .entradas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2.8mm;
+}
+
+.puestos > li, .entradas > li {
+  display: grid;
+  grid-template-columns: 24mm minmax(0, 1fr);
+  gap: 0.8mm 3.4mm;
+}
+
+/* La fecha ancla la fila y es lo único de la columna izquierda: sin ella, cada
+   entrada tendría que empezar repitiendo cuándo pasó. */
+.fecha {
+  margin: 0;
+  font-size: 6.9pt;
+  line-height: 1.45;
+  color: var(--texto-3);
+  padding-top: 0.4mm;
+}
+
+.cargo {
+  margin: 0;
+  font-size: 8.8pt;
+  font-weight: 520;
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+}
+
+.donde {
+  margin: 0.4mm 0 0;
+  font-size: 7.2pt;
+  color: var(--texto-3);
+}
+
+.puntos {
+  margin: 1mm 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6mm;
+  font-size: 7.4pt;
+  line-height: 1.32;
+  color: var(--texto-2);
+}
+
+/* Viñeta dibujada: un cuadrado de señal, el mismo de los hitos del portafolio. */
+.puntos li { position: relative; padding-left: 3.4mm; }
+.puntos li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.5mm;
+  width: 1.2mm;
+  height: 1.2mm;
+  background: var(--senal);
+  outline: 0.2mm solid var(--texto-3);
+}
+
+/* --- Listas ---------------------------------------------------------------- */
+
+.herramientas, .cursos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1mm 5mm;
+  font-size: 7.2pt;
+  line-height: 1.34;
+  color: var(--texto-2);
+}
+
+.herramientas li, .cursos li { position: relative; padding-left: 3mm; }
+.herramientas li::before, .cursos li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.5mm;
+  width: 1.6mm;
+  height: 0.25mm;
+  background: var(--texto-3);
+}
+
+.cursos { font-size: 6.7pt; }
+
+/* --- Pie ------------------------------------------------------------------- */
+
+.pie {
+  position: absolute;
+  left: var(--margen);
+  right: var(--margen);
+  bottom: 8mm;
+  margin: 0;
+  padding-top: 2.4mm;
+  border-top: 0.25mm solid var(--linea);
+  font-size: 6.8pt;
+  color: var(--texto-3);
+}

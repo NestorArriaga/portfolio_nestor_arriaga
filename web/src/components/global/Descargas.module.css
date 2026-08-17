@@ -1,0 +1,169 @@
+/* Centro de descargas.
+
+   Panel anclado en escritorio, hoja inferior en pantalla estrecha. Sin sombras
+   decorativas: lo que separa el panel del fondo es un filete y un fondo opaco,
+   igual que las bandas del recorrido. */
+
+.envoltura { position: relative; display: inline-flex; }
+
+/* --- Panel (escritorio) ---------------------------------------------------- */
+
+.panel {
+  position: absolute;
+  z-index: 90;
+  bottom: calc(100% + 0.5rem);
+  left: 0;
+  width: min(23rem, calc(100vw - 2 * var(--margen, 1.5rem)));
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  /* Opaco: un panel translúcido dejaría leer la cartografía a través de los
+     nombres de los archivos. */
+  background: #0d0e0c;
+  border: 1px solid var(--linea);
+  color: var(--optico);
+  animation: entra var(--t-estado) var(--sal);
+}
+
+.panel:focus-visible { outline: 2px solid var(--senal); outline-offset: 2px; }
+
+@keyframes entra {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.velo { display: none; }
+
+.cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.titulo {
+  margin: 0;
+  font-size: var(--micro);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.cerrar {
+  border: 0;
+  background: transparent;
+  color: var(--texto-2);
+  font-size: var(--micro);
+  cursor: pointer;
+  padding: 0.3rem 0;
+  min-height: 44px;
+  transition: color var(--t-micro) var(--sal);
+}
+
+.cerrar:hover, .cerrar:focus-visible { color: var(--senal); }
+
+/* --- Piezas ---------------------------------------------------------------- */
+
+.pieza { display: grid; gap: 0.35rem; }
+.pieza + .pieza { padding-top: 0.9rem; border-top: 1px solid var(--linea); }
+
+.piezaNombre {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 520;
+  letter-spacing: -0.02em;
+  color: var(--optico);
+}
+
+.piezaNota { margin: 0; font-size: var(--micro-2); color: var(--texto-2); }
+
+/* La ficha dice qué se descarga antes de descargarlo: idioma, formato, número
+   de páginas y peso real medido sobre el archivo. */
+.ficha {
+  margin: 0.15rem 0 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 0.55rem;
+  font-size: var(--micro);
+  color: var(--texto-3);
+}
+
+.ficha span + span { padding-left: 0.55rem; border-left: 1px solid var(--linea); }
+
+.accion { justify-self: start; }
+
+/* --- Los dos currículos ---------------------------------------------------- */
+
+.lista { list-style: none; margin: 0.3rem 0 0; padding: 0; display: grid; gap: 0.4rem; }
+
+/* Una columna siempre. En dos, la ficha del archivo partía en tres renglones
+   y la acción quedaba flotando a media fila. */
+.fila {
+  display: grid;
+  gap: 0.15rem;
+  min-height: 44px;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--linea);
+  color: var(--optico);
+  text-decoration: none;
+  transition: border-color var(--t-micro) var(--sal), background-color var(--t-micro) var(--sal);
+}
+
+.fila:hover, .fila:focus-visible {
+  border-color: var(--senal);
+  background: color-mix(in srgb, var(--senal) 8%, transparent);
+}
+
+.filaIdioma { font-size: var(--micro-2); color: var(--optico); }
+.filaFicha { font-size: var(--micro); color: var(--texto-3); }
+
+/* La acción se nombra entera: quien lo dicta por voz o lo lee con un lector de
+   pantalla necesita «Descargar CV en español», no una flecha. */
+.filaAccion {
+  margin-top: 0.15rem;
+  font-size: var(--micro);
+  color: var(--senal);
+}
+
+/* --- Hoja inferior (pantalla estrecha) ------------------------------------- */
+
+@media (max-width: 720px) {
+  .velo {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 89;
+    background: color-mix(in srgb, #080908 72%, transparent);
+  }
+
+  .panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    max-height: 82svh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 1rem var(--margen) calc(1.2rem + env(safe-area-inset-bottom, 0px));
+    border: 0;
+    border-top: 1px solid var(--linea);
+    animation: sube var(--t-estado) var(--sal);
+  }
+
+  @keyframes sube {
+    from { transform: translateY(100%); }
+    to   { transform: none; }
+  }
+
+  /* En la hoja, la acción ocupa el ancho: es el objetivo del pulgar. */
+  .accion { justify-self: stretch; text-align: center; }
+  .fila { padding: 0.7rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel { animation: none; }
+}

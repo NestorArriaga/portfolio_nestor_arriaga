@@ -54,7 +54,10 @@ tmp/
 # --- Fuentes pesadas y documentos personales --------------------------------
 # Viven en el archivo local, no en el repositorio.
 Portafolio_Sd.pdf
-cv/
+# La carpeta de origen del currículum, no las copias publicadas: `cv/` a secas
+# casaba con cualquier carpeta de ese nombre y dejaba fuera del despliegue los
+# dos PDF que el sitio enlaza, que se habrían servido como 404.
+/web/CV/
 CV.pdf
 *.psd
 *.ai

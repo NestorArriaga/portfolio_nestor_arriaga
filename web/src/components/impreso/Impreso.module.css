@@ -523,13 +523,19 @@
   padding-block: 8mm 4mm;
 }
 
-/* Cuatro hitos en columna, cada uno con su año como ancla izquierda. La línea
-   vertical es la trayectoria; no hay flechas ni iconos añadidos. */
+/* Los hitos en columna, cada uno con su año como ancla izquierda. La línea
+   vertical es la trayectoria; no hay flechas ni iconos añadidos. Se reparten
+   por el alto disponible, así que su número no deja huecos. */
 .hitos {
   grid-column: span 7;
+  /* Alineada arriba y del alto de su contenido: repartida por toda la hoja,
+     la trayectoria abría dos vacíos de medio palmo entre hito e hito y la
+     línea seguía bajando sin nada que sostener. Ahora la línea empieza y
+     termina donde empieza y termina la trayectoria. */
+  align-self: start;
   list-style: none; margin: 0; padding: 0;
-  display: grid; gap: 13mm;
-  align-content: space-between;
+  display: grid; gap: 15mm;
+  align-content: start;
   border-left: 0.3mm solid var(--linea);
   padding-left: 7mm;
 }

@@ -205,6 +205,9 @@ export function fichasSistemas() {
     id: s.id,
     num: s.codigo,
     titulo: s.nombre,
+    /* Los sistemas no ocupan un territorio: son la herramienta con la que se
+       trabajan todos. Van en su propio grupo del Explorador. */
+    territorioId: 'sistemas',
     lugar: s.capacidad,
     territorio: 'sistemas',
     metodo: 'sistemas digitales',

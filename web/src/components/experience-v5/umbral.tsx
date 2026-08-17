@@ -7,6 +7,8 @@ import { useEscena } from './director';
 import { Ayuda, useAyuda, useCerrarAlDesplazar, useGesto, usePunteroFino } from './ayudas';
 import { anchoServido } from './obra';
 import type { Lamina } from './registry';
+import { Descargas, type Catalogo } from '@/components/global/Descargas';
+
 import styles from './umbral.module.css';
 
 /**
@@ -79,14 +81,14 @@ export function GloboEstatico({ marcadores, listo }: { marcadores: Marcador[]; l
  * ubicación.
  */
 export function PortadaV5({
-  marcadores, quieto, descarga, tapada = false, onRecorrer, onVistazo, onContacto,
+  marcadores, quieto, descargas, tapada = false, onRecorrer, onVistazo, onContacto,
 }: {
   marcadores: Marcador[];
   quieto: boolean;
   /** El Vistazo está abierto encima: aquí no hay nada que orientar. */
   tapada?: boolean;
   /** Peso y páginas se miden sobre el archivo generado, no se escriben. */
-  descarga: { href: string; mb: string; paginas: number } | null;
+  descargas: Catalogo;
   onRecorrer: () => void;
   onVistazo: () => void;
   onContacto: () => void;
@@ -236,15 +238,12 @@ export function PortadaV5({
 
           <button type="button" className="btn" data-v="borde"
                   aria-describedby={vistazo.visible ? vistazo.id : undefined}
-                  onClick={() => { vistazo.cerrar(); onVistazo(); }}>Índice de proyectos</button>
+                  onClick={() => { vistazo.cerrar(); onVistazo(); }}>Explorar proyectos</button>
 
-          {descarga ? (
-            <a className="btn" data-v="borde" href={descarga.href} download
-               aria-label={`Descargar portafolio en PDF · ${descarga.paginas} páginas · ${descarga.mb} MB`}>
-              Descargar
-              <span className={styles.formato}>{`PDF · ${descarga.paginas} · ${descarga.mb} MB`}</span>
-            </a>
-          ) : null}
+          {/* Una sola puerta a los tres documentos. Enlazar el portafolio y
+              los dos currículos por separado habría dejado cuatro botones
+              compitiendo en la misma fila de la portada. */}
+          <Descargas catalogo={descargas} />
 
           <a className="btn" data-v="senal" href="#contacto"
              onClick={(e) => { e.preventDefault(); onContacto(); }}>Contacto</a>

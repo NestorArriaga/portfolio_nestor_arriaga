@@ -9,19 +9,23 @@ import type { Ficha } from './atlas';
 import styles from './orbita.module.css';
 
 /**
- * Vistazo orbital — el índice que emana del Globe.
+ * Explorador del Atlas.
  *
- * No es una galería superpuesta. El globo se queda como **núcleo y contexto**;
- * los quince proyectos se separan de su superficie y salen por arcos hasta
- * quedar en tres órbitas legibles. La órbita exterior termina de cerrar una `@`
- * espacial: núcleo, espiral y salida.
+ * Un solo modelo para entrar al trabajo: **territorio → proyectos**. Quince
+ * proyectos repartidos en seis sitios y cuatro sistemas digitales, no
+ * diecinueve códigos flotando alrededor de unos anillos.
  *
- * Los tres ejes —territorio, método, escala— no son chips flotando: son tres
- * anillos que reordenan la órbita. Cambiar de anillo redistribuye los nodos por
- * ese criterio, y la reordenación es la que enseña la relación.
+ * El globo es contexto, no competidor: sitúa los territorios que tienen
+ * geometría verificada. No se reinicia al cambiar de territorio —rehacer la
+ * escena WebGL en cada clic costaría más que lo que aporta orientarla— y en
+ * pantalla estrecha ni siquiera se monta: un dibujo sostiene la misma lectura
+ * sin un contexto 3D.
  *
- * La rotación del atlas vive en una variable CSS, no en el estado de React:
- * arrastrar el índice no vuelve a renderizar quince nodos por fotograma.
+ * «Relaciones» conserva la órbita como lectura secundaria, con una diferencia
+ * que la hace legible: **cada anillo es un territorio**. Antes los tres anillos
+ * eran una paginación de cinco en cinco y no significaban nada; ahora el número
+ * de nodos de un anillo es el número de proyectos de ese sitio, y eso se puede
+ * rotular sin inventar nada.
  */
 
 const Globe = dynamic(() => import('@/components/originkit/ui/globe'), {
@@ -29,176 +33,171 @@ const Globe = dynamic(() => import('@/components/originkit/ui/globe'), {
   loading: () => <div className={styles.nucleoHueco} aria-hidden="true" />,
 });
 
-type Eje = 'territorio' | 'metodo' | 'escala';
+export type Territorio = {
+  id: string;
+  nombre: string;
+  corto: string;
+  region: string;
+  proyectos: number;
+  /** Falso si no hay geometría de la que derivar su punto en el globo. */
+  situado: boolean;
+  lat: number | null;
+  lng: number | null;
+};
 
-/** Los tres ejes, con la etiqueta que se lee en pantalla. */
-const EJES: { id: Eje; etiqueta: string }[] = [
-  { id: 'territorio', etiqueta: 'Por territorio' },
-  { id: 'metodo', etiqueta: 'Por método' },
-  { id: 'escala', etiqueta: 'Por escala' },
-];
+/** Los sistemas no ocupan territorio: son la herramienta transversal. */
+const SISTEMAS: Territorio = {
+  id: 'sistemas',
+  nombre: 'Sistemas digitales',
+  corto: 'Sistemas',
+  region: 'Plataformas y herramientas',
+  proyectos: 4,
+  situado: false,
+  lat: null,
+  lng: null,
+};
 
-/**
- * Tres órbitas: 5, 5 y 5. Radios en `vmin`. La exterior se queda en 44 y no en
- * 50 porque el nodo ya no es una caja centrada sino una etiqueta con su número
- * debajo: a 50 los rótulos de arriba se salían del panel.
- */
-const RADIOS = [26, 35, 44];
+/** Radios de los anillos de «Relaciones», del interior al exterior. */
+const RADIOS = [15, 22, 29, 36, 43, 48, 52];
 
 export function VistazoOrbital({
-  abierto, fichas, marcadores, onCerrar, onElegir,
+  abierto, fichas, territorios, marcadores, onCerrar, onElegir,
 }: {
   abierto: boolean;
   fichas: Ficha[];
+  territorios: Territorio[];
   marcadores: { lat: number; lng: number }[];
   onCerrar: () => void;
   onElegir: (id: string) => void;
 }) {
   const idPanel = useId().replace(/:/g, '');
-  const [eje, setEje] = useState<Eje>('territorio');
-  const [foco, setFoco] = useState<string | null>(null);
-  /**
-   * Vista del índice.
-   *
-   * En una pantalla estrecha la órbita no puede ser la interfaz principal: los
-   * nodos son puntos de seis píxeles con el código debajo y el título no se ve,
-   * así que elegir exige apuntar a ciegas. En móvil se abre la lista y la
-   * órbita queda como modo visual opcional; en escritorio, al revés.
-   */
-  const [lista, setLista] = useState(false);
+  const [territorio, setTerritorio] = useState<string | null>(null);
+  const [elegido, setElegido] = useState<string | null>(null);
+  const [relaciones, setRelaciones] = useState(false);
   const [movil, setMovil] = useState(false);
+
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 860px), (pointer: coarse)');
-    const leer = () => { setMovil(mq.matches); setLista(mq.matches); };
+    const mq = window.matchMedia('(max-width: 900px), (pointer: coarse)');
+    const leer = () => setMovil(mq.matches);
     leer();
     mq.addEventListener('change', leer);
     return () => mq.removeEventListener('change', leer);
   }, []);
-  const panel = useRef<HTMLDivElement>(null);
-  const campo = useRef<HTMLDivElement>(null);
+
   const dialogo = useRef<HTMLDivElement>(null);
+  const campo = useRef<HTMLDivElement>(null);
   const giro = useRef(0);
   const arrastre = useRef<{ x: number; base: number } | null>(null);
-  /** Origen del gesto en curso, mientras se decide si es toque o arrastre. */
   const partida = useRef<{ x: number; y: number; id: number; activo: boolean } | null>(null);
-  /** Verdadero sólo durante el clic que remata un arrastre real. */
   const arrastrado = useRef(false);
 
-  /**
-   * El orden de los nodos depende del eje activo: al cambiarlo, los proyectos
-   * del mismo territorio, método o escala quedan contiguos en la órbita. Es la
-   * reordenación la que enseña la relación.
-   */
+  /** Los siete grupos, en el orden en que se recorre el atlas. */
+  const grupos = useMemo(() => {
+    const conSistemas = [...territorios, SISTEMAS];
+    return conSistemas
+      .map((t) => ({ t, fichas: fichas.filter((f) => f.territorioId === t.id) }))
+      .filter((g) => g.fichas.length > 0);
+  }, [territorios, fichas]);
+
+  const visibles = useMemo(
+    () => (territorio ? fichas.filter((f) => f.territorioId === territorio) : fichas),
+    [fichas, territorio],
+  );
+
+  /* La ficha nunca queda vacía: si nadie ha elegido, muestra la primera de lo
+     que hay a la vista. Un panel en blanco no enseña qué es una ficha. */
+  const ficha = useMemo(
+    () => visibles.find((f) => f.id === elegido) ?? visibles[0] ?? null,
+    [visibles, elegido],
+  );
+
+  const situados = territorios.filter((t) => t.situado).length;
+
+  /* --- Relaciones: un anillo por territorio ------------------------------- */
   const nodos = useMemo(() => {
-    const orden = [...fichas].sort(
-      (a, b) => String(a[eje]).localeCompare(String(b[eje])) || a.num.localeCompare(b.num),
-    );
-    // El reparto sale del número real de entradas, no de un cinco fijo: con
-    // los cuatro casos de SISTEMAS la cuarta tanda caía en el mismo radio que
-    // la tercera y los rótulos se encimaban.
-    const porAnillo = Math.ceil(orden.length / RADIOS.length);
-    return orden.map((f, i) => {
-      const anillo = Math.min(RADIOS.length - 1, Math.floor(i / porAnillo));
-      const enAnillo = i % porAnillo;
-      const total = Math.min(porAnillo, orden.length - anillo * porAnillo);
-      // Cada anillo arranca desplazado para que los nodos no se alineen en
-      // radios idénticos y la órbita se lea como órbita.
-      const ang = (enAnillo / total) * 360 + anillo * 24;
-      return { f, anillo, ang, i };
+    const out: { f: Ficha; r: number; ang: number }[] = [];
+    grupos.forEach((g, anillo) => {
+      const r = RADIOS[Math.min(anillo, RADIOS.length - 1)];
+      g.fichas.forEach((f, i) => {
+        // Cada anillo arranca desplazado para que los nodos de anillos vecinos
+        // no se alineen en el mismo radio y se tapen entre sí.
+        const ang = (i / g.fichas.length) * 360 + anillo * 17;
+        out.push({ f, r, ang });
+      });
     });
-  }, [fichas, eje]);
+    return out;
+  }, [grupos]);
 
-  /* La previsualización ya no se abre junto al nodo —tapaba a sus vecinos y se
-     salía del panel por los bordes—, así que no hace falta medir hacia qué
-     lado cabe: vive en la banda de lectura, que tiene sitio siempre. */
-
-  /* --- Arrastre: gira el atlas sin pasar por React ------------------------- */
   const aplicar = useCallback(() => {
     campo.current?.style.setProperty('--giro', `${giro.current.toFixed(2)}deg`);
   }, []);
 
-  /**
-   * Arrastre del campo, separado del toque sobre un proyecto.
-   *
-   * Antes cualquier `pointerdown` sobre el campo iniciaba el giro, y como los
-   * diecinueve nodos viven dentro del campo, tocar un proyecto en un teléfono
-   * arrastraba el atlas en lugar de abrirlo: el dedo nunca está del todo quieto.
-   *
-   * Ahora el gesto se decide por lo que hace, no por dónde empieza:
-   *
-   * - si el toque nace en un control —nodo, botón o enlace— no hay arrastre;
-   * - hasta los 8 px de recorrido el gesto sigue siendo un toque, y el clic del
-   *   nodo llega intacto;
-   * - pasados los 8 px empieza el giro y se anula **sólo** el clic inmediato;
-   * - el movimiento vertical no se captura: la página sigue desplazándose.
-   */
+  /* --- Arrastre en «Relaciones»: gira el atlas sin pasar por React --------- */
   useEffect(() => {
-    if (!abierto) return undefined;
+    if (!abierto || !relaciones) return;
     const n = campo.current;
-    if (!n) return undefined;
+    if (!n) return;
 
-    /** Recorrido mínimo para considerar que el gesto es un arrastre. */
     const UMBRAL = 8;
 
-    const abajo = (e: PointerEvent) => {
-      if (e.button !== 0 && e.pointerType === 'mouse') return;
-      const destino = e.target as HTMLElement | null;
-      // Un toque que nace en un control le pertenece a ese control.
-      if (destino?.closest('button, a, input, [role="button"]')) return;
-      arrastre.current = { x: e.clientX, base: giro.current };
+    const bajar = (e: PointerEvent) => {
+      // Un gesto que nace sobre un control es del control, no del campo.
+      if ((e.target as HTMLElement).closest('button, a, [role="button"]')) return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
       partida.current = { x: e.clientX, y: e.clientY, id: e.pointerId, activo: false };
+      arrastrado.current = false;
     };
 
     const mover = (e: PointerEvent) => {
       const p = partida.current;
-      if (!p || !arrastre.current || e.pointerId !== p.id) return;
-      const dx = e.clientX - p.x;
-      const dy = e.clientY - p.y;
+      if (!p || e.pointerId !== p.id) return;
 
       if (!p.activo) {
-        // Por debajo del umbral todavía no hay gesto. Y si el recorrido es
-        // sobre todo vertical, el gesto es de la página, no del atlas.
-        if (Math.hypot(dx, dy) < UMBRAL) return;
-        if (Math.abs(dy) > Math.abs(dx)) { arrastre.current = null; partida.current = null; return; }
+        // Por debajo del umbral todavía puede ser un toque: no se secuestra el
+        // gesto, y el desplazamiento vertical del documento sigue funcionando.
+        if (Math.hypot(e.clientX - p.x, e.clientY - p.y) < UMBRAL) return;
         p.activo = true;
-        n.setPointerCapture?.(e.pointerId);
+        arrastrado.current = true;
+        arrastre.current = { x: e.clientX, base: giro.current };
+        try { n.setPointerCapture(e.pointerId); } catch { /* ya capturado */ }
       }
 
-      giro.current = arrastre.current.base + dx * 0.35;
+      const a = arrastre.current;
+      if (!a) return;
+      giro.current = a.base + (e.clientX - a.x) * 0.35;
       aplicar();
     };
 
     const soltar = (e: PointerEvent) => {
       const p = partida.current;
-      if (p?.activo) {
-        // Sólo se anula el clic que remata este arrastre, no los siguientes.
-        arrastrado.current = true;
-        window.setTimeout(() => { arrastrado.current = false; }, 0);
-        n.releasePointerCapture?.(e.pointerId);
+      if (!p || e.pointerId !== p.id) return;
+      if (p.activo) {
+        try { n.releasePointerCapture(e.pointerId); } catch { /* ya soltado */ }
+        // Sólo se anula el clic accidental que remata este arrastre.
+        setTimeout(() => { arrastrado.current = false; }, 0);
       }
-      arrastre.current = null;
       partida.current = null;
+      arrastre.current = null;
     };
 
     const cancelar = (e: PointerEvent) => {
-      if (partida.current?.activo) n.releasePointerCapture?.(e.pointerId);
-      arrastre.current = null;
-      partida.current = null;
+      if (partida.current?.id === e.pointerId) { partida.current = null; arrastre.current = null; }
+      arrastrado.current = false;
     };
 
-    n.addEventListener('pointerdown', abajo);
+    n.addEventListener('pointerdown', bajar);
     window.addEventListener('pointermove', mover);
     window.addEventListener('pointerup', soltar);
     window.addEventListener('pointercancel', cancelar);
     return () => {
-      n.removeEventListener('pointerdown', abajo);
+      n.removeEventListener('pointerdown', bajar);
       window.removeEventListener('pointermove', mover);
       window.removeEventListener('pointerup', soltar);
       window.removeEventListener('pointercancel', cancelar);
     };
-  }, [abierto, aplicar]);
+  }, [abierto, relaciones, aplicar]);
 
-  /* --- Teclado: flechas recorren, Enter abre, Escape cierra ---------------- */
+  /* --- Teclado y bloqueo de fondo ----------------------------------------- */
   useEffect(() => {
     if (!abierto) return;
     const previo = document.body.style.overflow;
@@ -206,68 +205,42 @@ export function VistazoOrbital({
     dialogo.current?.focus({ preventScroll: true });
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { e.preventDefault(); onCerrar(); return; }
-
-      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-        const i = nodos.findIndex((n) => n.f.id === foco);
-        const sig = e.key === 'ArrowRight'
-          ? (i + 1 + nodos.length) % nodos.length
-          : (i - 1 + nodos.length) % nodos.length;
-        setFoco(nodos[sig]?.f.id ?? null);
-        // El atlas gira para traer al frente el nodo enfocado: navegar con
-        // teclado mueve la órbita igual que arrastrarla.
-        giro.current = -(nodos[sig]?.ang ?? 0) + 270;
-        aplicar();
-        e.preventDefault();
-        return;
-      }
-
-      if (e.key !== 'Tab') return;
-      const f = panel.current?.querySelectorAll<HTMLElement>('button, a[href]');
-      if (!f?.length) return;
-      const a = f[0], z = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
-      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+      if (e.key === 'Escape') { e.preventDefault(); onCerrar(); }
     };
-
-    document.addEventListener('keydown', onKey);
+    window.addEventListener('keydown', onKey);
     return () => {
-      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('keydown', onKey);
       document.body.style.overflow = previo;
     };
-  }, [abierto, onCerrar, nodos, foco, aplicar]);
+  }, [abierto, onCerrar]);
 
-  /* Dos ayudas de primer uso, nunca a la vez: el turno global las ordena.
-     La segunda sólo tiene sentido mientras el diálogo sigue abierto. */
   const fino = usePunteroFino();
-  const elegir = useAyuda('vistazo-elegir', abierto, 900);
-  const escape = useAyuda('vistazo-escape', abierto, 1400);
+  const escape = useAyuda('explorador-escape', abierto, 1400);
+  const tocar = useAyuda('explorador-territorio', abierto && !relaciones, 900);
 
   if (!abierto) return null;
 
-  const vista = nodos.find((n) => n.f.id === foco)?.f ?? null;
+  const abrir = (id: string) => { tocar.cerrar(); onElegir(id); };
 
   return (
     <div className={styles.fondo} role="dialog" aria-modal="true"
-         ref={dialogo} tabIndex={-1}
-         aria-labelledby={`${idPanel}-t`}>
-      <div className={styles.panel} ref={panel} data-vista={lista ? 'lista' : 'orbita'}>
+         ref={dialogo} tabIndex={-1} aria-labelledby={`${idPanel}-t`}>
+      <div className={styles.panel} data-vista={relaciones ? 'relaciones' : 'explorar'}>
 
-        {/* Encabezado: qué es esto, qué se puede hacer y cómo se sale. Va
-            pegado arriba para que el cierre no desaparezca al desplazar. */}
         <header className={styles.cabecera}>
           <div className={styles.rotulo}>
-            <h2 id={`${idPanel}-t`} className={styles.titulo}>Índice de proyectos</h2>
-            <p className={`${styles.instruccion} mono`}>
-              Selecciona un proyecto · organiza por territorio, método o escala
+            <h2 id={`${idPanel}-t`} className={styles.titulo}>Explorador del Atlas</h2>
+            <p className={`${styles.instruccion} mono`} id={`${idPanel}-i`}>
+              Elige un territorio · abre un proyecto
             </p>
           </div>
 
           <div className={styles.acciones}>
+            {/* La órbita es lectura secundaria y se nombra por lo que enseña. */}
             <button type="button" data-touch className={`${styles.accion} mono`}
-                    aria-pressed={!lista}
-                    onClick={() => setLista(!lista)}>
-              {lista ? 'Ver órbita' : 'Ver lista'}
+                    aria-pressed={relaciones}
+                    onClick={() => setRelaciones((v) => !v)}>
+              {relaciones ? 'Ver territorios' : 'Relaciones'}
             </button>
             <button type="button" data-touch className={`${styles.accion} mono`}
                     data-cerrar=""
@@ -278,67 +251,24 @@ export function VistazoOrbital({
           </div>
         </header>
 
-        {/* Los tres ejes reordenan el índice. Etiqueta completa y estado
-            evidente: antes eran tres arcos en minúscula y el activo se
-            distinguía por un recuadro que parecía un error de foco. */}
-        <div className={styles.ejes} role="group" aria-label="Organizar el índice">
-          {(EJES).map(({ id, etiqueta }, i) => (
-            <button
-              key={id} type="button" data-touch
-              className={`${styles.eje} mono`}
-              aria-pressed={eje === id}
-              onClick={() => setEje(id)}
-            >
-              <span className={styles.ejeArco} aria-hidden="true" />
-              {etiqueta}
-            </button>
-          ))}
-        </div>
-
-        {lista ? (
-          /* Lista: una columna, fila completa pulsable, miniatura recortada.
-             En tres columnas —código, título, territorio— los títulos largos
-             se metían debajo del territorio y los textos se solapaban. */
-          <ul className={styles.listado}>
-            {nodos.map(({ f }) => (
-              <li key={f.id}>
-                <button type="button" data-touch className={styles.fila}
-                        data-id={f.id}
-                        onClick={() => { elegir.cerrar(); onElegir(f.id); }}
-                        onFocus={() => setFoco(f.id)}>
-                  <span className={styles.filaMini} aria-hidden="true">
-                    {f.mini ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={f.mini.src} srcSet={f.mini.srcSet} sizes="72px"
-                           width={f.mini.width} height={f.mini.height}
-                           alt="" loading="lazy" decoding="async" />
-                    ) : f.planta ? (
-                      <svg viewBox={f.planta.viewBox} className={styles.filaPlanta}>
-                        {f.planta.capas.map((c) => (
-                          <g key={c.nombre} fill={c.color} stroke={c.color}
-                             dangerouslySetInnerHTML={{ __html: c.body }} />
-                        ))}
-                      </svg>
-                    ) : null}
-                  </span>
-                  <span className={styles.filaTexto}>
-                    <span className={`${styles.filaNum} mono`}>{f.num}</span>
-                    <span className={styles.filaTitulo}>{f.titulo}</span>
-                    <span className={`${styles.filaLugar} mono`}>{f.lugar}</span>
-                  </span>
-                  <span className={styles.filaFlecha} aria-hidden="true" />
-                </button>
-              </li>
-            ))}
-          </ul>
+        {relaciones ? (
+          <Relaciones
+            campo={campo} grupos={grupos} nodos={nodos}
+            arrastrado={arrastrado} onAbrir={abrir}
+          />
         ) : (
-          <>
-            <div className={styles.campo} ref={campo} data-campo>
-              {/* El núcleo es contexto, no protagonista. En móvil ni siquiera
-                  se monta la escena 3D: un dibujo sostiene la misma lectura. */}
+          <div className={styles.reparto}>
+            {/* Contexto: dónde está cada territorio. En pantalla estrecha es un
+                dibujo pequeño y no bloquea nada; en escritorio, el globo. */}
+            <div className={styles.contexto}>
               <div className={styles.nucleo}>
                 {movil ? (
-                  <GloboEstatico marcadores={marcadores.map((m, i) => ({ ...m, territoryId: String(i), nombre: '' }))} listo />
+                  /* `listo` significa «el globo 3D ya montó, retírate»: aquí
+                     el dibujo es el globo, así que se queda a la vista. */
+                  <GloboEstatico
+                    marcadores={marcadores.map((m, i) => ({ ...m, territoryId: String(i), nombre: '' }))}
+                    listo={false}
+                  />
                 ) : (
                   <Globe
                     markerConfig={{ markers: marcadores, color: '#e9ff3a', size: 26 }}
@@ -355,80 +285,190 @@ export function VistazoOrbital({
                 )}
               </div>
 
-              {/* Las tres órbitas y la salida que cierra la `@`. */}
-              <svg className={styles.trazas} viewBox="0 0 100 100" aria-hidden="true">
-                {RADIOS.map((r) => (
-                  <circle key={r} cx="50" cy="50" r={r} className={styles.traza} />
-                ))}
-                <path className={styles.salida}
-                      d="M50 19 C 76 19, 92 34, 92 52 C 92 70, 78 82, 62 82" />
-              </svg>
+              {/* Lo que el globo no puede situar se dice, no se disimula. */}
+              {situados < territorios.length ? (
+                <p className={`${styles.nota} mono`}>
+                  {`${situados} de ${territorios.length} territorios con coordenada verificada`}
+                </p>
+              ) : null}
+            </div>
 
-              {nodos.map(({ f, anillo, ang, i }) => (
-                <button
-                  key={f.id}
-                  type="button"
-                  className={styles.nodo}
-                  data-on={foco === f.id || undefined}
-                  style={{
-                    '--r': String(RADIOS[anillo]),
-                    '--a': `${ang}deg`,
-                    '--i': String(i),
-                  } as CSSProperties}
-                  data-id={f.id}
-                  onPointerEnter={() => setFoco(f.id)}
-                  onFocus={() => setFoco(f.id)}
-                  onClick={() => { if (arrastrado.current) return; elegir.cerrar(); onElegir(f.id); }}
-                  aria-label={`${f.num} ${f.titulo}, ${f.lugar}`}
-                >
-                  <span className={styles.nodoPunto} aria-hidden="true" />
-                  <span className={`${styles.nodoNum} mono`}>{f.num}</span>
+            <div className={styles.seleccion}>
+              <div className={styles.territorios} role="group"
+                   aria-label="Territorios del atlas" aria-describedby={`${idPanel}-i`}>
+                <button type="button" data-touch className={`${styles.territorio} mono`}
+                        aria-pressed={territorio === null}
+                        onClick={() => { setTerritorio(null); setElegido(null); }}>
+                  <span className={styles.territorioNombre}>Todos</span>
+                  <span className={styles.territorioCuenta}>{fichas.length}</span>
                 </button>
-              ))}
-            </div>
 
-            {/* La lectura del proyecto señalado: una sola composición con la
-                miniatura dentro. Antes la previsualización salía flotando junto
-                al nodo y tapaba los proyectos vecinos, mientras el título vivía
-                en otra esquina del panel. */}
-            <div className={styles.lectura} aria-live="polite">
-              {vista ? (
-                <>
-                  <span className={styles.lecturaMini} aria-hidden="true">
-                    {vista.mini ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={vista.mini.src} srcSet={vista.mini.srcSet} sizes="180px"
-                           width={vista.mini.width} height={vista.mini.height}
-                           alt="" decoding="async" />
-                    ) : vista.planta ? (
-                      <svg viewBox={vista.planta.viewBox} className={styles.filaPlanta}>
-                        {vista.planta.capas.map((c) => (
-                          <g key={c.nombre} fill={c.color} stroke={c.color}
-                             dangerouslySetInnerHTML={{ __html: c.body }} />
-                        ))}
-                      </svg>
-                    ) : null}
+                {grupos.map(({ t, fichas: fs }) => (
+                  <button
+                    key={t.id} type="button" data-touch
+                    className={`${styles.territorio} mono`}
+                    aria-pressed={territorio === t.id}
+                    aria-describedby={tocar.visible ? tocar.id : undefined}
+                    onClick={() => {
+                      tocar.cerrar();
+                      setTerritorio(t.id === territorio ? null : t.id);
+                      setElegido(null);
+                    }}
+                  >
+                    <span className={styles.territorioNombre}>{t.nombre}</span>
+                    <span className={styles.territorioCuenta}>{fs.length}</span>
+                    {t.situado ? <i className={styles.territorioPunto} aria-hidden="true" /> : null}
+                  </button>
+                ))}
+              </div>
+
+              {tocar.visible ? <Ayuda id={tocar.id} texto="Toca un territorio" /> : null}
+
+              <ul className={styles.listado}>
+                {visibles.map((f) => (
+                  <li key={f.id}>
+                    <button
+                      type="button" data-touch className={styles.fila}
+                      data-id={f.id}
+                      data-on={ficha?.id === f.id || undefined}
+                      onClick={() => abrir(f.id)}
+                      onPointerEnter={() => setElegido(f.id)}
+                      onFocus={() => setElegido(f.id)}
+                      aria-label={`${f.num} ${f.titulo}, ${f.lugar}`}
+                    >
+                      <span className={styles.filaMini} aria-hidden="true">
+                        <Mini f={f} sizes="76px" />
+                      </span>
+                      <span className={styles.filaTexto}>
+                        <span className={`${styles.filaNum} mono`}>{f.num}</span>
+                        <span className={styles.filaTitulo}>{f.titulo}</span>
+                        <span className={`${styles.filaLugar} mono`}>{f.lugar}</span>
+                      </span>
+                      <span className={styles.filaFlecha} aria-hidden="true" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              {/* La ficha del proyecto en foco. Entera es el enlace: no hay que
+                  encontrar una palabra pequeña para abrirlo. */}
+              {ficha && !movil ? (
+                <a className={styles.ficha} href={ficha.href}
+                   onClick={(e) => { e.preventDefault(); abrir(ficha.id); }}>
+                  <span className={styles.fichaMini} aria-hidden="true">
+                    <Mini f={ficha} sizes="200px" />
                   </span>
-                  <span className={styles.lecturaTexto}>
-                    <span className={`${styles.lecturaNum} mono`}>{vista.num}</span>
-                    <span className={styles.lecturaTitulo}>{vista.titulo}</span>
-                    <span className={`${styles.lecturaMeta} mono`}>
-                      {`${vista.lugar} · ${vista.metodo} · ${vista.escala}`}
-                    </span>
+                  <span className={styles.fichaTexto}>
+                    <span className={`${styles.fichaNum} mono`}>{ficha.num}</span>
+                    <span className={styles.fichaTitulo}>{ficha.titulo}</span>
+                    <dl className={`${styles.fichaDatos} mono`}>
+                      <div><dt>territorio</dt><dd>{ficha.lugar}</dd></div>
+                      <div><dt>método</dt><dd>{ficha.metodo}</dd></div>
+                      <div><dt>escala</dt><dd>{ficha.escala}</dd></div>
+                    </dl>
+                    <span className={`${styles.fichaAbrir} mono`}>Abrir proyecto</span>
                   </span>
-                </>
-              ) : (
-                <span className={`${styles.lecturaMeta} mono`}>
-                  {`${fichas.length} proyectos · señala uno para verlo`}
-                </span>
-              )}
+                </a>
+              ) : null}
             </div>
-          </>
+          </div>
         )}
 
-        {/* La ayuda de teclado sólo tiene sentido donde hay teclado. */}
-        {escape.visible && fino && !lista
-          ? <Ayuda id={escape.id} texto="Esc cierra" /> : null}
+        {escape.visible && fino ? <Ayuda id={escape.id} texto="Esc cierra" /> : null}
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+/** La miniatura de índice, o el dibujo de planta cuando no hay ráster. */
+function Mini({ f, sizes }: { f: Ficha; sizes: string }) {
+  if (f.mini) {
+    return (
+      /* eslint-disable-next-line @next/next/no-img-element */
+      <img src={f.mini.src} srcSet={f.mini.srcSet} sizes={sizes}
+           width={f.mini.width} height={f.mini.height}
+           alt="" loading="lazy" decoding="async" />
+    );
+  }
+  if (f.planta) {
+    return (
+      <svg viewBox={f.planta.viewBox} className={styles.filaPlanta} aria-hidden="true">
+        {f.planta.capas.map((c) => (
+          <g key={c.nombre} fill={c.color} stroke={c.color}
+             dangerouslySetInnerHTML={{ __html: c.body }} />
+        ))}
+      </svg>
+    );
+  }
+  return null;
+}
+
+/**
+ * Relaciones — la órbita como lectura secundaria.
+ *
+ * Un anillo por territorio. El número de nodos de un anillo es el número de
+ * proyectos de ese sitio: la forma dice algo verificable, y por eso se puede
+ * rotular sin inventarle un significado.
+ */
+function Relaciones({
+  campo, grupos, nodos, arrastrado, onAbrir,
+}: {
+  campo: React.RefObject<HTMLDivElement>;
+  grupos: { t: Territorio; fichas: Ficha[] }[];
+  nodos: { f: Ficha; r: number; ang: number }[];
+  arrastrado: React.MutableRefObject<boolean>;
+  onAbrir: (id: string) => void;
+}) {
+  const [foco, setFoco] = useState<string | null>(null);
+  const vista = nodos.find((n) => n.f.id === foco)?.f ?? null;
+
+  return (
+    <div className={styles.relaciones}>
+      <div className={styles.campo} ref={campo} data-campo>
+        <svg className={styles.trazas} viewBox="0 0 100 100" aria-hidden="true">
+          {grupos.map((g, i) => (
+            <circle key={g.t.id} cx="50" cy="50" r={RADIOS[Math.min(i, RADIOS.length - 1)]}
+                    className={styles.traza} />
+          ))}
+        </svg>
+
+        {nodos.map(({ f, r, ang }, i) => (
+          <button
+            key={f.id} type="button" className={styles.nodo}
+            data-on={foco === f.id || undefined}
+            style={{ '--r': String(r), '--a': `${ang}deg`, '--i': String(i) } as CSSProperties}
+            data-id={f.id}
+            onPointerEnter={() => setFoco(f.id)}
+            onFocus={() => setFoco(f.id)}
+            onClick={() => { if (arrastrado.current) return; onAbrir(f.id); }}
+            aria-label={`${f.num} ${f.titulo}, ${f.lugar}`}
+          >
+            <span className={styles.nodoPunto} aria-hidden="true" />
+            <span className={`${styles.nodoNum} mono`}>{f.num}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Leyenda: qué es un anillo y qué es un nodo. Sin ella los anillos son
+          decoración con aspecto de dato. */}
+      <div className={styles.leyenda}>
+        <p className={`${styles.leyendaTitulo} mono`}>
+          Cada anillo es un territorio · cada nodo, un proyecto
+        </p>
+        <ol className={`${styles.leyendaLista} mono`}>
+          {grupos.map((g) => (
+            <li key={g.t.id}>
+              <span className={styles.leyendaAnillo} aria-hidden="true" />
+              <span className={styles.leyendaNombre}>{g.t.nombre}</span>
+              <span className={styles.leyendaCuenta}>{g.fichas.length}</span>
+            </li>
+          ))}
+        </ol>
+        <p className={`${styles.leyendaLectura} mono`} aria-live="polite">
+          {vista ? `${vista.num} · ${vista.titulo} · ${vista.lugar}` : 'Señala un nodo para leerlo'}
+        </p>
       </div>
     </div>
   );

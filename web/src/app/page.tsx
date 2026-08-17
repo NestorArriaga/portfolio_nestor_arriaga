@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 import { Atlas } from '@/components/experience-v5/ExperienceV5';
 import {
   momentos, granular, parqueEstados, marcadores, recortes, fichas, actos, rostro,
-  descargaPdf,
+  descargas,
+  territorios,
 } from '@/components/experience-v5/registry';
 import { plano } from '@/components/proyecto/blueprints';
 import { sistemas, fichasSistemas } from '@/components/sistemas/registro';
@@ -61,7 +62,8 @@ export default function Portada() {
       fichas={[...fichas(), ...fichasSistemas()]}
       actos={actos()}
       rostro={rostro()}
-      descarga={descargaPdf()}
+      territorios={territorios()}
+      descargas={descargas()}
     />
   );
 }

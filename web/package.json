@@ -21,7 +21,8 @@
     "portfolio:pdf": "node scripts/build-print-derivatives.mjs && node scripts/portfolio-pdf.mjs",
     "atlas:sources": "python3 scripts/build_atlas_sources.py",
     "atlas:masks": "python3 scripts/build_territory_masks.py",
-    "sistemas": "python3 scripts/build_sistemas.py --fuentes \"$SISTEMAS_FUENTES\""
+    "sistemas": "python3 scripts/build_sistemas.py --fuentes \"$SISTEMAS_FUENTES\"",
+    "cv:pdf": "node scripts/cv-pdf.mjs"
   },
   "dependencies": {
     "d3-geo": "^3.1.1",

@@ -204,15 +204,96 @@ export function capa(slug: string, i = 0): Lamina | null {
  * Si el PDF todavía no existe, el botón no se dibuja.
  */
 export function descargaPdf() {
-  const rel = '/downloads/Nestor-Arriaga-Gallegos-Portafolio-2026.pdf';
+  return medirPdf('/downloads/Nestor-Arriaga-Gallegos-Portafolio-2026.pdf');
+}
+
+/**
+ * Mide un PDF publicado: peso y número de páginas, leídos del propio fichero.
+ *
+ * Devuelve `null` si no existe, para que el enlace no se dibuje en vez de
+ * prometer una descarga que daría 404.
+ */
+function medirPdf(rel: string) {
   const f = path.join(process.cwd(), 'public', rel.replace(/^\//, ''));
   if (!fs.existsSync(f)) return null;
 
   const buf = fs.readFileSync(f);
   const mb = (buf.length / 1024 / 1024).toFixed(1);
-  // `/Type /Page` aparece una vez por página; `/Pages` no cuenta.
-  const paginas = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
-  return { href: rel, mb, paginas };
+  const kb = Math.round(buf.length / 1024);
+  // `/Type /Page` aparece una vez por página; `/Pages` no cuenta. En un archivo
+  // con flujos de objetos comprimidos esa marca puede no verse en claro, y
+  // entonces se lee `/N`, que la linearización deja en la cabecera.
+  let paginas = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
+  if (!paginas) paginas = Number(/\/Linearized[^>]*?\/N\s+(\d+)/.exec(buf.toString('latin1'))?.[1] ?? 0);
+  return { href: rel, mb, kb, paginas };
+}
+
+/**
+ * Los tres documentos descargables, medidos sobre el disco.
+ *
+ * El portafolio y los dos currículos viven en el mismo sitio para que el
+ * Centro de descargas no tenga que saber de dónde sale cada uno. La selección
+ * de idioma es del currículum: el portafolio sólo existe en español y decirlo
+ * es más honesto que ofrecer una versión inglesa que no está hecha.
+ */
+export function descargas() {
+  const portafolio = medirPdf('/downloads/Nestor-Arriaga-Gallegos-Portafolio-2026.pdf');
+  const cvEs = medirPdf('/downloads/cv/Nestor-Arriaga-CV-ES.pdf');
+  const cvEn = medirPdf('/downloads/cv/Nestor-Arriaga-CV-EN.pdf');
+
+  return {
+    portafolio: portafolio && {
+      ...portafolio,
+      titulo: 'Portafolio 2026',
+      nota: 'Cartografía, análisis territorial y sistemas',
+      idioma: 'Español',
+      lang: 'es',
+    },
+    cv: [
+      cvEs && {
+        ...cvEs, titulo: 'Curriculum vitae', idioma: 'Español', lang: 'es',
+        accion: 'Descargar CV en español',
+      },
+      cvEn && {
+        ...cvEn, titulo: 'Curriculum vitae', idioma: 'English', lang: 'en',
+        accion: 'Download CV in English',
+      },
+    ].filter(Boolean) as {
+      href: string; mb: string; kb: number; paginas: number;
+      titulo: string; idioma: string; lang: string; accion: string;
+    }[],
+  };
+}
+
+/**
+ * Los seis territorios del atlas, con su punto en el globo si lo tienen.
+ *
+ * El Explorador se organiza por territorio porque es lo que ordena el trabajo:
+ * quince proyectos repartidos en seis sitios, no quince códigos sueltos. La
+ * lista sale de `content/home.ts`, que es donde ya vivían con su nombre, su
+ * región y sus proyectos.
+ *
+ * Cuatro de los seis tienen coordenada derivada de su propia geometría, por
+ * proyección inversa desde EPSG:6372. Metztitlán y la Comarca Lagunera no
+ * tienen geometría en el repositorio, así que **no se les inventa un punto**:
+ * se marcan `situado: false` y el Explorador lo dice en vez de fingirlo. Para
+ * situarlos basta con añadir sus máscaras a `public/atlas/geo/`.
+ */
+export function territorios() {
+  const marcas = marcadores();
+  return territories.map((t) => {
+    const m = marcas.find((x) => x.territoryId === t.id) ?? null;
+    return {
+      id: t.id,
+      nombre: t.name,
+      corto: t.short,
+      region: t.region,
+      proyectos: t.projectIds.length,
+      situado: Boolean(m),
+      lat: m?.lat ?? null,
+      lng: m?.lng ?? null,
+    };
+  });
 }
 
 export function marcadores() {
@@ -469,6 +550,7 @@ export function fichas() {
     id: `p${c.id}`,
     num: `P${c.id}`,
     titulo: c.index,
+    territorioId: c.territoryId,
     lugar: lugar.get(c.territoryId)?.name ?? c.place,
     territorio: lugar.get(c.territoryId)?.short ?? c.place,
     metodo: METODO[c.family] ?? c.family,

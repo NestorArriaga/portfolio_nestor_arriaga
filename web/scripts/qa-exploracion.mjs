@@ -44,8 +44,8 @@ console.log('\norbita · toque y arrastre');
   const p = await ctx.newPage();
   await p.goto(`${BASE}/?vistazo=1`, { waitUntil: 'networkidle' });
   await p.waitForTimeout(2200);
-  await p.getByRole('button', { name: /ver órbita/i }).click().catch(() => {});
-  await p.waitForTimeout(600);
+  await p.getByRole('button', { name: 'Relaciones', exact: true }).click();
+  await p.waitForTimeout(700);
 
   const nodo = p.locator('[data-campo] [data-id]').first();
   const caja = await nodo.boundingBox();
@@ -55,11 +55,13 @@ console.log('\norbita · toque y arrastre');
   await p.mouse.down();
   await p.mouse.up();
   await p.waitForTimeout(900);
-  comprobar(!p.url().includes('vistazo=1'), 'un toque sobre un nodo abre el proyecto', p.url());
+  comprobar(!p.url().includes('vistazo=1'), 'un toque sobre un nodo de Relaciones abre el proyecto', p.url());
 
   // Un arrastre sobre el campo gira el atlas y no abre nada.
   await p.goto(`${BASE}/?vistazo=1`, { waitUntil: 'networkidle' });
   await p.waitForTimeout(2200);
+  await p.getByRole('button', { name: 'Relaciones', exact: true }).click();
+  await p.waitForTimeout(700);
   const campo = p.locator('[data-campo]').first();
   const c = await campo.boundingBox();
   const giroAntes = await p.evaluate(() => {

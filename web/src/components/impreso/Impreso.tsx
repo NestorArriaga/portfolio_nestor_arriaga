@@ -304,10 +304,14 @@ function Perfil({ identidad, total }: { identidad: Parametros['identidad']; tota
  * como impacto.
  */
 function Trayectoria({ total }: { total: number }) {
+  /* Tres hitos, uno por ámbito: investigación internacional, sector privado y
+     política pública. El cuarto que había aquí no figura en el currículum, y
+     el proyecto que podría ocupar su lugar —el sistema de monitoreo de la
+     Sierra Fría— ya se lee en la banda de escala de trabajo de esta misma
+     hoja: repetirlo sería llenar un hueco con un eco. */
   const hitos: [string, string, string][] = [
     ['2025', 'CIHEAM-IAMM / GRANULAR', 'Investigación territorial, diversidad rural y presión hídrica.'],
-    ['2025', 'Grupo INDERS / Agropark', 'Instrumentos de gestión ambiental y trazabilidad documental.'],
-    ['2025', 'C+Lab / Tecnológico de Monterrey', 'Restauración socioambiental y gobernanza territorial.'],
+    ['04–08 / 2025', 'Grupo INDERS / Agropark', 'Instrumentos de gestión ambiental y trazabilidad documental.'],
     ['2024–2025', 'Universidad Autónoma Chapingo / SEMARNAT', 'Ordenamiento ecológico comunitario.'],
   ];
 

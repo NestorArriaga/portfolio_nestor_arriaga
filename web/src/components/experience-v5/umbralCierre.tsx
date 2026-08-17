@@ -5,6 +5,8 @@ import { CSSProperties, useEffect, useId, useRef, useState } from 'react';
 
 import { useEscena } from './director';
 import { Arroba } from './arroba';
+import { Descargas, type Catalogo } from '@/components/global/Descargas';
+
 import styles from './umbralCierre.module.css';
 
 /**
@@ -199,12 +201,12 @@ export function Rostro({
  * recorridos encendidos.
  */
 export function Contacto({
-  marcadores, correo, descarga, quieto, onVistazo, onInicio,
+  marcadores, correo, descargas, quieto, onVistazo, onInicio,
 }: {
   marcadores: { territoryId: string; nombre: string; lat: number; lng: number }[];
   correo: string;
-  /** Portafolio en PDF: ruta, peso real y número de páginas. */
-  descarga: { href: string; mb: string; paginas: number } | null;
+  /** Los tres documentos publicados, medidos sobre el disco. */
+  descargas: Catalogo;
   quieto: boolean;
   onVistazo: () => void;
   onInicio: () => void;
@@ -280,19 +282,10 @@ export function Contacto({
             <button type="button" className="btn" data-v="borde" onClick={onInicio}>inicio</button>
           </div>
 
-          {/* El archivo se enlaza, no se precarga: el PDF pesa decenas de MB y
-              no debe descargarse por abrir la portada. `download` da el nombre
-              estable; sin soporte, el navegador simplemente lo abre. */}
-          {descarga ? (
-            <a className={`${styles.descarga} btn`} data-v="senal"
-               href={descarga.href} download
-               aria-label={`Descargar portafolio en PDF · ${descarga.paginas} páginas · ${descarga.mb} MB`}>
-              Descargar portafolio
-              <span className={styles.descargaMeta}>
-                {`PDF · ${descarga.paginas} páginas · ${descarga.mb} MB`}
-              </span>
-            </a>
-          ) : null}
+          {/* El mismo centro de descargas que la portada: una sola pieza, una
+              sola lógica. Ningún archivo se precarga. */}
+          <Descargas catalogo={descargas} variante="senal"
+                     className={styles.descarga} />
 
           <p className={`${styles.aviso} mono`} role="status" aria-live="polite">
             {copiado ? 'Correo copiado al portapapeles' : ''}

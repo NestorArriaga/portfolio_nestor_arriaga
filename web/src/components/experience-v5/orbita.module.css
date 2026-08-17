@@ -1,24 +1,32 @@
-/* Índice de proyectos.
+/* Explorador del Atlas.
 
-   Dos vistas de la misma información: la órbita, que enseña cómo se relacionan
-   los proyectos, y la lista, que enseña cuáles son. En escritorio manda la
-   órbita; en una pantalla estrecha manda la lista, porque un punto de seis
-   píxeles con el código debajo no es una forma de elegir.
+   Escritorio: el globo a la izquierda como contexto y, a la derecha, los
+   territorios, la lista de proyectos y la ficha del elegido. Pantalla estrecha:
+   la lista es la navegación y el globo se reduce a un dibujo pequeño que no
+   bloquea nada.
 
-   El panel es una rejilla de cuatro bandas —encabezado, ejes, cuerpo y
-   lectura—, así que ninguna vista puede taparle el cierre a la anterior. */
+   El encabezado va pegado arriba en las dos vistas: el cierre nunca puede
+   quedar fuera de la pantalla al recorrer la lista. */
 
 .fondo { position: fixed; inset: 0; z-index: 80; background: var(--tinta); }
 
+/* La ayuda se posa sobre el panel; como fila de la retícula se estiraba de
+   lado a lado y parecía una barra de estado. */
+.panel > [role='status'] {
+  position: absolute;
+  left: var(--margen);
+  bottom: calc(var(--margen) + env(safe-area-inset-bottom, 0px));
+  z-index: 2;
+}
+
 .panel {
   position: relative;
-  height: 100svh;
-  color: var(--optico);
+  height: 100%;
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
-  gap: clamp(0.6rem, 1.6vh, 1.2rem);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1rem;
   padding: var(--margen);
-  overflow: clip;
+  padding-bottom: calc(var(--margen) + env(safe-area-inset-bottom, 0px));
 }
 
 /* --- Encabezado ------------------------------------------------------------ */
@@ -28,256 +36,422 @@
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.8rem 1.5rem;
 }
 
-.rotulo { display: grid; gap: 0.3rem; min-width: 0; }
+.rotulo { display: grid; gap: 0.25rem; min-width: 0; }
 
 .titulo {
   margin: 0;
-  font-size: clamp(1.15rem, 2.2vw, 1.7rem);
-  font-weight: 540;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  color: var(--optico);
 }
 
 .instruccion { margin: 0; font-size: max(var(--micro-2), 0.8rem); color: var(--texto-2); }
 
-.acciones { display: flex; gap: 0.4rem; flex: none; }
+.acciones { display: flex; gap: 0.5rem; flex: none; }
 
 .accion {
+  padding: 0.6rem 1rem;
   min-height: 44px;
-  padding: 0.5rem 0.9rem;
-  font-size: max(var(--micro), 0.78rem);
-  color: var(--texto-2);
+  border: 1px solid var(--linea);
   background: transparent;
-  border: 1px solid color-mix(in srgb, var(--optico) 26%, transparent);
+  color: var(--texto-2);
+  font-size: max(var(--micro-2), 0.8rem);
   cursor: pointer;
   transition: color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal);
 }
 
 .accion:hover, .accion:focus-visible { color: var(--optico); border-color: var(--optico); }
+.accion[aria-pressed='true'] { color: var(--senal); border-color: var(--senal); }
+.accion[data-cerrar] { color: var(--senal); border-color: var(--senal); }
 
-/* El cierre es la salida: lleva el color de señal y nunca se va de la banda. */
-.accion[data-cerrar] { color: var(--senal); border-color: color-mix(in srgb, var(--senal) 50%, transparent); }
-.accion[data-cerrar]:hover, .accion[data-cerrar]:focus-visible { border-color: var(--senal); }
+/* --- Reparto: contexto y selección ---------------------------------------- */
 
-/* --- Ejes ------------------------------------------------------------------- */
+.reparto {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  min-height: 0;
+}
 
-.ejes { display: flex; flex-wrap: wrap; gap: 0.2rem 1.4rem; }
+.contexto {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.8rem;
+  align-content: center;
+  min-height: 0;
+}
 
-.eje {
-  display: flex; align-items: center; gap: 0.55rem;
-  padding: 0.4rem 0; min-height: 44px;
-  font-size: max(var(--micro-2), 0.8rem);
-  border: 0; background: transparent; color: var(--texto-2);
-  border-bottom: 2px solid transparent;
+.nucleo {
+  position: relative;
+  place-self: center;
+  width: min(100%, 42vh);
+  aspect-ratio: 1;
+  opacity: 0.9;
+}
+
+.nucleoHueco { width: 100%; height: 100%; }
+
+/* Lo que el globo no puede situar se declara. Dos de los seis territorios no
+   tienen geometría en el repositorio y no se les inventa un punto. */
+.nota {
+  margin: 0;
+  text-align: center;
+  font-size: var(--micro);
+  color: var(--texto-3);
+}
+
+.seleccion {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  min-height: 0;
+}
+
+/* --- Territorios ----------------------------------------------------------- */
+
+.territorios { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.territorio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--linea);
+  background: transparent;
+  color: var(--texto-2);
+  font-size: max(var(--micro-2), 0.78rem);
   cursor: pointer;
-  transition: color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal);
+  transition: color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal),
+              background-color var(--t-micro) var(--sal);
 }
 
-/* Un arco, no un chip: el eje se dibuja como parte del instrumento.
+.territorio:hover, .territorio:focus-visible { color: var(--optico); border-color: var(--optico); }
 
-   Sólo la curva superior. Con los laterales, el arco y el subrayado del estado
-   activo cerraban un rectángulo que se leía como un recuadro de foco. */
-.ejeArco {
+/* El estado activo no depende sólo del color: cambian el fondo y el peso. */
+.territorio[aria-pressed='true'] {
+  color: var(--tinta);
+  background: var(--senal);
+  border-color: var(--senal);
+  font-weight: 500;
+}
+
+.territorioNombre { white-space: nowrap; }
+
+.territorioCuenta {
+  font-size: var(--micro);
+  color: inherit;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Un punto sólo donde hay coordenada verificada: es el mismo dato que el globo
+   dibuja, no un adorno. */
+.territorioPunto {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
   flex: none;
-  width: 22px; height: 10px;
-  border-top: 1px solid color-mix(in srgb, var(--optico) 28%, transparent);
-  border-radius: 22px 22px 0 0;
-  transition: border-color var(--t-micro) var(--sal), width var(--t-micro) var(--sal);
 }
 
-.eje:hover, .eje:focus-visible { color: var(--optico); }
-.eje[aria-pressed='true'] { color: var(--optico); border-bottom-color: var(--senal); }
-.eje[aria-pressed='true'] .ejeArco { border-color: var(--senal); width: 34px; }
+/* --- Lista de proyectos ---------------------------------------------------- */
 
-/* --- Campo orbital ---------------------------------------------------------- */
+.listado {
+  list-style: none;
+  margin: 0;
+  padding: 0 0.2rem 0 0;
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  min-height: 0;
+}
 
-/* El campo es su propio contenedor de medida. Con el radio en `vmin` los nodos
-   se colocaban respecto de la pantalla y no de la caja que les toca: los de
-   abajo caían sobre la banda de lectura. En `cqmin` el anillo siempre cabe. */
+.fila {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) 14px;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 60px;
+  padding: 0.5rem 0.6rem 0.5rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--linea);
+  background: transparent;
+  color: var(--optico);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--t-micro) var(--sal);
+}
+
+.fila:hover, .fila:focus-visible, .fila[data-on] {
+  background: color-mix(in srgb, var(--optico) 6%, transparent);
+}
+
+.filaMini {
+  width: 76px;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--optico) 7%, transparent);
+}
+
+.filaMini img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.filaPlanta { width: 100%; height: 100%; }
+
+.filaTexto { display: grid; gap: 0.1rem; min-width: 0; }
+.filaNum { font-size: var(--micro); color: var(--senal); }
+.filaTitulo {
+  font-size: max(var(--micro-2), 0.95rem);
+  line-height: 1.25;
+  color: var(--optico);
+}
+.filaLugar { font-size: var(--micro); color: var(--texto-2); }
+
+.filaFlecha {
+  width: 7px; height: 7px;
+  border-top: 1.4px solid var(--texto-3);
+  border-right: 1.4px solid var(--texto-3);
+  transform: rotate(45deg);
+  justify-self: end;
+  transition: border-color var(--t-micro) var(--sal), transform var(--t-micro) var(--sal);
+}
+
+.fila:hover .filaFlecha, .fila[data-on] .filaFlecha {
+  border-color: var(--senal);
+  transform: rotate(45deg) translate(1px, -1px);
+}
+
+/* --- Ficha del proyecto ---------------------------------------------------- */
+
+/* Entera es el enlace: no hay que encontrar una palabra pequeña para abrir. */
+.ficha {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--linea);
+  color: var(--optico);
+  text-decoration: none;
+}
+
+.fichaMini {
+  width: 200px;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--optico) 7%, transparent);
+}
+
+.fichaMini img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.fichaTexto { display: grid; gap: 0.3rem; align-content: start; min-width: 0; }
+.fichaNum { font-size: var(--micro); color: var(--senal); }
+
+.fichaTitulo {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 520;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.fichaDatos {
+  margin: 0.2rem 0 0;
+  display: grid;
+  gap: 0.15rem;
+  font-size: var(--micro);
+}
+
+.fichaDatos > div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.6rem; }
+.fichaDatos dt { color: var(--texto-3); }
+.fichaDatos dd { margin: 0; color: var(--texto-2); }
+
+.fichaAbrir {
+  margin-top: 0.35rem;
+  justify-self: start;
+  font-size: var(--micro-2);
+  color: var(--senal);
+  border-bottom: 1px solid var(--senal);
+  padding-bottom: 2px;
+}
+
+.ficha:hover .fichaAbrir,
+.ficha:focus-visible .fichaAbrir { color: var(--optico); border-color: var(--optico); }
+
+/* --- Relaciones ------------------------------------------------------------ */
+
+.relaciones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+  gap: clamp(1rem, 3vw, 3rem);
+  min-height: 0;
+}
+
+/* El campo es su propio contenedor de medida: con el radio en `vmin` los nodos
+   se colocaban respecto de la pantalla y no de la caja que les toca. */
 .campo {
   position: relative;
-  display: grid; place-items: center;
-  min-height: 0;
   container-type: size;
-  container-name: campo;
+  min-height: 0;
   touch-action: pan-y;
   cursor: grab;
 }
+
 .campo:active { cursor: grabbing; }
 
-.nucleo, .nucleoHueco {
-  position: absolute; top: 50%; left: 50%;
-  width: 46cqmin; height: 46cqmin;
-  transform: translate(-50%, -50%);
-  /* Contexto, no protagonista: el globo se atenúa para que los proyectos
-     manden en la lectura. */
-  opacity: 0.42;
-  pointer-events: none;
+.trazas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.traza {
+  fill: none;
+  stroke: color-mix(in srgb, var(--optico) 14%, transparent);
+  stroke-width: 0.16;
+  vector-effect: non-scaling-stroke;
 }
 
-.trazas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.traza { fill: none; stroke: color-mix(in srgb, var(--optico) 12%, transparent); stroke-width: 0.12; }
-.salida { fill: none; stroke: var(--senal); stroke-width: 0.3; opacity: 0.5; }
-
-/* Cada nodo se coloca por ángulo y radio sobre el campo, y el giro del atlas
-   vive en una variable CSS: arrastrar no vuelve a renderizar diecinueve nodos. */
 .nodo {
   position: absolute;
-  top: 50%; left: 50%;
-  display: grid; place-items: center; gap: 0.3rem;
-  min-width: 44px; min-height: 44px;
+  left: 50%; top: 50%;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
   padding: 0;
-  border: 0; background: transparent;
-  color: inherit;
-  font: inherit;
+  border: 0;
+  background: transparent;
+  color: var(--texto-2);
   cursor: pointer;
-  /* Centrar, girar hasta el ángulo del nodo, salir por el radio de su anillo y
-     deshacer el giro para que el rótulo quede en horizontal. La multiplicación
-     va dentro de `calc`: fuera, la declaración entera es inválida y los
-     diecinueve nodos se apilan en el centro. */
+  /* El orden importa: primero se gira el sistema, después se avanza por el
+     radio y por último se deshace el giro para que el rótulo quede horizontal.
+     `var(--r) * 1cqmin` sin `calc` es CSS inválido y anulaba la declaración
+     entera: los diecinueve nodos caían en el centro. */
   transform:
     translate(-50%, -50%)
     rotate(calc(var(--a) + var(--giro, 0deg)))
     translate(calc(var(--r) * 1cqmin))
     rotate(calc(-1 * (var(--a) + var(--giro, 0deg))));
-  transition: transform 620ms var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
+
+.nodo:hover, .nodo:focus-visible, .nodo[data-on] { color: var(--senal); }
 
 .nodoPunto {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: color-mix(in srgb, var(--optico) 60%, transparent);
-  transition: transform var(--t-micro) var(--sal), background var(--t-micro) var(--sal);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor;
+  transition: transform var(--t-micro) var(--sal);
 }
 
-.nodoNum { font-size: max(var(--micro), 0.72rem); color: var(--texto-2); transition: color var(--t-micro) var(--sal); }
+.nodo:hover .nodoPunto, .nodo[data-on] .nodoPunto { transform: scale(1.6); }
 
-.nodo:hover .nodoPunto, .nodo:focus-visible .nodoPunto,
-.nodo[data-on] .nodoPunto { background: var(--senal); transform: scale(1.5); }
-.nodo:hover .nodoNum, .nodo:focus-visible .nodoNum,
-.nodo[data-on] .nodoNum { color: var(--senal); }
+.nodoNum { font-size: var(--micro); white-space: nowrap; }
 
-/* --- Lectura del proyecto señalado ------------------------------------------ */
+/* --- Leyenda de Relaciones ------------------------------------------------- */
 
-/* Una sola composición: miniatura, código, título y las tres claves. Antes la
-   previsualización flotaba junto al nodo —tapando a sus vecinos— y el título
-   vivía en otra esquina del panel. */
-.lectura {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  min-height: 96px;
-  padding-top: 0.8rem;
-  border-top: 1px solid color-mix(in srgb, var(--optico) 16%, transparent);
-}
-
-.lecturaMini {
-  flex: none;
-  width: 150px; height: 84px;
-  display: grid; place-items: center;
-  overflow: hidden;
-  background: var(--grafito);
-  outline: 1px solid color-mix(in srgb, var(--optico) 16%, transparent);
-}
-
-.lecturaMini :where(img, svg) { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-.lecturaTexto { display: grid; gap: 0.15rem; min-width: 0; }
-.lecturaNum { color: var(--senal); font-size: max(var(--micro), 0.75rem); }
-.lecturaTitulo { font-size: clamp(1.05rem, 1.9vw, 1.6rem); font-weight: 520; letter-spacing: -0.02em; }
-.lecturaMeta { color: var(--texto-2); font-size: max(var(--micro), 0.78rem); }
-
-/* --- Lista ------------------------------------------------------------------ */
-
-/* Una columna. La fila entera es el control, así que no hay que acertarle a un
-   punto, y la miniatura da la lectura visual que el código no da. */
-.listado {
-  list-style: none; margin: 0; padding: 0;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-.fila {
+.leyenda {
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr) auto;
+  gap: 0.7rem;
+  align-content: center;
+  min-width: 0;
+}
+
+.leyendaTitulo {
+  margin: 0;
+  font-size: max(var(--micro-2), 0.8rem);
+  line-height: 1.4;
+  color: var(--optico);
+}
+
+.leyendaLista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+  font-size: var(--micro);
+  color: var(--texto-2);
+}
+
+.leyendaLista li {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.9rem;
-  width: 100%;
-  min-height: 68px;
-  padding: 0.6rem 0;
-  text-align: left;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--optico) 12%, transparent);
-  color: inherit;
-  cursor: pointer;
-  transition: background var(--t-micro) var(--sal);
+  gap: 0.6rem;
 }
 
-.fila:hover, .fila:focus-visible { background: color-mix(in srgb, var(--optico) 6%, transparent); }
-
-.filaMini {
-  width: 72px; height: 48px;
-  display: grid; place-items: center;
-  overflow: hidden;
-  background: var(--grafito);
-  outline: 1px solid color-mix(in srgb, var(--optico) 14%, transparent);
+/* Un arco, no un cuadrado de color: es la misma figura que dibuja el anillo. */
+.leyendaAnillo {
+  width: 14px; height: 7px;
+  border-top: 1px solid color-mix(in srgb, var(--optico) 45%, transparent);
+  border-radius: 14px 14px 0 0;
 }
 
-.filaMini :where(img, svg) { width: 100%; height: 100%; object-fit: cover; display: block; }
-.filaPlanta { background: var(--papel, #f3f2ec); }
+.leyendaNombre { min-width: 0; }
+.leyendaCuenta { color: var(--texto-3); font-variant-numeric: tabular-nums; }
 
-/* El texto se apila: en tres columnas los títulos largos se metían debajo del
-   territorio y las dos cadenas se solapaban. */
-.filaTexto { display: grid; gap: 0.15rem; min-width: 0; }
-.filaNum { font-size: max(var(--micro), 0.72rem); color: var(--senal); }
-.filaTitulo { font-size: 1rem; line-height: 1.25; }
-.filaLugar { font-size: max(var(--micro), 0.78rem); color: var(--texto-2); }
-
-/* Dirección: la fila lleva a alguna parte. */
-.filaFlecha {
-  width: 9px; height: 9px; flex: none;
-  border-top: 1.5px solid var(--texto-2);
-  border-right: 1.5px solid var(--texto-2);
-  transform: rotate(45deg);
-  transition: border-color var(--t-micro) var(--sal), transform var(--t-micro) var(--sal);
+.leyendaLectura {
+  margin: 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--linea);
+  font-size: var(--micro);
+  line-height: 1.45;
+  color: var(--texto-2);
+  min-height: 2.9em;
 }
 
-.fila:hover .filaFlecha, .fila:focus-visible .filaFlecha {
-  border-color: var(--senal);
-  transform: rotate(45deg) translate(2px, -2px);
+/* --- Pantalla estrecha ----------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .panel { gap: 0.8rem; }
+
+  /* La lista es la navegación: una columna, y el contexto encima en pequeño. */
+  .reparto {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0.8rem;
+  }
+
+  .contexto {
+    grid-template-columns: 88px minmax(0, 1fr);
+    grid-template-rows: auto;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .nucleo { width: 88px; place-self: start; }
+  .nota { text-align: left; }
+
+  /* Dos columnas fijas. Envueltos y elásticos ocupaban siete filas y dejaban
+     la lista fuera de la pantalla; desplazándose en una línea, el último
+     quedaba cortado contra el borde y se leía como un rótulo roto. */
+  .territorios {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.3rem;
+  }
+  .territorio { padding: 0.45rem 0.6rem; justify-content: space-between; }
+  .territorioNombre { white-space: normal; }
+
+  .fila { grid-template-columns: 64px minmax(0, 1fr) 12px; gap: 0.7rem; min-height: 64px; }
+  .filaMini { width: 64px; }
+
+  /* La ficha no se monta en móvil: la fila ya lleva código, título, territorio
+     y miniatura, y un panel más debajo obligaría a desplazarse para nada. */
+
+  .relaciones { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; }
+  .leyenda { align-content: start; }
+  .leyendaLista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* --- Móvil ------------------------------------------------------------------- */
+/* --- Suelo tipográfico móvil ----------------------------------------------- */
 
 @media (max-width: 860px) {
-  /* Suelo tipográfico: nada funcional por debajo de 14 px. */
-  .instruccion, .accion, .eje, .filaTitulo, .filaLugar, .filaNum,
-  .lecturaMeta, .lecturaNum, .nodoNum { font-size: 0.875rem; }
-
-  .cabecera { gap: 0.6rem; }
-  .acciones { width: 100%; }
-  .accion { flex: 1; }
-
-  /* Los tres ejes se ven enteros. Desplazándose en una sola línea, el tercero
-     quedaba partido contra el borde y se leía como un rótulo roto. */
-  .ejes { flex-wrap: wrap; gap: 0 1.1rem; }
-  .eje { white-space: nowrap; }
-
-  .nucleo, .nucleoHueco { width: 58cqmin; height: 58cqmin; opacity: 0.34; }
-
-  /* En la vista de órbita la lectura se reserva su banda; en la de lista, el
-     listado ocupa el cuerpo y no hay nada que tapar. */
-  .lectura { min-height: 80px; gap: 0.8rem; }
-  .lecturaMini { width: 104px; height: 62px; }
-  .filaTitulo { line-height: 1.3; }
+  .instruccion, .accion, .territorio, .territorioCuenta, .filaTitulo, .filaLugar,
+  .filaNum, .nota, .nodoNum, .leyendaTitulo, .leyendaLista, .leyendaLectura {
+    font-size: 14px;
+  }
+  .titulo { font-size: 1.35rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nodo, .nodoPunto, .nodoNum, .fila, .filaFlecha, .eje, .ejeArco, .accion {
-    transition: none;
-  }
+  .nodo, .nodoPunto, .fila, .filaFlecha, .accion, .territorio { transition: none; }
 }
