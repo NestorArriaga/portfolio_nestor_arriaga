@@ -114,10 +114,10 @@ export function Vistazo({
   const vista = lista.find((f) => f.id === foco) ?? lista[0] ?? null;
 
   return (
-    <div className={styles.fondo} role="dialog" aria-modal="true" aria-label="Atlas de proyectos">
+    <div className={styles.fondo} role="dialog" aria-modal="true" aria-label="Índice de proyectos">
       <div className={styles.panel} ref={panel}>
         <header className={styles.cabecera}>
-          <p className={styles.titulo}>Atlas</p>
+          <p className={styles.titulo}>Índice de proyectos</p>
           <p className={`${styles.cuenta} mono`}>{`${lista.length} / ${fichas.length}`}</p>
           <button type="button" className={`${styles.cerrar} mono`} data-touch onClick={onCerrar}>
             Cerrar
@@ -269,8 +269,9 @@ export function Hud({
       onPointerEnter={() => setEntero(true)}
       onFocusCapture={() => setEntero(true)}
     >
-      <button type="button" className={`${styles.hudInicio} mono`} data-touch onClick={onInicio}>
-        Atlas
+      <button type="button" className={`${styles.hudInicio} mono`} data-touch
+              aria-label="Volver al inicio del recorrido" onClick={onInicio}>
+        Inicio
       </button>
 
       {/* Quince marcas: una línea de 1 px por proyecto, no una barra gruesa. */}
@@ -292,8 +293,8 @@ export function Hud({
       </p>
 
       <button ref={vistazoRef} type="button" className={`${styles.hudVistazo} mono`}
-              data-touch aria-label="Vistazo · abrir índice de proyectos"
-              onClick={onVistazo}>Vistazo</button>
+              data-touch aria-label="Abrir el índice de proyectos"
+              onClick={onVistazo}>Índice</button>
     </div>
   );
 }

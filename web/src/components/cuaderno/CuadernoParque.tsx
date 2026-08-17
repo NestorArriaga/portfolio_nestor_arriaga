@@ -61,8 +61,8 @@ export function CuadernoParque({ d }: { d: ParqueDatos }) {
           <span className={styles.saltoNombre}>GRANULAR</span>
         </Link>
         <div className={styles.centro}>
-          <Link className="btn" data-v="borde" href={d.atlasHref}>Atlas</Link>
-          <Link className="btn" data-v="borde" href={d.vistazoHref}>Vistazo</Link>
+          <Link className="btn" data-v="borde" href={d.atlasHref}>Volver al recorrido</Link>
+          <Link className="btn" data-v="borde" href={d.vistazoHref}>Índice de proyectos</Link>
         </div>
       </footer>
     </main>

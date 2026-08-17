@@ -15,7 +15,7 @@
 }
 
 .acto {
-  font-size: 12px;
+  font-size: var(--micro);
   letter-spacing: 0.14em;
   color: var(--senal-texto);
 }
@@ -47,14 +47,10 @@
 .punto { fill: var(--senal); }
 
 .coordenada figcaption {
-  display: grid;
-  gap: 0.1rem;
-  font-size: 12px;
+  font-size: var(--micro);
   line-height: 1.35;
+  color: var(--texto-2);
 }
-
-.coordenada figcaption b { font-weight: 500; color: var(--texto); }
-.coordenada figcaption span { color: var(--texto-2); }
 
 /* --- Leyenda como control -------------------------------------------------- */
 
@@ -73,10 +69,10 @@
   gap: 0.5rem;
   padding: 0.32rem 0;
   min-height: 28px;
-  font-size: 13px;
+  font-size: var(--micro-2);
   color: var(--texto-2);
   text-align: left;
-  transition: color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 
 .clase i {
@@ -84,7 +80,7 @@
   width: 13px; height: 13px;
   background: var(--c, var(--senal));
   outline: 1px solid color-mix(in srgb, var(--texto) 22%, transparent);
-  transition: transform var(--micro) var(--sal), outline-color var(--micro) var(--sal);
+  transition: transform var(--t-micro) var(--sal), outline-color var(--t-micro) var(--sal);
 }
 
 .clase:hover,
@@ -104,10 +100,14 @@
   .instrumentos {
     justify-items: stretch;
     gap: 0.7rem;
+    /* El acceso directo aterriza al comienzo de la lectura. En móvil los
+       instrumentos deben estar ya presentes: ocultarlos hasta 40 % dejaba un
+       vacío de media pantalla y hacía parecer que la escena no había cargado. */
+    opacity: clamp(0, calc((var(--e, 0) - 0.15) * 8), 1);
     transform: none;
   }
 
-  .coordenada { width: 88px; }
+  .coordenada { width: min(190px, 46vw); }
 
   .leyenda {
     grid-auto-flow: column;
@@ -118,5 +118,5 @@
     padding-bottom: 0.2rem;
   }
 
-  .clase { min-height: 44px; font-size: 13px; }
+  .clase { min-height: 44px; font-size: var(--micro-2); }
 }

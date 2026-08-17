@@ -14,6 +14,7 @@
     "test": "node --test scripts/test-rutas.mjs scripts/test-entrega.mjs",
     "qa:rutas": "node scripts/qa-rutas.mjs",
     "qa:navegacion": "node scripts/qa-navegacion.mjs",
+    "qa:exploracion": "node scripts/qa-exploracion.mjs",
     "qa:visual": "node scripts/qa-visual.mjs",
     "qa:impresion": "node scripts/qa-impresion.mjs",
     "print:derivados": "node scripts/build-print-derivatives.mjs",

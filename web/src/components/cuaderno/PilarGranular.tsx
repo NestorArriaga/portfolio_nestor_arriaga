@@ -160,24 +160,24 @@ export function PilarGranular({ d }: { d: PilarDatos }) {
 
       <footer className={styles.salida}>
         <Link className={styles.salto} href={d.proyectoAnterior.href} data-touch>
-          <span className={`${styles.saltoDir} mono`}>{`anterior · ${d.proyectoAnterior.num}`}</span>
+          <span className={`${styles.saltoDir} mono`}>{`Proyecto anterior · ${d.proyectoAnterior.num}`}</span>
           <span className={styles.saltoNombre}>{d.proyectoAnterior.nombre}</span>
         </Link>
 
         <div className={styles.centro}>
-          <Link className="btn" data-v="borde" href={d.atlasHref}>Atlas</Link>
-          <Link className="btn" data-v="borde" href={d.vistazoHref}>Vistazo</Link>
+          <Link className="btn" data-v="borde" href={d.atlasHref}>Volver al recorrido</Link>
+          <Link className="btn" data-v="borde" href={d.vistazoHref}>Índice de proyectos</Link>
           {/* El paso entre pilares es interno al proyecto y va aparte del
               anterior/siguiente entre proyectos: son dos movimientos distintos. */}
           {d.siguiente ? (
             <Link className="btn" data-v="borde" href={d.siguiente.href}>
-              {`pilar siguiente · ${d.siguiente.nombre}`}
+              {`Pilar siguiente · ${d.siguiente.nombre}`}
             </Link>
           ) : null}
         </div>
 
         <Link className={styles.salto} href={d.proyectoSiguiente.href} data-touch data-dir="adelante">
-          <span className={`${styles.saltoDir} mono`}>{`siguiente · ${d.proyectoSiguiente.num}`}</span>
+          <span className={`${styles.saltoDir} mono`}>{`Proyecto siguiente · ${d.proyectoSiguiente.num}`}</span>
           <span className={styles.saltoNombre}>{d.proyectoSiguiente.nombre}</span>
         </Link>
       </footer>

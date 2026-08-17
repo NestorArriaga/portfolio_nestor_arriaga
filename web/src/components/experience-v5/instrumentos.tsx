@@ -85,7 +85,8 @@ function Coordenada({ lat, lng, nombre }: { lat: number; lng: number; nombre: st
   const y = ((33 - lat) / 19) * 100;
 
   return (
-    <figure className={styles.coordenada}>
+    <figure className={styles.coordenada}
+            aria-label={`Ubicación de ${nombre} en México: ${lat.toFixed(2)}° ${lng.toFixed(2)}°`}>
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         {[25, 50, 75].map((v) => (
           <line key={`v${v}`} x1={v} y1="0" x2={v} y2="100" className={styles.malla} />
@@ -97,10 +98,9 @@ function Coordenada({ lat, lng, nombre }: { lat: number; lng: number; nombre: st
         <line x1="0" y1={y} x2="100" y2={y} className={styles.cruz} />
         <circle cx={x} cy={y} r="2.6" className={styles.punto} />
       </svg>
-      <figcaption className="mono">
-        <b>{nombre}</b>
-        <span>{`${lat.toFixed(2)}° ${lng.toFixed(2)}°`}</span>
-      </figcaption>
+      {/* Sin rótulo, la cruz y el punto parecían ornamento: dicen qué miden,
+          y los grados los da la banda territorial del pie. */}
+      <figcaption className="mono">Ubicación en México</figcaption>
     </figure>
   );
 }

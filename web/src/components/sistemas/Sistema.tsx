@@ -50,16 +50,16 @@ export function SistemaPagina({
   // descargara la variante de 800 px para una caja de 1339: la interfaz llegaba
   // a menos de la mitad de la densidad necesaria y el texto se leía blando.
   const pasos = caso.detalles.length + (caso.segundo?.imagen ? 1 : 0);
+  const posicion = Number.parseInt(caso.codigo.slice(1), 10);
 
   return (
     <main className={styles.sistema} id="contenido" tabIndex={-1}>
       <nav className={styles.riel} aria-label="Navegación del sistema">
-        <Link className={`${styles.volver} mono`} href="/#sistemas">← Sistemas</Link>
-        <span className={styles.rielCentro}>
-          <Link className="btn" data-v="borde" href={origen}>Atlas</Link>
-          <Link className="btn" data-v="borde" href={vistazoHref()}
-                aria-label="Vistazo · abrir índice de proyectos">Vistazo</Link>
-        </span>
+        <Link className={`${styles.volver} mono`} href={origen}>
+          <i aria-hidden="true" />Volver al recorrido
+        </Link>
+        <p className={`${styles.posicion} mono`}>{`S${String(posicion).padStart(2, '0')} de 4`}</p>
+        <Link className={`${styles.indice} mono`} href={vistazoHref()}>Índice</Link>
       </nav>
 
       {/* 1 · Apertura: nombre, capacidad, estado y captura dominante. */}
@@ -138,18 +138,23 @@ export function SistemaPagina({
         <nav className={styles.saltos} aria-label="Otros sistemas">
           {vecinos.anterior ? (
             <Link className={styles.salto} href={vecinos.anterior.href}>
-              <span className={`${styles.saltoDir} mono`}>anterior</span>
+              <span className={`${styles.saltoDir} mono`}>Sistema anterior</span>
               <span className={`${styles.saltoNum} mono`}>{vecinos.anterior.codigo}</span>
               <span className={styles.saltoNombre}>{vecinos.anterior.nombre}</span>
             </Link>
           ) : <span />}
           {vecinos.siguiente ? (
             <Link className={styles.salto} href={vecinos.siguiente.href} data-dir="adelante">
-              <span className={`${styles.saltoDir} mono`}>siguiente</span>
+              <span className={`${styles.saltoDir} mono`}>Sistema siguiente</span>
               <span className={`${styles.saltoNum} mono`}>{vecinos.siguiente.codigo}</span>
               <span className={styles.saltoNombre}>{vecinos.siguiente.nombre}</span>
             </Link>
           ) : <span />}
+        </nav>
+
+        <nav className={styles.salidasGlobales} aria-label="Salir del sistema">
+          <Link className="btn" data-v="borde" href={origen}>Volver al recorrido</Link>
+          <Link className="btn" data-v="borde" href={vistazoHref()}>Índice de proyectos</Link>
         </nav>
       </footer>
     </main>

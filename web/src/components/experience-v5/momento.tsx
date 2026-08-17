@@ -169,9 +169,17 @@ export function MomentoProyecto({
           acto={d.acto}
         />
 
-        {/* Lugar y acceso, siempre en el mismo sitio de la retícula. */}
+        {/* Banda territorial: lugar, coordenada y acceso en una sola pieza.
+            El topónimo y sus grados dejan de vivir en bloques distintos. */}
         <div className={styles.pie}>
-          <p className={`${styles.lugar} mono`}>{d.lugar}</p>
+          <p className={`${styles.lugar} mono`}>
+            <b>{d.lugar}</b>
+            {coordenada ? (
+              <span className={styles.grados}>
+                {`${coordenada.lat.toFixed(2)}° ${coordenada.lng.toFixed(2)}°`}
+              </span>
+            ) : null}
+          </p>
           <a className={`${styles.abrir} mono`} href={d.href} data-touch
              onPointerEnter={precargarHero} onFocus={precargarHero}>abrir proyecto</a>
         </div>

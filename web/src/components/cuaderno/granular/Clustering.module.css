@@ -19,14 +19,13 @@
   z-index: 20;
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--linea);
-  background: color-mix(in srgb, var(--tinta) 92%, transparent);
+  background: var(--tinta);
 }
 
 @media (min-height: 620px) {
   .indice {
     position: sticky;
     top: 3.4rem;
-    backdrop-filter: blur(6px);
   }
 }
 
@@ -47,14 +46,14 @@
   color: var(--texto-2);
   text-decoration: none;
   border-bottom: 2px solid transparent;
-  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal);
 }
 
 .indice a:hover, .indice a:focus-visible { color: var(--texto); }
 .indice a[data-on] { color: var(--texto); border-bottom-color: var(--acento); }
 
-.indiceNum { font-size: 11px; color: var(--texto-3); }
-.indiceNombre { font-size: 13px; }
+.indiceNum { font-size: var(--micro); color: var(--texto-3); }
+.indiceNombre { font-size: var(--micro-2); }
 
 @media (max-width: 720px) {
   /* Sin envoltura desordenada: en móvil el índice se desplaza en su propia
@@ -120,7 +119,7 @@
 
 .relacionRotulo {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--micro);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--acento);
@@ -142,11 +141,11 @@
   font-variant-numeric: tabular-nums;
 }
 
-.relacionCifra span { font-size: 12px; color: var(--texto-2); }
+.relacionCifra span { font-size: var(--micro); color: var(--texto-2); }
 
 .relacionNota {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--micro);
   line-height: 1.5;
   color: var(--texto-3);
   max-width: 40ch;
@@ -170,7 +169,7 @@
 
 .leyendaTitulo {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--micro);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--acento);
@@ -193,7 +192,7 @@
   border-bottom: 1px solid var(--linea);
   color: var(--texto-2);
   cursor: pointer;
-  transition: color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 
 .grupo i {
@@ -201,7 +200,7 @@
   height: 14px;
   background: var(--c);
   outline: 1px solid color-mix(in srgb, var(--texto) 22%, transparent);
-  transition: transform var(--micro) var(--sal);
+  transition: transform var(--t-micro) var(--sal);
 }
 
 .grupo:hover, .grupo:focus-visible, .grupo[aria-pressed='true'] { color: var(--texto); }
@@ -209,13 +208,13 @@
 
 /* El color del grupo lo lleva la muestra, no el rótulo: el magenta de C2 se
    queda en 4.47:1 sobre tinta y como texto de 12 px no llega al mínimo. */
-.grupoClave { font-size: 12px; color: var(--texto); }
-.grupoNombre { font-size: 13px; }
-.grupoNum { font-size: 13px; font-variant-numeric: tabular-nums; }
+.grupoClave { font-size: var(--micro); color: var(--texto); }
+.grupoNombre { font-size: var(--micro-2); }
+.grupoNum { font-size: var(--micro-2); font-variant-numeric: tabular-nums; }
 
 .leyendaLectura {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--micro-2);
   line-height: 1.55;
   color: var(--texto-2);
   max-width: 44ch;
@@ -227,7 +226,7 @@
   margin: 0;
   padding-top: 0.7rem;
   border-top: 1px solid var(--linea);
-  font-size: 12px;
+  font-size: var(--micro);
   line-height: 1.5;
   color: var(--texto-3);
   max-width: 44ch;
@@ -254,7 +253,7 @@
 
 /* Igual que en la leyenda: el color del grupo lo lleva el filete superior de
    la ficha, no el rótulo de 12 px. */
-.sintesisClave { margin: 0; font-size: 12px; color: var(--texto); letter-spacing: 0.12em; }
+.sintesisClave { margin: 0; font-size: var(--micro); color: var(--texto); letter-spacing: 0.12em; }
 
 .sintesisNombre {
   margin: 0;
@@ -264,7 +263,7 @@
   text-wrap: balance;
 }
 
-.sintesisLectura { margin: 0; font-size: 13px; line-height: 1.55; color: var(--texto-2); }
+.sintesisLectura { margin: 0; font-size: var(--micro-2); line-height: 1.55; color: var(--texto-2); }
 
 .metodo {
   display: flex;
@@ -273,7 +272,7 @@
   margin: 0;
   padding-top: 0.8rem;
   border-top: 1px solid var(--linea);
-  font-size: 12px;
+  font-size: var(--micro);
   color: var(--texto-2);
 }
 
@@ -290,4 +289,14 @@
 @media (max-width: 720px) {
   .verticalCaja img { max-height: 60svh; }
   .leyendaLectura, .relacionNota, .cautela, .sintesisLectura, .metodo { font-size: 14px; }
+}
+
+/* Suelo tipográfico móvil.
+
+   En una pantalla estrecha nada funcional baja de 14 px: por debajo, una
+   microetiqueta técnica deja de ser información y pasa a ser una mancha. La
+   jerarquía se conserva porque lo que estaba grande sigue grande. */
+@media (max-width: 860px) {
+  .indiceNum, .grupoClave, .grupoNombre, .grupoNum, .relacionRotulo,
+  .relacionCifra span, .leyendaTitulo, .sintesisClave { font-size: 14px; }
 }

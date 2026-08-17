@@ -94,7 +94,12 @@ export function Atlas({
     const n = document.getElementById(id);
     if (!n) return null;
     const fijo = Math.max(0, n.offsetHeight - window.innerHeight);
-    const y = n.getBoundingClientRect().top + window.scrollY + fijo * 0.34;
+    /* Los proyectos aterrizan cuando título, obra e instrumentos ya forman
+       una lectura. El rostro es una escena de dibujo: al abrirlo por enlace se
+       entrega más avanzado para que se reconozca de inmediato, sin obligar a
+       recorrer un vacío antes de entenderlo. */
+    const punto = id === 'rostro' ? 0.72 : 0.34;
+    const y = n.getBoundingClientRect().top + window.scrollY + fijo * punto;
     window.scrollTo({ top: y, behavior: 'auto' });
     return n;
   }, []);
@@ -114,7 +119,13 @@ export function Atlas({
     if (!id) return;
 
     let vivo = true;
-    const soltar = () => { vivo = false; };
+    /* En navegadores táctiles puede aparecer un `touchstart` sintético durante
+       la restauración de la página. Si se escucha desde el primer instante,
+       cancela la colocación antes de su primer fotograma y el enlace directo
+       deja la escena exactamente en progreso cero. Se garantiza una ventana
+       corta de estabilización; después, cualquier gesto real sí toma control. */
+    let interrumpible = false;
+    const soltar = () => { if (interrumpible) vivo = false; };
     window.addEventListener('wheel', soltar, { passive: true, once: true });
     window.addEventListener('touchstart', soltar, { passive: true, once: true });
     window.addEventListener('keydown', soltar, { once: true });
@@ -130,9 +141,11 @@ export function Atlas({
       }
     };
     let temporizador = window.setTimeout(colocar, 0);
+    const habilitarInterrupcion = window.setTimeout(() => { interrumpible = true; }, 500);
 
     return () => {
       window.clearTimeout(temporizador);
+      window.clearTimeout(habilitarInterrupcion);
       vivo = false;
       window.removeEventListener('wheel', soltar);
       window.removeEventListener('touchstart', soltar);
@@ -140,6 +153,8 @@ export function Atlas({
     };
   }, [aterrizar]);
   const disparador = useRef<HTMLButtonElement | null>(null);
+  /** El control que abrió el índice, sea cual sea. */
+  const origen = useRef<HTMLElement | null>(null);
   const quieto = useMovimientoReducido();
 
   const ir = useCallback((id: string) => {
@@ -174,10 +189,28 @@ export function Atlas({
     window.history.replaceState(null, '', `${window.location.pathname}${s ? `?${s}` : ''}${window.location.hash}`);
   }, []);
 
+  /**
+   * Abrir el índice recordando desde dónde.
+   *
+   * El foco se devolvía siempre al botón «Índice» del HUD, que es el único que
+   * publicaba su referencia. Quien abría el índice desde la portada aterrizaba
+   * al cerrarlo en un control distinto del que había pulsado, en otro punto de
+   * la página. Ahora se guarda el elemento que tenía el foco.
+   */
+  const abrirAtlas = useCallback(() => {
+    const n = document.activeElement;
+    origen.current = n instanceof HTMLElement ? n : null;
+    setAtlas(true);
+  }, []);
+
   const cerrarAtlas = useCallback(() => {
     setAtlas(false);
     limpiarQuery();
-    disparador.current?.focus();
+    // Si el control de origen ya no está en el documento —se abrió desde una
+    // página interior, o desde la URL— el HUD es el destino de reserva.
+    const n = origen.current;
+    if (n && n.isConnected) n.focus();
+    else disparador.current?.focus();
   }, [limpiarQuery]);
 
   /**
@@ -230,7 +263,7 @@ export function Atlas({
         <PortadaV5
           marcadores={marcadores} quieto={quieto} descarga={descarga} tapada={atlas}
           onRecorrer={() => ir('perfil')}
-          onVistazo={() => setAtlas(true)}
+          onVistazo={abrirAtlas}
           onContacto={() => irYEnfocar('contacto')}
         />
 
@@ -295,14 +328,14 @@ export function Atlas({
           correo="nestorarriaga.irnr@gmail.com"
           descarga={descarga}
           quieto={quieto}
-          onVistazo={() => setAtlas(true)}
+          onVistazo={abrirAtlas}
           onInicio={() => ir('portada')}
         />
       </main>
 
       <Hud
         fichas={fichas} actos={actos}
-        onVistazo={() => setAtlas(true)}
+        onVistazo={abrirAtlas}
         onInicio={() => ir('portada')}
         vistazoRef={(el) => { disparador.current = el; }}
       />

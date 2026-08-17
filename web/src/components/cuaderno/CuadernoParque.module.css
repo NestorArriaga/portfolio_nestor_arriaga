@@ -11,8 +11,6 @@
      se queda en 3.36:1. Ésta es la misma madera llevada a 4.85:1. */
   --madera-texto: #8a5f36;
   --margen: clamp(24px, 3.5vw, 64px);
-  --sal: cubic-bezier(.16, 1, .3, 1);
-  --micro: 210ms;
 
   /* La superficie declara su tinta: los controles del sistema leen `--texto`
      y sin ella caían al blanco óptico por defecto, ilegible sobre marfil. */
@@ -44,7 +42,7 @@
   margin: 0 0 0.8rem;
   padding-bottom: 0.6rem;
   border-bottom: 1px solid var(--linea);
-  font-size: 12px;
+  font-size: var(--micro);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--tinta);
@@ -57,7 +55,7 @@
   color: var(--texto-2);
 }
 
-.pie { margin: 0.5rem 0 0; font-size: 12px; color: var(--texto-2); }
+.pie { margin: 0.5rem 0 0; font-size: var(--micro); color: var(--texto-2); }
 
 /* --- 1 · VISTAZO ----------------------------------------------------------- */
 
@@ -72,7 +70,7 @@
 
 .encabezado { grid-area: encabezado; display: grid; gap: 0.8rem; align-content: center; }
 
-.num { font-size: 12px; letter-spacing: 0.14em; color: var(--madera-texto); }
+.num { font-size: var(--micro); letter-spacing: 0.14em; color: var(--madera-texto); }
 
 /* «Challenge» no parte por espacio, así que el cuerpo lo fija la palabra más
    larga contra el ancho de su columna —unos 27vw—, no el viewport entero. A
@@ -85,14 +83,14 @@
   font-weight: 560;
 }
 
-.ficha { margin: 0.4rem 0 0; display: grid; gap: 0.3rem; font-size: 12px; }
+.ficha { margin: 0.4rem 0 0; display: grid; gap: 0.3rem; font-size: var(--micro); }
 .ficha > div { display: flex; gap: 0.7rem; }
 .ficha dt { color: var(--texto-2); min-width: 5.5rem; }
 .ficha dd { margin: 0; }
 
 .plantaCaja { grid-area: planta; position: relative; display: grid; place-items: center; min-width: 0; }
 
-.planta, .dibujo { display: block; width: 100%; max-height: 74svh; transition: opacity var(--micro) var(--sal); }
+.planta, .dibujo { display: block; width: 100%; max-height: 74svh; transition: opacity var(--t-micro) var(--sal); }
 .planta[data-off] { opacity: 0.2; }
 
 .hotspot {
@@ -101,7 +99,7 @@
   transform: translate(-50%, -50%);
   display: inline-flex; align-items: center; gap: 0.45rem;
   min-height: 44px; padding: 0 0.4rem;
-  font-size: 12px;
+  font-size: var(--micro);
   color: var(--tinta);
 }
 
@@ -109,14 +107,14 @@
   width: 11px; height: 11px; border-radius: 50%;
   background: var(--senal);
   outline: 1px solid var(--tinta);
-  transition: transform var(--micro) var(--sal);
+  transition: transform var(--t-micro) var(--sal);
 }
 
 .hotspot span {
   padding: 0.16rem 0.4rem;
   background: color-mix(in srgb, var(--papel) 92%, transparent);
   opacity: 0.66;
-  transition: opacity var(--micro) var(--sal);
+  transition: opacity var(--t-micro) var(--sal);
 }
 
 .hotspot[data-on] i { transform: scale(1.4); }
@@ -128,17 +126,22 @@
   margin: 0;
   position: relative;
   width: 100%;
-  background-image: url('/projects/park/dise-o-parque-yuc-2200.webp');
+  /* El recorte muestra una fracción de la lámina, así que no necesita los
+     2200 px en una caja de cien: `image-set` deja que la densidad decida y en
+     pantalla estrecha basta la variante de 1100. */
+  background-image: image-set(
+    url('/projects/park/dise-o-parque-yuc-1100.webp') 1x,
+    url('/projects/park/dise-o-parque-yuc-2200.webp') 2x);
   background-repeat: no-repeat;
   outline: 1px solid transparent;
-  transition: outline-color var(--micro) var(--sal), transform var(--micro) var(--sal);
+  transition: outline-color var(--t-micro) var(--sal), transform var(--t-micro) var(--sal);
 }
 
 .recorte[data-on] { outline-color: var(--senal); transform: scale(1.03); }
 
 .recorte figcaption {
   position: absolute; left: 0; bottom: -1.35rem;
-  font-size: 12px;
+  font-size: var(--micro);
   color: var(--texto-2);
 }
 
@@ -160,7 +163,7 @@
 .circulacion {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  transition: opacity var(--micro) var(--sal);
+  transition: opacity var(--t-micro) var(--sal);
   pointer-events: none;
 }
 
@@ -178,14 +181,14 @@
   width: 100%;
   min-height: 44px;
   padding: 0.4rem 0;
-  font-size: 13px;
+  font-size: var(--micro-2);
   text-align: left;
   color: var(--texto-2);
   background: none;
   border: none;
   border-bottom: 1px solid var(--linea);
   cursor: pointer;
-  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal);
 }
 
 .opcion::before {
@@ -193,7 +196,7 @@
   width: 14px; height: 2px;
   flex: none;
   background: currentColor;
-  transition: width var(--micro) var(--sal), background var(--micro) var(--sal);
+  transition: width var(--t-micro) var(--sal), background var(--t-micro) var(--sal);
 }
 
 .opcion:hover, .opcion:focus-visible { color: var(--tinta); }
@@ -227,11 +230,11 @@
   cursor: pointer;
   text-align: left;
   border: 1px solid var(--linea);
-  transition: border-color var(--micro) var(--sal);
+  transition: border-color var(--t-micro) var(--sal);
 }
 
 .alternativa:hover, .alternativa:focus-visible { border-color: var(--senal); }
-.alternativa span { font-size: 12px; color: var(--texto-2); padding: 0 0.4rem 0.4rem; }
+.alternativa span { font-size: var(--micro); color: var(--texto-2); padding: 0 0.4rem 0.4rem; }
 .alternativa .dibujo { max-height: 26svh; }
 
 /* --- 4 · DETALLE ----------------------------------------------------------- */
@@ -248,7 +251,7 @@
 
 .proceso summary {
   min-height: 44px; display: flex; align-items: center;
-  font-size: 13px; cursor: pointer; list-style: none;
+  font-size: var(--micro-2); cursor: pointer; list-style: none;
 }
 
 .proceso summary::-webkit-details-marker { display: none; }
@@ -264,7 +267,7 @@
 
 .procesoPieza { margin: 0; display: grid; gap: 0.4rem; }
 .procesoPieza img { width: 100%; height: auto; max-height: 40svh; object-fit: contain; }
-.procesoPieza figcaption { display: grid; gap: 0.2rem; font-size: 12px; }
+.procesoPieza figcaption { display: grid; gap: 0.2rem; font-size: var(--micro); }
 .procesoPieza b { font-weight: 500; }
 .procesoPieza span { color: var(--texto-2); max-width: 44ch; line-height: 1.5; }
 
@@ -280,7 +283,7 @@
 }
 
 .salto { display: grid; gap: 0.2rem; text-decoration: none; color: var(--tinta); min-height: 44px; }
-.saltoDir { font-size: 12px; color: var(--texto-2); }
+.saltoDir { font-size: var(--micro); color: var(--texto-2); }
 .saltoNombre { font-size: clamp(18px, 2.4vw, 30px); font-weight: 500; letter-spacing: -0.02em; }
 
 .centro { display: flex; gap: 0.5rem; }
@@ -288,10 +291,10 @@
 .accion {
   min-height: 44px; padding: 0.6rem 1rem;
   display: inline-flex; align-items: center;
-  font-size: 13px; color: var(--tinta);
+  font-size: var(--micro-2); color: var(--tinta);
   border: 1px solid var(--linea);
   text-decoration: none;
-  transition: border-color var(--micro) var(--sal);
+  transition: border-color var(--t-micro) var(--sal);
 }
 
 .accion:hover, .accion:focus-visible { border-color: var(--senal); }
@@ -356,4 +359,19 @@
 
 @media (prefers-reduced-motion: reduce) {
   .planta, .dibujo, .circulacion, .recorte, .hotspot i, .hotspot span { transition: none; }
+}
+
+/* En pantalla estrecha el recorte mide poco más de cien píxeles: la variante
+   grande no aporta detalle visible y cuesta medio megabyte. */
+@media (max-width: 860px) {
+  .recorte { background-image: url('/projects/park/dise-o-parque-yuc-1100.webp'); }
+}
+
+/* Suelo tipográfico móvil.
+
+   En una pantalla estrecha nada funcional baja de 14 px: por debajo, una
+   microetiqueta técnica deja de ser información y pasa a ser una mancha. La
+   jerarquía se conserva porque lo que estaba grande sigue grande. */
+@media (max-width: 860px) {
+  .rotulo, .rotulo span, .num, .pie, .procesoPieza figcaption { font-size: 14px; }
 }

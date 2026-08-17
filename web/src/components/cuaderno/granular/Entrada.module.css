@@ -15,7 +15,7 @@
   margin: 0;
   padding-bottom: 0.6rem;
   border-bottom: 1px solid var(--linea);
-  font-size: 12px;
+  font-size: var(--micro);
   font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -30,5 +30,5 @@
 }
 
 @media (max-width: 720px) {
-  .rotuloNota { margin-left: 0; font-size: 13px; }
+  .rotuloNota { margin-left: 0; font-size: var(--micro-2); }
 }

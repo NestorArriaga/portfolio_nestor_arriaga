@@ -57,7 +57,7 @@
   border-radius: 50%;
   background: var(--senal);
   outline: 1px solid var(--tinta);
-  transition: transform var(--micro) var(--sal);
+  transition: transform var(--t-micro) var(--sal);
 }
 
 /* El conector es corto y sale del punto: no cruza la composición. */
@@ -69,16 +69,16 @@
   transform-origin: left center;
   transform: scaleX(0.35);
   opacity: 0.32;
-  transition: transform var(--ui) var(--sal), opacity var(--ui) var(--sal);
+  transition: transform var(--t-estado) var(--sal), opacity var(--t-estado) var(--sal);
 }
 
 .marcaNum {
   position: absolute;
   left: calc(50% + 30px);
-  font-size: 12px;
+  font-size: var(--micro);
   color: var(--tinta);
   opacity: 0.32;
-  transition: opacity var(--ui) var(--sal);
+  transition: opacity var(--t-estado) var(--sal);
 }
 
 /* Sólo el detalle activo enseña su conector completo; los demás bajan
@@ -125,7 +125,7 @@
   background-repeat: no-repeat;
   background-size: 320%;
   outline: 1px solid color-mix(in srgb, var(--tinta) 16%, transparent);
-  transition: outline-color var(--ui) var(--sal);
+  transition: outline-color var(--t-estado) var(--sal);
 }
 
 .detalle[data-on] .recorte { outline-color: var(--senal); outline-width: 2px; }
@@ -134,15 +134,15 @@
   display: flex;
   align-items: baseline;
   gap: 0.45rem;
-  font-size: 12px;
+  font-size: var(--micro);
   color: var(--texto-2);
-  transition: color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 
 .detalle figcaption b {
   display: grid; place-items: center;
   width: 16px; height: 16px;
-  font-size: 11px;
+  font-size: var(--micro);
   color: var(--tinta);
   background: var(--senal);
 }
@@ -172,12 +172,12 @@
 }
 
 .patrones b {
-  font-size: 13px; font-weight: 500;
+  font-size: var(--micro-2); font-weight: 500;
   color: var(--texto-2);
-  transition: color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 
-.patrones span { font-size: 12px; color: var(--texto-2); }
+.patrones span { font-size: var(--micro); color: var(--texto-2); }
 
 /* Activo a texto pleno con su filo de señal; inactivo en secundario, que sobre
    papel es #4f5049 y cumple AA. Ningún estado se apaga por opacidad. */
@@ -194,7 +194,7 @@
   z-index: 4;
 }
 
-.num { font-size: 12px; letter-spacing: 0.14em; color: color-mix(in srgb, var(--tinta) 62%, transparent); }
+.num { font-size: var(--micro); letter-spacing: 0.14em; color: color-mix(in srgb, var(--tinta) 62%, transparent); }
 
 .titulo {
   margin: 0;
@@ -205,11 +205,11 @@
   clip-path: inset(0 calc((1 - clamp(0, var(--e, 0) * 4, 1)) * 100%) 0 0);
 }
 
-.lugar { font-size: 13px; color: var(--texto-2); }
+.lugar { font-size: var(--micro-2); color: var(--texto-2); }
 
 .abrir {
   justify-self: start;
-  font-size: 13px;
+  font-size: var(--micro-2);
   color: var(--tinta);
   border-bottom: 1px solid var(--senal);
   padding-bottom: 2px;

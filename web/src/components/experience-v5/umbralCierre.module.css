@@ -14,25 +14,99 @@
   display: grid; place-items: center;
 }
 
-/* Ocupa la pantalla. La profundidad del puntero son 8 px, ni uno más. */
-.rostroSvg {
+/* La pieza ocupa la pantalla y reserva su caja antes de existir.
+
+   `content-visibility` deja fuera del trabajo de composición todo lo que
+   todavía no se ve, y el tamaño intrínseco impide que reservar ese espacio
+   provoque un salto cuando entra. */
+.rostroPieza {
+  position: relative;
   width: min(94vw, 106svh);
   height: 94svh;
   color: color-mix(in srgb, var(--papel) 94%, transparent);
-  overflow: visible;
+  content-visibility: auto;
+  contain-intrinsic-size: auto min(94vw, 106svh) 94svh;
+  contain: layout paint style;
   transform:
     translate3d(var(--px, 0px), var(--py, 0px), 0)
     scale(var(--z, 1));
   transition: transform 700ms var(--sal);
 }
 
-/* Al cambiar de lectura, la anterior se retira despacio: se percibe que son
-   capas de una misma pieza sin llegar a superponerse. */
-.base { opacity: 0; transition: opacity 640ms var(--sal); }
-.base[data-on] { opacity: 1; }
-.base[data-previa] { opacity: 0.16; }
+/* La ventana: el propio dibujo recorta el territorio.
 
-.trazo { clip-path: inset(0 calc((1 - var(--e, 0)) * 100%) 0 0); transition: clip-path 1100ms var(--sal); }
+   La máscara es el archivo externo `rostro-trazos.svg`. Antes los 715 trazos
+   entraban dos veces en el DOM —una como máscara y otra como dibujo—, 1 430
+   nodos que el navegador tenía que mantener y volver a componer en cada
+   cuadro. Como máscara se decodifica una vez y no ocupa un solo nodo. */
+/* Lienzo con la proporción del dibujo, centrado en la caja. Es el equivalente
+   del `viewBox` con `preserveAspectRatio`: sin él la máscara se estira al
+   ancho de la pantalla y el rostro se deforma. */
+.lienzo {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  aspect-ratio: var(--ratio);
+  /* Se ajusta por el lado que primero topa. En un teléfono estrecho la altura
+     disponible daría un dibujo más ancho que la pantalla, y con sólo
+     `max-width` el alto seguía mandando y el rostro se recortaba. */
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.ventana {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #14150f;
+  -webkit-mask-image: var(--trazos);
+  mask-image: var(--trazos);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  /* Devuelve rango a la base sin aclararla: sin esto el territorio se hunde en
+     el negro del fondo y el rostro se pierde. */
+  filter: contrast(1.34) brightness(1.16) saturate(0.86);
+}
+
+/* Al cambiar de lectura, la anterior se retira despacio: se percibe que son
+   capas de una misma pieza sin llegar a superponerse. Sólo hay dos imágenes
+   montadas como mucho, nunca las cuatro. */
+.base {
+  position: absolute;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 640ms var(--sal);
+}
+.base[data-on] { opacity: 1; }
+
+/* El dibujo exterior: un plano de tinta recortado por el mismo archivo. Así
+   conserva el color del sistema sin insertar el vector por segunda vez. */
+.trazo {
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0.34;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--trazos);
+  mask-image: var(--trazos);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: inset(0 calc((1 - var(--e, 0)) * 100%) 0 0);
+  transition: clip-path 1100ms var(--sal);
+}
+
+/* Un enlace directo debe mostrar la pieza, no el primer fotograma de su
+   construcción. En el recorrido normal el recorte sigue respondiendo a
+   `--e`; `:target` sólo sella el estado cuando el rostro es el destino. */
+.rostro:target .trazo { clip-path: none; }
+
+.hilos { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 
 .cauce, .red { pathLength: 1; stroke-dasharray: 1; stroke-width: 1.6; }
 .cauce { stroke: var(--papel); stroke-dashoffset: calc(1 - clamp(0, var(--e, 0) * 2.6, 1)); }
@@ -51,13 +125,13 @@
   border: 0; background: transparent;
   color: var(--texto-2);
   cursor: pointer;
-  transition: color 200ms var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 
 .lectura i {
   width: 22px; height: 1px;
   background: color-mix(in srgb, var(--papel) 30%, transparent);
-  transition: width 200ms var(--sal), background-color 200ms var(--sal);
+  transition: width var(--t-micro) var(--sal), background-color var(--t-micro) var(--sal);
 }
 
 .lectura:hover { color: var(--optico); }
@@ -130,7 +204,7 @@
   font-weight: 500;
   text-decoration: none;
   border: 1px solid var(--senal);
-  transition: background-color 200ms var(--sal), border-color 200ms var(--sal);
+  transition: background-color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal);
 }
 
 .correo:hover { background: var(--optico); border-color: var(--optico); color: #080908; }
@@ -147,7 +221,7 @@
   background: transparent;
   color: var(--optico);
   cursor: pointer;
-  transition: border-color 200ms var(--sal), color 200ms var(--sal), background-color 200ms var(--sal);
+  transition: border-color var(--t-micro) var(--sal), color var(--t-micro) var(--sal), background-color var(--t-micro) var(--sal);
 }
 
 .accion:hover, .accion:focus-visible { border-color: var(--senal); color: var(--senal); }
@@ -168,9 +242,9 @@
   padding-block: 0.7rem;
 }
 
-.descargaMeta { font-size: 12px; opacity: 0.72; }
+.descargaMeta { font-size: var(--micro); opacity: 0.72; }
 
-.aviso { margin: 0.5rem 0 0; min-height: 1.1em; font-size: 13px; color: var(--senal); }
+.aviso { margin: 0.5rem 0 0; min-height: 1.1em; font-size: var(--micro-2); color: var(--senal); }
 
 @media (max-width: 720px) {
   /* El correo ocupa una fila completa y las acciones se reparten debajo. */
@@ -194,8 +268,14 @@
 }
 
 @media (max-width: 900px) {
-  .rostro { height: 240svh; }
-  .rostroSvg { width: calc(100vw - 6px); height: 74svh; }
+  /* Un solo gesto largo, no dos pantallas y media: el dibujo conserva su
+     secuencia pero deja de sentirse detenido en los teléfonos. */
+  .rostro { height: 170svh; }
+  .rostroPieza {
+    width: calc(100vw - 6px);
+    height: 74svh;
+    contain-intrinsic-size: auto calc(100vw - 6px) 74svh;
+  }
   /* Los controles no tapan el rostro: bajan a una bandeja bajo el dibujo. */
   .lecturas {
     right: var(--margen); left: var(--margen); top: auto;
@@ -203,20 +283,24 @@
     transform: none;
     grid-auto-flow: column; justify-content: space-between;
   }
-  .lectura { flex-direction: column; gap: 0.3rem; font-size: 0.7rem; }
+  .lectura { flex-direction: column; gap: 0.3rem; font-size: max(var(--micro), 0.7rem); }
   .lectura i { width: 18px; }
   .lectura[aria-pressed='true'] i { width: 26px; }
-  .palabras { bottom: calc(var(--margen) + 7rem); font-size: 0.68rem; }
+  .palabras { bottom: calc(var(--margen) + 7rem); font-size: max(var(--micro), 0.68rem); }
+  .ventana { filter: contrast(1.28) brightness(1.28) saturate(0.82); }
   .contacto { height: 170svh; }
   .globoCierre { width: 132vw; height: 132vw; top: 92%; }
   .nombre { font-size: clamp(1.7rem, 9vw, 2.5rem); }
 }
 
+/* Con movimiento reducido la escena se entrega terminada: el rostro completo,
+   los dos hilos trazados y ninguna transición pendiente. No es una versión
+   recortada, es la misma composición sin el recorrido que la dibuja. */
 @media (prefers-reduced-motion: reduce) {
   .rostro, .contacto { height: auto; }
   .rostroMarco, .contactoMarco { position: static; height: auto; min-height: 100svh; }
-  .rostroSvg, .globoCierre { transform: none; }
-  .trazo { clip-path: none; }
+  .rostroPieza, .globoCierre { transform: none; transition: none; }
+  .trazo { clip-path: none; transition: none; }
   .cauce, .red { stroke-dashoffset: 0; }
   .base { transition: none; }
 }
@@ -225,7 +309,7 @@
 .autoria {
   margin: 1.4rem 0 0;
   max-width: 62ch;
-  font-size: 11px;
+  font-size: var(--micro);
   line-height: 1.55;
   color: color-mix(in srgb, var(--optico, #f6f7f2) 58%, transparent);
 }

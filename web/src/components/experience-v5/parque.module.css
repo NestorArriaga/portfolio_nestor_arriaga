@@ -135,7 +135,7 @@
   display: inline-flex; align-items: center; gap: 0.45rem;
   min-height: 44px; padding: 0 0.4rem;
   color: var(--tinta);
-  font-size: 12px;
+  font-size: var(--micro);
   opacity: clamp(0, calc((var(--e, 0) - 0.24 - var(--k, 0) * 0.07) * 8), 1);
   transition: opacity 380ms var(--sal);
 }
@@ -144,14 +144,14 @@
   width: 11px; height: 11px; border-radius: 50%;
   background: var(--senal);
   outline: 1px solid var(--tinta);
-  transition: transform var(--micro) var(--sal);
+  transition: transform var(--t-micro) var(--sal);
 }
 
 .hotspot span {
   padding: 0.16rem 0.4rem;
   background: color-mix(in srgb, var(--papel) 92%, transparent);
   opacity: 0.62;
-  transition: opacity var(--micro) var(--sal);
+  transition: opacity var(--t-micro) var(--sal);
 }
 
 .hotspot[data-on] i { transform: scale(1.4); }
@@ -167,11 +167,16 @@
 .recorte {
   margin: 0;
   position: relative;
-  background-image: url('/projects/park/dise-o-parque-yuc-2200.webp');
+  /* El recorte muestra una fracción de la lámina, así que no necesita los
+     2200 px en una caja de cien: `image-set` deja que la densidad decida y en
+     pantalla estrecha basta la variante de 1100. */
+  background-image: image-set(
+    url('/projects/park/dise-o-parque-yuc-1100.webp') 1x,
+    url('/projects/park/dise-o-parque-yuc-2200.webp') 2x);
   background-repeat: no-repeat;
   width: 100%;
   outline: 1px solid transparent;
-  transition: outline-color var(--ui) var(--sal), transform var(--ui) var(--sal);
+  transition: outline-color var(--t-estado) var(--sal), transform var(--t-estado) var(--sal);
   /* Entran una tras otra, de izquierda a derecha. */
   opacity: clamp(0, calc((var(--e, 0) - 0.1 - var(--k, 0) * 0.12) * 6), 1);
   transform: translate3d(0, calc((1 - clamp(0, (var(--e, 0) - 0.1 - var(--k, 0) * 0.12) * 6, 1)) * 16px), 0);
@@ -182,7 +187,7 @@
 
 .recorte figcaption {
   position: absolute; left: 0; bottom: -1.35rem;
-  font-size: 12px;
+  font-size: var(--micro);
   color: color-mix(in srgb, var(--tinta) 72%, transparent);
 }
 
@@ -209,11 +214,11 @@
 
 .opcion {
   min-height: 40px; padding: 0.4rem 0.6rem;
-  font-size: 13px;
+  font-size: var(--micro-2);
   color: color-mix(in srgb, var(--tinta) 62%, transparent);
   border: 1px solid transparent;
   cursor: pointer;
-  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal);
 }
 
 .opcion:hover, .opcion:focus-visible { color: var(--tinta); }
@@ -279,7 +284,7 @@
 
 .riel ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.15rem; }
 
-.rielItem { font-size: 13px; }
+.rielItem { font-size: var(--micro-2); }
 
 /* El contador se lee: la madera plena se queda en 3.36:1 sobre el papel. */
 .contador { color: var(--madera-texto, #8a5f36); }
@@ -291,13 +296,13 @@
      por debajo del mínimo AA para 13 px. La jerarquía entre el paso activo y
      los demás la siguen marcando el tono pleno y la longitud de la marca. */
   color: color-mix(in srgb, var(--tinta) 66%, transparent);
-  transition: color 200ms var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 
 .rielItem i {
   width: 14px; height: 1px;
   background: currentColor;
-  transition: width 240ms var(--sal), background-color 200ms var(--sal);
+  transition: width var(--t-micro) var(--sal), background-color var(--t-micro) var(--sal);
 }
 
 .rielItem:hover,
@@ -380,4 +385,10 @@
   .variante { grid-template-rows: minmax(0, 1fr) auto; }
 
   .entrega { display: none; }
+}
+
+/* En pantalla estrecha el recorte mide poco más de cien píxeles: la variante
+   grande no aporta detalle visible y cuesta medio megabyte. */
+@media (max-width: 860px) {
+  .recorte { background-image: url('/projects/park/dise-o-parque-yuc-1100.webp'); }
 }

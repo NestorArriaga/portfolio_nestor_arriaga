@@ -36,7 +36,7 @@
   border: 1px solid color-mix(in srgb, var(--optico) 13%, transparent);
   background: transparent; color: var(--texto-2);
   cursor: pointer; white-space: nowrap;
-  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal);
 }
 .chip:hover { color: var(--optico); }
 .chip[aria-pressed='true'] { background: var(--optico); border-color: var(--optico); color: var(--tinta); }
@@ -71,7 +71,7 @@
 
 .miniCaja img {
   width: 100%; height: 100%; object-fit: cover;
-  transition: transform var(--ui) var(--sal);
+  transition: transform var(--t-estado) var(--sal);
 }
 
 .ficha:hover .miniCaja img, .ficha:focus-visible .miniCaja img { transform: scale(1.03); }
@@ -83,7 +83,7 @@
 .detalle { display: grid; align-content: start; gap: 0.42rem; min-height: 0; }
 
 .detalleImg { margin: 0; width: 100%; aspect-ratio: 1.25; overflow: clip; }
-.detalleImg img { width: 100%; height: 100%; object-fit: cover; animation: entra var(--ui) var(--sal); }
+.detalleImg img { width: 100%; height: 100%; object-fit: cover; animation: entra var(--t-estado) var(--sal); }
 
 @keyframes entra { from { opacity: 0; transform: scale(1.02); } to { opacity: 1; transform: none; } }
 
@@ -114,7 +114,7 @@
     transparent 100%
   );
   color: var(--optico);
-  font-size: 12px;
+  font-size: var(--micro);
 }
 
 /* Sobre papel el HUD se pinta en tinta con un velo del propio papel: el mismo
@@ -139,9 +139,9 @@
 
 .hudInicio, .hudVistazo {
   border: 0; background: transparent; color: var(--texto-2); cursor: pointer;
-  font-size: 12px;
+  font-size: var(--micro);
   padding: 0.5rem 0.2rem; min-height: 44px; display: inline-flex; align-items: center;
-  transition: color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 .hudInicio:hover, .hudVistazo:hover, .hudInicio:focus-visible, .hudVistazo:focus-visible { color: var(--optico); }
 
@@ -150,7 +150,7 @@
 .marcas li {
   width: 100%; max-width: 22px; height: 1px;
   background: color-mix(in srgb, var(--optico) 34%, transparent);
-  transition: background-color var(--micro) var(--sal), height var(--micro) var(--sal);
+  transition: background-color var(--t-micro) var(--sal), height var(--t-micro) var(--sal);
 }
 
 /* El indicador tiene que ganarle claramente a las inactivas. */
@@ -159,7 +159,7 @@
 .hudActivo {
   margin: 0; display: flex; gap: 0.7rem; align-items: baseline;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  opacity: 0; transition: opacity var(--ui) var(--sal);
+  opacity: 0; transition: opacity var(--t-estado) var(--sal);
 }
 
 .hud[data-entero] .hudActivo { opacity: 1; }
@@ -180,7 +180,7 @@
   /* A 390 px el nombre del proyecto no cabe junto a todo lo demás; las marcas
      y el número ya dicen dónde estás. */
   .hudActo, .hudTerritorio { display: none; }
-  .hudActivo { font-size: 0.7rem; }
+  .hudActivo { font-size: max(var(--micro), 0.7rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {

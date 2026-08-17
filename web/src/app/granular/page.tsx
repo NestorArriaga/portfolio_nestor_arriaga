@@ -61,17 +61,17 @@ export default function GranularPage() {
 
         <footer className={styles.salida}>
           <Link className={styles.salto} href="/caso/subcuencas-y-rios-calvillo" data-touch>
-            <span className={`${styles.saltoDir} mono`}>anterior · P13</span>
+            <span className={`${styles.saltoDir} mono`}>Proyecto anterior · P13</span>
             <span className={styles.saltoNombre}>Subcuencas y ríos</span>
           </Link>
 
           <div className={styles.centro}>
-            <Link className="btn" data-v="borde" href={atlasHref('14')}>Atlas</Link>
-            <Link className="btn" data-v="borde" href={vistazoHref()}>Vistazo</Link>
+            <Link className="btn" data-v="borde" href={atlasHref('14')}>Volver al recorrido</Link>
+            <Link className="btn" data-v="borde" href={vistazoHref()}>Índice de proyectos</Link>
           </div>
 
           <Link className={styles.salto} href="/caso/urban-challenge" data-touch data-dir="adelante">
-            <span className={`${styles.saltoDir} mono`}>siguiente · P15</span>
+            <span className={`${styles.saltoDir} mono`}>Proyecto siguiente · P15</span>
             <span className={styles.saltoNombre}>Urban Challenge</span>
           </Link>
         </footer>

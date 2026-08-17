@@ -30,7 +30,7 @@
   gap: 0.5rem;
 }
 
-.serie { color: var(--senal); letter-spacing: 0.18em; font-size: 12px; }
+.serie { color: var(--senal); letter-spacing: 0.18em; font-size: var(--micro); }
 
 .aperturaTitulo {
   margin: 0;
@@ -43,7 +43,7 @@
 }
 
 .tresPalabras {
-  font-size: 13px;
+  font-size: var(--micro-2);
   letter-spacing: 0.12em;
   color: color-mix(in srgb, var(--optico, #f6f7f2) 62%, transparent);
 }
@@ -72,7 +72,7 @@
   display: flex; align-items: baseline; gap: 0.9rem; flex-wrap: wrap;
 }
 
-.folio { color: var(--senal); font-size: 12px; letter-spacing: 0.14em; }
+.folio { color: var(--senal); font-size: var(--micro); letter-spacing: 0.14em; }
 
 .nombre {
   margin: 0;
@@ -81,7 +81,7 @@
 }
 
 .estado {
-  font-size: 11px;
+  font-size: var(--micro);
   padding: 3px 8px;
   border: 1px solid color-mix(in srgb, var(--optico, #f6f7f2) 28%, transparent);
   color: color-mix(in srgb, var(--optico, #f6f7f2) 76%, transparent);
@@ -114,7 +114,7 @@
 .acciones {
   list-style: none; margin: 0; padding: 0;
   display: flex; flex-wrap: wrap; gap: 0.3rem 1rem;
-  font-size: 11px; letter-spacing: 0.1em;
+  font-size: var(--micro); letter-spacing: 0.1em;
   color: color-mix(in srgb, var(--optico, #f6f7f2) 58%, transparent);
 }
 
@@ -127,7 +127,7 @@
 .detalles:has(> :only-child) { grid-template-columns: minmax(0, 1fr); max-width: 46%; }
 
 .segundo { margin: 0; display: grid; gap: 0.4rem; }
-.segundo figcaption { display: flex; gap: 0.6rem; font-size: 11px; }
+.segundo figcaption { display: flex; gap: 0.6rem; font-size: var(--micro); }
 .segundo b { color: var(--senal); font-weight: 500; }
 .segundo span { color: color-mix(in srgb, var(--optico, #f6f7f2) 55%, transparent); }
 
@@ -135,7 +135,7 @@
   justify-self: start;
   min-height: 44px;
   display: inline-flex; align-items: center;
-  font-size: 12px; letter-spacing: 0.1em;
+  font-size: var(--micro); letter-spacing: 0.1em;
   color: var(--optico, #f6f7f2);
   border-bottom: 1px solid var(--senal);
 }
@@ -144,7 +144,7 @@
 .contador {
   position: absolute;
   right: var(--margen); bottom: calc(var(--margen) * 0.6);
-  font-size: 11px;
+  font-size: var(--micro);
   /* Al 45 % el contador se quedaba en 4.25:1 sobre la tinta. A 11 px el mínimo
      es 4.5:1, y este número es la única referencia de cuántas capturas quedan. */
   color: color-mix(in srgb, var(--optico, #f6f7f2) 52%, transparent);
@@ -180,7 +180,7 @@
 }
 
 .captura figcaption {
-  font-size: 11px;
+  font-size: var(--micro);
   line-height: 1.4;
   color: color-mix(in srgb, var(--optico, #f6f7f2) 55%, transparent);
 }
@@ -195,6 +195,11 @@
    recorrer siete alturas para ver cuatro capturas. Aquí se apilan. */
 
 @media (max-width: 900px) {
+  /* Suelo tipográfico móvil: las etiquetas del capítulo de sistemas —código,
+     estado, acciones y pie de captura— comparten el mínimo de 14 px. */
+  .rotulo, .codigo, .estado, .acciones, .lamina figcaption, .laminaMeta,
+  .estadoPie, .contador, .ficha, .saltoDir, .saltoNum { font-size: 14px; }
+
   .apertura { height: auto; }
   .caso { height: auto; }
 

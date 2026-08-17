@@ -79,15 +79,15 @@ await ir('/');
 const disparador = await page.$('#portada .btn:nth-child(2)');
 await disparador?.click();
 await page.waitForTimeout(900);
-ok(await page.$('[role="dialog"]') !== null, 'Vistazo abre desde la portada');
-ok((await page.locator('[role="dialog"] [role="status"]').allTextContents())
-  .some((t) => /Selecciona un proyecto/.test(t)), 'Vistazo explica cómo elegir');
+ok(await page.$('[role="dialog"]') !== null, 'el índice abre desde la portada');
+ok(/Selecciona un proyecto/.test(await page.locator('[role="dialog"]').innerText()),
+  'el índice explica cómo elegir');
 ok(await page.evaluate(() => document.querySelectorAll('[data-id]').length) === 19,
   'el índice reúne los quince proyectos y los cuatro sistemas');
 await page.keyboard.press('Escape');
 await page.waitForTimeout(600);
 ok(await page.$('[role="dialog"]') === null, 'Esc cierra el índice');
-ok(await page.evaluate(() => document.activeElement?.textContent?.trim()) === 'Vistazo',
+ok(await page.evaluate(() => document.activeElement?.textContent?.trim()) === 'Índice de proyectos',
   'el foco vuelve al control que lo abrió');
 
 /* --- 3 · Vistazo → proyectos y sistemas ---------------------------------- */
@@ -101,8 +101,10 @@ for (const destino of ['p01', 'p05', 'p10', 'p15', 's01', 's04']) {
 
 /* --- 3b · Ayudas de las páginas interiores ------------------------------- */
 console.log('ayudas interiores');
+/* La página de proyecto ya no necesita una ayuda que explique su propio riel:
+   los controles dicen la acción —«Volver al recorrido», «Índice»— en vez de
+   nombrar sitios del sistema. La ayuda que queda es la del sistema. */
 for (const [ruta, patron, nombre] of [
-  ['/caso/geomorfologia-metztitlan', /Atlas · volver al recorrido/, 'la página de proyecto explica Atlas'],
   ['/sistema/datos-aereos-agricolas', /leer el caso/, 'la página de sistema explica cómo leerlo'],
 ]) {
   await ir(ruta);
@@ -114,33 +116,39 @@ for (const [ruta, patron, nombre] of [
   ok(vivas === 1, `${ruta}: una sola ayuda a la vez`, String(vivas));
 }
 
-// Atlas lleva su nombre accesible de forma permanente, no sólo cuando la ayuda
-// está visible.
+// Las dos salidas del riel se nombran solas: el texto visible es el nombre
+// accesible, así que quien las dicta por voz activa lo que lee.
 await ir('/caso/geomorfologia-metztitlan');
-ok((await page.getAttribute('nav a:has-text("Atlas")', 'aria-label')) === 'Atlas · volver al recorrido',
-  'Atlas tiene nombre accesible permanente');
-// El nombre accesible empieza por la etiqueta visible, igual que en Atlas: quien
-// dicta «Vistazo» por voz tiene que activar el control que dice «Vistazo».
-ok((await page.getAttribute('nav a:has-text("Vistazo")', 'aria-label')) === 'Vistazo · abrir índice de proyectos',
-  'Vistazo tiene nombre accesible permanente');
+for (const [texto, nombre] of [
+  ['Volver al recorrido', 'la salida al recorrido se nombra sola'],
+  ['Índice', 'la salida al índice se nombra sola'],
+]) {
+  const n = await page.getByRole('link', { name: texto, exact: true }).first();
+  ok(await n.count() > 0, nombre, texto);
+}
+// Y el riel dice en qué punto del recorrido está uno.
+ok(/P05 de \d+/.test(await page.locator('nav').first().innerText()),
+  'el riel sitúa el proyecto dentro del total');
 
 /* --- 4 · Abrir proyecto y volver al ancla -------------------------------- */
 console.log('proyecto ↔ atlas');
 await ir('/caso/geomorfologia-metztitlan?from=%2F%23p05');
-const atlas = await page.$('nav a:has-text("Atlas")');
-ok(!!atlas, 'la página de proyecto ofrece Atlas');
-ok((await atlas?.getAttribute('href')) === '/#p05', 'Atlas conserva el ancla de origen',
+const atlas = await page.$('nav a:has-text("Volver al recorrido")');
+ok(!!atlas, 'la página de proyecto ofrece la vuelta al recorrido');
+ok((await atlas?.getAttribute('href')) === '/#p05', 'la vuelta conserva el ancla de origen',
   (await atlas?.getAttribute('href')) ?? '');
 
 await ir('/caso/geomorfologia-metztitlan');
-ok((await page.$eval('nav a:has-text("Atlas")', (n) => n.getAttribute('href'))) === '/#p05',
-  'sin origen, Atlas usa el ancla del propio proyecto');
+ok((await page.$eval('nav a:has-text("Volver al recorrido")', (n) => n.getAttribute('href'))) === '/#p05',
+  'sin origen, la vuelta usa el ancla del propio proyecto');
 
 /* --- 5 · Sistemas: navegación propia ------------------------------------- */
 console.log('sistemas');
 await ir('/sistema/datos-aereos-agricolas');
-ok((await page.$eval('a:has-text("← Sistemas")', (n) => n.getAttribute('href'))) === '/#sistemas',
-  '← Sistemas regresa al capítulo');
+ok((await page.$eval('nav a:has-text("Volver al recorrido")', (n) => n.getAttribute('href'))) === '/#sistemas',
+  'el sistema regresa al capítulo del recorrido');
+ok(/S01 de 4/.test(await page.locator('nav').first().innerText()),
+  'el riel sitúa el sistema dentro del total');
 const siguiente = await page.$eval('a[data-dir="adelante"]', (n) => n.getAttribute('href'));
 ok(siguiente === '/sistema/estrato', 'siguiente encadena S01 → S02', siguiente);
 await page.click('a[data-dir="adelante"]');
@@ -152,9 +160,9 @@ ok(page.url().endsWith('/sistema/datos-aereos-agricolas'), 'el botón atrás del
 
 /* --- 6 · Vistazo desde una página interior ------------------------------- */
 await ir('/caso/pendiente-metztitlan');
-await page.click('nav a:has-text("Vistazo")');
+await page.click('nav a:has-text("Índice")');
 await page.waitForTimeout(1600);
-ok(await page.$('[role="dialog"]') !== null, 'Vistazo abre desde una página interior');
+ok(await page.$('[role="dialog"]') !== null, 'el índice abre desde una página interior');
 
 /* --- 7 · Contacto: correo y descarga ------------------------------------- */
 console.log('contacto');
@@ -213,8 +221,8 @@ console.log('ayudas en móvil');
 
   await movil.goto(`${BASE}/?vistazo=1`, { waitUntil: 'networkidle', timeout: 90000 });
   await movil.waitForTimeout(1800);
-  const cerrarMovil = movil.locator('[role="dialog"] button[aria-label="Cerrar el índice de proyectos"]');
-  ok(await cerrarMovil.count() === 1, 'en móvil el Vistazo tiene botón de cierre con nombre');
+  const cerrarMovil = movil.getByRole('button', { name: 'Cerrar', exact: true });
+  ok(await cerrarMovil.count() === 1, 'en móvil el índice tiene botón de cierre con nombre');
   ok(await cerrarMovil.isVisible(), 'ese botón es visible');
   await ctxMovil.close();
 }

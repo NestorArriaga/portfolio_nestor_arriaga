@@ -60,7 +60,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  transition: color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 .abrir:hover, .abrir:focus-visible { color: var(--senal); }
 
@@ -73,7 +73,7 @@
   display: flex;
   align-items: center;
   opacity: clamp(0, calc(var(--e, 0) * 4 - var(--i) * 0.55 - 0.6), 1);
-  transition: opacity var(--ui) var(--sal);
+  transition: opacity var(--t-estado) var(--sal);
 }
 
 .anclajePunto {

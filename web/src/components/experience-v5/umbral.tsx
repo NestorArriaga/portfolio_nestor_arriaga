@@ -26,13 +26,13 @@ const Globe = dynamic(() => import('@/components/originkit/ui/globe'), {
 export type Marcador = { territoryId: string; nombre: string; lat: number; lng: number };
 
 /**
- * Esfera de puntos en SVG con los marcadores reales sobre su meridiano.
+ * Globo de contexto sin WebGL.
  *
- * No es un `loader`: es la misma figura que el globo interactivo, dibujada con
- * la retícula y los cuatro puntos verificados. Se funde cuando el componente
- * de tres.js está montado.
+ * Una proyección ortográfica dibujada con seis elipses y un punto por
+ * territorio. Sostiene la lectura —dónde está cada proyecto— sin montar una
+ * escena 3D, que para una pieza de contexto es un coste que no se devuelve.
  */
-function GloboEstatico({ marcadores, listo }: { marcadores: Marcador[]; listo: boolean }) {
+export function GloboEstatico({ marcadores, listo }: { marcadores: Marcador[]; listo: boolean }) {
   const paralelos = [-60, -30, 0, 30, 60];
   const meridianos = [0, 30, 60, 90, 120, 150];
 
@@ -149,7 +149,9 @@ export function PortadaV5({
         <div ref={caja} className={styles.globo}
              onPointerEnter={() => setSobreGlobo(true)}
              onPointerLeave={() => setSobreGlobo(false)}>
-          {dentro ? (
+          {/* Un solo globo WebGL a la vez: con el índice abierto, el de la
+              portada se desmonta y deja su sitio al dibujo de contexto. */}
+          {dentro && !tapada ? (
             <Globe
               markerConfig={{
                 markers: marcadores.map((m) => ({ lat: m.lat, lng: m.lng })),
@@ -234,7 +236,7 @@ export function PortadaV5({
 
           <button type="button" className="btn" data-v="borde"
                   aria-describedby={vistazo.visible ? vistazo.id : undefined}
-                  onClick={() => { vistazo.cerrar(); onVistazo(); }}>Vistazo</button>
+                  onClick={() => { vistazo.cerrar(); onVistazo(); }}>Índice de proyectos</button>
 
           {descarga ? (
             <a className="btn" data-v="borde" href={descarga.href} download
@@ -255,7 +257,7 @@ export function PortadaV5({
               <Ayuda id={recorrer.id}
                      texto={modoGesto === 'desplazar' ? 'Desplázate para recorrer' : 'Desliza para recorrer'} />
             ) : vistazo.visible ? (
-              <Ayuda id={vistazo.id} texto="Vistazo · índice de proyectos" />
+              <Ayuda id={vistazo.id} texto="Abre el índice de todos los proyectos" />
             ) : null}
           </span>
         </div>

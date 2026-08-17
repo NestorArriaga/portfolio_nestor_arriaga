@@ -1,9 +1,10 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CSSProperties, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 import { Ayuda, useAyuda, usePunteroFino } from './ayudas';
+import { GloboEstatico } from './umbral';
 import type { Ficha } from './atlas';
 import styles from './orbita.module.css';
 
@@ -30,6 +31,13 @@ const Globe = dynamic(() => import('@/components/originkit/ui/globe'), {
 
 type Eje = 'territorio' | 'metodo' | 'escala';
 
+/** Los tres ejes, con la etiqueta que se lee en pantalla. */
+const EJES: { id: Eje; etiqueta: string }[] = [
+  { id: 'territorio', etiqueta: 'Por territorio' },
+  { id: 'metodo', etiqueta: 'Por método' },
+  { id: 'escala', etiqueta: 'Por escala' },
+];
+
 /**
  * Tres órbitas: 5, 5 y 5. Radios en `vmin`. La exterior se queda en 44 y no en
  * 50 porque el nodo ya no es una caja centrada sino una etiqueta con su número
@@ -46,14 +54,35 @@ export function VistazoOrbital({
   onCerrar: () => void;
   onElegir: (id: string) => void;
 }) {
+  const idPanel = useId().replace(/:/g, '');
   const [eje, setEje] = useState<Eje>('territorio');
   const [foco, setFoco] = useState<string | null>(null);
-  const [lista, setLista] = useState(false);   // vista accesible alternativa
+  /**
+   * Vista del índice.
+   *
+   * En una pantalla estrecha la órbita no puede ser la interfaz principal: los
+   * nodos son puntos de seis píxeles con el código debajo y el título no se ve,
+   * así que elegir exige apuntar a ciegas. En móvil se abre la lista y la
+   * órbita queda como modo visual opcional; en escritorio, al revés.
+   */
+  const [lista, setLista] = useState(false);
+  const [movil, setMovil] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 860px), (pointer: coarse)');
+    const leer = () => { setMovil(mq.matches); setLista(mq.matches); };
+    leer();
+    mq.addEventListener('change', leer);
+    return () => mq.removeEventListener('change', leer);
+  }, []);
   const panel = useRef<HTMLDivElement>(null);
   const campo = useRef<HTMLDivElement>(null);
-  const primero = useRef<HTMLButtonElement>(null);
+  const dialogo = useRef<HTMLDivElement>(null);
   const giro = useRef(0);
   const arrastre = useRef<{ x: number; base: number } | null>(null);
+  /** Origen del gesto en curso, mientras se decide si es toque o arrastre. */
+  const partida = useRef<{ x: number; y: number; id: number; activo: boolean } | null>(null);
+  /** Verdadero sólo durante el clic que remata un arrastre real. */
+  const arrastrado = useRef(false);
 
   /**
    * El orden de los nodos depende del eje activo: al cambiarlo, los proyectos
@@ -79,49 +108,93 @@ export function VistazoOrbital({
     });
   }, [fichas, eje]);
 
-  /**
-   * La previsualización se abre hacia dentro del panel. Un nodo abajo a la
-   * derecha abriría fuera de la pantalla, así que al señalarlo se mide su
-   * posición real —que cambia con el giro del atlas— y se marca el lado. Es una
-   * medición por señalamiento, no por fotograma.
-   */
-  useEffect(() => {
-    if (!foco) return;
-    const n = campo.current?.querySelector<HTMLElement>(`[data-id="${foco}"]`);
-    const p = panel.current;
-    if (!n || !p) return;
-    const a = n.getBoundingClientRect();
-    const b = p.getBoundingClientRect();
-    n.dataset.vert = (a.top + a.height / 2 - b.top) / b.height > 0.56 ? 'arriba' : 'abajo';
-    const x = (a.left + a.width / 2 - b.left) / b.width;
-    n.dataset.lado = x > 0.76 ? 'izq' : x < 0.24 ? 'der' : 'centro';
-  }, [foco, eje]);
+  /* La previsualización ya no se abre junto al nodo —tapaba a sus vecinos y se
+     salía del panel por los bordes—, así que no hace falta medir hacia qué
+     lado cabe: vive en la banda de lectura, que tiene sitio siempre. */
 
   /* --- Arrastre: gira el atlas sin pasar por React ------------------------- */
   const aplicar = useCallback(() => {
     campo.current?.style.setProperty('--giro', `${giro.current.toFixed(2)}deg`);
   }, []);
 
+  /**
+   * Arrastre del campo, separado del toque sobre un proyecto.
+   *
+   * Antes cualquier `pointerdown` sobre el campo iniciaba el giro, y como los
+   * diecinueve nodos viven dentro del campo, tocar un proyecto en un teléfono
+   * arrastraba el atlas en lugar de abrirlo: el dedo nunca está del todo quieto.
+   *
+   * Ahora el gesto se decide por lo que hace, no por dónde empieza:
+   *
+   * - si el toque nace en un control —nodo, botón o enlace— no hay arrastre;
+   * - hasta los 8 px de recorrido el gesto sigue siendo un toque, y el clic del
+   *   nodo llega intacto;
+   * - pasados los 8 px empieza el giro y se anula **sólo** el clic inmediato;
+   * - el movimiento vertical no se captura: la página sigue desplazándose.
+   */
   useEffect(() => {
-    if (!abierto) return;
+    if (!abierto) return undefined;
     const n = campo.current;
-    if (!n) return;
+    if (!n) return undefined;
 
-    const abajo = (e: PointerEvent) => { arrastre.current = { x: e.clientX, base: giro.current }; };
+    /** Recorrido mínimo para considerar que el gesto es un arrastre. */
+    const UMBRAL = 8;
+
+    const abajo = (e: PointerEvent) => {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      const destino = e.target as HTMLElement | null;
+      // Un toque que nace en un control le pertenece a ese control.
+      if (destino?.closest('button, a, input, [role="button"]')) return;
+      arrastre.current = { x: e.clientX, base: giro.current };
+      partida.current = { x: e.clientX, y: e.clientY, id: e.pointerId, activo: false };
+    };
+
     const mover = (e: PointerEvent) => {
-      if (!arrastre.current) return;
-      giro.current = arrastre.current.base + (e.clientX - arrastre.current.x) * 0.35;
+      const p = partida.current;
+      if (!p || !arrastre.current || e.pointerId !== p.id) return;
+      const dx = e.clientX - p.x;
+      const dy = e.clientY - p.y;
+
+      if (!p.activo) {
+        // Por debajo del umbral todavía no hay gesto. Y si el recorrido es
+        // sobre todo vertical, el gesto es de la página, no del atlas.
+        if (Math.hypot(dx, dy) < UMBRAL) return;
+        if (Math.abs(dy) > Math.abs(dx)) { arrastre.current = null; partida.current = null; return; }
+        p.activo = true;
+        n.setPointerCapture?.(e.pointerId);
+      }
+
+      giro.current = arrastre.current.base + dx * 0.35;
       aplicar();
     };
-    const arriba = () => { arrastre.current = null; };
+
+    const soltar = (e: PointerEvent) => {
+      const p = partida.current;
+      if (p?.activo) {
+        // Sólo se anula el clic que remata este arrastre, no los siguientes.
+        arrastrado.current = true;
+        window.setTimeout(() => { arrastrado.current = false; }, 0);
+        n.releasePointerCapture?.(e.pointerId);
+      }
+      arrastre.current = null;
+      partida.current = null;
+    };
+
+    const cancelar = (e: PointerEvent) => {
+      if (partida.current?.activo) n.releasePointerCapture?.(e.pointerId);
+      arrastre.current = null;
+      partida.current = null;
+    };
 
     n.addEventListener('pointerdown', abajo);
     window.addEventListener('pointermove', mover);
-    window.addEventListener('pointerup', arriba);
+    window.addEventListener('pointerup', soltar);
+    window.addEventListener('pointercancel', cancelar);
     return () => {
       n.removeEventListener('pointerdown', abajo);
       window.removeEventListener('pointermove', mover);
-      window.removeEventListener('pointerup', arriba);
+      window.removeEventListener('pointerup', soltar);
+      window.removeEventListener('pointercancel', cancelar);
     };
   }, [abierto, aplicar]);
 
@@ -130,7 +203,7 @@ export function VistazoOrbital({
     if (!abierto) return;
     const previo = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    primero.current?.focus();
+    dialogo.current?.focus({ preventScroll: true });
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { e.preventDefault(); onCerrar(); return; }
@@ -175,144 +248,187 @@ export function VistazoOrbital({
   const vista = nodos.find((n) => n.f.id === foco)?.f ?? null;
 
   return (
-    <div className={styles.fondo} role="dialog" aria-modal="true" aria-label="Atlas orbital de proyectos">
-      <div className={styles.panel} ref={panel}>
-        {/* Tres anillos-instrumento. No son chips: son los ejes del atlas. */}
-        <div className={styles.anillos} role="group" aria-label="Reordenar la órbita">
-          {(['territorio', 'metodo', 'escala'] as Eje[]).map((x, i) => (
-            <button
-              key={x} type="button" data-touch
-              ref={i === 0 ? primero : undefined}
-              className={`${styles.anillo} mono`}
-              aria-pressed={eje === x}
-              onClick={() => setEje(x)}
-            >
-              <span className={styles.anilloArco} aria-hidden="true" />
-              {x}
-            </button>
-          ))}
-        </div>
+    <div className={styles.fondo} role="dialog" aria-modal="true"
+         ref={dialogo} tabIndex={-1}
+         aria-labelledby={`${idPanel}-t`}>
+      <div className={styles.panel} ref={panel} data-vista={lista ? 'lista' : 'orbita'}>
 
-        <div className={styles.campo} ref={campo}>
-          {/* El núcleo: el mismo globo, reducido, como contexto. */}
-          <div className={styles.nucleo}>
-            <Globe
-              markerConfig={{ markers: marcadores, color: '#e9ff3a', size: 26 }}
-              fill="dots"
-              dots={{ color: '#f6f7f2', size: 3, density: 8, allDots: false }}
-              fillColor="#f6f7f2" oceanColor="#080908"
-              outlineColor="#f6f7f2" outlineWidth={1} showOutline
-              graticuleColor="#22221c" showGrid
-              initialLatitude={23} initialLongitude={102}
-              scale={9} speed={0.18} direction="left"
-              stopOnHover dragSpeed={3} detail={5} smoothing={9}
-              style={{ width: '100%', height: '100%' }}
-            />
+        {/* Encabezado: qué es esto, qué se puede hacer y cómo se sale. Va
+            pegado arriba para que el cierre no desaparezca al desplazar. */}
+        <header className={styles.cabecera}>
+          <div className={styles.rotulo}>
+            <h2 id={`${idPanel}-t`} className={styles.titulo}>Índice de proyectos</h2>
+            <p className={`${styles.instruccion} mono`}>
+              Selecciona un proyecto · organiza por territorio, método o escala
+            </p>
           </div>
 
-          {/* Las tres órbitas y la salida que cierra la `@`. */}
-          <svg className={styles.trazas} viewBox="0 0 100 100" aria-hidden="true">
-            {RADIOS.map((r) => (
-              <circle key={r} cx="50" cy="50" r={r} className={styles.traza} />
-            ))}
-            <path className={styles.salida}
-                  d="M50 19 C 76 19, 92 34, 92 52 C 92 70, 78 82, 62 82" />
-          </svg>
+          <div className={styles.acciones}>
+            <button type="button" data-touch className={`${styles.accion} mono`}
+                    aria-pressed={!lista}
+                    onClick={() => setLista(!lista)}>
+              {lista ? 'Ver órbita' : 'Ver lista'}
+            </button>
+            <button type="button" data-touch className={`${styles.accion} mono`}
+                    data-cerrar=""
+                    aria-describedby={escape.visible && fino ? escape.id : undefined}
+                    onClick={() => { escape.cerrar(); onCerrar(); }}>
+              Cerrar
+            </button>
+          </div>
+        </header>
 
-          {nodos.map(({ f, anillo, ang, i }) => (
+        {/* Los tres ejes reordenan el índice. Etiqueta completa y estado
+            evidente: antes eran tres arcos en minúscula y el activo se
+            distinguía por un recuadro que parecía un error de foco. */}
+        <div className={styles.ejes} role="group" aria-label="Organizar el índice">
+          {(EJES).map(({ id, etiqueta }, i) => (
             <button
-              key={f.id}
-              type="button"
-              className={styles.nodo}
-              data-on={foco === f.id || undefined}
-              style={{
-                '--r': String(RADIOS[anillo]),
-                '--a': `${ang}deg`,
-                '--i': String(i),
-              } as CSSProperties}
-              data-id={f.id}
-              onPointerEnter={() => setFoco(f.id)}
-              onFocus={() => setFoco(f.id)}
-              onClick={() => { elegir.cerrar(); onElegir(f.id); }}
-              aria-label={`${f.num} ${f.titulo}, ${f.lugar}`}
+              key={id} type="button" data-touch
+              className={`${styles.eje} mono`}
+              aria-pressed={eje === id}
+              onClick={() => setEje(id)}
             >
-              {/* El nodo es una etiqueta, no una caja: número y punto. La
-                  miniatura sólo aparece al señalar, y lo hace junto al nodo
-                  para que se lea como una previsualización de ese punto de la
-                  órbita y no como una tarjeta suelta. */}
-              <span className={styles.nodoPunto} aria-hidden="true" />
-              <span className={`${styles.nodoNum} mono`}>{f.num}</span>
-              <span className={styles.nodoPrevia} aria-hidden="true">
-                {f.mini ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img src={f.mini.src} srcSet={f.mini.srcSet} sizes="18vw"
-                       width={f.mini.width} height={f.mini.height}
-                       alt="" loading="lazy" decoding="async" />
-                ) : f.planta ? (
-                  <svg className={styles.nodoPlanta} viewBox={f.planta.viewBox}>
-                    {f.planta.capas.map((c) => (
-                      <g key={c.nombre} fill={c.color} stroke={c.color}
-                         dangerouslySetInnerHTML={{ __html: c.body }} />
-                    ))}
-                  </svg>
-                ) : null}
-                <span className={`${styles.nodoPreviaTitulo} mono`}>{f.titulo}</span>
-              </span>
+              <span className={styles.ejeArco} aria-hidden="true" />
+              {etiqueta}
             </button>
           ))}
         </div>
 
-        {/* Al enfocar: número, título, lugar, método y escala. Nada más. */}
-        <div className={styles.lectura} aria-live="polite">
-          {vista ? (
-            <>
-              <p className={`${styles.lecturaNum} mono`}>{vista.num}</p>
-              <p className={styles.lecturaTitulo}>{vista.titulo}</p>
-              <p className={`${styles.lecturaMeta} mono`}>
-                {`${vista.lugar} · ${vista.metodo} · ${vista.escala}`}
-              </p>
-            </>
-          ) : (
-            <p className={`${styles.lecturaMeta} mono`}>
-              {`${fichas.length} entradas en órbita`}
-            </p>
-          )}
-          {/* La segunda ayuda nombra una tecla, así que sólo tiene sentido
-              donde hay teclado. En táctil manda el botón de cierre, que ya
-              lleva su nombre accesible completo. */}
-          {elegir.visible ? <Ayuda id={elegir.id} texto="Selecciona un proyecto" />
-            : (escape.visible && fino) ? <Ayuda id={escape.id} texto="Esc cierra" /> : null}
-        </div>
-
-        <div className={styles.controles}>
-          <button type="button" data-touch className={`${styles.control} mono`}
-                  aria-label={lista ? 'Ver el índice como órbita' : 'Ver el índice como lista'}
-                  aria-pressed={lista} onClick={() => setLista(!lista)}>
-            {lista ? 'órbita' : 'lista'}
-          </button>
-          <button type="button" data-touch className={`${styles.control} mono`}
-                  aria-label="Cerrar el índice de proyectos"
-                  aria-describedby={escape.visible && fino ? escape.id : undefined}
-                  onClick={() => { escape.cerrar(); onCerrar(); }}>
-            cerrar
-          </button>
-        </div>
-
-        {/* Vista accesible alternativa. La principal sigue siendo la órbita. */}
         {lista ? (
-          <ul className={styles.listaPlana}>
+          /* Lista: una columna, fila completa pulsable, miniatura recortada.
+             En tres columnas —código, título, territorio— los títulos largos
+             se metían debajo del territorio y los textos se solapaban. */
+          <ul className={styles.listado}>
             {nodos.map(({ f }) => (
               <li key={f.id}>
-                <button type="button" data-touch className={styles.filaPlana}
-                        onClick={() => { elegir.cerrar(); onElegir(f.id); }} onFocus={() => setFoco(f.id)}>
-                  <span className={`${styles.filaNum} mono`}>{f.num}</span>
-                  <span className={styles.filaTitulo}>{f.titulo}</span>
-                  <span className={`${styles.filaMeta} mono`}>{f.lugar}</span>
+                <button type="button" data-touch className={styles.fila}
+                        data-id={f.id}
+                        onClick={() => { elegir.cerrar(); onElegir(f.id); }}
+                        onFocus={() => setFoco(f.id)}>
+                  <span className={styles.filaMini} aria-hidden="true">
+                    {f.mini ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={f.mini.src} srcSet={f.mini.srcSet} sizes="72px"
+                           width={f.mini.width} height={f.mini.height}
+                           alt="" loading="lazy" decoding="async" />
+                    ) : f.planta ? (
+                      <svg viewBox={f.planta.viewBox} className={styles.filaPlanta}>
+                        {f.planta.capas.map((c) => (
+                          <g key={c.nombre} fill={c.color} stroke={c.color}
+                             dangerouslySetInnerHTML={{ __html: c.body }} />
+                        ))}
+                      </svg>
+                    ) : null}
+                  </span>
+                  <span className={styles.filaTexto}>
+                    <span className={`${styles.filaNum} mono`}>{f.num}</span>
+                    <span className={styles.filaTitulo}>{f.titulo}</span>
+                    <span className={`${styles.filaLugar} mono`}>{f.lugar}</span>
+                  </span>
+                  <span className={styles.filaFlecha} aria-hidden="true" />
                 </button>
               </li>
             ))}
           </ul>
-        ) : null}
+        ) : (
+          <>
+            <div className={styles.campo} ref={campo} data-campo>
+              {/* El núcleo es contexto, no protagonista. En móvil ni siquiera
+                  se monta la escena 3D: un dibujo sostiene la misma lectura. */}
+              <div className={styles.nucleo}>
+                {movil ? (
+                  <GloboEstatico marcadores={marcadores.map((m, i) => ({ ...m, territoryId: String(i), nombre: '' }))} listo />
+                ) : (
+                  <Globe
+                    markerConfig={{ markers: marcadores, color: '#e9ff3a', size: 26 }}
+                    fill="dots"
+                    dots={{ color: '#f6f7f2', size: 3, density: 8, allDots: false }}
+                    fillColor="#f6f7f2" oceanColor="#080908"
+                    outlineColor="#f6f7f2" outlineWidth={1} showOutline
+                    graticuleColor="#22221c" showGrid
+                    initialLatitude={23} initialLongitude={102}
+                    scale={9} speed={0.18} direction="left"
+                    stopOnHover dragSpeed={3} detail={5} smoothing={9}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                )}
+              </div>
+
+              {/* Las tres órbitas y la salida que cierra la `@`. */}
+              <svg className={styles.trazas} viewBox="0 0 100 100" aria-hidden="true">
+                {RADIOS.map((r) => (
+                  <circle key={r} cx="50" cy="50" r={r} className={styles.traza} />
+                ))}
+                <path className={styles.salida}
+                      d="M50 19 C 76 19, 92 34, 92 52 C 92 70, 78 82, 62 82" />
+              </svg>
+
+              {nodos.map(({ f, anillo, ang, i }) => (
+                <button
+                  key={f.id}
+                  type="button"
+                  className={styles.nodo}
+                  data-on={foco === f.id || undefined}
+                  style={{
+                    '--r': String(RADIOS[anillo]),
+                    '--a': `${ang}deg`,
+                    '--i': String(i),
+                  } as CSSProperties}
+                  data-id={f.id}
+                  onPointerEnter={() => setFoco(f.id)}
+                  onFocus={() => setFoco(f.id)}
+                  onClick={() => { if (arrastrado.current) return; elegir.cerrar(); onElegir(f.id); }}
+                  aria-label={`${f.num} ${f.titulo}, ${f.lugar}`}
+                >
+                  <span className={styles.nodoPunto} aria-hidden="true" />
+                  <span className={`${styles.nodoNum} mono`}>{f.num}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* La lectura del proyecto señalado: una sola composición con la
+                miniatura dentro. Antes la previsualización salía flotando junto
+                al nodo y tapaba los proyectos vecinos, mientras el título vivía
+                en otra esquina del panel. */}
+            <div className={styles.lectura} aria-live="polite">
+              {vista ? (
+                <>
+                  <span className={styles.lecturaMini} aria-hidden="true">
+                    {vista.mini ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={vista.mini.src} srcSet={vista.mini.srcSet} sizes="180px"
+                           width={vista.mini.width} height={vista.mini.height}
+                           alt="" decoding="async" />
+                    ) : vista.planta ? (
+                      <svg viewBox={vista.planta.viewBox} className={styles.filaPlanta}>
+                        {vista.planta.capas.map((c) => (
+                          <g key={c.nombre} fill={c.color} stroke={c.color}
+                             dangerouslySetInnerHTML={{ __html: c.body }} />
+                        ))}
+                      </svg>
+                    ) : null}
+                  </span>
+                  <span className={styles.lecturaTexto}>
+                    <span className={`${styles.lecturaNum} mono`}>{vista.num}</span>
+                    <span className={styles.lecturaTitulo}>{vista.titulo}</span>
+                    <span className={`${styles.lecturaMeta} mono`}>
+                      {`${vista.lugar} · ${vista.metodo} · ${vista.escala}`}
+                    </span>
+                  </span>
+                </>
+              ) : (
+                <span className={`${styles.lecturaMeta} mono`}>
+                  {`${fichas.length} proyectos · señala uno para verlo`}
+                </span>
+              )}
+            </div>
+          </>
+        )}
+
+        {/* La ayuda de teclado sólo tiene sentido donde hay teclado. */}
+        {escape.visible && fino && !lista
+          ? <Ayuda id={escape.id} texto="Esc cierra" /> : null}
       </div>
     </div>
   );

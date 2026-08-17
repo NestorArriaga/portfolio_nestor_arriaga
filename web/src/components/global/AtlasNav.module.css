@@ -35,8 +35,7 @@
 
 /* El fondo solo aparece cuando hay contenido detrás que estorbe la lectura. */
 .nav[data-scrolled='true'] {
-  background: rgba(5, 5, 5, 0.86);
-  backdrop-filter: blur(8px);
+  background: rgb(5, 5, 5);
   border-bottom-color: var(--line-dark);
 }
 

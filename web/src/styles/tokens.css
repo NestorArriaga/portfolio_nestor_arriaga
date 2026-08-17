@@ -88,6 +88,24 @@
   --type-label: 0.75rem;                      /* 12px */
   --type-technical: 0.6875rem;                /* 11px, mínimo en escritorio */
 
+  /* Cuerpo de las microetiquetas técnicas —códigos, unidades, coordenadas,
+     pies y rótulos de capítulo—. En escritorio son 12 px; en una pantalla
+     estrecha suben al suelo de 14, porque por debajo dejan de leerse. Se
+     declara aquí para que ninguna hoja tenga que acordarse de subirlo. */
+  --micro: 12px;
+  --micro-2: 13px;
+
+  /* --- Movimiento -------------------------------------------------------
+
+     Una sola curva y tres duraciones. Antes cada hoja declaraba las suyas y
+     `--micro` significaba 210 ms en unos ámbitos y 12 px en otros: las
+     ciento cincuenta y siete reglas de `font-size: var(--micro)` resolvían a
+     una duración, quedaban inválidas y heredaban su tamaño. */
+  --sal: cubic-bezier(.16, 1, .3, 1);
+  --t-micro: var(--t-micro);      /* foco, hover, presión */
+  --t-estado: 380ms;     /* un elemento cambia de estado */
+  --t-editorial: 760ms;  /* la escena cambia de página */
+
   --measure: 62ch;             /* 45-75 caracteres */
   --leading-tight: 0.92;
   --leading-body: 1.55;
@@ -144,6 +162,14 @@
     --plate-column: 100%;
     --plate-field: 100%;
     --type-technical: 0.75rem; /* mínimo 12px en móvil */
+  }
+}
+
+/* Suelo tipográfico móvil: ninguna microetiqueta baja de 14 px. */
+@media (max-width: 860px) {
+  :root {
+    --micro: 14px;
+    --micro-2: 14px;
   }
 }
 

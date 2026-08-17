@@ -54,6 +54,7 @@ export function Proyecto({
   const puntos = [{ id: 'apertura', nombre: 'apertura' },
     ...p.capitulos.map((c) => ({ id: c.id, nombre: c.nombre })),
     { id: 'salida', nombre: 'salida' }];
+  const indiceActivo = Math.max(0, puntos.findIndex((x) => x.id === activo));
 
   return (
     <main
@@ -64,8 +65,15 @@ export function Proyecto({
     >
       <Apertura p={p} />
 
-      {/* Índice de capítulos: puntos, etiqueta al señalar, estado actual. */}
+      {/* Índice de capítulos: puntos, etiqueta al señalar y estado actual.
+
+          En móvil los puntos se quedaban solos: una hilera de círculos sin
+          nada que dijera dónde está uno ni cuántos capítulos quedan. El nombre
+          del capítulo activo va delante y los puntos son el recorrido. */}
       <nav className={styles.indice} aria-label="Capítulos del proyecto">
+        <p className={`${styles.indiceActual} mono`} aria-hidden="true">
+          {`${indiceActivo + 1}/${puntos.length} · ${puntos[indiceActivo]?.nombre ?? puntos[0].nombre}`}
+        </p>
         <ol>
           {puntos.map((x) => (
             <li key={x.id}>
@@ -942,10 +950,20 @@ function Salida({
     siguiente?: { id: string; corto: string; href: string } };
   atlasHref: string; vistazoHref: string;
 }) {
+  const hayNotas = Boolean(p.oficial || p.fuente
+    || (p.creditos && p.creditos.length > 1) || p.descartes.length);
+
   return (
     <footer id="salida" data-capitulo="" className={styles.salida}>
+      {/* La bandeja sólo existe si hay algo que guardar: con un proyecto sin
+          fuente, coautoría ni descartes quedaba una franja abierta con un
+          título y nada debajo. */}
+      {hayNotas ? (
       <details className={styles.notas}>
-        <summary className="mono">Notas y alcance</summary>
+        <summary className="mono">
+          <span>Notas y alcance</span>
+          <i className={styles.chevron} aria-hidden="true" />
+        </summary>
         <dl className="mono">
           <div><dt>Título oficial</dt><dd>{p.oficial}</dd></div>
           {p.fuente ? <div><dt>Fuente</dt><dd>{p.fuente}</dd></div> : null}
@@ -963,11 +981,17 @@ function Salida({
           ) : null}
         </dl>
       </details>
+      ) : null}
 
-      <nav className={styles.saltos} aria-label="Navegación entre proyectos">
+      {/* Cuatro salidas con nombre completo y dirección dibujada. Antes eran
+          «anterior», «siguiente» y dos botones sueltos —«Atlas» y «Vistazo»—
+          que nombraban sitios del sistema en vez de decir qué hacían. */}
+      <nav className={styles.saltos} aria-label="Continuar el recorrido">
         {vecinos.anterior ? (
           <Link className={styles.salto} href={vecinos.anterior.href}>
-            <span className={`${styles.saltoDir} mono`}>anterior</span>
+            <span className={`${styles.saltoDir} mono`}>
+              <i className={styles.saltoFlecha} aria-hidden="true" />Proyecto anterior
+            </span>
             <span className={`${styles.saltoNum} mono`}>
               <Glifo id={vecinos.anterior.id} tam={16} />{`P${vecinos.anterior.id}`}
             </span>
@@ -976,14 +1000,15 @@ function Salida({
         ) : <span />}
 
         <div className={styles.centro}>
-          <Link className="btn" data-v="borde" href={atlasHref}>Atlas</Link>
-          <Link className="btn" data-v="borde" href={vistazoHref}
-                aria-label="Vistazo · abrir índice de proyectos">Vistazo</Link>
+          <Link className="btn" data-v="borde" href={atlasHref}>Volver al recorrido</Link>
+          <Link className="btn" data-v="borde" href={vistazoHref}>Índice de proyectos</Link>
         </div>
 
         {vecinos.siguiente ? (
           <Link className={styles.salto} href={vecinos.siguiente.href} data-dir="adelante">
-            <span className={`${styles.saltoDir} mono`}>siguiente</span>
+            <span className={`${styles.saltoDir} mono`}>
+              Proyecto siguiente<i className={styles.saltoFlecha} aria-hidden="true" />
+            </span>
             <span className={`${styles.saltoNum} mono`}>
               <Glifo id={vecinos.siguiente.id} tam={16} />{`P${vecinos.siguiente.id}`}
             </span>

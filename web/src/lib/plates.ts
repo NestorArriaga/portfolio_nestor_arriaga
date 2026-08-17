@@ -206,23 +206,21 @@ export function getRostro(): RostroManifest | null {
 }
 
 /**
- * Contenido del SVG de trazos, sin envoltorio.
+ * Ruta del SVG de trazos del rostro.
  *
- * Va inline y no por `mask-image`: los 715 paths tienen que estar en el DOM
- * para poder revelarlos por grupos. Son 86 KB —unos 20 KB comprimidos—, que es
- * el precio de que la silueta sea vectorial a cualquier tamano.
+ * Antes esta función devolvía el **contenido** del archivo para insertarlo en
+ * línea, y la escena lo insertaba dos veces: una como máscara y otra como
+ * dibujo. Eran 1 430 nodos `<path>` que el navegador tenía que mantener y
+ * recomponer. Sirviéndolo como archivo, el mismo dibujo funciona de máscara CSS
+ * en los dos sitios, se decodifica una vez y no ocupa ningún nodo.
  */
 export function rostroTrazos(): string | null {
   const r = getRostro();
   if (!r) return null;
   const full = path.join(PUBLIC_DIR, r.trazos.file.replace(/^\//, ''));
-  if (!fs.existsSync(full)) return null;
-  return fs
-    .readFileSync(full, 'utf8')
-    .replace(/^[\s\S]*?<svg[^>]*>/, '')
-    .replace(/<\/svg>\s*$/, '')
-    .trim();
+  return fs.existsSync(full) ? r.trazos.file : null;
 }
+
 
 /* -------------------------------------------------------------------------- */
 /* P15 — PARK CHALLENGE                                                       */

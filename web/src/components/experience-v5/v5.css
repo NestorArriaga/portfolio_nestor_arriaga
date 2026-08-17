@@ -25,11 +25,7 @@
   /* Retícula de 12 columnas con márgenes fluidos. */
   --margen: clamp(1.15rem, 3.2vw, 4rem);
   --col: calc((100vw - var(--margen) * 2) / 12);
-
-  --sal: cubic-bezier(.16, 1, .3, 1);
   --ent: cubic-bezier(.22, 1, .36, 1);
-  --micro: 210ms;
-  --ui: 340ms;
 
   background: var(--fondo);
   color: var(--texto);
@@ -77,8 +73,11 @@
   font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 720px) {
-  .v5 .mono { font-size: clamp(0.8125rem, 3.4vw, 0.9rem); }
+/* Suelo tipográfico móvil. Toda la microtipografía del recorrido es `mono`, así
+   que esta única regla fijaba el mínimo de la experiencia entera: a 390 px
+   resolvía 13.26 px y arrastraba con ella disciplina, territorios y ayudas. */
+@media (max-width: 860px) {
+  .v5 .mono { font-size: clamp(0.875rem, 3.4vw, 0.95rem); }
 }
 
 .v5 .titulo {

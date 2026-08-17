@@ -7,8 +7,6 @@
   --optico: #f6f7f2;
   --senal: #e9ff3a;
   --margen: clamp(24px, 3.5vw, 64px);
-  --sal: cubic-bezier(.16, 1, .3, 1);
-  --micro: 210ms;
 
   --texto: var(--optico);
   --texto-2: #a6a79f;
@@ -34,7 +32,7 @@
 
 .apertura > * { min-width: 0; max-width: 100%; }
 
-.marca { font-size: 12px; color: var(--senal); }
+.marca { font-size: var(--micro); color: var(--senal); }
 
 .nombre {
   margin: 0;
@@ -55,7 +53,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem 0.9rem;
-  font-size: 13px;
+  font-size: var(--micro-2);
   color: var(--texto-2);
   letter-spacing: 0.06em;
   min-width: 0;
@@ -93,11 +91,11 @@
   gap: 0.45rem;
   min-height: 40px;
   padding: 0.4rem 0.8rem;
-  font-size: 12px;
+  font-size: var(--micro);
   color: var(--texto-2);
   border: 1px solid var(--linea);
   text-decoration: none;
-  transition: color var(--micro) var(--sal), border-color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal), border-color var(--t-micro) var(--sal);
 }
 
 .pastilla:hover, .pastilla:focus-visible { color: var(--texto); border-color: var(--texto-2); }
@@ -121,7 +119,7 @@
 .cifras dd { overflow-wrap: break-word; }
 
 .cifras > div { display: grid; gap: 0.2rem; }
-.cifras dt { font-size: 12px; color: var(--texto-2); }
+.cifras dt { font-size: var(--micro); color: var(--texto-2); }
 .cifras dd {
   margin: 0;
   font-size: clamp(20px, 2.4vw, 34px);
@@ -170,7 +168,7 @@
   letter-spacing: -0.02em;
 }
 
-.pagina { font-size: 12px; color: var(--texto-2); }
+.pagina { font-size: var(--micro); color: var(--texto-2); }
 
 .categorias { display: grid; gap: 0.15rem; justify-items: start; }
 
@@ -182,11 +180,11 @@
   padding: 0.3rem 0;
   color: var(--texto-2);
   text-align: left;
-  transition: color var(--micro) var(--sal);
+  transition: color var(--t-micro) var(--sal);
 }
 
-.categoria b { font-size: 13px; font-weight: 500; }
-.categoria span { font-size: 12px; }
+.categoria b { font-size: var(--micro-2); font-weight: 500; }
+.categoria span { font-size: var(--micro); }
 
 .categoria:hover, .categoria:focus-visible,
 .categoria[aria-pressed='true'] { color: var(--texto); }
@@ -198,12 +196,12 @@
   margin: 0;
   min-height: 4.6em;
   max-width: 46ch;
-  font-size: 12px;
+  font-size: var(--micro);
   line-height: 1.5;
   color: var(--texto-2);
 }
 
-.municipios { margin: 0; font-size: 12px; color: var(--texto-2); max-width: 46ch; }
+.municipios { margin: 0; font-size: var(--micro); color: var(--texto-2); max-width: 46ch; }
 .municipios span { display: block; color: var(--senal); }
 
 /* --- Alcance ---------------------------------------------------------------- */
@@ -219,7 +217,7 @@
   min-height: 44px;
   display: flex;
   align-items: center;
-  font-size: 13px;
+  font-size: var(--micro-2);
   cursor: pointer;
   list-style: none;
 }
@@ -235,45 +233,59 @@
   max-width: 62ch;
 }
 
-.alcanceCuerpo p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--texto-2); }
+.alcanceCuerpo p { margin: 0; font-size: var(--micro-2); line-height: 1.6; color: var(--texto-2); }
 .alcanceCuerpo ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.35rem; }
-.alcanceCuerpo li { font-size: 13px; line-height: 1.6; color: var(--texto-2); }
+.alcanceCuerpo li { font-size: var(--micro-2); line-height: 1.6; color: var(--texto-2); }
 
 .alcanceTitulo { color: var(--texto) !important; }
 .fuente { color: var(--texto-2); }
 
 /* --- Salida ------------------------------------------------------------------ */
 
+/* Tres salidas en una fila mientras quepan de verdad.
+
+   La columna central era `auto`, de modo que no cedía ancho a nadie: con los
+   rótulos escritos como acciones —«Volver al recorrido», «Índice de
+   proyectos»— la fila medía 826 px dentro de 768 y empujaba la página. Ahora
+   la fila sólo existe cuando hay sitio para ella. */
 .salida {
   margin: 0 var(--margen);
   min-width: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: end;
   gap: clamp(1rem, 3vw, 3rem);
   border-top: 1px solid var(--linea);
   padding-top: 1.4rem;
 }
 
-.centro { display: flex; gap: 0.5rem; }
+@media (min-width: 1040px) {
+  .salida {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: end;
+  }
+}
+
+.centro { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* Un nombre largo de proyecto parte por donde pueda antes que desbordar. */
+.saltoNombre { overflow-wrap: anywhere; }
 
 .accion {
   min-height: 44px;
   padding: 0.6rem 1rem;
   display: inline-flex;
   align-items: center;
-  font-size: 13px;
+  font-size: var(--micro-2);
   color: var(--texto);
   border: 1px solid var(--linea);
   text-decoration: none;
-  transition: border-color var(--micro) var(--sal), color var(--micro) var(--sal);
+  transition: border-color var(--t-micro) var(--sal), color var(--t-micro) var(--sal);
 }
 
 .accion:hover, .accion:focus-visible { border-color: var(--senal); color: var(--senal); }
 
 .salto { display: grid; gap: 0.2rem; text-decoration: none; color: var(--texto); min-height: 44px; }
 .salto[data-dir='adelante'] { justify-items: end; text-align: right; }
-.saltoDir { font-size: 12px; color: var(--texto-2); }
+.saltoDir { font-size: var(--micro); color: var(--texto-2); }
 .saltoNombre { font-size: clamp(18px, 2.4vw, 30px); font-weight: 500; letter-spacing: -0.02em; }
 
 /* --- Móvil ------------------------------------------------------------------- */
@@ -304,9 +316,7 @@
   .detalle, .municipios, .alcanceCuerpo p, .alcanceCuerpo li { font-size: 14px; }
   .alcance summary { font-size: 14px; }
   .pastilla { min-height: 44px; }
-  .salida { grid-template-columns: minmax(0, 1fr); }
   .salto[data-dir='adelante'] { justify-items: start; text-align: left; }
-  .centro { flex-wrap: wrap; }
 }
 
 /* --- Instrumentos del pilar --------------------------------------------------
@@ -322,7 +332,7 @@
    láminas sin categorías dejaban la columna con el título y el folio a secas. */
 .pie {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--micro-2);
   line-height: 1.55;
   color: var(--texto-2);
   max-width: 46ch;

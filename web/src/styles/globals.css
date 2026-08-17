@@ -93,3 +93,12 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+/* Suelo tipográfico móvil.
+
+   En una pantalla estrecha nada funcional baja de 14 px: por debajo, una
+   microetiqueta técnica deja de ser información y pasa a ser una mancha. La
+   jerarquía se conserva porque lo que estaba grande sigue grande. */
+@media (max-width: 860px) {
+  .saltar { font-size: 14px; }
+}

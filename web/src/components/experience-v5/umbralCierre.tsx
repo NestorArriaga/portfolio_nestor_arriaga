@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useId, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useId, useRef, useState } from 'react';
 
 import { useEscena } from './director';
 import { Arroba } from './arroba';
@@ -44,27 +44,61 @@ export type BaseRostro = {
 export function Rostro({
   trazos, viewBox, bases, quieto,
 }: {
+  /** Ruta del SVG de trazos. Se usa como máscara, no se inserta en el DOM. */
   trazos: string; viewBox: string; bases: BaseRostro[]; quieto: boolean;
 }) {
   const ref = useEscena('rostro', { z: [1.12, 1] }, quieto);
   const uid = useId().replace(/:/g, '');
-  const [activa, setActiva] = useState(bases[0]?.role ?? '');
+  /* Relieve es la primera lectura: describe el perfil incluso antes de que la
+     persona pruebe los controles. La vista satelital se conserva como capa,
+     pero sobre el fondo oscuro no debe ser la única pista de que hay un rostro. */
+  const [activa, setActiva] = useState(
+    bases.find((b) => b.role === 'relieve')?.role ?? bases[0]?.role ?? '',
+  );
   const [previa, setPrevia] = useState<string | null>(null);
   const caja = useRef<HTMLDivElement>(null);
   const [, , vw, vh] = viewBox.split(/\s+/).map(Number);
 
+  /* La escena se monta cuando se acerca, no al cargar la página.
+   *
+   * Antes se montaba siempre: en un teléfono de 360 px eso significaba
+   * descargar las cuatro bases de 2000 px —casi 14 MB— antes de que nadie
+   * hubiera llegado al rostro. */
+  const [cerca, setCerca] = useState(false);
+  useEffect(() => {
+    const n = caja.current;
+    if (!n || cerca) return undefined;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setCerca(true); io.disconnect(); }
+    }, { rootMargin: '120% 0px' });
+    io.observe(n);
+    return () => io.disconnect();
+  }, [cerca]);
+
+  /* Cambio de lectura con un resto de la anterior durante el fundido.
+   *
+   * El temporizador se guarda para poder cancelarlo: si el visitante cambia de
+   * capa dos veces seguidas, o abandona la escena, el anterior seguía vivo y
+   * escribía estado sobre un componente ya desmontado. */
+  const relevo = useRef<number | null>(null);
   const elegir = (rol: string) => {
     if (rol === activa) return;
     setPrevia(activa);
     setActiva(rol);
-    window.setTimeout(() => setPrevia(null), 700);
+    if (relevo.current) window.clearTimeout(relevo.current);
+    relevo.current = window.setTimeout(() => { setPrevia(null); relevo.current = null; }, 700);
   };
+  useEffect(() => () => { if (relevo.current) window.clearTimeout(relevo.current); }, []);
 
-  // Profundidad al puntero: entre 4 y 8 px, nada más.
+  /* Profundidad al puntero: entre 4 y 8 px, y sólo donde hay puntero fino.
+   *
+   * En táctil no aporta nada —no hay hover— y en cambio obliga a recalcular
+   * estilo en cada `pointermove`, que es justo mientras se arrastra la página. */
   useEffect(() => {
-    if (quieto) return;
+    if (quieto || !cerca) return undefined;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
     const n = caja.current;
-    if (!n) return;
+    if (!n) return undefined;
     const on = (e: PointerEvent) => {
       const r = n.getBoundingClientRect();
       n.style.setProperty('--px', `${((e.clientX - r.left) / r.width - 0.5) * 8}px`);
@@ -72,55 +106,69 @@ export function Rostro({
     };
     n.addEventListener('pointermove', on, { passive: true });
     return () => n.removeEventListener('pointermove', on);
-  }, [quieto]);
+  }, [quieto, cerca]);
+
+  // Sólo se montan la lectura activa y, mientras dura el fundido, la anterior.
+  const visibles = bases.filter((b) => b.role === activa || b.role === previa);
 
   return (
     <section
       ref={ref as (n: HTMLElement | null) => void}
       className={styles.rostro} id="rostro" aria-labelledby={`${uid}-t`}
     >
-      <div className={styles.rostroMarco} ref={caja}>
+      <div className={styles.rostroMarco} ref={caja}
+           style={{ '--trazos': `url(${trazos})`, '--ratio': String(vw / vh) } as CSSProperties}>
         <h2 id={`${uid}-t`} className={styles.oculto}>Rostro territorial</h2>
 
-        <svg className={styles.rostroSvg} viewBox={viewBox} role="img"
-             aria-label="Un rostro dibujado con trazos; dentro de la silueta se ve una base territorial real">
-          <defs>
-            <mask id={`${uid}-m`} maskUnits="userSpaceOnUse" x="0" y="0" width={vw} height={vh}>
-              <g fill="#fff" dangerouslySetInnerHTML={{ __html: trazos }} />
-            </mask>
-            {/* Realce local: sin esto la base se hunde en el negro del fondo y
-                el rostro se pierde. No aclara la imagen: le devuelve rango. */}
-            <filter id={`${uid}-f`}>
-              <feComponentTransfer>
-                <feFuncR type="linear" slope="1.5" intercept="-0.06" />
-                <feFuncG type="linear" slope="1.5" intercept="-0.06" />
-                <feFuncB type="linear" slope="1.5" intercept="-0.06" />
-              </feComponentTransfer>
-            </filter>
-          </defs>
+        <div className={styles.rostroPieza}>
+          {/* El lienzo conserva la proporción del dibujo y se centra en la
+              caja, igual que hacía el `viewBox` del SVG: la máscara y los
+              encuadres de las bases se miden contra él, no contra la pantalla. */}
+          <div className={styles.lienzo}
+               role="img"
+               aria-label="Un rostro dibujado con trazos; dentro de la silueta se ve una base territorial real">
+            {/* La silueta recorta el territorio. La máscara es el propio
+                dibujo, servido como archivo externo: son 715 trazos que el
+                navegador decodifica una vez y no entran al DOM. */}
+            <div className={styles.ventana}>
+              {cerca ? visibles.map((b) => (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  key={b.role}
+                  className={styles.base}
+                  data-on={b.role === activa || undefined}
+                  src={b.src}
+                  srcSet={b.srcSet}
+                  /* La caja del rostro nunca pasa de la altura del viewport,
+                     así que en un teléfono basta la variante de 500 o 1000 px. */
+                  sizes="(max-width: 720px) 100vw, 62vw"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    left: `${b.frame[0] * 100}%`,
+                    top: `${b.frame[1] * 100}%`,
+                    width: `${b.frame[2] * 100}%`,
+                    height: `${b.frame[3] * 100}%`,
+                  } as CSSProperties}
+                />
+              )) : null}
+            </div>
 
-          <g mask={`url(#${uid}-m)`} filter={`url(#${uid}-f)`}>
-            <rect x="0" y="0" width={vw} height={vh} fill="#14150f" />
-            {bases.map((b) => (
-              <image key={b.role} className={styles.base}
-                     data-on={b.role === activa || undefined}
-                     data-previa={b.role === previa || undefined}
-                     href={b.src}
-                     x={b.frame[0] * vw} y={b.frame[1] * vh}
-                     width={b.frame[2] * vw} height={b.frame[3] * vh}
-                     preserveAspectRatio="xMidYMid slice" />
-            ))}
-          </g>
+            {/* El trazo por encima del territorio: el mismo archivo, ahora
+                como máscara de un plano de tinta, para llevar el color del
+                sistema sin insertar el dibujo por segunda vez. */}
+            <div className={styles.trazo} aria-hidden="true" />
 
-          <g className={styles.trazo} fill="currentColor" dangerouslySetInnerHTML={{ __html: trazos }} />
-
-          {/* El cauce de P13 llega y se convierte en perfil. */}
-          <path className={styles.cauce} fill="none" vectorEffect="non-scaling-stroke"
-                d={`M${-vw * 0.34} ${vh * 0.47} C ${vw * 0.08} ${vh * 0.45}, ${vw * 0.3} ${vh * 0.32}, ${vw * 0.53} ${vh * 0.22}`} />
-          {/* Y la red sale hacia GRANULAR. */}
-          <path className={styles.red} fill="none" vectorEffect="non-scaling-stroke"
-                d={`M${vw * 0.6} ${vh * 0.6} C ${vw * 0.86} ${vh * 0.7}, ${vw * 0.99} ${vh * 0.85}, ${vw * 1.34} ${vh * 0.91}`} />
-        </svg>
+            {/* Los dos hilos que entran y salen de la escena. Dos, no más. */}
+            <svg className={styles.hilos} viewBox={viewBox} aria-hidden="true">
+              <path className={styles.cauce} fill="none" vectorEffect="non-scaling-stroke"
+                    d={`M${-vw * 0.34} ${vh * 0.47} C ${vw * 0.08} ${vh * 0.45}, ${vw * 0.3} ${vh * 0.32}, ${vw * 0.53} ${vh * 0.22}`} />
+              <path className={styles.red} fill="none" vectorEffect="non-scaling-stroke"
+                    d={`M${vw * 0.6} ${vh * 0.6} C ${vw * 0.86} ${vh * 0.7}, ${vw * 0.99} ${vh * 0.85}, ${vw * 1.34} ${vh * 0.91}`} />
+            </svg>
+          </div>
+        </div>
 
         {/* Marcas laterales, no pestañas: cada lectura es una línea con su
             nombre, inscrita en el borde del dibujo. */}
@@ -228,7 +276,7 @@ export function Contacto({
                     data-copiado={copiado || undefined}>
               {copiado ? 'copiado' : 'copiar'}
             </button>
-            <button type="button" className="btn" data-v="borde" onClick={onVistazo}>vistazo</button>
+            <button type="button" className="btn" data-v="borde" onClick={onVistazo}>Índice de proyectos</button>
             <button type="button" className="btn" data-v="borde" onClick={onInicio}>inicio</button>
           </div>
 

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
 
-import { Ayuda, useAyuda } from '@/components/experience-v5/ayudas';
 import { Glifo } from '@/components/cuaderno/Glifo';
 import { regresoAtlas, vistazoHref } from '@/lib/rutas';
 import styles from './RielCaso.module.css';
@@ -88,9 +87,6 @@ function Riel({ id, corto, territorio, superficie, posicion, total, from }: Riel
   // «siguiente» aparecía escondido.
   useEffect(() => { setVisible(true); }, [pathname]);
 
-  // Una sola vez por sesión, en el primer proyecto que se abre: `Atlas` no es
-  // un nombre evidente para «volver al recorrido».
-  const ayuda = useAyuda('proyecto-atlas', visible, 1100);
 
   return (
     <nav
@@ -99,18 +95,13 @@ function Riel({ id, corto, territorio, superficie, posicion, total, from }: Riel
       data-visible={visible || undefined}
       aria-label="Navegación del atlas"
     >
-      <span className={styles.conAyuda}>
-        <Link className={`${styles.atlas} btn`} data-v="fantasma" href={regresoAtlas(id, from)}
-              aria-label="Atlas · volver al recorrido"
-              aria-describedby={ayuda.visible ? ayuda.id : undefined}
-              onClick={ayuda.cerrar}>
-          Atlas
-        </Link>
-        {ayuda.visible ? (
-          <Ayuda id={ayuda.id} lado="abajo" sup={superficie === 'papel' ? 'papel' : 'tinta'}
-                 texto="Atlas · volver al recorrido" />
-        ) : null}
-      </span>
+      {/* El control dice a dónde lleva. «Atlas» nombraba el sitio, no la
+          acción, y desde dentro de un proyecto nadie tenía por qué saber que
+          ése era el camino de vuelta. */}
+      <Link className={`${styles.atlas} btn`} data-v="fantasma" href={regresoAtlas(id, from)}>
+        <span className={styles.flechaAtras} aria-hidden="true" />
+        Volver al recorrido
+      </Link>
 
       <p className={styles.actual}>
         <Glifo id={id} tam={18} clase={styles.glifo} />
@@ -119,11 +110,11 @@ function Riel({ id, corto, territorio, superficie, posicion, total, from }: Riel
         <span className={`${styles.territorio} mono`}>{territorio}</span>
       </p>
 
-      <p className={`${styles.posicion} mono`}>{`${posicion}/${total}`}</p>
+      {/* «2/15» no dice de qué son quince. */}
+      <p className={`${styles.posicion} mono`}>{`P${id} de ${total}`}</p>
 
-      <Link className={`${styles.vistazo} btn`} data-v="fantasma" href={vistazoHref()}
-            aria-label="Vistazo · abrir índice de proyectos">
-        Vistazo
+      <Link className={`${styles.vistazo} btn`} data-v="fantasma" href={vistazoHref()}>
+        Índice
       </Link>
     </nav>
   );

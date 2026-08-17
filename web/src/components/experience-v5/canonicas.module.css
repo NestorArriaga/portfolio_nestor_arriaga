@@ -24,7 +24,7 @@
   stroke-width: 0.16;
   vector-effect: non-scaling-stroke;
   opacity: 0;
-  transition: opacity var(--micro) var(--sal);
+  transition: opacity var(--t-micro) var(--sal);
 }
 .puntos circle[data-on] { opacity: 1; }
 
@@ -77,7 +77,7 @@
   display: grid;
   gap: 0.3rem;
   opacity: clamp(0, calc(var(--e, 0) * 3.4 - var(--i) * 0.7 - 0.35), 1);
-  transition: opacity var(--ui) var(--sal), transform var(--ui) var(--sal);
+  transition: opacity var(--t-estado) var(--sal), transform var(--t-estado) var(--sal);
 }
 
 .fragmento:nth-child(1) { left: 6%;  top: 14%;
@@ -115,7 +115,7 @@
 .patrones li {
   display: grid; gap: 0.1rem;
   opacity: clamp(0, calc(var(--e, 0) * 3.4 - var(--i) * 0.6 - 0.3), 1);
-  transition: opacity var(--ui) var(--sal);
+  transition: opacity var(--t-estado) var(--sal);
 }
 .patrones b { font-weight: 500; color: var(--texto); }
 .patrones span { color: var(--texto-2); text-wrap: balance; }
@@ -151,7 +151,7 @@
   --t: calc(var(--e, 0) * var(--n));
   --d: max(calc(var(--t) - var(--i) - 0.5), calc(var(--i) + 0.5 - var(--t)));
   opacity: clamp(0, calc(1 - var(--d) * 2.4), 1);
-  transition: opacity var(--ui) var(--sal);
+  transition: opacity var(--t-estado) var(--sal);
 }
 
 .escalaNum { margin: 0; color: var(--senal); }
@@ -172,7 +172,7 @@
 /* Las capas reales del SVG se encienden en secuencia. */
 .capaPark {
   opacity: clamp(0, calc(var(--e, 0) * 4 - var(--i) * 0.75 - 0.15), 1);
-  transition: opacity var(--ui) var(--sal);
+  transition: opacity var(--t-estado) var(--sal);
 }
 
 .estudio {
@@ -204,8 +204,8 @@
 
 .opcion {
   padding: 0.55rem 0.85rem; border: 0; background: transparent;
-  color: var(--texto-2); font-family: var(--mono); font-size: 0.76rem; cursor: pointer;
-  transition: color var(--micro) var(--sal), background-color var(--micro) var(--sal);
+  color: var(--texto-2); font-family: var(--mono); font-size: max(var(--micro), 0.76rem); cursor: pointer;
+  transition: color var(--t-micro) var(--sal), background-color var(--t-micro) var(--sal);
 }
 .opcion:hover { color: var(--texto); }
 .opcion[aria-pressed='true'] { background: var(--texto); color: var(--fondo); }
